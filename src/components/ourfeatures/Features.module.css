@@ -1,0 +1,26 @@
+/** @format */
+
+.features {
+  text-align: center;
+  margin-top: 70px;
+  background: #aaa8a31f;
+  padding: 45px 0;
+}
+.features h2 {
+  color: #038674;
+  margin-bottom: 45px;
+}
+.featureIcon {
+  font-size: 33px;
+  margin-bottom: 13px;
+  color: #bba04c;
+}
+.features h4 {
+  margin-bottom: 13px;
+  color: #003128e8;
+}
+.features p {
+  line-height: 2em;
+  padding: 0 3px;
+  color: #16433ad1;
+}

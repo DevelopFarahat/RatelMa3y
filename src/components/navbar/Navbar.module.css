@@ -1,0 +1,46 @@
+/** @format */
+.Navbar {
+  padding: 0;
+  box-shadow: 0 3px 5px #80808029;
+  background: white;
+}
+.NavbarBrand {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.logo {
+  height: 85px;
+}
+.link {
+  color: #01332c !important;
+  font-size: 18px !important;
+  text-decoration: none;
+  margin: 0 10px;
+}
+.link:hover {
+  color: #01332c;
+  border-bottom: 1px solid #c2a054;
+}
+.button {
+  background: #038674;
+  color: white;
+  border: none;
+  font-size: 16px;
+}
+
+.button:hover {
+  background: #026154;
+}
+.button:focus {
+  box-shadow: none;
+  background: #038674;
+}
+.button:focus-visible {
+  overflow: hidden;
+  border: none;
+}
+.button:first-of-type {
+  margin-right: 6px;
+  text-transform: capitalize;
+}

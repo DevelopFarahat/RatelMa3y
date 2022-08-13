@@ -1,0 +1,72 @@
+/** @format */
+
+.contact {
+  margin-top: 86px;
+  padding: 100px 0 15px;
+  margin-left: 25%;
+  margin-right: 25%;
+}
+.contact h2 {
+  font-size: 37px;
+  color: #bfa155;
+  margin-bottom: 45px;
+}
+.contact h2 span {
+  color: #038674;
+  border-bottom: 1px solid #038674;
+  padding-bottom: 5px;
+}
+.contact input {
+  font-size: 20px;
+  margin-top: 20px;
+  border: 1px solid #c1a153;
+  color: #bfa155;
+}
+.contact input:focus {
+  color: #bfa155;
+  background-color: #fff;
+  border-color: #c1a153;
+  outline: 0;
+  box-shadow: none;
+}
+.contact ::placeholder {
+  color: #bfa155;
+  opacity: 1; /* Firefox */
+}
+
+:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  color: #bfa155;
+}
+
+::-ms-input-placeholder {
+  /* Microsoft Edge */
+  color: #bfa155;
+}
+.contact button {
+  width: 100%;
+  font-size: 20px;
+  font-weight: 400;
+  border: none;
+  background: #038674;
+}
+.contact button:hover {
+  background-color: #038674;
+}
+.contact button:active {
+  background-color: #038674;
+}
+.contact button:focus {
+  box-shadow: none;
+  background-color: #038674;
+}
+.contact div {
+  font-size: 15px;
+  color: #ab0303;
+}
+@media (max-width: 769px) {
+  .contact {
+    margin-left: 0;
+    margin-right: 0;
+  }
+}

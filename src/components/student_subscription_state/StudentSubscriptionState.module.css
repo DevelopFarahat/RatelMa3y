@@ -1,0 +1,189 @@
+.student-user-data-container {
+    width: 50%;
+    height: 471px;
+    padding: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+    position: relative;
+  }
+  .table-settings-container {
+    width: 99%;
+    margin: auto;
+    background-color: #c2a054;
+    padding: 5px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    color: #ffffff;
+    margin-bottom: 25px;
+  }
+  .table-settings-container > label {
+    flex: 0 0 15%;
+  }
+  .table-settings-container > input {
+    flex: 0 0 30%;
+  }
+  .table-settings-container > button {
+    flex: 0 0 25%;
+  }
+  .table-wrapper {
+    width: 99%;
+    height: 83%;
+    overflow: auto;
+  }
+  .student-accounts-table {
+    width: 99%;
+    margin: auto;
+   
+  }
+  .student-accounts-table,
+  tr,
+  td,
+  th {
+    padding: 10px;
+    text-align: center;
+    font-size: 1rem;
+    letter-spacing: .5px;
+    border:none;
+  }
+  .student-accounts-table > thead > tr {
+    background-color: #c2a054;
+    color: #ffffff;
+    position: sticky;
+    top: -1px;
+  }
+  .student-accounts-table > thead > tr >  th{
+    border-left: 1px solid #dadada;
+  }
+  .student-accounts-table > thead > tr >  th:nth-child(1){
+    border-left: none;
+  }
+  .student-accounts-table > tbody > tr:nth-child(even) {
+    background-color: #dadada;
+  }
+  .student-accounts-table > tbody > tr:hover{
+    background-color:#c2a054;
+    color:#FFFFFF;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    transition: all .5s ease-in-out;
+    -webkit-transition: all .5s ease-in-out;
+    -moz-transition: all .5s ease-in-out;
+    -ms-transition: all .5s ease-in-out;
+    -o-transition: all .5s ease-in-out;
+    cursor: pointer;
+  }
+  .table-wrapper::-webkit-scrollbar {
+    width: 20px;
+  }
+  
+  .table-wrapper::-webkit-scrollbar-track {
+    background-color: #e4e4e4;
+    border-radius: 100px;
+  }
+  
+  .table-wrapper::-webkit-scrollbar-thumb {
+    border-radius: 100px;
+    border: 6px solid rgba(0, 0, 0, 0.18);
+    border-left: 0;
+    border-right: 0;
+    background-color: #038674;
+  }
+  .btn {
+    width: 35%;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+    text-align: center;
+    font-size: 1rem;
+    text-transform: capitalize;
+    padding: 8px 8px;
+    background-color: #038674;
+    margin-top: 20px;
+    color: #ffffff;
+  }
+  .disabled-btn {
+    width: 35%;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+    text-align: center;
+    font-size: 1rem;
+    text-transform: capitalize;
+    padding: 8px 8px;
+    margin-top: 20px;
+    color: #ffffff;
+    background-color: #666666;
+    opacity: 0.3;
+    cursor: not-allowed !important;
+
+  }
+.setting-icon-hidden{
+    display: none;
+    margin-left: 10px;
+    cursor: pointer;
+    color: #FFFFFF;
+}
+.student-accounts-table > tbody > tr:hover .setting-icon-hidden{
+    display: inline;
+    transition: all .5s ease-in-out;
+    -webkit-transition: all .5s ease-in-out;
+    -moz-transition: all .5s ease-in-out;
+    -ms-transition: all .5s ease-in-out;
+    -o-transition: all .5s ease-in-out;
+    color: #FFFFFF;
+}
+.dime-table{
+  width: 100%;
+  height: 100%;
+  background-color: rgba(4,0,0,.8);
+  position: absolute;
+  top:0;
+  left:0;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+}
+.setting-student-status_instructor-container{
+  width:50%;
+  padding:10px;
+  margin: auto;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  background-color: #FFFFFF;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  position: absolute;
+  top:50%;
+  left:50%;
+  transform: translate(-50%,-50%);
+  -webkit-transform: translate(-50%,-50%);
+  -moz-transform: translate(-50%,-50%);
+  -ms-transform: translate(-50%,-50%);
+  -o-transform: translate(-50%,-50%);
+}
+.close-dime{
+  color: #FFFFFF;
+  cursor: pointer;
+  margin: 17px 0 0 17px;
+}
+.close-dime:hover{
+  color: #038674;
+}
+

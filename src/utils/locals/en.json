@@ -1,0 +1,23 @@
+{
+  "title": "Registration",
+  "name": "name",
+  "password": " password",
+  "email": "email",
+  "day1": "saterday",
+  "day2": "sunday",
+  "day3": "monday",
+  "day4": "tuesday",
+  "day5": "wednesday",
+  "day7": "thursday",
+  "day8": "friday",
+  "age": "age",
+  "mobile number": " Mobile Number",
+  "qualified": "qualified degree",
+  "sectionnumber": " numbers of sections you want to join ",
+  "numbers-sections": "  choose numbers of sections you want to join",
+  "favourite-days": "Favourite Days  ",
+  "weekly-time": " What weekly appointments would you like to attend?",
+  "From 10 to 12 at night": "From 10 to 12 at night",
+  "From 4:30 in the morning until 6:30 in the afternoon": "From 4:30 in the morning until 6:30 in the afternoon",
+  "From 1 to 3 in the afternoon": " From 1 to 3 in the afternoon"
+}

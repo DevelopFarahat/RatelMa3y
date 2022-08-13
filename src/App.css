@@ -1,0 +1,24 @@
+/** @format */
+/* Main color1 :#01332c */
+/* Main color2 :#c2a054 */
+.RoomAccordionHeader .accordion-button {
+  background: none;
+}
+.RoomAccordionHeader .accordion-button:focus {
+  box-shadow: none;
+  color: #212529;
+}
+/* ********************************* */
+
+.overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  background-color: #001916cf;
+  z-index: 2;
+}
+body{
+  overscroll-behavior: none;
+}

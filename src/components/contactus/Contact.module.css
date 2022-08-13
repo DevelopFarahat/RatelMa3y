@@ -1,0 +1,76 @@
+/** @format */
+
+.contact {
+  background: url(../../assets/images/contatus.webp) no-repeat center center
+    fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  width: 100%;
+  min-height: 300px;
+  margin-top: 65px;
+  text-align: center;
+}
+.innercontact {
+  background: rgb(0 0 0 / 78%);
+  color: #eee;
+  padding-top: 60px;
+  min-height: 300px;
+  padding-bottom: 60px;
+}
+.contacticon {
+  color: #c7af6e;
+  font-size: 100px;
+  text-align: center;
+}
+.contact h2 {
+  color: #c7af6e;
+  margin-top: 20px;
+  text-align: center;
+}
+.contact p {
+  color: #c7af6e;
+  text-align: center;
+}
+.contact input {
+  background: rgba(111, 105, 105, 0.7);
+  color: #fff;
+  border: none;
+  font-size: 20px;
+  padding: 8px 10px;
+  color: #c7af6e;
+}
+.contact input:focus {
+  background: rgba(111, 105, 105, 0.7);
+  color: #fff;
+  border: none;
+  font-size: 20px;
+  padding: 8px 10px;
+  box-shadow: none;
+  color: #c7af6e;
+}
+.contact textarea {
+  background: rgba(111, 105, 105, 0.7);
+  color: #fff;
+  border: none;
+  padding: 8px 10px;
+  color: #c7af6e;
+}
+.contact textarea:focus {
+  background: rgba(111, 105, 105, 0.7);
+  color: #fff;
+  border: none;
+  padding: 8px 10px;
+  box-shadow: none;
+  color: #c7af6e;
+}
+.contact button {
+  width: 100%;
+  font-size: 18px;
+  font-weight: 500;
+}
+.innercontact div {
+  font-size: 15px;
+  color: #ab0303;
+}

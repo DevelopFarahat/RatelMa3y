@@ -1,0 +1,56 @@
+/** @format */
+
+.footer {
+  background: url(../../assets/images/footer.webp) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  width: 100%;
+  min-height: 300px;
+  margin-top: 65px;
+  text-align: center;
+}
+.footer .innerfooter {
+  background: rgb(0 0 0 / 90%);
+  color: #eee;
+  padding-top: 60px;
+  min-height: 300px;
+  padding-bottom: 40px;
+}
+.footer .innerfooter h4 {
+  color: #c2a556;
+  margin-bottom: 20px;
+}
+.link {
+  text-decoration: none;
+  color: white;
+  display: block;
+  font-size: 18px;
+}
+.link:hover {
+  color: #c2a556;
+}
+.logo {
+  height: 155px;
+  margin-top: -45px;
+}
+.social {
+  display: flex;
+  margin: 12px;
+  justify-content: space-evenly;
+}
+.socialicon {
+  font-size: 27px;
+  color: #7a7171;
+}
+.socialicon :hover {
+  color: white;
+}
+.Ratelfooter {
+  font-size: 19px;
+  color: white;
+}
+.Ratelcopyright {
+  color: #7a7171;
+}

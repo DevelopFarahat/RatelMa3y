@@ -1,0 +1,12 @@
+/** @format */
+
+.card {
+  width: 80%;
+  margin: 30px auto;
+}
+.AccordionItem {
+  margin: 0 -16px -16px -16px;
+  border-radius: 0 !important;
+  border-bottom: none;
+}
+

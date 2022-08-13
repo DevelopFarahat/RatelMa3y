@@ -1,0 +1,25 @@
+/** @format */
+
+.statistics {
+  margin-top: 100px;
+  text-align: center;
+}
+.stcard {
+  box-shadow: 0 0 19px rgb(0 0 0 / 16%);
+  border-radius: 6px;
+  padding: 10px 5px;
+  width: 80%;
+  margin: auto;
+  margin-bottom: 30px;
+}
+.stcard .numb {
+  font-size: 50px;
+  font-weight: bold;
+  margin-bottom: 35px;
+  color: #01332c;
+}
+.stcard .text {
+  font-size: 19px;
+  color: #c0a34f;
+  font-weight: 500;
+}
