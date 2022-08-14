@@ -17,6 +17,7 @@ import RegistrationForm from "./components/registration-form/RegistrationForm";
 import { useTranslation } from "react-i18next";
 import Footer from "./components/footer/Footer";
 import ScrollToTop from "./utils/ScrollToTop";
+import Instructor from "./components/instructor/Instructor";
 
 function App() {
   const [t, i18n] = useTranslation();
