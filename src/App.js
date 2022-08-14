@@ -44,6 +44,7 @@ function App() {
             <Route path="systemUsers" index element={<SystemUsers />} />
             <Route path="addPost" element={<AddPost />}/>
             <Route path="students" element={<Student />} />
+			<Route path="instructors" element={<Instructor/>}/>
           </Route>
           <Route
             path="register"
