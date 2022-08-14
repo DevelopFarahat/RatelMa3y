@@ -2,14 +2,16 @@ import React, {  useState } from "react";
 import StudentSubscriptionState from "../student_subscription_state/StudentSubscriptionState";
 import StudentDetails from "../student_details/StudentDetails";
 const Students = () => {
-    const instructorArr = [{ id: 1, name: 'mostafa mahmoud' }, { id: 2, name: 'ali ahmed' }, { id: 3, name: 'yassin mostafa' }, { id: 4, name: 'bahar mokhtar' }, { id: 5, name: 'mohamed magdy' }, { id: 6, name: 'hatem mohamed' }]
+    const [specificStudentJoiningRequestData,setSpecificStudentJoiningRequestData] = useState({});
+    const [isStudentRequestDataVisible,setIsStudentRequestDataVisible] = useState(true);
+    const [isStudentRatelDataVisible,setIsStudentRatelDataVisible] = useState(false);
     
 
 
     return (
         <>
-        <StudentDetails/>
-        <StudentSubscriptionState  instructorArr={instructorArr}/>
+        <StudentDetails specificStudentJoiningRequestData={specificStudentJoiningRequestData} setIsStudentRequestDataVisible={setIsStudentRequestDataVisible} setIsStudentRatelDataVisible={setIsStudentRatelDataVisible} isStudentRequestDataVisible={isStudentRequestDataVisible} isStudentRatelDataVisible={isStudentRatelDataVisible}/>
+        <StudentSubscriptionState  setSpecificStudentJoiningRequestData={setSpecificStudentJoiningRequestData} setIsStudentRequestDataVisible={setIsStudentRequestDataVisible} setIsStudentRatelDataVisible={setIsStudentRatelDataVisible}/>
         </>
     )
 }

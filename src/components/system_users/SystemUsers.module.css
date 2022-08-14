@@ -31,7 +31,7 @@ body {
   font-size: 1rem;
   text-transform: capitalize;
   padding: 8px 8px;
-  background-color: #4c6e59;
+  background-color: #038674;
   margin-top: 20px;
   color: #ffffff;
 }
@@ -71,6 +71,7 @@ body {
   width: 99%;
   height: 83%;
   overflow: auto;
+  position: relative;
 }
 .system-accounts-table {
   width: 99%;
@@ -87,10 +88,9 @@ th {
   border:none;
 }
 .system-accounts-table > thead > tr {
-  cursor: default;
   background-color: #c2a054;
   color: #ffffff;
-
+  position: sticky;
   top: -1px;
 }
 .system-accounts-table > thead > tr > th{
@@ -108,16 +108,15 @@ th {
   background-color:#c2a054;
   color:#FFFFFF;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  transition: all .2s ease-in-out;
-  -webkit-transition: all .2s ease-in-out;
-  -moz-transition: all .2s ease-in-out;
-  -ms-transition: all .2s ease-in-out;
-  -o-transition: all .2s ease-in-out;
+  transition: all .3s ease-in-out;
+  -webkit-transition: all .3s ease-in-out;
+  -moz-transition: all .3s ease-in-out;
+  -ms-transition: all .3s ease-in-out;
+  -o-transition: all .3s ease-in-out;
 }
 .table-wrapper::-webkit-scrollbar {
   width: 20px;
 }
-
 .table-wrapper::-webkit-scrollbar-track {
   background-color: #e4e4e4;
   border-radius: 100px;
@@ -149,4 +148,24 @@ th {
   background-color: #666666;
   opacity: 0.3;
   cursor:not-allowed !important;
+}
+.no-result{
+  position: absolute;
+  top:50%;
+  left:50%;
+  display: block;
+  object-fit: cover;
+  transform: translate(-50%,-50%);
+  -webkit-transform: translate(-50%,-50%);
+  -moz-transform: translate(-50%,-50%);
+  -ms-transform: translate(-50%,-50%);
+  -o-transform: translate(-50%,-50%);
+}
+.errors{
+  border-color: #f6003c !important;
+}
+.errors:focus{
+box-shadow:   0 0 0 0.25rem rgba(246,0,60,.25) !important;
+border-color: #f6003c !important;
+
 }

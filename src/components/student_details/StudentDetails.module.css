@@ -1,12 +1,92 @@
+.student-details-main-container {
+  width: 45%;
+  height:471px;
+  padding: 10px;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  background-color: #ffffff;
+}
+.settings-header {
+  width: 100%;
+  padding: 10px;
+  background-color: #c2a054;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+.ratel-student-data-tap,
+.joinnig-request-data-tap {
+  font-size: 1rem;
+  text-align: center;
+  text-transform: capitalize;
+  letter-spacing: 0.5px;
+  color: #ffffff;
+  background-color: #038674;
+  padding: 10px;
+  cursor: pointer;
+}
+.taps-shadow {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.empty-data-img {
+  margin: auto;
+  padding: 88px;
+  display: block;
+  background-position: 50% 50%;
+}
+.student-request-joinnig-info-main-container{
+    padding:20px 0 0 0;
+    overflow: auto;
+    overflow: auto;
+    width: 100%;
+    height: 85%;
+}
+.requested-joinnig-student-table {
+  width: 100%;
+}
+.requested-joinnig-student-table > thead > tr > th , td{
+    font-size: 1rem;
+    text-transform: capitalize;
+    letter-spacing: .5px;
+    word-spacing: 1px;
+    text-align: center;
+}
 
-.student-details-main-container{
-    width:45%;
-    padding: 20px;
-    border-radius: 5px;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    -ms-border-radius: 5px;
-    -o-border-radius: 5px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    background-color: #FFFFFF;
+.requested-joinnig-student-table > thead > tr > th {
+  border-top: 1px solid #dadada;
+  background-color: #c2a054;
+  color:#FFFFFF;
+}
+.requested-joinnig-student-table > thead > tr:nth-child(even){
+    background-color: #dadada;
+}
+.requested-joinnig-student-table > thead > tr > th:nth-child(6) {
+  border-bottom: 1px solid #dadada;
+}
+.requested-joinnig-student-table > thead > tr:nth-child(6) > th{
+  border-left: 1px solid #dadada;
+}
+.requested-joinnig-student-table > thead > tr:nth-child(6) > th:nth-child(2){
+    border: none;
+}
+.student-request-joinnig-info-main-container::-webkit-scrollbar {
+  width: 20px;
+}
+
+.student-request-joinnig-info-main-container::-webkit-scrollbar-track {
+  background-color: #e4e4e4;
+  border-radius: 100px;
+}
+
+.student-request-joinnig-info-main-container::-webkit-scrollbar-thumb {
+  border-radius: 100px;
+  border: 6px solid rgba(0, 0, 0, 0.18);
+  border-left: 0;
+  border-right: 0;
+  background-color: #038674;
 }

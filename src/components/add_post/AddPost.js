@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AddPostStyles from "./AddPost.module.css";
 import Form from "react-bootstrap/Form";
 import { RiFolder5Fill } from "react-icons/ri";
 import { MdOutlineClear } from "react-icons/md";
 import { BsFillFileEarmarkPostFill } from "react-icons/bs";
+import axios from "axios";
 const AddPost = () => {
     const[postData,setPostData] = useState({
-        post_img:'',
+        article_img:'',
         title:'',
         content:''
     });
@@ -16,7 +17,9 @@ const AddPost = () => {
         let reader = new FileReader();
         reader.onload = function () {
             let dataURL = reader.result;
-            setPostImage(dataURL);
+            console.log(event.target.value);
+            setPostImage(event.target.value);
+            
         };
         reader.readAsDataURL(event.target.files[0]);
         
@@ -26,7 +29,7 @@ const AddPost = () => {
             setPostData({
                 ...postData,
                 [event.target.name]:event.target.value,
-                post_img:postImage
+                article_img:postImage
             })
         }
         const clearImagePath = ()=>{
@@ -36,7 +39,15 @@ const AddPost = () => {
 
             event.preventDefault();
 
-            
+          /*
+            axios.post(`https://ratel-may.herokuapp.com/api/events`,postData).then((res)=>{
+                console.log(res);
+            }).catch((error)=>{
+                console.log(error);
+            }); 
+            */
+      
+      
             setIsUserMadeAPost(true);
             
             setTimeout(()=>{
@@ -53,8 +64,8 @@ const AddPost = () => {
             <form className={AddPostStyles['add-post-main-container']} onSubmit={handleSubmit}>
                 <div>
                     <Form.Label htmlFor="postImage">Post Image</Form.Label>
-                    <div  id="postImage"   className={AddPostStyles['post-image-area']}>
-                    {postImage === ''?null:<img src={postImage} alt="logo" className={AddPostStyles['image-post']}/>}
+                    <div  id="postImage"   className={AddPostStyles['post-image-area']} style={{backgroundImage:postImage === ''?'':`url(http://localhost:3000/one.png)`}}>
+                    
                     
                     </div>
                     <div className={AddPostStyles["button-group"]}>

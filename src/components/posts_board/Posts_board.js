@@ -1,11 +1,11 @@
 import React from "react";
 import Post from "../post/Post";
 import PostBoardStyles from "./PostsBoard.module.css";
-import One from "../../assets/images/one.webp";
-import Two from "../../assets/images/two.webp";
-import Three from "../../assets/images/three.webp";
-import Four from "../../assets/images/four.webp";
-import Five from "../../assets/images/five.webp";
+import One from "../../assets/images/one.jpg";
+import Two from "../../assets/images/two.jpg";
+import Three from "../../assets/images/three.jpg";
+import Four from "../../assets/images/four.jpg";
+import Five from "../../assets/images/five.jpg";
 const PostsBoard = () => {
   const Posts = [{
     id: 1, imagePath: One, title: 'Congratulation For Joining Ratel Ma3y Academy', details: `Inshaa Allah We Gonna Start Our Programes On Sunday 14 August,Inshaa Allah We Gonna Start Our Programes On Sunday 14 August,
