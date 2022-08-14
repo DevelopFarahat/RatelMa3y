@@ -1,7 +1,6 @@
 /** @format */
 
 .contact {
-  margin-top: 86px;
   padding: 100px 0 15px;
   margin-left: 25%;
   margin-right: 25%;
@@ -23,6 +22,19 @@
   color: #bfa155;
 }
 .contact input:focus {
+  color: #bfa155;
+  background-color: #fff;
+  border-color: #c1a153;
+  outline: 0;
+  box-shadow: none;
+}
+.contact textarea {
+  font-size: 20px;
+  margin-top: 20px;
+  border: 1px solid #c1a153;
+  color: #bfa155;
+}
+.contact textarea:focus {
   color: #bfa155;
   background-color: #fff;
   border-color: #c1a153;

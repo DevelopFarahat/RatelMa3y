@@ -67,7 +67,7 @@ function Contact() {
             <Form.Control
               type='text'
               name='userName'
-              placeholder='Enter user name'
+              placeholder='Enter full name'
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.userName}
@@ -104,9 +104,10 @@ function Contact() {
           </Form.Group>
           <Form.Group className='mb-3' controlId='formBasicMessage'>
             <Form.Control
-              type='text'
+              as='textarea'
               name='message'
               placeholder='Say some thing'
+              rows={4}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.message}
