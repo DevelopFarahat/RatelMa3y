@@ -1,6 +1,6 @@
 .student-details-main-container {
-  width: 45%;
-  height:471px;
+  width: 47%;
+  height: 471px;
   padding: 10px;
   border-radius: 5px;
   -webkit-border-radius: 5px;
@@ -39,40 +39,67 @@
   display: block;
   background-position: 50% 50%;
 }
-.student-request-joinnig-info-main-container{
-    padding:20px 0 0 0;
-    overflow: auto;
-    overflow: auto;
-    width: 100%;
-    height: 85%;
+.student-request-joinnig-info-main-container {
+  padding: 20px 0 0 0;
+  overflow: auto;
+  overflow: auto;
+  width: 100%;
+  height: 85%;
 }
 .requested-joinnig-student-table {
-  width: 100%;
+  width: 120%;
 }
-.requested-joinnig-student-table > thead > tr > th , td{
-    font-size: 1rem;
-    text-transform: capitalize;
-    letter-spacing: .5px;
-    word-spacing: 1px;
-    text-align: center;
+.requested-joinnig-student-table > thead > tr > th,
+td {
+  font-size: 1rem;
+  text-transform: capitalize;
+  letter-spacing: 0.5px;
+  word-spacing: 1px;
+  text-align: center;
 }
-
+.requested-joinnig-student-table > thead > tr > td > span {
+  display: block;
+  margin: auto;
+  text-align: center;
+}
+.requested-joinnig-student-table > thead > tr > td > span > span {
+  display: block;
+  width: 305;
+  margin: auto;
+  text-align: center;
+}
+.requested-joinnig-student-table
+  > thead
+  > tr
+  > td
+  > span
+  > div
+  > span:nth-child(1),
+.requested-joinnig-student-table
+  > thead
+  > tr
+  > td
+  > span
+  > div
+  > span:nth-child(3) {
+  color: #c2a054;
+}
 .requested-joinnig-student-table > thead > tr > th {
   border-top: 1px solid #dadada;
   background-color: #c2a054;
-  color:#FFFFFF;
+  color: #ffffff;
 }
-.requested-joinnig-student-table > thead > tr:nth-child(even){
-    background-color: #dadada;
+.requested-joinnig-student-table > thead > tr:nth-child(even) {
+  background-color: #dadada;
 }
 .requested-joinnig-student-table > thead > tr > th:nth-child(6) {
   border-bottom: 1px solid #dadada;
 }
-.requested-joinnig-student-table > thead > tr:nth-child(6) > th{
+.requested-joinnig-student-table > thead > tr:nth-child(6) > th {
   border-left: 1px solid #dadada;
 }
-.requested-joinnig-student-table > thead > tr:nth-child(6) > th:nth-child(2){
-    border: none;
+.requested-joinnig-student-table > thead > tr:nth-child(6) > th:nth-child(2) {
+  border: none;
 }
 .student-request-joinnig-info-main-container::-webkit-scrollbar {
   width: 20px;
@@ -84,6 +111,113 @@
 }
 
 .student-request-joinnig-info-main-container::-webkit-scrollbar-thumb {
+  border-radius: 100px;
+  border: 6px solid rgba(0, 0, 0, 0.18);
+  border-left: 0;
+  border-right: 0;
+  background-color: #038674;
+}
+.no-result {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: block;
+  object-fit: cover;
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
+}
+.btn {
+  width: 35%;
+  outline: none;
+  border: none;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  text-align: center;
+  font-size: 1rem;
+  text-transform: capitalize;
+  padding: 8px 8px;
+  background-color: #038674;
+  color: #ffffff;
+}
+.student-ratel-info-main-container{
+  height:79%;
+}
+.table-settings-container {
+  width: 99%;
+  margin:10px  auto 0 auto;
+  background-color: #c2a054;
+  padding: 5px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  color: #ffffff;
+  margin-bottom: 25px;
+}
+.table-settings-container > label {
+  flex: 0 0 15%;
+}
+.table-settings-container > .form-sort-select {
+  flex: 0 0 30%;
+  text-align: justify;
+  cursor: pointer;
+}
+.table-settings-container > button {
+  flex: 0 0 25%;
+}
+.table-wrapper {
+  width: 99%;
+  height: 83%;
+  overflow: auto;
+  position: relative;
+}
+.student-session-info-table {
+  width: 99%;
+  margin: auto;
+}
+.system-accounts-table,
+tr,
+td,
+th {
+  padding: 10px;
+  text-align: center;
+  font-size: 1rem;
+  letter-spacing: 0.5px;
+  border: none;
+}
+.student-session-info-table > thead > tr {
+  background-color: #c2a054;
+  color: #ffffff;
+  position: sticky;
+  top: -1px;
+}
+.student-session-info-table > thead > tr > th {
+  border-left: 1px solid #dadada;
+}
+
+.student-session-info-table > thead > tr > th:nth-child(1),
+.student-session-info-table > thead > tr > th:nth-child(5) {
+  border-right: 1px solid #dadada;
+}
+
+.student-session-info-table > tbody > tr:nth-child(even) {
+  background-color: #dadada;
+}
+.table-wrapper::-webkit-scrollbar {
+  width: 20px;
+}
+.table-wrapper::-webkit-scrollbar-track {
+  background-color: #e4e4e4;
+  border-radius: 100px;
+}
+
+.table-wrapper::-webkit-scrollbar-thumb {
   border-radius: 100px;
   border: 6px solid rgba(0, 0, 0, 0.18);
   border-left: 0;

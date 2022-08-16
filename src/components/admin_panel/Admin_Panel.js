@@ -18,7 +18,6 @@ const AdminPanel = () => {
 
     return (
         <>
-            {console.log(activeLinks)}
             <div className={AdminPanelStyles['admin-panel-navigation']}>
                 <Link className={`${activeLinks.SystemUsersActive? AdminPanelStyles['active-tap']:AdminPanelStyles['navigation-links']}`} to={"/adminPanel/systemUsers"} id="SystemUsersActive" onClick={(event)=>activateLink(event)}>System Users</Link>
             

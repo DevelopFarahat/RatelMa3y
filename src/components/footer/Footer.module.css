@@ -1,7 +1,7 @@
 /** @format */
 
 .footer {
-  background: url(../../assets/images/footer.webp) no-repeat center center fixed;
+  background: url(../../assets/images/footer.webp) no-repeat center center ;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;

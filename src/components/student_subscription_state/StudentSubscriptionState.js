@@ -9,7 +9,7 @@ import Form from "react-bootstrap/Form";
 import { AiFillSetting } from "react-icons/ai";
 import CircleGif from "../../assets/images/check-circle.gif";
 import NoResultFiltaration from "../../assets/images/no-result.png";
-const StudentSubscriptionState = ({ setSpecificStudentJoiningRequestData, setIsStudentRequestDataVisible, setIsStudentRatelDataVisible }) => {
+const StudentSubscriptionState = ({ setSpecificStudentJoiningRequestData, setIsStudentRequestDataVisible,initialSpecificStudentJoiningRequestData, setIsStudentRatelDataVisible }) => {
     const pindingSubscriptionStateArr = [{ subscription_id: 1, subscription_name: "Active" }, { subscription_id: 2, subscription_name: "OnHold" }, { subscription_id: 3, subscription_name: "Cancelled" }];
     const activeSubscriptionStatusArr = [{ subscription_id: 3, subscription_name: "OnHold" }, { subscription_id: 4, subscription_name: "Cancelled" }];
     const onHoldSubscriptionStatusArr = [{ subscription_id: 5, subscription_name: "Active" }, { subscription_id: 6, subscription_name: "Cancelled" }];
@@ -110,6 +110,7 @@ const StudentSubscriptionState = ({ setSpecificStudentJoiningRequestData, setIsS
         };
 
         axios.get(`https://ratel-may.herokuapp.com/api/students/${stdObji._id}`).then((res) => {
+            initialSpecificStudentJoiningRequestData.current = res.data;
             setSpecificStudentJoiningRequestData(res.data);
             console.log(res.data);
         }).catch((error) => {
@@ -172,7 +173,7 @@ const StudentSubscriptionState = ({ setSpecificStudentJoiningRequestData, setIsS
                         <tbody>
 
                             {studentData.map((stdData) => (
-                                <tr key={stdData._id} id={stdData._id} onClick={(event) => getStudentRatelMa3yJoiningRequestData(stdData, event)} style={{ background: selectedRow === stdData._id ? '#038674' : '', color: selectedRow === stdData._id ? '#FFFFFF' : '', boxShadow: selectedRow === stdData._id ? `rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);` : '' }}>
+                                <tr key={stdData._id} id={stdData._id} onClick={(event) => getStudentRatelMa3yJoiningRequestData(stdData, event)} style={{ background: selectedRow === stdData._id ? '#038674' : '', color: selectedRow === stdData._id ? '#FFFFFF' : '', boxShadow: selectedRow === stdData._id ? `rgba(0, 0, 0, 0.2) 0 6px 20px 0 rgba(0, 0, 0, 0.19)` : '' }}>
                                     <td>{stdData._id}</td>
                                     <td>{stdData.name}</td>
                                     <td>{stdData.subscription_state} {stdData.subscription_state !== 'Cancelled' ? <AiFillSetting className={StudentSubscriptionStyles['setting-icon-hidden']} size={25} onClick={(event) => toogleStudentStatus(stdData, event)} /> : null}</td>
