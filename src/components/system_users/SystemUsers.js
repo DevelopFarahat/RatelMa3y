@@ -9,6 +9,7 @@ import NoResultFiltaration from "../../assets/images/no-result.png";
 import { TbPlayerTrackNext } from "react-icons/tb";
 import { ImPrevious2 } from "react-icons/im";
 import axios from "axios";
+
 const SystemUsers = () => {
     let listOfCountries = [
         { id: 0, name: "Egypt" },
@@ -148,7 +149,6 @@ const SystemUsers = () => {
             working_hours: [],
             working_days: [[]],
         },
-
         password: '',
         mobile: '',
         programs: '',
@@ -174,14 +174,10 @@ const SystemUsers = () => {
     const [fetchAgain,setFetchAgain] = useState(0)           //Just dummy number to tell that another fetch call is needed
 
     const handleChange = (event) => {
-
-
-
         if (event.target.id !== 'age') {
             setUserData({
                 ...userData,
                 [event.target.id]: event.target.value,
-
             }
             )
         } else {
@@ -192,12 +188,6 @@ const SystemUsers = () => {
             }
             )
         }
-
-
-
-
-
-
 
         errorHandle(event.target.id, event.target.value);
     }
@@ -332,6 +322,8 @@ const SystemUsers = () => {
     }
 
     const handleSubmit = (event) => {
+        event.preventDefault();
+
         let y = [];
         for (let i = 0; i < Object.values(workingDays).length; i++) {
             if (Object.values(workingDays)[i] !== '') {
@@ -346,6 +338,7 @@ const SystemUsers = () => {
                 wHours.push(Number(Object.values(WorkingHours)[i]))
             }
         }
+
         setUserData({
             ...userData,
             prefs: {
@@ -358,16 +351,17 @@ const SystemUsers = () => {
             ],
 
         })
-        event.preventDefault();
 
+        axios.post(`http://localhost:5000/api/instructors`, userData).then((res) => {
+            console.log('response',res.data)
+            
+            //TODO: request the data one more time or just add the user to the instructors array locally
+            //This is the second option
+            setAccountsData(accountsData.concat(res.data))
 
-        axios.post(`https://ratel-may.herokuapp.com/api/instructors`, userData).then((res) => {
-            console.log(res.data)
-            console.log(userData);
         }).catch((error) => {
             console.log(error.message);
         });
-
     }
 
 
@@ -431,15 +425,15 @@ const SystemUsers = () => {
 
                     <div>
                         <Form.Label htmlFor="age">Age</Form.Label>
-                        <Form.Control type="number" name="age" id="age" value={userData.age} onChange={handleChange} className={`${SystemUsersStyles['system-user-form-controls']} ${errors.ageError ? SystemUsersStyles['errors'] : ''}`} />
+                        <Form.Control min={1} max={100} type="number" name="age" id="age" value={userData.age} onChange={handleChange} className={`${SystemUsersStyles['system-user-form-controls']} ${errors.ageError ? SystemUsersStyles['errors'] : ''}`} />
                         <small className='text-danger'>{errors.ageError}</small>
                     </div>
                     <div>
                         <Form.Label htmlFor="gender">Gender</Form.Label>
                         <Form.Select name="gender" id="gender" value={userData.gender} onChange={handleChange} className={`${SystemUsersStyles['system-user-form-controls']} ${errors.genderError ? SystemUsersStyles['errors'] : ''}`} >
                             <option value="">Select</option>
-                            <option value="male">Male</option>
-                            <option value="female">Female</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
                         </Form.Select>
                         <small className='text-danger'>{errors.genderError}</small>
                     </div>
@@ -561,13 +555,13 @@ const SystemUsers = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {accountsData.map((userAccount) => (
+                            {accountsData?.map((userAccount) => (
                                 <tr key={userAccount._id} id={userAccount._id}>
                                     <td>{userAccount._id}</td>
                                     <td>{userAccount.name}</td>
                                     <td>{userAccount.email}</td>
                                     <td>{userAccount.mobile}</td>
-                                    <td>{userAccount.privilages}</td>
+                                    <td>{userAccount.privilages??userAccount.privileges}</td>
                                 </tr>
                             ))}
                         </tbody>
