@@ -1,5 +1,3 @@
-/** @format */
-
 import "./App.css";
 import NavBar from "./components/navbar/NavBar";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -18,41 +16,62 @@ import { useTranslation } from "react-i18next";
 import Footer from "./components/footer/Footer";
 import ScrollToTop from "./utils/ScrollToTop";
 import Instructor from "./components/instructor/Instructor";
+import Room from "./components/room/Room";
+import Login from "./pages/Login";
+import { UserProvider } from "./utils/UserContext";
+import { useEffect, useState } from "react";
+// import { FileUploadPage } from "./components/test-post/TestPost";
 
 function App() {
   const [t, i18n] = useTranslation();
-  
-  return (
-    <div className="App">
-      <NavBar i18n={i18n} />
-      <ScrollToTop/>
-      <div style={{ height: 86 }}></div>
-      <div style={{ minHeight: "100vh" }}>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="home" element={<Home />} />
-          <Route path="about" element={<Aboutus />} />
-          <Route path="contact" element={<Contact />} />
-          <Route path="adminPanel" element={<AdminPanel />} />
-          <Route path="room" element={<Sessions />} />
-          <Route path="login" element={<Sessions />} />
 
-          <Route path="events" element={<PostsBoard />} />
-          <Route path="events/:id" element={<PostDetails />} />
-          
-          <Route path="adminPanel" element={<AdminPanel />}>
-            <Route index element={<SystemUsers />} />
-            <Route path="systemUsers" index element={<SystemUsers />} />
-            <Route path="addPost" element={<AddPost />}/>
-            <Route path="students" element={<Student />} />
-			<Route path="instructors" element={<Instructor/>}/>
-          </Route>
-          <Route
-            path="register"
-            element={<RegistrationForm i18n={i18n} t={t} />}
-          />
-        </Routes>
-      </div>
+  //For changing direction with language change
+  const [isArabic, setIsArabic] = useState(false);
+  useEffect(() => {
+    setIsArabic(localStorage.getItem("i18nextLng")=='ar');
+  }, [localStorage.getItem("i18nextLng")]);
+
+  const styles = {
+    body: {
+      direction: isArabic ? "rtl" : "ltr",
+    },
+  };
+
+  return (
+    <div className="App" style={styles.body}>
+      <ScrollToTop />
+      <UserProvider>
+        <NavBar i18n={i18n} />
+        <div style={{ height: 86 }}></div>
+        <div style={{ minHeight: "100vh" }}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="home" element={<Home />} />
+            <Route path="about" element={<Aboutus />} />
+            <Route path="contact" element={<Contact />} />
+            <Route path="adminPanel" element={<AdminPanel />} />
+            <Route path="sessions" element={<Sessions />} />
+            <Route path="sessions/room" element={<Room />} />
+
+            <Route path="login" element={<Login />} />
+
+            <Route path="events" element={<PostsBoard />} />
+            <Route path="events/:id" element={<PostDetails />} />
+
+            <Route path="adminPanel" element={<AdminPanel />}>
+              <Route index element={<SystemUsers />} />
+              <Route path="systemUsers" index element={<SystemUsers />} />
+              <Route path="addPost" element={<AddPost />} />
+              <Route path="students" element={<Student />} />
+              <Route path="instructors" element={<Instructor />} />
+            </Route>
+            <Route
+              path="register"
+              element={<RegistrationForm i18n={i18n} t={t} />}
+            />
+          </Routes>
+        </div>
+      </UserProvider>
       <Footer />
     </div>
   );

@@ -15,6 +15,7 @@ const initialValues = {
 };
 const onSubmit = (values) => {
   console.log("Form data", values);
+  //TODO: make a place for storing contacts in backend
   alert("Welcome ,,, " + " " + values.userName);
 };
 const validate = (values) => {
@@ -116,7 +117,7 @@ function Contact() {
               <div className='error'>{formik.errors.message}</div>
             ) : null}
           </Form.Group>
-          <Button variant='primary' type='submit'>
+          <Button variant='primary' type='submit' >
             Submit
           </Button>
         </Form>

@@ -74,7 +74,6 @@ const SystemUsers = () => {
         { id: 2, programName: "Memorizing" }
 
     ]
-
     /*
         let systemDataAccountsArr = [{ id: 1, username: "devfarahat", fullname: "mohamed farahat", privilege: "instructor", mobile: "01150849567" }
             , { id: 2, username: "codeLoop", fullname: "mohamed gamal", privilege: "admin", mobile: "0119798663" },
@@ -126,8 +125,8 @@ const SystemUsers = () => {
         h7: false
     });
     const [systemUsersFormSteps, setSystemUsersFormSteps] = useState({
-        firstStep: false,
-        nextStep: true
+        firstStep: true,
+        nextStep: false
     });
     const [checkedDays, setCheckedDays] = useState({
         d0: false,
@@ -171,6 +170,9 @@ const SystemUsers = () => {
         passwordError: '',
 
     });
+
+    const [fetchAgain,setFetchAgain] = useState(0)           //Just dummy number to tell that another fetch call is needed
+
     const handleChange = (event) => {
 
 
@@ -197,16 +199,11 @@ const SystemUsers = () => {
 
 
 
-
-
-
-
-
         errorHandle(event.target.id, event.target.value);
     }
 
     const handleAppointmentInDays = (event) => {
-
+      
         setCheckedDays({ ...checkedDays, [event.target.id]: !checkedDays[event.target.id] })
 
         if (event.target.checked) {
@@ -224,29 +221,32 @@ const SystemUsers = () => {
 
         } else {
             let x = workingDays;
-            console.log(x);
-            x.splice(event.target.value, 1);
-            setWorkingDays(Object.values(x));
+            
+           let arr  = Object.values(x);
+           arr.splice(event.target.value,1);
+            setWorkingDays(arr);
 
 
         }
 
     }
     const handleApoointmentInHours = (event)=>{
-
             setCheckedHours({...checkedHours,[event.target.id]:!checkedHours[event.target.id]});
             if(event.target.checked){
                 setWorkingHours({
                     ...WorkingHours,
-                    [event.target.id]:workingHoursCheckedValuesArr[event.targat.value]
+                    [event.target.id]:workingHoursCheckedValuesArr[event.target.value]
                 })
             }else{
+                console.log("hi farahat");
                 let wH = WorkingHours;
-                wH.splice(event.target.value,1);
-                setWorkingDays(wH);
+              let arr = Object.values(wH);
+              
+           arr[event.target.value] = null;
+                setWorkingDays(arr);
+               console.log(arr);
             }
     }
-
     const errorHandle = (filed, value) => {
         if (filed === 'email') {
             const emailRegx = /^[A-Z a-z]+[0-9]*@[A-Z a-z]+.com$/;
@@ -329,8 +329,6 @@ const SystemUsers = () => {
                 started_atError: value.length === 0 ? 'Started At  Is Required' : ''
             });
         }
-
-
     }
 
     const handleSubmit = (event) => {
@@ -342,11 +340,17 @@ const SystemUsers = () => {
 
         }
 
+        let wHours = [];
+        for(let i = 0 ; i < Object.values(WorkingHours).length;i++){
+            if(Object.values(WorkingHours)[i] !== null){
+                wHours.push(Number(Object.values(WorkingHours)[i]))
+            }
+        }
         setUserData({
             ...userData,
             prefs: {
                 working_days: y,
-                working_hours: [[1, 2]]
+                working_hours: wHours
             },
             certificates: ['إجازة تحفيظ عن رواية حفص عن عاصم'],
             notes_in_book: [
@@ -412,7 +416,7 @@ const SystemUsers = () => {
 
     return (
         <>
-{ console.log(workingDays)}
+        {console.log(userData)}
             <form className={SystemUsersStyles['system-user-form']} method="post" onSubmit={handleSubmit}>
                 {systemUsersFormSteps.firstStep ? <><div>
                     <Form.Label htmlFor="email">Email</Form.Label>
@@ -574,5 +578,5 @@ const SystemUsers = () => {
 
         </>
     )
-                            }
+}
 export default SystemUsers;

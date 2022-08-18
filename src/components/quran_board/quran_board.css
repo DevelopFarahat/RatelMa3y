@@ -9,11 +9,13 @@
     margin:30px  auto 0 auto;
     padding: 20px;
     direction: rtl;
-    border-radius: 5px;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     -ms-border-radius: 5px;
     -o-border-radius: 5px;
+    border-radius: 5px;
+    background-color: #038674;
+    color: white;
 }
 .quran-surah-settings > div{
     flex: 0 0 33.33%;

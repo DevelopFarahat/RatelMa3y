@@ -1,6 +1,7 @@
 /** @format */
 /* Main color1 :#01332c */
 /* Main color2 :#c2a054 */
+
 .RoomAccordionHeader .accordion-button {
   background: none;
 }
@@ -8,6 +9,7 @@
   box-shadow: none;
   color: #212529;
 }
+
 /* ********************************* */
 
 .overlay {

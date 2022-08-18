@@ -26,6 +26,8 @@ const Instructor = () => {
     const [selectedInstructorData, setSelectedInstructorData] = useState([]);
     const initialResponse = useRef();
     const initialResponseSpecificInstructorData = useRef();
+    const [fetchAgain,setFetchAgain] = useState(0)           //Just dummy number to tell that another fetch call is needed
+    
     const handleFiltaration = (event) => {
         console.log(event.target.value);
         setFilterValue(event.target.value);
@@ -33,36 +35,44 @@ const Instructor = () => {
 
     const filterStudents = () => {
         let filtarationArr = [];
-        for (let i = 0; i < instructorData.length; i++) {
 
+        for (let i = 0; i < instructorData.length; i++) {
             if (filterValue.toLowerCase() === instructorData[i].name.toLowerCase()) {
                 filtarationArr.push(instructorData[i]);
             }
         }
         filterValue !== '' ? setInstructorData(filtarationArr) : setInstructorData(initialResponse.current);
     }
+
+
     const resetTableFiltaration = () => {
         setFilterValue('');
         setInstructorData(initialResponse.current);
 
-
+        setFetchAgain(fetchAgain+1)
     }
+
+
     const handlerRowClicked = useCallback((event) => {
         const id = event.currentTarget.id;
         setSelectedRow(id);
     }, []);
+
+
     const setInstructorAvailability = (event, instructorObji) => {
         let availability = event.currentTarget.id === 'available' ? false : true;
-        axios.put(`https://ratel-may.herokuapp.com/api/instructors/${instructorObji._id}`, { is_available: availability }).then((res) => {
+        axios.put(`http://localhost:5000/api/instructors/${instructorObji._id}`, { is_available: availability }).then((res) => {
             console.log(res);
         }).catch((error) => {
             console.log(error);
         })
     }
+
+
     const getSpecificInstructorData = (event) => {
         event.stopPropagation();
         console.log(event.currentTarget.id);
-        axios.get(`https://ratel-may.herokuapp.com/api/instructors/${event.currentTarget.id}`).then((res) => {
+        axios.get(`http://localhost:5000/api/instructors/${event.currentTarget.id}`).then((res) => {
             initialResponseSpecificInstructorData.current = res.data;
             setSelectedInstructorData(res.data);
             console.log(res.data);
@@ -72,14 +82,17 @@ const Instructor = () => {
 
         handlerRowClicked(event);
     }
+
+
     useEffect(() => {
-        axios.get(`https://ratel-may.herokuapp.com/api/instructors`).then((res) => {
+        axios.get(`http://localhost:5000/api/instructors`).then((res) => {
             initialResponse.current = res.data;
             setInstructorData(res.data);
         }).catch((error) => {
             console.log(error);
         })
-    });
+    },[fetchAgain]);
+
 
     return (
         <>
@@ -94,7 +107,7 @@ const Instructor = () => {
                 </div>
 
                 <div className={InstructorStyles['table-wrapper']}>
-                    {instructorData.length === 0 ? <img src={NoResultFiltaration} className={InstructorStyles['no-result']} alt="no-result" /> : <table className={InstructorStyles['instructor-table']}>
+                    {instructorData?.length === 0 ? <img src={NoResultFiltaration} className={InstructorStyles['no-result']} alt="no-result" /> : <table className={InstructorStyles['instructor-table']}>
                         <thead>
                             <tr>
                                 <th>Id</th>
@@ -115,7 +128,7 @@ const Instructor = () => {
                         </thead>
                         <tbody>
 
-                            {instructorData.map((instructData) => (
+                            {instructorData?.map((instructData) => (
                                 <tr key={instructData._id} id={instructData._id} onClick={(event) => { getSpecificInstructorData(event) }} style={{ background: selectedRow === instructData._id ? '#038674' : '', color: selectedRow === instructData._id ? '#FFFFFF' : '', boxShadow: selectedRow === instructData._id ? `rgba(0, 0, 0, 0.2) 0 6px 20px 0 rgba(0, 0, 0, 0.19)` : '' }}>
                                     <td>{instructData._id}</td>
                                     <td>{instructData.name}</td>
