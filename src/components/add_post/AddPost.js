@@ -17,8 +17,10 @@ const AddPost = () => {
         let reader = new FileReader();
         reader.onload = function () {
             let dataURL = reader.result;
-            console.log(event.target.value);
-            setPostImage(event.target.value);
+      
+            console.log(event.target.files);
+          //  setPostImage(URL.createObjectURL(event.target.files[0]));
+          setPostImage(event.target.files[0].name);
             
         };
         reader.readAsDataURL(event.target.files[0]);
@@ -39,13 +41,13 @@ const AddPost = () => {
 
             event.preventDefault();
 
-          /*
+          
             axios.post(`https://ratel-may.herokuapp.com/api/events`,postData).then((res)=>{
                 console.log(res);
             }).catch((error)=>{
                 console.log(error);
             }); 
-            */
+            
       
       
             setIsUserMadeAPost(true);
@@ -64,8 +66,9 @@ const AddPost = () => {
             <form className={AddPostStyles['add-post-main-container']} onSubmit={handleSubmit}>
                 <div>
                     <Form.Label htmlFor="postImage">Post Image</Form.Label>
-                    <div  id="postImage"   className={AddPostStyles['post-image-area']} style={{backgroundImage:postImage === ''?'':`url(http://localhost:3000/one.png)`}}>
-                    
+                    <div  id="postImage"   className={AddPostStyles['post-image-area']}>
+                    {postImage?<img className={AddPostStyles['image-post']} src={require(`D:/posts_images/${postImage}`)} alt="postImage"/>:null}
+                   
                     
                     </div>
                     <div className={AddPostStyles["button-group"]}>

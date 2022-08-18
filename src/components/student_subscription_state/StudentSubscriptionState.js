@@ -59,7 +59,7 @@ const StudentSubscriptionState = ({ setSpecificStudentJoiningRequestData, setIsS
         const id = event.currentTarget.id;
         setSelectedRow(id);
     }, []);
-    const toogleStudentStatus = (stdObject, event) => {
+    const toogleStudentStatus = (stdObject, event,index) => {
         event.stopPropagation();
         setStudentStatus(current => !current);
         setChangableSubscriptionState(stdObject)
@@ -140,7 +140,7 @@ const StudentSubscriptionState = ({ setSpecificStudentJoiningRequestData, setIsS
         }).catch((error) => {
             console.log(error);
         })
-    }, []);
+},[]);
 
     const changeSubscriptionState = () => {
         if (studentConfiguration.studentStatus !== 'Cancelled') {
@@ -172,11 +172,11 @@ const StudentSubscriptionState = ({ setSpecificStudentJoiningRequestData, setIsS
                         </thead>
                         <tbody>
 
-                            {studentData.map((stdData) => (
+                            {studentData.map((stdData,index) => (
                                 <tr key={stdData._id} id={stdData._id} onClick={(event) => getStudentRatelMa3yJoiningRequestData(stdData, event)} style={{ background: selectedRow === stdData._id ? '#038674' : '', color: selectedRow === stdData._id ? '#FFFFFF' : '', boxShadow: selectedRow === stdData._id ? `rgba(0, 0, 0, 0.2) 0 6px 20px 0 rgba(0, 0, 0, 0.19)` : '' }}>
                                     <td>{stdData._id}</td>
                                     <td>{stdData.name}</td>
-                                    <td>{stdData.subscription_state} {stdData.subscription_state !== 'Cancelled' ? <AiFillSetting className={StudentSubscriptionStyles['setting-icon-hidden']} size={25} onClick={(event) => toogleStudentStatus(stdData, event)} /> : null}</td>
+                                    <td>{stdData.subscription_state} {stdData.subscription_state !== 'Cancelled' ? <AiFillSetting className={StudentSubscriptionStyles['setting-icon-hidden']} size={25} onClick={(event) => toogleStudentStatus(stdData, event,index)} /> : null}</td>
 
                                 </tr>
                             ))}

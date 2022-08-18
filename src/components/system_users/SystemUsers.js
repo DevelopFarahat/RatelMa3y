@@ -31,18 +31,50 @@ const SystemUsers = () => {
         { id: 5, name: "Thursday", att: 'working_days' },
         { id: 6, name: "Friday", att: 'working_days' }
     ];
-    let Working_hours = [
-        { id: 0, appointment: "from 10:00 am to 12:00 pm" },
-        { id: 1, appointment: "from 1:00 pm to 3:00 pm" },
-        { id: 2, appointment: "from 4:30 pm to 3:30 pm" },
-        { id: 3, appointment: "from 10:00 pm to 12:00 am" }
-    ];
-    let programs = [
-        { id: 0, programName: "Quran recitation" },
-        { id: 1, programName: "Nour Al-Bayan" },
-        { id: 2, programName: "Memorizing Quran" }
+    let workingHoursArr = [
+        ["8:00 am", "10:00 pm"],
+        ["10:00 am", "12:00 pm"],
+        ["12:00 pm", "2:00 pm"],
+        ["2:00 pm", "4:00 pm"],
+        ["4:00 pm", "6:00 pm"],
+        ["6:00 pm", "8:00 pm"],
+        ["8:00 pm", "10:00 pm"],
+        ["10:00 pm", "12:00 am"]
+    ]
+    let workingHoursCheckedValuesArr = [
+
+        [0, 1],
+        [0, 1],
+        [0, 1],
+        [0, 1],
+        [0, 1],
+        [0, 1],
+        [0, 1],
+        [0, 1]
+
 
     ]
+   
+    let Working_hours = [
+
+
+        { id: 0, appointment: " 8:00 am to 10:00 pm", att: "h0" },
+        { id: 1, appointment: " 10:00 am to 12:00 pm", att: "h1" },
+        { id: 2, appointment: " 12:00 pm to 2:00 pm", att: "h2" },
+        { id: 3, appointment: " 2:00 pm to 4:00 pm", att: "h3" },
+        { id: 4, appointment: " 4:00 pm to 6:00 pm", att: "h4" },
+        { id: 5, appointment: " 6:00 pm to 8:00 pm", att: "h5" },
+        { id: 6, appointment: " 8:00 pm to 10:00 pm", att: "h6" },
+        { id: 7, appointment: " 10:00 pm to 12:00 am", att: "h7" }
+    ];
+
+    let programs = [
+        { id: 0, programName: "Recitation" },
+        { id: 1, programName: "Noor Bayan" },
+        { id: 2, programName: "Memorizing" }
+
+    ]
+
     /*
         let systemDataAccountsArr = [{ id: 1, username: "devfarahat", fullname: "mohamed farahat", privilege: "instructor", mobile: "01150849567" }
             , { id: 2, username: "codeLoop", fullname: "mohamed gamal", privilege: "admin", mobile: "0119798663" },
@@ -64,10 +96,48 @@ const SystemUsers = () => {
     */
     const [accountsData, setAccountsData] = useState([]);
     const [filterValue, setFilterValue] = useState('');
+    const [workingDays, setWorkingDays] = useState({
+        d0: '',
+        d1: '',
+        d2: '',
+        d3: '',
+        d4: '',
+        d5: '',
+        d6: '',
+    });
+    const [WorkingHours, setWorkingHours] = useState({
+        h0: '',
+        h1: '',
+        h2: '',
+        h3: '',
+        h4: '',
+        h5: '',
+        h6: '',
+        h7: ''
+    });
+    const [checkedHours, setCheckedHours] = useState({
+        h0: false,
+        h1: false,
+        h2: false,
+        h3: false,
+        h4: false,
+        h5: false,
+        h6: false,
+        h7: false
+    });
     const [systemUsersFormSteps, setSystemUsersFormSteps] = useState({
-        firstStep: true,
-        nextStep: false
-    })
+        firstStep: false,
+        nextStep: true
+    });
+    const [checkedDays, setCheckedDays] = useState({
+        d0: false,
+        d1: false,
+        d2: false,
+        d3: false,
+        d4: false,
+        d5: false,
+        d6: false
+    });
     const [userData, setUserData] = useState({
         email: '',
         name: '',
@@ -75,8 +145,11 @@ const SystemUsers = () => {
         age: '',
         state: '',
         started_at: '',
-        working_hours: [],
-        working_days: [],
+        prefs: {
+            working_hours: [],
+            working_days: [[]],
+        },
+
         password: '',
         mobile: '',
         programs: '',
@@ -100,11 +173,27 @@ const SystemUsers = () => {
     });
     const handleChange = (event) => {
 
+
+
+        if (event.target.id !== 'age') {
             setUserData({
                 ...userData,
-                [event.target.id]:event.target.value
+                [event.target.id]: event.target.value,
+
             }
             )
+        } else {
+            setUserData({
+                ...userData,
+                age: Number(event.target.value),
+
+            }
+            )
+        }
+
+
+
+
 
 
 
@@ -115,15 +204,49 @@ const SystemUsers = () => {
 
         errorHandle(event.target.id, event.target.value);
     }
-    let x = [];
-    const handleAppointmentInDays = (event)=>{
-       // console.log(event.target.value);
-        if(event.target.id.checked){
-            console.log(true)
-            x.push(event.target.value);
+
+    const handleAppointmentInDays = (event) => {
+
+        setCheckedDays({ ...checkedDays, [event.target.id]: !checkedDays[event.target.id] })
+
+        if (event.target.checked) {
+
+            setWorkingDays({
+
+                ...workingDays,
+                [event.target.id]: event.target.value
+
+
+            })
+
+           
+
+
+        } else {
+            let x = workingDays;
+            console.log(x);
+            x.splice(event.target.value, 1);
+            setWorkingDays(Object.values(x));
+
+
         }
-        console.log(x);
+
     }
+    const handleApoointmentInHours = (event)=>{
+
+            setCheckedHours({...checkedHours,[event.target.id]:!checkedHours[event.target.id]});
+            if(event.target.checked){
+                setWorkingHours({
+                    ...WorkingHours,
+                    [event.target.id]:workingHoursCheckedValuesArr[event.targat.value]
+                })
+            }else{
+                let wH = WorkingHours;
+                wH.splice(event.target.value,1);
+                setWorkingDays(wH);
+            }
+    }
+
     const errorHandle = (filed, value) => {
         if (filed === 'email') {
             const emailRegx = /^[A-Z a-z]+[0-9]*@[A-Z a-z]+.com$/;
@@ -209,12 +332,40 @@ const SystemUsers = () => {
 
 
     }
+
     const handleSubmit = (event) => {
+        let y = [];
+        for (let i = 0; i < Object.values(workingDays).length; i++) {
+            if (Object.values(workingDays)[i] !== '') {
+                y.push(Number(Object.values(workingDays)[i]));
+            }
+
+        }
+
+        setUserData({
+            ...userData,
+            prefs: {
+                working_days: y,
+                working_hours: [[1, 2]]
+            },
+            certificates: ['إجازة تحفيظ عن رواية حفص عن عاصم'],
+            notes_in_book: [
+                { page: 1, surah: 1, ayah: 1, word_no: 1, content: "farahat" },
+            ],
+
+        })
         event.preventDefault();
 
-        console.log(userData);
+
+        axios.post(`https://ratel-may.herokuapp.com/api/instructors`, userData).then((res) => {
+            console.log(res.data)
+            console.log(userData);
+        }).catch((error) => {
+            console.log(error.message);
+        });
 
     }
+
 
     const filterAccounts = () => {
         console.log(filterValue);
@@ -256,12 +407,12 @@ const SystemUsers = () => {
         }).catch((error) => {
             console.log(error);
         })
-    });
+    }, []);
+
 
     return (
         <>
-
-
+{ console.log(workingDays)}
             <form className={SystemUsersStyles['system-user-form']} method="post" onSubmit={handleSubmit}>
                 {systemUsersFormSteps.firstStep ? <><div>
                     <Form.Label htmlFor="email">Email</Form.Label>
@@ -327,30 +478,54 @@ const SystemUsers = () => {
                         <Form.Label htmlFor="privileges">Privileges</Form.Label>
                         <Form.Select id="privileges" name="Privileges" onChange={handleChange} className={`${SystemUsersStyles['system-user-form-controls']} ${errors.privilegeError ? SystemUsersStyles['errors'] : ''}`} >
                             <option value="">Select</option>
-                            <option value="ADMIN">Admin</option>
-                            <option value="INSTRUCTOR">Instructor</option>
-                            <option value="SUPERVISOR">Supervisor</option>
+                            <option value="Admin">Admin</option>
+                            <option value="Instructor">Instructor</option>
+                            <option value="Supervisor">Supervisor</option>
                         </Form.Select>
                         <small className='text-danger'>{errors.privilegesError}</small>
                     </div>
 
                     <div className={SystemUsersStyles['days-check-box-container']}>
-                        {namesOfDaysOfTheWeek.map((day) => (
-                            <div key={day.id}>
-                                <Form.Label htmlFor={day.att} >{day.name}</Form.Label>
-                                <Form.Check name={day.att} id={day.att} value={day.id} onClick={handleAppointmentInDays} />
-                            </div>
-                        ))}
+
+                        <div >
+                            <Form.Label htmlFor="d0" >Saturday</Form.Label>
+                            <Form.Check name="d0" id="d0" value={0} onChange={(event) => handleAppointmentInDays(event)} checked={checkedDays['d0']} />
+                        </div>
+                        <div >
+                            <Form.Label htmlFor="d1" >Sunday</Form.Label>
+                            <Form.Check name="d1" id="d1" value={1} onChange={(event) => handleAppointmentInDays(event)} checked={checkedDays["d1"]} />
+                        </div>
+                        <div >
+                            <Form.Label htmlFor="d2" >Monday</Form.Label>
+                            <Form.Check name="d2" id="d2" value={2} onChange={(event) => handleAppointmentInDays(event)} checked={checkedDays["d2"]} />
+                        </div>
+                        <div >
+                            <Form.Label htmlFor="d3" >Tuesday</Form.Label>
+                            <Form.Check name="d3" id="d3" value={3} onChange={(event) => handleAppointmentInDays(event)} checked={checkedDays["d3"]} />
+                        </div>
+                        <div >
+                            <Form.Label htmlFor="d4" >Tuesday</Form.Label>
+                            <Form.Check name="d4" id="d4" value={4} onChange={(event) => handleAppointmentInDays(event)} checked={checkedDays["d4"]} />
+                        </div>
+                        <div >
+                            <Form.Label htmlFor="d5" >Tuesday</Form.Label>
+                            <Form.Check name="d5" id="d5" value={5} onChange={(event) => handleAppointmentInDays(event)} checked={checkedDays["d5"]} />
+                        </div>
+                        <div >
+                            <Form.Label htmlFor="d6" >Tuesday</Form.Label>
+                            <Form.Check name="d6" id="d6" value={6} onChange={(event) => handleAppointmentInDays(event)} checked={checkedDays["d6"]} />
+                        </div>
+
                     </div>
-                    <div>
-                        <Form.Label htmlFor="working_hours">Working Hours</Form.Label>
-                        <Form.Select id="working_hours" name="working_hours" multiple onChange={handleChange} className={`${SystemUsersStyles['system-user-form-controls']} ${errors.working_hoursError ? SystemUsersStyles['errors'] : ''}`}>
-                            <option value="">Select</option>
-                            {Working_hours.map((wHours) => (
-                                <option key={wHours.id} value={wHours.appointment}>{wHours.appointment}</option>
-                            ))}
-                        </Form.Select>
-                        <small className="text-danger">{errors.working_hoursError}</small>
+                    <div className={SystemUsersStyles['hours-check-box-container']}>
+
+                    {Working_hours.map((wh,index)=>(
+                        <div key={wh.id}>
+                            <Form.Label htmlFor={wh.att}>{wh.appointment}</Form.Label>
+                            <Form.Check id={wh.att} name={wh.att} value={index} onChange={handleApoointmentInHours}  checked={checkedHours['hindex']}/>
+                        </div>
+                    ))}
+
                     </div>
                     <div>
                         <Form.Label htmlFor="started_at">Started at</Form.Label>
@@ -399,5 +574,5 @@ const SystemUsers = () => {
 
         </>
     )
-}
+                            }
 export default SystemUsers;
