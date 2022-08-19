@@ -94,6 +94,16 @@ const SystemUsers = () => {
         { id: 16, username: "magdy22", fullname: "mohamed magdy", privilege: "supervisor", mobile: "01977464" },
         { id: 17, username: "magdy22", fullname: "mohamed magdy", privilege: "supervisor", mobile: "01977464" }];
     */
+        const [isArabic, setIsArabic] = useState(false);
+        useEffect(() => {
+          setIsArabic(localStorage.getItem("i18nextLng")==='ar');
+        }, [localStorage.getItem("i18nextLng")]);
+      
+        const styles = {
+          body: {
+            direction: isArabic ? "rtl" : "ltr",
+          },
+        };
     const [accountsData, setAccountsData] = useState([]);
     const [filterValue, setFilterValue] = useState('');
     const [workingDays, setWorkingDays] = useState({
@@ -409,7 +419,7 @@ const SystemUsers = () => {
 
     return (
         <>
-            <form className={SystemUsersStyles['system-user-form']} method="post" encType="multipart/form-data" onSubmit={handleSubmit} >
+            <form className={SystemUsersStyles['system-user-form']} style={styles.body} method="post" encType="multipart/form-data" onSubmit={handleSubmit} >
                 {systemUsersFormSteps.firstStep ? <><div>
                     <Form.Label htmlFor="email">Email</Form.Label>
                     <Form.Control type="text" name="e-mail" id="email" value={userData.email} onChange={handleChange.bind(this)} className={`${SystemUsersStyles['system-user-form-controls']} ${errors.emailError ? SystemUsersStyles['errors'] : ''}`} />
@@ -539,16 +549,16 @@ const SystemUsers = () => {
                     <button type="submit" className={`${userData.state === '' || userData.mobile === '' || userData.privileges === '' || userData.working_days === '' || userData.working_hours === '' || userData.started_at === '' || errors.stateError || errors.mobileError || errors.privilegeError || errors.working_daysError || errors.working_hoursError || errors.started_atError ? SystemUsersStyles['disabled-btn'] : SystemUsersStyles['btn']}`} style={{ float: 'right' }}>Add User<IoIosPersonAdd style={{ margin: '0 0 3px 3px' }} /></button>
                 </>}
             </form>
-            <div className={SystemUsersStyles['system-user-data-container']}>
-                <div className={SystemUsersStyles['table-settings-container']}>
+            <div className={SystemUsersStyles['system-user-data-container']} style={styles.body}>
+                <div className={SystemUsersStyles['table-settings-container']} style={styles.body}>
                     <Form.Label htmlFor="userAccountFilterTxt" className={SystemUsersStyles['filter-label']}>Filter</Form.Label>
                     <Form.Control id="userAccountFilterTxt" className={SystemUsersStyles['filter-txt']} value={filterValue} onChange={handleFiltaration} />
 
                     <button type="button" className={SystemUsersStyles['btn']} style={{ marginTop: 'auto' }} onClick={(event) => filterAccounts(event.target.value)}>Filter <AiFillFilter /></button>
                     <button type="button" className={SystemUsersStyles['btn']} style={{ marginTop: 'auto' }} onClick={resetTableFiltaration}>Reset<BiReset /></button>
                 </div>
-                <div className={SystemUsersStyles['table-wrapper']}>
-                    {accountsData.length === 0 ? <img src={NoResultFiltaration} className={SystemUsersStyles['no-result']} alt="no-result" /> : <table className={SystemUsersStyles['system-accounts-table']}>
+                <div className={SystemUsersStyles['table-wrapper']} style={styles.body}>
+                    {accountsData.length === 0 ? <img src={NoResultFiltaration} className={SystemUsersStyles['no-result']} alt="no-result"  /> : <table className={SystemUsersStyles['system-accounts-table']} style={styles.body}>
                         <thead>
                             <tr>
                                 <th>Id</th>

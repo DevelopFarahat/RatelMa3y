@@ -14,7 +14,7 @@ import UserContext from "../../utils/UserContext";
 
 function NavBar({ i18n }) {
   function changeLang(e) {
-    e.target.innerHTML == "en"
+    e.target.innerHTML === "en"
       ? (e.target.innerHTML = "ar")
       : (e.target.innerHTML = "en");
     i18n.changeLanguage(e.target.innerHTML);
@@ -77,12 +77,12 @@ function NavBar({ i18n }) {
             <Link className={NavCss.link} to={"/about"}>
               About us
             </Link>
-            {(user == null || user.role == "student") && (
+            {(user == null || user.role === "student") && (
               <Link className={NavCss.link} to={"/contact"}>
                 Contact us
               </Link>
             )}
-            {user != null && user.privilages == "Admin" && (
+            {user != null && user.privilages === "Admin" && (
               <Link to={"/adminPanel"}>
                 <Button variant="outline-success">Control Panel</Button>
               </Link>
