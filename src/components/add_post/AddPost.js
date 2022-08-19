@@ -19,7 +19,8 @@ const AddPost = () => {
     let reader = new FileReader();
     reader.onload = function () {
       let dataURL = reader.result;
-      console.log(event.target.value);
+      //console.log(event.target.value);
+      console.log(event.target.files[0])
       setPostImage(event.target.value);
     };
     reader.readAsDataURL(event.target.files[0]);
@@ -58,7 +59,7 @@ const AddPost = () => {
     //Upload on the server
 
     axios
-      .post("http://localhost:5000/api/events",data)
+      .post("https://ratel-may.herokuapp.com/api/events",data)
       .then((res) => console.log("results", res.data))
       .catch((err) => console.error(err));
 
@@ -104,6 +105,7 @@ const AddPost = () => {
                 id="file"
                 name="post_img"
                 onChange={(event) => {
+                 
                   setImg(event.target.files[0]);
                   openFile(event);
                 }}

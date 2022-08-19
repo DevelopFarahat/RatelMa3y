@@ -6,9 +6,10 @@ import { AiFillFilter } from "react-icons/ai";
 import { BiReset } from "react-icons/bi";
 import SystemUsersStyles from "./SystemUsers.module.css";
 import NoResultFiltaration from "../../assets/images/no-result.png";
-import { TbPlayerTrackNext } from "react-icons/tb";
+import { TbChevronDownLeft, TbPlayerTrackNext } from "react-icons/tb";
 import { ImPrevious2 } from "react-icons/im";
 import axios from "axios";
+import { object } from "yup";
 const SystemUsers = () => {
     let listOfCountries = [
         { id: 0, name: "Egypt" },
@@ -54,7 +55,7 @@ const SystemUsers = () => {
 
 
     ]
-   
+
     let Working_hours = [
 
 
@@ -125,8 +126,9 @@ const SystemUsers = () => {
         h7: false
     });
     const [systemUsersFormSteps, setSystemUsersFormSteps] = useState({
-        firstStep: true,
-        nextStep: false
+        firstStep: false,
+        secondStep: true,
+        thirdStep:false
     });
     const [checkedDays, setCheckedDays] = useState({
         d0: false,
@@ -146,9 +148,8 @@ const SystemUsers = () => {
         started_at: '',
         prefs: {
             working_hours: [],
-            working_days: [[]],
+            working_days: [],
         },
-
         password: '',
         mobile: '',
         programs: '',
@@ -156,7 +157,6 @@ const SystemUsers = () => {
     });
     const [errors, setErrors] = useState({
         emailError: '',
-        /*fullnameError: '',*/
         nameError: '',
         ageError: '',
         genderError: '',
@@ -171,43 +171,28 @@ const SystemUsers = () => {
 
     });
 
-    const [fetchAgain,setFetchAgain] = useState(0)           //Just dummy number to tell that another fetch call is needed
+    const [fetchAgain, setFetchAgain] = useState(0)           //Just dummy number to tell that another fetch call is needed
 
     const handleChange = (event) => {
-
-
-
         if (event.target.id !== 'age') {
             setUserData({
                 ...userData,
                 [event.target.id]: event.target.value,
-
             }
             )
         } else {
             setUserData({
                 ...userData,
                 age: Number(event.target.value),
-
             }
             )
         }
-
-
-
-
-
-
-
         errorHandle(event.target.id, event.target.value);
     }
 
     const handleAppointmentInDays = (event) => {
-      
         setCheckedDays({ ...checkedDays, [event.target.id]: !checkedDays[event.target.id] })
-
         if (event.target.checked) {
-
             setWorkingDays({
 
                 ...workingDays,
@@ -215,37 +200,29 @@ const SystemUsers = () => {
 
 
             })
-
-           
-
-
         } else {
-            let x = workingDays;
-            
-           let arr  = Object.values(x);
-           arr.splice(event.target.value,1);
+            let workingDaysCloneObji = workingDays;
+
+            let arr = Object.values(workingDaysCloneObji);
+            arr.splice(event.target.value, 1);
             setWorkingDays(arr);
-
-
         }
 
     }
-    const handleApoointmentInHours = (event)=>{
-            setCheckedHours({...checkedHours,[event.target.id]:!checkedHours[event.target.id]});
-            if(event.target.checked){
-                setWorkingHours({
-                    ...WorkingHours,
-                    [event.target.id]:workingHoursCheckedValuesArr[event.target.value]
-                })
-            }else{
-                console.log("hi farahat");
-                let wH = WorkingHours;
-              let arr = Object.values(wH);
-              
-           arr[event.target.value] = null;
-                setWorkingDays(arr);
-               console.log(arr);
-            }
+    const handleApoointmentInHours = (event) => {
+        setCheckedHours({ ...checkedHours, [event.target.id]: !checkedHours[event.target.id] });
+        if (event.target.checked) {
+            setWorkingHours({
+                ...WorkingHours,
+                [event.target.id]: workingHoursCheckedValuesArr[event.target.value]
+            })
+        } else {
+            let workingHoursCloneObji = WorkingHours;
+            let arr = Object.values(workingHoursCloneObji);
+
+            arr[event.target.value] = [0, 0];
+            setWorkingHours(arr);
+        }
     }
     const errorHandle = (filed, value) => {
         if (filed === 'email') {
@@ -308,20 +285,6 @@ const SystemUsers = () => {
                 stateError: value.length === 0 ? 'State Is Required' : ''
             });
         }
-        else if (filed === 'working_hours') {
-
-            setErrors({
-                ...errors,
-                working_hoursError: value.length === 0 ? 'Working Hours Is Required' : ''
-            });
-        }
-        else if (filed === 'working_days') {
-
-            setErrors({
-                ...errors,
-                working_daysError: value.length === 0 ? 'Working Days Is Required' : ''
-            });
-        }
         else if (filed === 'started_at') {
 
             setErrors({
@@ -332,43 +295,73 @@ const SystemUsers = () => {
     }
 
     const handleSubmit = (event) => {
-        let y = [];
+        event.preventDefault();
+
+        if (workingDays.d0 === '' && workingDays.d1 === '' && workingDays.d2 === '' && workingDays.d3 === '' && workingDays.d4 === '' && workingDays.d5 === '' && workingDays.d6 === '') {
+
+            setErrors({
+                ...errors,
+                working_daysError: 'Choose At Least One Day',
+                working_hoursError: ''
+            })
+        }
+        else if (WorkingHours.h0 === '' && WorkingHours.h1 === '' && WorkingHours.h2 === '' && WorkingHours.h3 === '' && WorkingHours.h4 === '' && WorkingHours.h5 === '' && WorkingHours.h6 === '' && WorkingHours.h7 === '') {
+            setErrors({
+                ...errors,
+                working_daysError: '',
+                working_hoursError: 'Choose At Least One Hour'
+            })
+        } else {
+            setErrors({
+                ...errors,
+                working_hoursError: '',
+                working_daysError: ''
+            })
+        }
+        let wD = [];
         for (let i = 0; i < Object.values(workingDays).length; i++) {
             if (Object.values(workingDays)[i] !== '') {
-                y.push(Number(Object.values(workingDays)[i]));
+                wD.push(Number(Object.values(workingDays)[i]));
             }
 
         }
-
         let wHours = [];
-        for(let i = 0 ; i < Object.values(WorkingHours).length;i++){
-            if(Object.values(WorkingHours)[i] !== null){
-                wHours.push(Number(Object.values(WorkingHours)[i]))
+
+        for (let i = 0; i < Object.values(WorkingHours).length; i++) {
+            if (Object.values(WorkingHours)[i] === '') {
+                let emptyWorkingHourInitialValue = Object.values(WorkingHours)[i] = [0, 0];
+                wHours.push(emptyWorkingHourInitialValue);
+            } else {
+                wHours.push(Object.values(WorkingHours)[i])
             }
         }
         setUserData({
             ...userData,
             prefs: {
-                working_days: y,
+                working_days: wD,
                 working_hours: wHours
-            },
-            certificates: ['إجازة تحفيظ عن رواية حفص عن عاصم'],
-            notes_in_book: [
-                { page: 1, surah: 1, ayah: 1, word_no: 1, content: "farahat" },
-            ],
+            }
 
         })
-        event.preventDefault();
 
 
-        axios.post(`https://ratel-may.herokuapp.com/api/instructors`, userData).then((res) => {
-            console.log(res.data)
-            console.log(userData);
-        }).catch((error) => {
-            console.log(error.message);
-        });
-
+        let finalUser = {
+            ...userData,
+            prefs: {
+                working_days: wD,
+                working_hours: wHours
+            }
+        }
+        /*
+         axios.post(`https://ratel-may.herokuapp.com/api/instructors`, finalUser).then((res) => {
+             console.log(res.data)
+             console.log(userData);
+         }).catch((error) => {
+             console.log(error.message);
+         });
+     */
     }
+
 
 
     const filterAccounts = () => {
@@ -401,7 +394,7 @@ const SystemUsers = () => {
     }
     const systemUsersNextStep = (event) => {
         event.preventDefault();
-        event.target.id === 'firstStep' ? setSystemUsersFormSteps({ firstStep: true, nextStep: false }) : setSystemUsersFormSteps({ firstStep: false, nextStep: true })
+        event.target.id === 'firstStep' ? setSystemUsersFormSteps({ firstStep: true, secondStep: false,thirdStep:false }) :event.target.id === 'secondStep'? setSystemUsersFormSteps({ firstStep: false, secondStep: true,thirdStep:false }):setSystemUsersFormSteps({ firstStep: false, secondStep: false,thirdStep:true })
 
     }
 
@@ -416,36 +409,44 @@ const SystemUsers = () => {
 
     return (
         <>
-        {console.log(userData)}
-            <form className={SystemUsersStyles['system-user-form']} method="post" onSubmit={handleSubmit}>
+            <form className={SystemUsersStyles['system-user-form']} method="post" encType="multipart/form-data" onSubmit={handleSubmit} >
                 {systemUsersFormSteps.firstStep ? <><div>
                     <Form.Label htmlFor="email">Email</Form.Label>
-                    <Form.Control type="text" name="e-mail" id="email" value={userData.email} onChange={handleChange} className={`${SystemUsersStyles['system-user-form-controls']} ${errors.emailError ? SystemUsersStyles['errors'] : ''}`} />
+                    <Form.Control type="text" name="e-mail" id="email" value={userData.email} onChange={handleChange.bind(this)} className={`${SystemUsersStyles['system-user-form-controls']} ${errors.emailError ? SystemUsersStyles['errors'] : ''}`} />
                     <small className='text-danger'>{errors.emailError}</small>
                 </div>
                     <div>
                         <Form.Label htmlFor="name">Name</Form.Label>
-                        <Form.Control type="text" name="name" id="name" value={userData.name} onChange={handleChange} className={`${SystemUsersStyles['system-user-form-controls']} ${errors.nameError ? SystemUsersStyles['errors'] : ''}`} />
+                        <Form.Control type="text" name="name" id="name" value={userData.name} onChange={handleChange.bind(this)} className={`${SystemUsersStyles['system-user-form-controls']} ${errors.nameError ? SystemUsersStyles['errors'] : ''}`} />
                         <small className='text-danger'>{errors.nameError}</small>
                     </div>
 
                     <div>
                         <Form.Label htmlFor="age">Age</Form.Label>
-                        <Form.Control type="number" name="age" id="age" value={userData.age} onChange={handleChange} className={`${SystemUsersStyles['system-user-form-controls']} ${errors.ageError ? SystemUsersStyles['errors'] : ''}`} />
+                        <Form.Control type="number" name="age" id="age" value={userData.age} onChange={handleChange.bind(this)} className={`${SystemUsersStyles['system-user-form-controls']} ${errors.ageError ? SystemUsersStyles['errors'] : ''}`} />
                         <small className='text-danger'>{errors.ageError}</small>
                     </div>
                     <div>
+                        <Form.Label htmlFor="password">Password</Form.Label>
+                        <Form.Control type="password" name="Password" id="password" value={userData.password} onChange={handleChange.bind(this)} className={`${SystemUsersStyles['system-user-form-controls']} ${errors.passwordError ? SystemUsersStyles['errors'] : ''}`} />
+                        <small className='text-danger'>{errors.passwordError}</small>
+                    </div>
+                    <button type="submit" className={`${userData.name === '' || userData.email === '' || userData.age === '' || userData.gender === '' || userData.programs === '' || userData.password === '' || errors.nameError || errors.emailError || errors.ageError || errors.genderError || errors.programsError || errors.passwordError ? SystemUsersStyles['disabled-btn'] : SystemUsersStyles['btn']}`} style={{ float: 'right' }} id="secondStep" onClick={(event) => systemUsersNextStep(event)}>Next<TbPlayerTrackNext style={{ margin: '-2px 0 0 3px' }} /></button>
+
+
+                </> : systemUsersFormSteps.nextStep ? <>
+                    <div>
                         <Form.Label htmlFor="gender">Gender</Form.Label>
-                        <Form.Select name="gender" id="gender" value={userData.gender} onChange={handleChange} className={`${SystemUsersStyles['system-user-form-controls']} ${errors.genderError ? SystemUsersStyles['errors'] : ''}`} >
+                        <Form.Select name="gender" id="gender" value={userData.gender} onChange={handleChange.bind(this)} className={`${SystemUsersStyles['system-user-form-controls']} ${errors.genderError ? SystemUsersStyles['errors'] : ''}`} >
                             <option value="">Select</option>
-                            <option value="male">Male</option>
-                            <option value="female">Female</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
                         </Form.Select>
                         <small className='text-danger'>{errors.genderError}</small>
                     </div>
                     <div>
                         <Form.Label htmlFor="programs">Programs</Form.Label>
-                        <Form.Select id="programs" name="programs" onChange={handleChange} className={`${SystemUsersStyles['system-user-form-controls']} ${errors.programsError ? SystemUsersStyles['errors'] : ''}`} >
+                        <Form.Select id="programs" name="programs" onChange={handleChange.bind(this)} className={`${SystemUsersStyles['system-user-form-controls']} ${errors.programsError ? SystemUsersStyles['errors'] : ''}`} >
                             <option value="">Select</option>
                             {programs.map((pr) => (
                                 <option key={pr.id} value={pr.programName}>{pr.programName}</option>
@@ -453,14 +454,6 @@ const SystemUsers = () => {
                         </Form.Select>
                         <small className='text-danger'>{errors.programsError}</small>
                     </div>
-                    <div>
-                        <Form.Label htmlFor="password">Password</Form.Label>
-                        <Form.Control type="password" name="Password" id="password" value={userData.password} onChange={handleChange} className={`${SystemUsersStyles['system-user-form-controls']} ${errors.passwordError ? SystemUsersStyles['errors'] : ''}`} />
-                        <small className='text-danger'>{errors.passwordError}</small>
-                    </div>
-                    <button type="submit" className={`${userData.name === '' || userData.email === '' || userData.age === '' || userData.gender === '' || userData.programs === '' || userData.password === '' || errors.nameError || errors.emailError || errors.ageError || errors.genderError || errors.programsError || errors.passwordError ? SystemUsersStyles['disabled-btn'] : SystemUsersStyles['btn']}`} style={{ float: 'right' }} id="nextStep" onClick={(event) => systemUsersNextStep(event)}>Next<TbPlayerTrackNext style={{ margin: '-2px 0 0 3px' }} /></button>
-
-                </> : <>
                     <div>
                         <Form.Label htmlFor="state">State</Form.Label>
                         <Form.Select name="state" id="state" onChange={handleChange} className={`${SystemUsersStyles['system-user-form-controls']} ${errors.stateError ? SystemUsersStyles['errors'] : ''}`} >
@@ -480,16 +473,18 @@ const SystemUsers = () => {
                     <div>
 
                         <Form.Label htmlFor="privileges">Privileges</Form.Label>
-                        <Form.Select id="privileges" name="Privileges" onChange={handleChange} className={`${SystemUsersStyles['system-user-form-controls']} ${errors.privilegeError ? SystemUsersStyles['errors'] : ''}`} >
+                        <Form.Select id="privileges" name="Privileges" onChange={handleChange} className={`${SystemUsersStyles['system-user-form-controls']} ${errors.privilegesError ? SystemUsersStyles['errors'] : ''}`} >
                             <option value="">Select</option>
                             <option value="Admin">Admin</option>
-                            <option value="Instructor">Instructor</option>
+                            <option value="None">Instructor</option>
                             <option value="Supervisor">Supervisor</option>
                         </Form.Select>
                         <small className='text-danger'>{errors.privilegesError}</small>
                     </div>
-
-                    <div className={SystemUsersStyles['days-check-box-container']}>
+                    <button type="button" className={SystemUsersStyles['btn']} id="firstStep" onClick={(event) => systemUsersNextStep(event)}><ImPrevious2 style={{ marginTop: '-3px' }} />Next</button>
+                </> : <>
+                    <span>Working Days</span>
+                    <div className={`${SystemUsersStyles['days-check-box-container']} ${errors.working_daysError ? SystemUsersStyles['errors'] : ''}`}>
 
                         <div >
                             <Form.Label htmlFor="d0" >Saturday</Form.Label>
@@ -521,24 +516,27 @@ const SystemUsers = () => {
                         </div>
 
                     </div>
-                    <div className={SystemUsersStyles['hours-check-box-container']}>
-
-                    {Working_hours.map((wh,index)=>(
-                        <div key={wh.id}>
-                            <Form.Label htmlFor={wh.att}>{wh.appointment}</Form.Label>
-                            <Form.Check id={wh.att} name={wh.att} value={index} onChange={handleApoointmentInHours}  checked={checkedHours['hindex']}/>
-                        </div>
-                    ))}
+                    <small className="text-danger">{errors.working_daysError}</small><br />
+                    <span>Working Hours</span>
+                    <div className={`${SystemUsersStyles['hours-check-box-container']} ${errors.working_hoursError ? SystemUsersStyles['errors'] : ''}`}>
+                        {Working_hours.map((wh, index) => (
+                            <div key={wh.id}>
+                                <Form.Label htmlFor={wh.att}>{wh.appointment}</Form.Label>
+                                <Form.Check id={wh.att} name={wh.att} value={index} onChange={handleApoointmentInHours} checked={checkedHours['hindex']} />
+                            </div>
+                        ))}
 
                     </div>
+                    <small className="text-danger">{errors.working_hoursError}</small><br />
                     <div>
                         <Form.Label htmlFor="started_at">Started at</Form.Label>
                         <Form.Control type="date" id="started_at" name="started_at" onChange={handleChange} className={`${SystemUsersStyles['system-user-form-controls']} ${errors.started_atError ? SystemUsersStyles['errors'] : ''}`} />
                         <small className="text-danger">{errors.started_atError}</small>
                     </div>
-                    <button type="button" className={SystemUsersStyles['btn']} id="firstStep" onClick={(event) => systemUsersNextStep(event)}><ImPrevious2 style={{ marginTop: '-3px' }} />Previous</button>
-                    <button type="submit" className={`${userData.state === '' || userData.mobile === '' || userData.privileges === '' || userData.working_days === '' || userData.working_hours === '' || userData.started_at === '' || errors.stateError || errors.mobileError || errors.privilegeError || errors.working_daysError || errors.working_hoursError || errors.started_atError ? SystemUsersStyles['disabled-btn'] : SystemUsersStyles['btn']}`} style={{ float: 'right' }}>Add User<IoIosPersonAdd style={{ margin: '0 0 3px 3px' }} /></button>
 
+
+
+                    <button type="submit" className={`${userData.state === '' || userData.mobile === '' || userData.privileges === '' || userData.working_days === '' || userData.working_hours === '' || userData.started_at === '' || errors.stateError || errors.mobileError || errors.privilegeError || errors.working_daysError || errors.working_hoursError || errors.started_atError ? SystemUsersStyles['disabled-btn'] : SystemUsersStyles['btn']}`} style={{ float: 'right' }}>Add User<IoIosPersonAdd style={{ margin: '0 0 3px 3px' }} /></button>
                 </>}
             </form>
             <div className={SystemUsersStyles['system-user-data-container']}>
