@@ -575,7 +575,7 @@ const SystemUsers = () => {
                                     <td>{userAccount.name}</td>
                                     <td>{userAccount.email}</td>
                                     <td>{userAccount.mobile}</td>
-                                    <td>{userAccount.privilages}</td>
+                                    <td>{userAccount.privilages??userAccount.privileges}</td>
                                 </tr>
                             ))}
                         </tbody>
