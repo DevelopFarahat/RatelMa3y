@@ -192,3 +192,6 @@ box-shadow:   0 0 0 0.25rem rgba(246,0,60,.25) !important;
 border-color: #f6003c !important;
 
 }
+input[type="number"]{
+  appearance: none;
+}

@@ -352,14 +352,14 @@ const SystemUsers = () => {
                 working_hours: wHours
             }
         }
-        /*
+        
          axios.post(`https://ratel-may.herokuapp.com/api/instructors`, finalUser).then((res) => {
              console.log(res.data)
              console.log(userData);
          }).catch((error) => {
              console.log(error.message);
          });
-     */
+     
     }
 
 
@@ -423,7 +423,7 @@ const SystemUsers = () => {
 
                     <div>
                         <Form.Label htmlFor="age">Age</Form.Label>
-                        <Form.Control type="number" name="age" id="age" value={userData.age} onChange={handleChange.bind(this)} className={`${SystemUsersStyles['system-user-form-controls']} ${errors.ageError ? SystemUsersStyles['errors'] : ''}`} />
+                        <Form.Control min={1} max={100} type="number" name="age" id="age" value={userData.age} onChange={handleChange.bind(this)} className={`${SystemUsersStyles['system-user-form-controls']} ${errors.ageError ? SystemUsersStyles['errors'] : ''}`} />
                         <small className='text-danger'>{errors.ageError}</small>
                     </div>
                     <div>
