@@ -12,7 +12,7 @@ import { BrowserRouter as Router, Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import UserContext from "../../utils/UserContext";
 
-function NavBar({ i18n }) {
+function NavBar({ i18n,t }) {
   function changeLang(e) {
     e.target.innerHTML === "en"
       ? (e.target.innerHTML = "ar")
@@ -58,33 +58,33 @@ function NavBar({ i18n }) {
             navbarScroll
           >
             <Link className={NavCss.link} to={"/home"}>
-              Home
+            {t("navbar_home")}
             </Link>
             <Link className={NavCss.link} to={"/events"}>
-              Events
+            {t("navbar_events")}
             </Link>
             {user != null && (
               <Link className={NavCss.link} to={"/sessions"}>
-                Sessions
+               {t("navbar_rooms")}
               </Link>
             )}
             {user != null && user.role == "student" && (
               <Link className={NavCss.link} to={"/sessions"}>
-                Evaluations
+                 {t("navbar_evaluations")}
               </Link>
             )}
 
             <Link className={NavCss.link} to={"/about"}>
-              About us
+            {t("navbar_aboutus")}
             </Link>
             {(user == null || user.role === "student") && (
               <Link className={NavCss.link} to={"/contact"}>
-                Contact us
+               {t("navbar_contactus")}
               </Link>
             )}
             {user != null && user.privilages === "Admin" && (
               <Link to={"/adminPanel"}>
-                <Button variant="outline-success">Control Panel</Button>
+                <Button variant="outline-success">   {t("navbar_adminpanel")}</Button>
               </Link>
             )}
           </Nav>
@@ -96,20 +96,21 @@ function NavBar({ i18n }) {
               style={{ margin: 16, fontWeight: 500 }}
             >
               <NavDropdown.Item href="#action/3.1">
-                Manage Account
+                {t("manageAccount")}
               </NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item className="text-danger" onClick={logout}>
-                Logout
+                {t("logout")}
               </NavDropdown.Item>
             </NavDropdown>
           ) : (
             <Link to={"/login"}>
               <Button className={NavCss.button} variant="outline-success">
-                Login
+                {t("login")}
               </Button>
             </Link>
           )}
+          {/*
           <Button
             className={NavCss.button}
             variant="outline-success"
@@ -117,6 +118,7 @@ function NavBar({ i18n }) {
           >
             en
           </Button>
+           */}
         </Navbar.Collapse>
       </Container>
     </Navbar>

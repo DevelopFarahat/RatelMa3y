@@ -1,36 +1,35 @@
-/** @format */
-
 .post-details-main-container {
   width: 100%;
   padding: 20px;
   position: relative;
 }
 .post-image-details {
-  width: 60%;
-  margin: auto;
+  width: 100%;
+  height: 350px;
   object-fit: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
   display: block;
-  margin-bottom: 22px;
-  border: 1px solid #038674;
-  padding: 4px;
-  border-radius: 4px;
 }
-
 .post-details-title {
+  width: 50%;
+  height: 100px;
   border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  margin: auto;
   text-align: center;
   text-transform: capitalize;
   font-weight: bold;
-  font-size: 20px;
-  margin: auto;
+  font-size: 1rem;
+  position: absolute;
+  top: 45%;
+  left: 26%;
   box-sizing: border-box;
-  background: #ffff;
-  padding: 30px 10px;
-  box-shadow: 0 6px 36px -18px rgb(0 0 0 / 70%);
-  width: 50%;
-  color: #003228;
+  padding-top: 37px;
+  background: #ffffff;
 }
 .post-details {
   width: 100%;
@@ -38,15 +37,16 @@
 }
 .post-paragarph {
   width: 100%;
-  line-height: 1.8;
+  line-height: 1.5;
   text-align: justify;
+  letter-spacing: 0.5px;
+  word-spacing: 1px;
   text-transform: capitalize;
-  margin-top: 25px;
-  font-size: 19px;
-  font-weight: 400;
-  color: #003228;
+  margin-top: 30px;
+  background-color: #ffffff;
 }
 .btn {
+  width: 12%;
   outline: none;
   border: none;
   border-radius: 5px;
@@ -59,25 +59,18 @@
   text-transform: capitalize;
   padding: 8px 8px;
   background-color: #038674;
+  margin-top: 20px;
   color: #ffffff;
 }
 .latest-post-badge {
   position: absolute;
-  top: 2%;
+  top: 5%;
   background: #f6003c;
+  width: 90px;
+  height: 25px;
   text-align: center;
   border-radius: 5px;
   color: #ffffff;
   text-transform: capitalize;
-  left: 4%;
-  padding: 4px 8px;
-}
-@media (max-width: 575.98px) {
-  .post-details-title {
-    width: 100%;
-  }
-  .latest-post-badge {
-    top: 1%;
-    font-size: 15px;
-  }
+  left: 1%;
 }

@@ -8,10 +8,12 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { BrowserRouter as Router, Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import "../../App.css";
 import FooterCss from "./Footer.module.css";
 
 function Footer() {
+  const [t, i18n] = useTranslation();
   return (
     <div className={FooterCss.footer}>
       <div className={FooterCss.innerfooter}>
@@ -22,7 +24,7 @@ function Footer() {
                 <img className={FooterCss.logo} src={logo} alt='logo' />
               </Link>
               <div className={FooterCss.social}>
-                <p className={FooterCss.Ratelfooter}>Follow us</p>
+                <p className={FooterCss.Ratelfooter}>{t("Follow_us")}</p>
                 <a
                   href='https://www.facebook.com/ratelma3y/'
                   target='_blank'
@@ -38,34 +40,34 @@ function Footer() {
               </div>
             </Col>
             <Col>
-              <h4>Home page</h4>
+              <h4>{t("footer_homepage")}</h4>
               <Link className={FooterCss.link} to={"/home"}>
-                Home
+              {t("footer_home")}
               </Link>
               <Link className={FooterCss.link} to={"/about"}>
-                About us
+              {t("footer_aboutus")}
               </Link>
               <Link className={FooterCss.link} to={"/contact"}>
-                Contact us
+              {t("footer_contactus")}
               </Link>
             </Col>
             <Col>
-              <h4>Enrollment system</h4>
+              <h4>{t("footer_enrollmentsystem")}</h4>
               <Link className={FooterCss.link} to={"/home"}>
-                Enrollment
+              {t("footer_enrollmentlink")}
               </Link>
               <Link className={FooterCss.link} to={"/about"}>
-                Studing
+              {t("footer_Studing")}
               </Link>
               <Link className={FooterCss.link} to={"/contact"}>
-                Exams
+              {t("footer_exam")}
               </Link>
               <Link className={FooterCss.link} to={"/events"}>
-                Certificate
+              {t("footer_certificate")}
               </Link>
             </Col>
           </Row>
-          <p className={FooterCss.Ratelcopyright}>RatelMay 1442-2022@</p>
+          <p className={FooterCss.Ratelcopyright}>{t("footer_end")}</p>
         </Container>
       </div>
     </div>

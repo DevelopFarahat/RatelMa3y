@@ -9,6 +9,7 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { useFormik } from "formik";
+import { useTranslation } from "react-i18next";
 const initialValues = {
   userName: "",
   email: "",
@@ -41,6 +42,7 @@ const validate = (values) => {
 };
 
 function ContactUs() {
+  const [t, i18n] = useTranslation();
   const formik = useFormik({
     initialValues,
     onSubmit,
@@ -51,9 +53,9 @@ function ContactUs() {
       <div className={ContctUsCss.innercontact}>
         <Container>
           <FaHeadphones className={ContctUsCss.contacticon} />
-          <h2>Tell Us What You Feal</h2>
-          <p className='lead'>Feal To Contact Us Any Time</p>
-          <Form onSubmit={formik.handleSubmit}>
+          <h2>{t("contactus_title")}</h2>
+          <p className='lead'>{t("contactus_text")}</p>
+          <Form>
             <Row>
               <Col md={6}>
                 <Form.Group className='mb-3' controlId='formBasicUserName'>
@@ -106,7 +108,7 @@ function ContactUs() {
                     rows={4}
                   />
                 </Form.Group>
-                <Button variant='danger'>Contact Us</Button>{" "}
+                <Button variant="danger">{t("contactus_btn")}</Button>{" "}
               </Col>
             </Row>
           </Form>

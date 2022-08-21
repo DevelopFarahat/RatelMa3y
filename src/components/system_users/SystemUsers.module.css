@@ -60,7 +60,7 @@ body {
 }
 .system-user-data-container {
   width: 50%;
-  height: 547px;
+  height: 579px;
   padding: 10px;
   box-shadow:  0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   border-radius: 5px;
@@ -136,6 +136,7 @@ th {
   -moz-transition: all .3s ease-in-out;
   -ms-transition: all .3s ease-in-out;
   -o-transition: all .3s ease-in-out;
+  cursor: pointer;
 }
 .table-wrapper::-webkit-scrollbar {
   width: 20px;
@@ -195,3 +196,75 @@ border-color: #f6003c !important;
 input[type="number"]{
   appearance: none;
 }
+.system-user-steps-circle-container{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.circle{
+  width:50px;
+  height:50px;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+  text-align: center;
+  padding-top: 11px;
+  border:1px solid #dadada;
+}
+.line{
+  width:50px;
+  height:3px;
+  border-bottom: 2px solid #dadada;
+}
+.coloredLine{
+
+  border-bottom: 2px solid #038674;
+}
+.coloredCircle{
+  background-color: #038674;
+  border:1px solid #038674;
+  color: #FFFFFF;
+}
+.alert-container{
+  width:25%;
+  padding: 10px;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  background-color:#FFFFFF;
+  position: absolute;
+  top: 63%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  -webkit-transform: translate(-50%,-50%);
+  -moz-transform: translate(-50%,-50%);
+  -ms-transform: translate(-50%,-50%);
+  -o-transform: translate(-50%,-50%);
+  color: #FFFFFF;
+  z-index:1500;
+}
+
+.alert-container >  img {
+  display: block;
+  margin: auto;
+  width:35%;
+  object-fit: scale-down;
+}
+.alert-container >  span {
+  display: block;
+  width: 100%;
+  font-size: 1rem;
+  letter-spacing: .5px;
+  text-transform: capitalize;
+  line-height: 1.5;
+  text-align: center;
+  color: #000000;
+  clear: both;
+}
+

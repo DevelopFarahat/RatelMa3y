@@ -41,12 +41,12 @@ function App() {
     <div className="App" style={styles.body}>
       <ScrollToTop />
       <UserProvider>
-        <NavBar i18n={i18n} />
+        <NavBar i18n={i18n}  t={t}/>
         <div style={{ height: 86 }}></div>
         <div style={{ minHeight: "100vh" }}>
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="home" element={<Home />} />
+            <Route path="/" i18n={i18n}  t={t}  element={<Home />} />
+            <Route path="home"  i18n={i18n}  t={t} element={<Home />} />
             <Route path="about" element={<Aboutus />} />
             <Route path="contact" element={<Contact />} />
             <Route path="adminPanel" element={<AdminPanel />} />
