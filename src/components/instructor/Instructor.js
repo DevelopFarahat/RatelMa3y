@@ -61,7 +61,7 @@ const Instructor = () => {
 
     const setInstructorAvailability = (event, instructorObji) => {
         let availability = event.currentTarget.id === 'available' ? false : true;
-        axios.put(`http://localhost:5000/api/instructors/${instructorObji._id}`, { is_available: availability }).then((res) => {
+        axios.put(`https://ratel-may.herokuapp.com/api/instructors/${instructorObji._id}`, { is_available: availability }).then((res) => {
             console.log(res);
         }).catch((error) => {
             console.log(error);
@@ -72,7 +72,7 @@ const Instructor = () => {
     const getSpecificInstructorData = (event) => {
         event.stopPropagation();
         console.log(event.currentTarget.id);
-        axios.get(`http://localhost:5000/api/instructors/${event.currentTarget.id}`).then((res) => {
+        axios.get(`https://ratel-may.herokuapp.com/api/instructors/${event.currentTarget.id}`).then((res) => {
             initialResponseSpecificInstructorData.current = res.data;
             setSelectedInstructorData(res.data);
             console.log(res.data);
@@ -85,7 +85,7 @@ const Instructor = () => {
 
 
     useEffect(() => {
-        axios.get(`http://localhost:5000/api/instructors`).then((res) => {
+        axios.get(`https://ratel-may.herokuapp.com/api/instructors`).then((res) => {
             initialResponse.current = res.data;
             setInstructorData(res.data);
         }).catch((error) => {

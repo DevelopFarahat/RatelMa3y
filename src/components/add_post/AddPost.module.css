@@ -1,7 +1,7 @@
 .add-post-main-container {
   align-self: flex-start;
   align-items: flex-start;
-  width: 40%;
+  width: 98%;
   background-color: #ffffff;
   border-radius: 5px;
   -webkit-border-radius: 5px;
@@ -10,9 +10,17 @@
   -o-border-radius: 5px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   padding: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items:center;
+  flex-wrap: wrap;
+}
+.add-post-main-container > .image-posting-settings-container{
+  width:30%;
 }
 .post-image-area {
-    height: 150px;
+    height: 259px;
     width:100%;
     border:1px solid #dadada;
     border-radius: 5px;
@@ -34,14 +42,14 @@
 }
 .button-container {
   position: relative;
-  display: inline-block;
   border-radius: 5px;
   cursor: pointer;
-  width: 100%;
+  width: 71%;
   text-align: center;
   text-transform: capitalize;
   background-color: #038674;
-  padding: 8px;
+  padding: 4px;
+  margin: 21px 0 0 0;
 }
 .button-container > button {
   outline: none;
@@ -75,7 +83,7 @@ input[type="file"] {
   padding-bottom: 30px;
 }
 .btn {
-  width: 35%;
+  width: 10%;
   outline: none;
   border: none;
   border-radius: 5px;
@@ -90,30 +98,22 @@ input[type="file"] {
   background-color: #038674;
   margin-top: 20px;
   color: #ffffff;
-}
-.disabled-btn {
-  width: 35%;
-  outline: none;
-  border: none;
-  border-radius: 5px;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  -ms-border-radius: 5px;
-  -o-border-radius: 5px;
-  text-align: center;
-  font-size: 1rem;
-  text-transform: capitalize;
-  padding: 8px 8px;
-  margin-top: 20px;
-  color: #ffffff;
-  background-color: #666666;
-  opacity: 0.3;
-  cursor:not-allowed !important;
+  float: right;
 }
 .clear-btn {
-  margin-left: 30%;
+  margin-left: 38.4%;
+  padding:5px;
+  width:26%;
 }
-.post-alert-container{
+.post-title-content-container{
+  flex:0 0 70%;
+  padding: 20px;
+}
+.posting-button-container{
+  width:100%;
+  padding:20px;
+}
+.post-alert-container,.post-alert-faild-container{
   width:25%;
   padding: 10px;
   border-radius: 5px;
@@ -122,10 +122,10 @@ input[type="file"] {
   -ms-border-radius: 5px;
   -o-border-radius: 5px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  background-color:#038674;
+  background-color:#FFFFFF;
   position: absolute;
-  top: 45%;
-  left: 50%;
+  top: 27%;
+  left: 86%;
   transform: translate(-50%,-50%);
   -webkit-transform: translate(-50%,-50%);
   -moz-transform: translate(-50%,-50%);
@@ -134,31 +134,21 @@ input[type="file"] {
   color: #FFFFFF;
   z-index:1500;
 }
-.post-alert-container::after{
-  content: "";
-  position: absolute;
-  top: 90%;
-  left: 1%;
-  height: 4px;
-  background: #c2a054;
-  border-radius: 2px;
-  animation: decreaseWidth 1s infinite ease-in-out;
-  animation-fill-mode: forwards;
-  -webkit-animation: decreaseWidth 1s 1 ease-in-out;
+.post-alert-faild-container{
+  top:55%;
+  left:50%;
+  background-color: #FFFFFF;
 }
-
-@keyframes decreaseWidth{
-  0%{
-      width:99%;
-      transition: all .5s ease-in-out;
-  }
-  100%{
-      width:0%;
-      transition: all .5s ease-in-out;
-  }
+.post-alert-container >  img , .post-alert-faild-container > img{
+  display: block;
+  margin: auto;
+  width:35%;
+  object-fit: scale-down;
 }
-
-.post-alert-container >  span{
+.post-alert-faild-container > img{
+  float: right;
+}
+.post-alert-container >  span , .post-alert-faild-container > span{
   display: block;
   width: 100%;
   font-size: 1rem;
@@ -166,4 +156,17 @@ input[type="file"] {
   text-transform: capitalize;
   line-height: 1.5;
   text-align: center;
+  color: #000000;
+  clear: both;
+}
+.post-alert-faild-container >  button{
+  margin: auto;
+  display: block;
+  background-color: #038674 !important;
+  color: #FFFFFF !important;
+  width:40%;
+  outline: none;
+  border: none;
+  margin-top: 55px;
+  margin-right: 7px;
 }

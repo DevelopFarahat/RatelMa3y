@@ -8,10 +8,11 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { BrowserRouter as Router, Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import "../../App.css";
 import FooterCss from "./Footer.module.css";
 
-function Footer(props) {
+function Footer() {
   return (
     <div className={FooterCss.footer} style={{transitionDuration: "3s" ,transform: props.isRoomPrepared? "translateY(300px)":"translateY(0px)"}}>
       <div className={FooterCss.innerfooter}>
@@ -22,7 +23,7 @@ function Footer(props) {
                 <img className={FooterCss.logo} src={logo} alt="logo" />
               </Link>
               <div className={FooterCss.social}>
-                <p className={FooterCss.Ratelfooter}>Follow us</p>
+                <p className={FooterCss.Ratelfooter}>{t("Follow_us")}</p>
                 <a
                   href="https://www.facebook.com/ratelma3y/"
                   target="_blank"
@@ -39,7 +40,7 @@ function Footer(props) {
               </div>
             </Col>
             <Col>
-              <h4>Home Page</h4>
+              <h4>Home page</h4>
               <Link className={FooterCss.link} to={"/home"}>
                 <span className={FooterCss.hoverable}>Home</span>
               </Link>
@@ -64,7 +65,7 @@ function Footer(props) {
               </Link>
             </Col>
           </Row>
-          <p className={FooterCss.Ratelcopyright}>RatelMay 1442-2022@</p>
+          <p className={FooterCss.Ratelcopyright}>{t("footer_end")}</p>
         </Container>
       </div>
     </div>

@@ -1,3 +1,5 @@
+/** @format */
+
 import "./App.css";
 import NavBar from "./components/navbar/NavBar";
 import { BrowserRouter as Router, Routes, Route,Navigate } from "react-router-dom";
@@ -48,34 +50,20 @@ function App() {
   };
 
   return (
-    <>
-      <div className="App" style={styles.body}>
-        <ScrollToTop />
-        <UserProvider>
-          <div style={styles.hideableDiv}>
-            <NavBar i18n={i18n} isRoomPrepared={isRoomPrepared}/>
-            <div style={{ height: 86 }}></div>
-            <div style={{ minHeight: "100vh" }}>
-              <Routes>
-                <Route path="/" element={<Navigate to="home" replace />} />
-                <Route path="home" element={<Home />} />
-                <Route path="about" element={<Aboutus />} />
-                <Route path="contact" element={<Contact />} />
-                <Route path="adminPanel" element={<AdminPanel />} />
-                <Route
-                  path="sessions"
-                  element={<Sessions textt={"test test"} setIsRoomPrepared={setIsRoomPrepared}/>}
-                />
-                <Route
-                  path="sessions/room"
-                  element={
-                    <Room
-                      setHideMain={setHideMain}
-                      setShowSidebar={setShowSidebar}
-                      setIsRoomPrepared={setIsRoomPrepared}
-                    />
-                  }
-                />
+    <div className="App" style={styles.body}>
+      <ScrollToTop />
+      <UserProvider>
+        <NavBar i18n={i18n} />
+        <div style={{ height: 86 }}></div>
+        <div style={{ minHeight: "100vh" }}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="home" element={<Home />} />
+            <Route path="about" element={<Aboutus />} />
+            <Route path="contact" element={<Contact />} />
+            <Route path="adminPanel" element={<AdminPanel />} />
+            <Route path="sessions" element={<Sessions />} />
+            <Route path="sessions/room" element={<Room />} />
 
                 <Route path="login" element={<Login />} />
                 <Route path="forgotten" element={<Forgot />} />
@@ -84,40 +72,22 @@ function App() {
                 <Route path="events" element={<PostsBoard />} />
                 <Route path="events/:id" element={<PostDetails />} />
 
-                <Route path="adminPanel" element={<AdminPanel />}>
-                  <Route index element={<SystemUsers />} />
-                  <Route path="systemUsers" index element={<SystemUsers />} />
-                  <Route path="addPost" element={<AddPost />} />
-                  <Route path="students" element={<Student />} />
-                  <Route path="instructors" element={<Instructor />} />
-                </Route>
-                <Route
-                  path="register"
-                  element={<RegistrationForm i18n={i18n} t={t} />}
-                />
-                <Route path="*" element={<Navigate to="home" replace />} />
-              </Routes>
-            </div>
-            <Footer isRoomPrepared={isRoomPrepared}/>
-          </div>
-
-          <div
-            style={{
-              display: showSidebar ? "flex" : "none",
-              position: "absolute",
-              zIndex: 11,
-              top: 0,
-              bottom: 0,
-              left: -8,
-              alignItems: "center",
-              pointerEvents: "none",
-            }}
-          >
-            <RoomSideBar />
-          </div>
-        </UserProvider>
-      </div>
-    </>
+            <Route path="adminPanel" element={<AdminPanel />}>
+              <Route index element={<SystemUsers />} />
+              <Route path="systemUsers" index element={<SystemUsers />} />
+              <Route path="addPost" element={<AddPost />} />
+              <Route path="students" element={<Student />} />
+              <Route path="instructors" element={<Instructor />} />
+            </Route>
+            <Route
+              path="register"
+              element={<RegistrationForm i18n={i18n} t={t} />}
+            />
+          </Routes>
+        </div>
+      </UserProvider>
+      <Footer />
+    </div>
   );
 }
 

@@ -50,33 +50,33 @@ function NavBar({ i18n, isRoomPrepared }) {
             navbarScroll
           >
             <Link className={NavCss.link} to={"/home"}>
-              Home
+            {t("navbar_home")}
             </Link>
             <Link className={NavCss.link} to={"/events"}>
-              Events
+            {t("navbar_events")}
             </Link>
             {user != null && (
               <Link className={NavCss.link} to={"/sessions"}>
-                Sessions
+               {t("navbar_rooms")}
               </Link>
             )}
             {/* {user != null && user.role == "student" && false && (
               <Link className={NavCss.link} to={"/sessions"}>
-                Evaluations
+                 {t("navbar_evaluations")}
               </Link>
             )} */}
 
             <Link className={NavCss.link} to={"/about"}>
-              About us
+            {t("navbar_aboutus")}
             </Link>
             {(!user || user.role == "student") && (
               <Link className={NavCss.link} to={"/contact"}>
-                Contact us
+               {t("navbar_contactus")}
               </Link>
             )}
             {user && user.privileges == "Admin" && (
               <Link to={"/adminPanel"}>
-                <Button variant="outline-success">Control Panel</Button>
+                <Button variant="outline-success">   {t("navbar_adminpanel")}</Button>
               </Link>
             )}
           </Nav>
@@ -93,23 +93,23 @@ function NavBar({ i18n, isRoomPrepared }) {
 
               <NavDropdown.Divider />
               <NavDropdown.Item className="text-danger" onClick={logout}>
-                Logout
+                {t("logout")}
               </NavDropdown.Item>
             </NavDropdown>
           ) : (
             <Link to={"/login"}>
               <Button className={NavCss.button} variant="outline-success">
-                Login
+                {t("login")}
               </Button>
             </Link>
           )}
-          {/* <Button
+          <Button
             className={NavCss.button}
             variant="outline-success"
             onClick={(e) => changeLang(e)}
           >
             en
-          </Button> */}
+          </Button>
         </Navbar.Collapse>
       </Container>
     </Navbar>

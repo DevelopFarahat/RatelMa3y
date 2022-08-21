@@ -1,42 +1,81 @@
-.App {
-  text-align: center;
+/** @format */
+
+.registration {
+  padding: 100px 0 15px;
+  margin-left: 25%;
+  margin-right: 25%;
+}
+.registration h2 {
+  font-size: 37px;
+  color: #bfa155;
+  margin-bottom: 45px;
+}
+.registration h2 span {
+  color: #038674;
+  border-bottom: 1px solid #038674;
+  padding-bottom: 5px;
+}
+.label {
+  font-size: 20px;
+  color: #bfa155;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+.registration input {
+  font-size: 20px;
+  border: 1px solid #c1a153;
+  color: #bfa155;
+  opacity: 0.5;
+}
+.registration .inputtype:focus {
+  color: #bfa155;
+  background-color: #fff;
+  border-color: #c1a153;
+  box-shadow: none;
+}
+.registration .checklabel {
+  color: #c1a153;
+  margin-bottom: 22px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.registration ::placeholder {
+  color: #bfa155;
+  opacity: 1; /* Firefox */
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  color: #bfa155;
+}
+
+::-ms-input-placeholder {
+  /* Microsoft Edge */
+  color: #bfa155;
+}
+.registration button {
+  width: 100%;
+  font-size: 20px;
+  font-weight: 400;
+  border: none;
+  background: #038674;
+}
+.registration button:hover {
+  background-color: #038674;
+}
+.registration button:active {
+  background-color: #038674;
+}
+.registration button:focus {
+  box-shadow: none;
+  background-color: #038674;
+}
+.registration div {
+  font-size: 15px;
+  color: #ab0303;
+}
+@media (max-width: 769px) {
+  .registration {
+    margin-left: 0;
+    margin-right: 0;
   }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 30vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-.divchosse{
-
-  margin-bottom: 5vh;
 }

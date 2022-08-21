@@ -6,6 +6,7 @@ import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { useFormik } from "formik";
+import { useTranslation } from "react-i18next";
 
 const initialValues = {
   userName: "",
@@ -50,6 +51,7 @@ const validate = (values) => {
   return errors;
 };
 function Contact() {
+  const [t, i18n] = useTranslation();
   const formik = useFormik({
     initialValues,
     onSubmit,
@@ -60,7 +62,7 @@ function Contact() {
     <div className={ContactCss.contact}>
       <Container>
         <h2>
-          <span>Contact</span> Us
+          <span>{t("contact")}</span> {t("us")}
         </h2>
         <Form onSubmit={formik.handleSubmit}>
           <Form.Group className='mb-3' controlId='formBasicUserName'>
@@ -117,7 +119,7 @@ function Contact() {
             ) : null}
           </Form.Group>
           <Button variant='primary' type='submit' >
-            Submit
+            {t("submit")}
           </Button>
         </Form>
       </Container>
