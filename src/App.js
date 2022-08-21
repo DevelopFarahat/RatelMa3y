@@ -1,3 +1,5 @@
+/** @format */
+
 import "./App.css";
 import NavBar from "./components/navbar/NavBar";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -28,7 +30,7 @@ function App() {
   //For changing direction with language change
   const [isArabic, setIsArabic] = useState(false);
   useEffect(() => {
-    setIsArabic(localStorage.getItem("i18nextLng")=='ar');
+    setIsArabic(localStorage.getItem("i18nextLng") == "ar");
   }, [localStorage.getItem("i18nextLng")]);
 
   const styles = {
@@ -38,35 +40,35 @@ function App() {
   };
 
   return (
-    <div className="App" style={styles.body}>
+    <div className='App' style={styles.body}>
       <ScrollToTop />
       <UserProvider>
-        <NavBar i18n={i18n}  t={t}/>
+        <NavBar i18n={i18n} t={t} />
         <div style={{ height: 86 }}></div>
         <div style={{ minHeight: "100vh" }}>
           <Routes>
-            <Route path="/" i18n={i18n}  t={t}  element={<Home />} />
-            <Route path="home"  i18n={i18n}  t={t} element={<Home />} />
-            <Route path="about" element={<Aboutus />} />
-            <Route path="contact" element={<Contact />} />
-            <Route path="adminPanel" element={<AdminPanel />} />
-            <Route path="sessions" element={<Sessions />} />
-            <Route path="sessions/room" element={<Room />} />
+            <Route path='/' i18n={i18n} t={t} element={<Home />} />
+            <Route path='home' i18n={i18n} t={t} element={<Home />} />
+            <Route path='about' element={<Aboutus />} />
+            <Route path='contact' element={<Contact />} />
+            <Route path='adminPanel' element={<AdminPanel />} />
+            <Route path='sessions' element={<Sessions />} />
+            <Route path='sessions/room' element={<Room />} />
 
-            <Route path="login" element={<Login />} />
+            <Route path='login' element={<Login />} />
 
-            <Route path="events" element={<PostsBoard />} />
-            <Route path="events/:id" element={<PostDetails />} />
+            <Route path='events' element={<PostsBoard />} />
+            <Route path='events/:id' element={<PostDetails />} />
 
-            <Route path="adminPanel" element={<AdminPanel />}>
+            <Route path='adminPanel' element={<AdminPanel />}>
               <Route index element={<SystemUsers />} />
-              <Route path="systemUsers" index element={<SystemUsers />} />
-              <Route path="addPost" element={<AddPost />} />
-              <Route path="students" element={<Student />} />
-              <Route path="instructors" element={<Instructor />} />
+              <Route path='systemUsers' index element={<SystemUsers />} />
+              <Route path='addPost' element={<AddPost />} />
+              <Route path='students' element={<Student />} />
+              <Route path='instructors' element={<Instructor />} />
             </Route>
             <Route
-              path="register"
+              path='register'
               element={<RegistrationForm i18n={i18n} t={t} />}
             />
           </Routes>
