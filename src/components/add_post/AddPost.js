@@ -57,6 +57,7 @@ const AddPost = () => {
 
     //Upload on the server
 
+    //TODO: empty inputs once done
     axios
       .post("http://localhost:5000/api/events",data)
       .then((res) => console.log("results", res.data))
@@ -101,6 +102,7 @@ const AddPost = () => {
               </button>
               <Form.Control
                 type="file"
+                accept="image/png, image/jpeg, image/jpg, image/webp"
                 id="file"
                 name="post_img"
                 onChange={(event) => {

@@ -23,4 +23,9 @@
 }
 body{
   overscroll-behavior: none;
+  overflow-x: hidden;
+}
+
+.colorTest{
+  color: #fff
 }

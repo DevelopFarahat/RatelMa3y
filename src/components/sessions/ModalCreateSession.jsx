@@ -2,14 +2,19 @@ import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
+import { InputGroup } from "react-bootstrap";
 import Select from "react-select";
 import axios from "axios";
+import { useContext } from "react";
+import UserContext from "../../utils/UserContext";
 
 export default function ModalCreateSession(props) {
   //TODO: make participants accessable from above to have the ability to remove any student later
 
-  const [options, setOptions] = useState([]);
+  const [options, setOptions] = useState([]); //For the dropdown
   const [participants, setParticipants] = useState([]);
+  const [isExam,setIsExam] = useState(false)
+  const { user } = useContext(UserContext)
 
   //TODO: make options asyncLater with this vid https://www.youtube.com/watch?v=3u_ulMvTYZI
 
@@ -17,10 +22,9 @@ export default function ModalCreateSession(props) {
     async function fetchData() {
       //Add students as options to select
 
-      let first = await axios.get("http://localhost:5000/api/students");
-      // let second = await axios.get('http://localhost:5000/api/instructors/62f26d5d8bd8c6d9adf90f55')
-      // first.filter((mem)=> second.students.include(mem._id))
-      let opts = await first.data?.map((stu) => ({
+      // let first = await axios.get("http://localhost:5000/api/students");
+      
+      let opts = user.students?.map((stu) => ({
         value: stu._id,
         label: stu.name,
       }));
@@ -53,55 +57,58 @@ export default function ModalCreateSession(props) {
 
   function handleChange(selectedOption) {
     let chosen = selectedOption?.map((sel) => sel.value);
-    console.log(chosen);
     setParticipants(chosen);
   }
 
   async function createSession() {
     if (participants == 0) return console.log("there are no participants");
 
-    participants[participants.length] = localStorage.getItem('user_id')
-    console.log(participants);
+    participants[participants.length] = localStorage.getItem("user_id");
 
-    //TODO: make room id as the name of instructor and time of creation
-    //TODO: make the backend dynamic when listening to whom want to join the room
+    //room id as the name of instructor and time of creation
     //Create a session and send it to the backend
-    let date = Date.now()
-    let rid = localStorage.getItem('user_id')+'-'+date
-    console.log('Room_id',rid.slice(0, -3))
-    
-    let first = await axios.post("http://localhost:5000/api/sessions", {
-      room_id:  rid.slice(0, -3),
-      chat: [],
-      members_with_access: participants,
-      created_by: localStorage.getItem('user_id'),
-      previously_reached: "Surah Al Ekhlas",
-      evaluations: [],
-      is_live: true,
-      currently_inside: [localStorage.getItem('user_id')],
-      created_at: date,
-      started_at: date,
-    },{
-      headers:{
-        authentication: props.user.accessToken
+
+    let date = Date.now();
+    let rid = localStorage.getItem("user_id") + "-" + date;
+    let first = await axios.post(
+      "http://localhost:5000/api/sessions",
+      {
+        room_id: rid.slice(0, -3),
+        
+        members_with_access: participants,
+        created_by: localStorage.getItem("user_id"),
+        previously_reached: {
+          
+        },
+        evaluations: [],
+        is_live: true,
+        attendants: [],
+        created_at: date,
+      },
+      {
+        headers: {
+          authentication: props.user.accessToken,
+        },
       }
-    });
+    );
     console.log(first);
 
     //Show the added session
 
-    props.setsessions(props.sessions.concat({
-      room_id: localStorage.getItem('user_id')+'-'+date,
-      chat: [],
-      members_with_access: participants,
-      created_by: localStorage.getItem('user_id'),
-      previously_reached: "Surah Al Ekhlas",
-      evaluations: [],
-      is_live: true,
-      currently_inside: [localStorage.getItem('user_id')],
-      created_at: date,
-      started_at: date,
-    }));
+    props.setsessions(
+      props.sessions.concat({
+        room_id: localStorage.getItem("user_id") + "-" + date,
+        chat: [],
+        members_with_access: participants,
+        created_by: localStorage.getItem("user_id"),
+        previously_reached: "Surah Al Ekhlas",
+        evaluations: [],
+        is_live: true,
+        currently_inside: [localStorage.getItem("user_id")],
+        created_at: date,
+        started_at: date,
+      })
+    );
     props.onHide();
   }
 
@@ -127,13 +134,33 @@ export default function ModalCreateSession(props) {
           isMulti
           styles={dropdownColorStyles}
         />
+
+        <div>
+          <input
+            className="form-check-input m-2"
+            type="checkbox"
+            id="isExamCheckbox"
+            value={isExam}
+          />
+          <label
+            className="form-check-label"
+            htmlFor="isExamCheckbox"
+            style={{ fontWeight: 500, transform: 'translateY(3px)' }}
+          >
+            Is an exam
+          </label>
+        </div>
       </Modal.Body>
 
       <Modal.Footer>
         <Button onClick={props.onHide} className="btn-secondary">
           Close
         </Button>
-        <Button onClick={createSession} vatiant="success" className="btn-success">
+        <Button
+          onClick={createSession}
+          vatiant="success"
+          className="btn-success"
+        >
           Create
         </Button>
       </Modal.Footer>

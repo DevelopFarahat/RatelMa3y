@@ -1,58 +1,44 @@
 /** @format */
 
-.contact {
-  padding: 48px 0 15px;
+.registration {
+  padding: 100px 0 15px;
   margin-left: 25%;
   margin-right: 25%;
 }
-.contact h2 {
+.registration h2 {
   font-size: 37px;
   color: #bfa155;
   margin-bottom: 45px;
 }
-.contact h2 span {
+.registration h2 span {
   color: #038674;
   border-bottom: 1px solid #038674;
   padding-bottom: 5px;
 }
-.contact input {
+.label {
   font-size: 20px;
-  margin-top: 20px;
-  border: 1px solid #c1a153;
-  color: #01332c;
+  color: #bfa155;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
-.contact input:focus {
-  color: #01332c;
+.registration input {
+  font-size: 20px;
+  border: 1px solid #c1a153;
+  color: #bfa155;
+  opacity: 0.5;
+}
+.registration .inputtype:focus {
+  color: #bfa155;
   background-color: #fff;
   border-color: #c1a153;
-  outline: 0;
   box-shadow: none;
 }
-/* Chrome, Safari, Edge, Opera */
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+.registration .checklabel {
+  color: #c1a153;
+  margin-bottom: 22px;
 }
 
-/* Firefox */
-input[type=number] {
-  -moz-appearance: textfield;
-}
-.contact textarea {
-  font-size: 20px;
-  margin-top: 20px;
-  border: 1px solid #c1a153;
-  color: #01332c;
-}
-.contact textarea:focus {
-  color: #01332c;
-  background-color: #fff;
-  border-color: #c1a153;
-  outline: 0;
-  box-shadow: none;
-}
-.contact ::placeholder {
+.registration ::placeholder {
   color: #bfa155;
   opacity: 1; /* Firefox */
 }
@@ -66,29 +52,29 @@ input[type=number] {
   /* Microsoft Edge */
   color: #bfa155;
 }
-.contact button {
+.registration button {
   width: 100%;
   font-size: 20px;
   font-weight: 400;
   border: none;
   background: #038674;
 }
-.contact button:hover {
+.registration button:hover {
   background-color: #038674;
 }
-.contact button:active {
+.registration button:active {
   background-color: #038674;
 }
-.contact button:focus {
+.registration button:focus {
   box-shadow: none;
   background-color: #038674;
 }
-.contact div {
+.registration div {
   font-size: 15px;
   color: #ab0303;
 }
 @media (max-width: 769px) {
-  .contact {
+  .registration {
     margin-left: 0;
     margin-right: 0;
   }

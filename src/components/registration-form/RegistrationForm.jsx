@@ -3,19 +3,19 @@ import { useTranslation } from "react-i18next";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Button } from "react-bootstrap";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import UserContext from "../../utils/UserContext";
 
 const validateEmail = RegExp(
-  /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
+  /\w+@\w+.(com|net|org)/i
 );
 const validateAge = RegExp(/^([5-9]|[1-5]\d|60)$/);
 const validatephone = RegExp(/^\d{11}$/);
 
 function RegistrationForm({ t }) {
-  const {user} = useContext(UserContext)
+  const { user } = useContext(UserContext);
   const navigate = useNavigate();
 
   // //if user is already logged in redirect to home

@@ -10,6 +10,7 @@
   min-height: 300px;
   margin-top: 65px;
   text-align: center;
+  direction: ltr;
 }
 .footer .innerfooter {
   background: rgb(0 0 0 / 90%);
@@ -24,11 +25,11 @@
 }
 .link {
   text-decoration: none;
-  color: white;
+  color: white !important;
   display: block;
   font-size: 18px;
 }
-.link:hover {
+.hoverable:hover {
   color: #c2a556;
 }
 .logo {

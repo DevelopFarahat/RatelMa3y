@@ -351,6 +351,18 @@ const SystemUsers = () => {
             ],
 
         })
+        
+        let finalUser = {
+            ...userData,
+            prefs: {
+                working_days: y,
+                working_hours: wHours
+            },
+            certificates: ['إجازة تحفيظ عن رواية حفص عن عاصم'],
+            notes_in_book: [
+                { page: 1, surah: 1, ayah: 1, word_no: 1, content: "farahat" },
+            ],
+        }
 
         axios.post(`http://localhost:5000/api/instructors`, userData).then((res) => {
             console.log('response',res.data)
@@ -555,7 +567,7 @@ const SystemUsers = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {accountsData?.map((userAccount) => (
+                            {accountsData.map((userAccount) => (
                                 <tr key={userAccount._id} id={userAccount._id}>
                                     <td>{userAccount._id}</td>
                                     <td>{userAccount.name}</td>
