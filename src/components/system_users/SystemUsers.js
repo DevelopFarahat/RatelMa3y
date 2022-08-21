@@ -385,6 +385,7 @@ const SystemUsers = () => {
                 wHours.push(Object.values(WorkingHours)[i]);
             }
         }
+
         setUserData({
             ...userData,
             prefs: {

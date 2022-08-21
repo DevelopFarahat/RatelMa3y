@@ -1,0 +1,17 @@
+.form-check-input {
+    margin-left: -100vh;
+  }
+  .form-label {
+    /* padding-left:160vh; */
+    float: left;
+  }
+  .formcontrol1 {
+    float: left;
+    margin-bottom: 5%;
+  }
+  .form-label1 {
+    float: left;
+  }
+  .form-check-label {
+    padding-right: 90%;
+  }

@@ -151,6 +151,7 @@ const AddPost = () => {
               </button>
               <Form.Control
                 type="file"
+                accept="image/png, image/jpeg, image/jpg, image/webp"
                 id="file"
                 name="post_img"
                 onChange={(event) => {

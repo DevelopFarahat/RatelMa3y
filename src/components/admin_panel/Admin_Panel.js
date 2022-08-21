@@ -1,4 +1,3 @@
-
 import AdminPanelStyles from "./AdminPanel.module.css";
 import { Outlet } from "react-router";
 import { Link, NavLink } from "react-router-dom";

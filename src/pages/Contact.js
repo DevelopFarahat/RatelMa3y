@@ -24,7 +24,7 @@ const validate = (values) => {
   if (!values.userName) {
     errors.userName = "Required";
   } else if (!/^(?:[A-Z]{2,15} ?\b){2,4}$/i.test(values.userName)) {
-    errors.userName = "at least your first and last names";
+    errors.userName = "Please enter your first and last names";
   }
   /*************************************/
   if (!values.email) {
@@ -57,7 +57,6 @@ function Contact() {
     onSubmit,
     validate,
   });
-  document.title = "Contact us";
 
   return (
     <div className={ContactCss.contact}>

@@ -9,8 +9,10 @@ import program1 from "../../assets/images/program1.webp";
 import program2 from "../../assets/images/program2.webp";
 import program3 from "../../assets/images/program3.webp";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 
 function Programs() {
+  const navigate = useNavigate()
   const [t, i18n] = useTranslation();
   return (
     <div className={ProgramsCss.programs}>
