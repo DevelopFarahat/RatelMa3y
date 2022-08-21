@@ -11,7 +11,12 @@ const initialValues = {
   Name: "",
   email: "",
   phone: "",
-  Education: "",
+  gender: "",
+  state: "",
+  password: "",
+  age: "",
+  day: "",
+  hour: "",
 };
 const onSubmit = (values) => {
   console.log("Form data", values);
@@ -32,14 +37,40 @@ const validate = (values) => {
     errors.email = "Invalid email format";
   }
   /*************************************/
+  if (!values.password) {
+    errors.password = "Required";
+  } else if (!/^\d{10}$/i.test(values.password)) {
+    errors.password = "password must be 10 digits";
+  }
+  /*************************************/
   if (!values.phone) {
     errors.phone = "Required";
-  } else if (!/^[0-9]*$/i.test(values.phone)) {
+  } else if (!/^\d{12}$/i.test(values.phone)) {
     errors.phone = "Invalid phone number!";
   }
   /*************************************/
-  if (!values.Education) {
-    errors.Education = "Required";
+  if (!values.state) {
+    errors.state = "Required";
+  }
+  /*************************************/
+  if (!values.age) {
+    errors.age = "Required";
+  } else if (values.age <= 4) {
+    errors.age = "age must be more than 4 years !";
+  } else if (values.age >= 100) {
+    errors.age = "age must be less than 100 years !";
+  }
+  /*************************************/
+  if (!values.gender) {
+    errors.gender = "Required";
+  }
+  /*************************************/
+  if (!values.day) {
+    errors.day = "Required";
+  }
+  /*************************************/
+  if (!values.hour) {
+    errors.hour = "Required";
   }
   return errors;
 };
@@ -73,6 +104,21 @@ function RegistrationForm() {
               <div className='error'>{formik.errors.Name}</div>
             ) : null}
           </Form.Group>
+          <Form.Group className='mb-3' controlId='formBasicage'>
+            <Form.Label className={RegCss.label}>Age</Form.Label>
+            <Form.Control
+              className={RegCss.inputtype}
+              type='number'
+              name='age'
+              placeholder='your age'
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.age}
+            />
+            {formik.touched.age && formik.errors.age ? (
+              <div className='error'>{formik.errors.age}</div>
+            ) : null}
+          </Form.Group>
           <Form.Group className='mb-3' controlId='formBasicEmail'>
             <Form.Label className={RegCss.label}>Email</Form.Label>
             <Form.Control
@@ -86,6 +132,21 @@ function RegistrationForm() {
             />
             {formik.touched.email && formik.errors.email ? (
               <div className='error'>{formik.errors.email}</div>
+            ) : null}
+          </Form.Group>
+          <Form.Group className='mb-3' controlId='formBasicpassword'>
+            <Form.Label className={RegCss.label}>Password</Form.Label>
+            <Form.Control
+              className={RegCss.inputtype}
+              type='password'
+              name='password'
+              placeholder='create Password'
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.password}
+            />
+            {formik.touched.password && formik.errors.password ? (
+              <div className='error'>{formik.errors.password}</div>
             ) : null}
           </Form.Group>
           <Form.Group className='mb-3' controlId='formBasicPhone'>
@@ -103,122 +164,142 @@ function RegistrationForm() {
               <div className='error'>{formik.errors.phone}</div>
             ) : null}
           </Form.Group>
-          <Form.Group className='mb-3' controlId='formBasicEducation'>
-            <Form.Label className={RegCss.label}>Education</Form.Label>
+          <Form.Group className='mb-3' controlId='formBasicstate'>
+            <Form.Label className={RegCss.label}>State</Form.Label>
             <Form.Control
               className={RegCss.inputtype}
               type='text'
-              name='education'
-              placeholder=' enter qualifications degree'
+              name='state'
+              placeholder=' enter your state'
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              value={formik.values.Education}
+              value={formik.values.state}
             />
-            {formik.touched.Education && formik.errors.Education ? (
-              <div className='error'>{formik.errors.Education}</div>
+            {formik.touched.state && formik.errors.state ? (
+              <div className='error'>{formik.errors.state}</div>
             ) : null}
           </Form.Group>
           <Form.Group>
-            <Form.Label className={RegCss.label}>
-              Where would you like to start?
-            </Form.Label>
+            <Form.Label className={RegCss.label}>Gender</Form.Label>
             <br />
-            <Form.Check
-              className={RegCss.checklabel}
-              name='start'
-              label='From Surah An-Nas'
-              inline
-              type='radio'
-            />
-            <Form.Check
-              className={RegCss.checklabel}
-              name='start'
-              label='From Surah Al-Baqarah'
-              inline
-              type='radio'
-            />
+            <div className={RegCss.checkContainer}>
+              <Form.Check
+                className={RegCss.checklabel}
+                name='gender'
+                label='Male'
+                inline
+                type='radio'
+              />
+              <Form.Check
+                className={RegCss.checklabel}
+                name='gender'
+                label='Female'
+                inline
+                type='radio'
+              />
+            </div>
           </Form.Group>
           <Form.Group>
-            <Form.Label className={RegCss.label}>
-              Number of weekly classes
-            </Form.Label>
+            <Form.Label className={RegCss.label}>Working days</Form.Label>
             <br />
-            <Form.Check
-              className={RegCss.checklabel}
-              name='classnum'
-              label='1'
-              inline
-              type='radio'
-            />
-            <Form.Check
-              className={RegCss.checklabel}
-              name='classnum'
-              label='2'
-              inline
-              type='radio'
-            />
-            <Form.Check
-              className={RegCss.checklabel}
-              name='classnum'
-              label='3'
-              inline
-              type='radio'
-            />
-            <Form.Check
-              className={RegCss.checklabel}
-              name='classnum'
-              label='4'
-              inline
-              type='radio'
-            />
+            <div className={RegCss.checkContainer}>
+              <Form.Check
+                className={RegCss.checklabel}
+                name='day'
+                label='Friday'
+                inline
+              />
+              <Form.Check
+                className={RegCss.checklabel}
+                name='day'
+                label='Saturday'
+                inline
+              />
+              <Form.Check
+                className={RegCss.checklabel}
+                name='day'
+                label='Sunday'
+                inline
+              />
+              <Form.Check
+                className={RegCss.checklabel}
+                name='day'
+                label='Monday'
+                inline
+              />
+              <Form.Check
+                className={RegCss.checklabel}
+                name='day'
+                label='Tuesday'
+                inline
+              />
+              <Form.Check
+                className={RegCss.checklabel}
+                name='day'
+                label='Wednesday'
+                inline
+              />
+              <Form.Check
+                className={RegCss.checklabel}
+                name='day'
+                label='Thursday'
+                inline
+              />
+            </div>
           </Form.Group>
           <Form.Group>
-            <Form.Label className={RegCss.label}>
-              Favorite days to study
-            </Form.Label>
+            <Form.Label className={RegCss.label}>Working Hours</Form.Label>
             <br />
-            <Form.Check
-              className={RegCss.checklabel}
-              name='day'
-              label='Friday'
-              inline
-            />
-            <Form.Check
-              className={RegCss.checklabel}
-              name='day'
-              label='Saturday'
-              inline
-            />
-            <Form.Check
-              className={RegCss.checklabel}
-              name='day'
-              label='Sunday'
-              inline
-            />
-            <Form.Check
-              className={RegCss.checklabel}
-              name='day'
-              label='Monday'
-              inline
-            />
-            <Form.Check
-              className={RegCss.checklabel}
-              name='day'
-              label='Tuesday'
-              inline
-            />
-            <Form.Check
-              className={RegCss.checklabel}
-              name='day'
-              label='Wednesday'
-              inline
-            />
-            <Form.Check
-              className={RegCss.checklabel}
-              name='day'
-              label='Thursday'
-              inline
-            />
+            <div className={RegCss.checkContainer}>
+              <Form.Check
+                className={RegCss.checklabel}
+                name='hour'
+                label='08:00 am to 10:00 pm'
+                inline
+              />
+              <Form.Check
+                className={RegCss.checklabel}
+                name='hour'
+                label='10:00 am to 12:00 pm'
+                inline
+              />
+              <Form.Check
+                className={RegCss.checklabel}
+                name='hour'
+                label='12:00 pm to 02:00 pm'
+                inline
+              />
+              <Form.Check
+                className={RegCss.checklabel}
+                name='hour'
+                label='02:00 pm to 04:00 pm'
+                inline
+              />
+              <Form.Check
+                className={RegCss.checklabel}
+                name='hour'
+                label='04:00 pm to 06:00 pm'
+                inline
+              />
+              <Form.Check
+                className={RegCss.checklabel}
+                name='hour'
+                label='06:00 pm to 08:00 pm'
+                inline
+              />
+              <Form.Check
+                className={RegCss.checklabel}
+                name='hour'
+                label='08:00 pm to 10:00 pm'
+                inline
+              />
+              <Form.Check
+                className={RegCss.checklabel}
+                name='hour'
+                label='10:00 pm to 12:00 am'
+                inline
+              />
+            </div>
           </Form.Group>
           <Button variant='primary' type='submit'>
             {t("submit")}

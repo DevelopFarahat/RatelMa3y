@@ -16,16 +16,15 @@
   padding-bottom: 5px;
 }
 .label {
-  font-size: 20px;
+  font-size: 17px;
   color: #bfa155;
   margin-top: 5px;
   margin-bottom: 5px;
 }
 .registration input {
-  font-size: 20px;
+  font-size: 16px;
   border: 1px solid #c1a153;
   color: #bfa155;
-  opacity: 0.5;
 }
 .registration .inputtype:focus {
   color: #bfa155;
@@ -40,9 +39,13 @@
 
 .registration ::placeholder {
   color: #bfa155;
-  opacity: 1; /* Firefox */
+  opacity: 0.5; /* Firefox */
 }
-
+.registration .checkContainer {
+  border: 1px solid #949e9d;
+  padding: 17px 22px 0;
+  margin-bottom: 16px;
+}
 :-ms-input-placeholder {
   /* Internet Explorer 10-11 */
   color: #bfa155;
@@ -54,10 +57,11 @@
 }
 .registration button {
   width: 100%;
-  font-size: 20px;
-  font-weight: 400;
+  font-size: 17px;
+  font-weight: 500;
   border: none;
   background: #038674;
+  margin-top: 10px;
 }
 .registration button:hover {
   background-color: #038674;
@@ -70,7 +74,7 @@
   background-color: #038674;
 }
 .registration div {
-  font-size: 15px;
+  font-size: 13px;
   color: #ab0303;
 }
 @media (max-width: 769px) {
