@@ -54,13 +54,14 @@ const AddPost = () => {
     data.append("article_img", img);
     data.append("content", postData.content);
     data.append("title", postData.title);
+    data.append("date", new Date().toLocaleString('en-US', { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }));
     //Upload on the server
 
     //========================== FARAHAT
 
     if (img !== undefined && img !== null && postData.content !== "" && postData.title !== "") {
       axios
-        .post("https://ratel-may.herokuapp.com/api/events", data)
+        .post("http://localhost:5000/api/events", data)
         .then((res) => console.log("results", res.data))
         .catch((err) => console.error(err));
       setIsUserMadeAPost(true);
@@ -151,7 +152,6 @@ const AddPost = () => {
               </button>
               <Form.Control
                 type="file"
-                accept="image/png, image/jpeg, image/jpg, image/webp"
                 id="file"
                 name="post_img"
                 onChange={(event) => {

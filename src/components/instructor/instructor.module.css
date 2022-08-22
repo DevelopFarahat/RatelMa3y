@@ -1,5 +1,5 @@
 .instructor-data-container {
-  width: 48%;
+  width: 53%;
   height: 471px;
   padding: 10px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -23,13 +23,16 @@
   margin-bottom: 25px;
 }
 .table-settings-container > label {
-  flex: 0 0 15%;
+  flex: 0 0 5%;
 }
 .table-settings-container > input {
-  flex: 0 0 30%;
+  flex: 0 0 25%;
+}
+.table-settings-container > select{
+  flex:0 0 25%;
 }
 .table-settings-container > button {
-  flex: 0 0 25%;
+  flex: 0 0 20%;
 }
 .table-wrapper {
   width: 99%;
@@ -51,19 +54,23 @@ th {
   letter-spacing: 0.5px;
   border: none;
 }
+.instructor-table > tbody > tr > td:nth-child(7) > span,
 .instructor-table > tbody > tr > td:nth-child(8) > span,
 .instructor-table > tbody > tr > td:nth-child(9) > span,
 .instructor-table > tbody > tr > td:nth-child(10) > span,
 .instructor-table > tbody > tr > td:nth-child(11) > span,
-.instructor-table > tbody > tr > td:nth-child(11) > span,
 .instructor-table > tbody > tr > td:nth-child(12) > span {
   display: block;
-  width: 208px;
+  width: 240px;
+}
+.instructor-table > tbody > tr > td > span > span{
+  display: block;
+  margin:20px auto;
+}
+.instructor-table > tbody > tr > td > span > div {
+  margin: 20px auto;
 }
 
-.instructor-table > tbody > tr > td > span > span {
-  display: block;
-}
 .instructor-table > thead > tr {
   background-color: #c2a054;
   color: #ffffff;
@@ -90,11 +97,11 @@ th {
   -o-transition: all 0.3s ease-in-out;
   cursor: pointer;
 }
-.instructor-table > tbody > tr > td > span > div > span:nth-child(1),
-.instructor-table > tbody > tr > td > span > div > span:nth-child(3) {
+.instructor-table > tbody > tr > td > span > div > span > span:nth-child(1),
+.instructor-table > tbody > tr > td > span > div > span >  span:nth-child(3) {
   color: #c2a054;
 }
-.instructor-table > tbody > tr:hover td > span > div > span{
+.instructor-table > tbody > tr:hover td > span > div > span >  span{
   color: #FFFFFF;
 }
 .table-wrapper::-webkit-scrollbar {
@@ -133,10 +140,10 @@ th {
 .available-img,.absence-img{
   display: block;
   margin: auto;
-  width:30%;
+  width:40%;
 }
 .available-img{
-  width:50%;
+  width:62%;
 }
 .online-sessions,.offline-instructor-sessions{
   width:30px;
@@ -150,7 +157,7 @@ th {
   margin: auto;
 }
 .offline-instructor-sessions{
-  background-color: #f6003c;
+  background-color: #FA0026;
 }
 .no-result {
   position: absolute;

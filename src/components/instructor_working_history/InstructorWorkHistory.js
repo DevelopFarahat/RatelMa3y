@@ -24,8 +24,8 @@ const InstructorWorkHistory = ({ selectedInstructorData, initialResponseSpecific
 
                 {Object.keys(selectedInstructorData).length === 0 ? <img src={EmptyDataImage} className={InstructorWorkHistoryStyles['empty-data-img']} alt="Empty" /> : <div className={InstructorWorkHistoryStyles['settings-header']}>
                     <span id="studentsTap" className={`${tapVisible.studentsTap ? InstructorWorkHistoryStyles['taps-shadow'] : ''} ${InstructorWorkHistoryStyles['students-data-tap']}`} onClick={toogleViewInstructorTaps}>Students</span>
-                    <span id="sessionsTap" className={`${tapVisible.sessionsTap ? InstructorWorkHistoryStyles['taps-shadow'] : ''} ${InstructorWorkHistoryStyles['sessions-data-tap']}`} onClick={toogleViewInstructorTaps}>Sessions</span>
-                    <span id="evaluationsTap" className={`${tapVisible.evaluationsTap ? InstructorWorkHistoryStyles['taps-shadow'] : ''} ${InstructorWorkHistoryStyles['evaluations-data-tap']}`} onClick={toogleViewInstructorTaps}>Evaluations</span>
+                    <span style={{display:"none"}} id="sessionsTap" className={`${tapVisible.sessionsTap ? InstructorWorkHistoryStyles['taps-shadow'] : ''} ${InstructorWorkHistoryStyles['sessions-data-tap']}`} onClick={toogleViewInstructorTaps}>Sessions</span>
+                    <span style={{display:"none"}} id="evaluationsTap" className={`${tapVisible.evaluationsTap ? InstructorWorkHistoryStyles['taps-shadow'] : ''} ${InstructorWorkHistoryStyles['evaluations-data-tap']}`} onClick={toogleViewInstructorTaps}>Evaluations</span>
                 </div>}
 
 
@@ -35,18 +35,18 @@ const InstructorWorkHistory = ({ selectedInstructorData, initialResponseSpecific
 
                 {Object.keys(selectedInstructorData).length !== 0 ? tapVisible.studentsTap ?
                     <div className={InstructorWorkHistoryStyles['students-content-tap']}>
-                        {/* students */}
-                        <InstructorHistory arrName={'students'} col1Name={'Name'} col2Name={"Email"} col3Name={"Mobile"} selectedInstructorData={selectedInstructorData} initialResponseSpecificInstructorData={initialResponseSpecificInstructorData} setSelectedInstructorData={setSelectedInstructorData} />
+                        {/* student */}
+                        <InstructorHistory key={"unique1"} arrName={'students'} col1Name={'Name'} col2Name={"Email"} col3Name={"Mobile"} selectedInstructorData={selectedInstructorData} initialResponseSpecificInstructorData={initialResponseSpecificInstructorData} setSelectedInstructorData={setSelectedInstructorData} />
 
-                    </div> : tapVisible.sessionsTap ? <div className={InstructorWorkHistoryStyles['sessions-content-tap']}>
+                    </div> : tapVisible.sessionsTap ? <div style={{display:"none"}} className={InstructorWorkHistoryStyles['sessions-content-tap']}>
                         {/* sessions  */}
                         <h1>Sessions</h1>
                     </div>
-                        : <div className={InstructorWorkHistoryStyles['evaluations-content-tap']}>
+                        : <div style={{display:"none"}} className={InstructorWorkHistoryStyles['evaluations-content-tap']}>
                             {/* evaluations */}
                             <h1>Evaluations</h1>
                         </div> : null}
-
+                  
 
 
 

@@ -10,14 +10,17 @@ const InstructorHistory = ({col1Name,col2Name,col3Name,arrName,selectedInstructo
     const filterAccounts = () => {
         console.log(filterValue);
         let filtarationArr = [];
+        console.log("selectedInstructorData");
+        console.log(selectedInstructorData)
+        console.log("selectedInstructorData");
         for (let i = 0; i < selectedInstructorData[arrName].length; i++) {
 
-            if (filterValue.toLowerCase() === selectedInstructorData[arrName][i].name.toLowerCase()) {
+            if (selectedInstructorData[arrName][i].name.toLowerCase().includes(filterValue.toLowerCase())) {
                 console.log("inside name condition");
                 filtarationArr.push(selectedInstructorData[arrName][i]);
 
             }
-            else if (filterValue.toLowerCase() === selectedInstructorData[arrName][i].email.toLowerCase()) {
+            else if ( selectedInstructorData[arrName][i].email.toLowerCase().includes(filterValue.toLowerCase())) {
                 filtarationArr.push(selectedInstructorData[arrName][i]);
             }
         }

@@ -28,7 +28,7 @@ const PostsBoard = () => {
 ];
   const [post,setPost] = useState([]);
   useEffect(()=>{
-    axios.get(`https://ratel-may.herokuapp.com/api/events`).then((res)=>{
+    axios.get(`http://localhost:5000/api/events`).then((res)=>{
       let postsArr = res.data;
       postsArr.reverse();
       setPost(current=>postsArr);
@@ -44,7 +44,7 @@ const PostsBoard = () => {
     <div className={PostBoardStyles['post-board']}>
       {
         
-        Posts.map((post,index,arr) => (
+        post.map((post,index,arr) => (
           
           <Post key={post._id} post={post} latestPost={arr[0]}/>
      

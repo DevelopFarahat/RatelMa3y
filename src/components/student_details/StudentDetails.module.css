@@ -52,6 +52,7 @@
 .requested-joinnig-student-table > thead > tr > th,
 td {
   font-size: 1rem;
+  text-transform: capitalize;
   letter-spacing: 0.5px;
   word-spacing: 1px;
   text-align: center;
@@ -62,11 +63,29 @@ td {
   text-align: center;
 }
 .requested-joinnig-student-table > thead > tr > td > span > span {
-  display: block;
-  width: 305;
-  margin: auto;
+  width: 305px;
+  margin: 10px auto;
   text-align: center;
+  display: block;
 }
+.requested-joinnig-student-table
+  > thead
+  > tr
+  > td
+  > span
+  > div , .requested-joinnig-student-table
+  > thead
+  > tr
+  > td
+  > span
+  > div
+  > span{
+
+    margin: 20px auto;
+    width:305px;
+    text-transform: uppercase;
+    text-align:justify;
+  }
 .requested-joinnig-student-table
   > thead
   > tr
@@ -81,6 +100,7 @@ td {
   > span
   > div
   > span:nth-child(3) {
+
   color: #c2a054;
 }
 .requested-joinnig-student-table > thead > tr > th {

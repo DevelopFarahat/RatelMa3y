@@ -141,8 +141,8 @@ const SystemUsers = () => {
         h7: false,
     });
     const [systemUsersFormSteps, setSystemUsersFormSteps] = useState({
-        firstStep: false,
-        secondStep: true,
+        firstStep: true,
+        secondStep: false,
         thirdStep: false,
     });
     const [checkedDays, setCheckedDays] = useState({
@@ -219,7 +219,7 @@ const SystemUsers = () => {
             let workingDaysCloneObji = workingDays;
 
             let arr = Object.values(workingDaysCloneObji);
-            arr[event.target.value] = null;
+            arr[event.target.value] = -1;
             //arr.splice(event.target.value, 1);
             setWorkingDays(arr);
         }
@@ -367,7 +367,7 @@ const SystemUsers = () => {
         for (let i = 0; i < Object.values(workingDays).length; i++) {
             
             if (Object.values(workingDays)[i] === "") {
-                let emptyWorkingDayInitialValue = (Object.values(workingDays)[i]) = null;
+                let emptyWorkingDayInitialValue = (Object.values(workingDays)[i]) = -1;
                 wD.push(emptyWorkingDayInitialValue);
             }else{
                 wD.push(Number(Object.values(workingDays)[i]));
@@ -385,7 +385,6 @@ const SystemUsers = () => {
                 wHours.push(Object.values(WorkingHours)[i]);
             }
         }
-
         setUserData({
             ...userData,
             prefs: {
@@ -414,7 +413,7 @@ const SystemUsers = () => {
             axios
             .post(`https://ratel-may.herokuapp.com/api/instructors`, finalUser)
             .then((res) => {
-                setFetchAgain(current=>current++);
+                setFetchAgain(fetchAgain+1);
                 setUserData({
                     email: "",
                     name: "",
@@ -501,7 +500,9 @@ const SystemUsers = () => {
                 privileges:userData.privileges,
             } )
             .then((res) => {
-                setFetchAgain(current=>current++);
+                setFetchAgain(fetchAgain+1);
+                setSelectedRow(-1);
+                console.log(res.data);
                 setUserData({
                     email: "",
                     name: "",
@@ -656,7 +657,7 @@ const SystemUsers = () => {
             privileges:userAccount.privileges,
         });
         for(let i = 0 ; i < userAccount.prefs.working_days.length;i++ ){
-            if(userAccount.prefs.working_days[i] !== null){
+            if(userAccount.prefs.working_days[i] !== -1){
                 
                 workinDaysInitialObji[`d${i}`] = userAccount.prefs.working_days[i];
                 workingDaysCheckedInitialObji[`d${i}`] = true
@@ -695,7 +696,7 @@ const SystemUsers = () => {
                 console.log(error);
             });
     }, [fetchAgain]);
-
+console.log(fetchAgain);
     return (
         <>
         {isUserCreateNewAccount? <div className={SystemUsersStyles["alert-container"]}>

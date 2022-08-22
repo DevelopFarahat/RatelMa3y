@@ -17,6 +17,7 @@ const StudentSubscriptionState = ({ setSpecificStudentJoiningRequestData, setIsS
     const [studentData, setStudentData] = useState([]);
     const [instructorData, setInstructorData] = useState([]);
     const initialResponse = useRef();
+    const [fetchAgain,setFetchAgain] = useState(0);
     const [studentStatus, setStudentStatus] = useState(false);
     const [selectedRow, setSelectedRow] = useState(-1);
     const [changableSubscriptionState, setChangableSubscriptionState] = useState({});
@@ -41,9 +42,9 @@ const StudentSubscriptionState = ({ setSpecificStudentJoiningRequestData, setIsS
         let filtarationArr = [];
         for (let i = 0; i < studentData.length; i++) {
 
-            if (filterValue.toLowerCase() === studentData[i].name.toLowerCase()) {
+            if ( studentData[i].name.toLowerCase().includes(filterValue.toLowerCase())) {
                 filtarationArr.push(studentData[i]);
-            } else if (filterValue.toLowerCase() === studentData[i].subscription_state.toLowerCase()) {
+            }else if (  studentData[i].subscription_state.toLowerCase().includes(filterValue.toLowerCase())) {
                 filtarationArr.push(studentData[i]);
             }
         }
@@ -70,7 +71,7 @@ const StudentSubscriptionState = ({ setSpecificStudentJoiningRequestData, setIsS
         setStudentConfiguration({
             studentStatus: '',
             studentInstructor: ''
-        })
+        });
     }
     const setConfiguration = (event) => {
         console.log(event.target.id);
@@ -98,7 +99,12 @@ const StudentSubscriptionState = ({ setSpecificStudentJoiningRequestData, setIsS
     }
     const handleSubmit = (event) => {
         event.preventDefault();
-        setStudentStatus(false);
+        setStudentStatus(current => !current);
+        setStudentConfiguration({
+            studentStatus: '',
+            studentInstructor: ''
+        });
+        //setStudentStatus(false);
         changeSubscriptionState();
 
     }
@@ -112,6 +118,7 @@ const StudentSubscriptionState = ({ setSpecificStudentJoiningRequestData, setIsS
         axios.get(`https://ratel-may.herokuapp.com/api/students/${stdObji._id}`).then((res) => {
             initialSpecificStudentJoiningRequestData.current = res.data;
             setSpecificStudentJoiningRequestData(res.data);
+           
             console.log(res.data);
         }).catch((error) => {
             console.log(error);
@@ -129,28 +136,37 @@ const StudentSubscriptionState = ({ setSpecificStudentJoiningRequestData, setIsS
         }, 1000);
     }
     useEffect(() => {
-        axios.get('https://ratel-may.herokuapp.com/api/students').then((res) => {
+        axios.get('http://localhost:5000/api/students').then((res) => {
             initialResponse.current = res.data;
             setStudentData(res.data)
         }, (error) => {
             console.log(error);
         });
-        axios.get(`https://ratel-may.herokuapp.com/api/instructors`).then((instructorRes) => {
+        axios.get(`http://localhost:5000/api/instructors`).then((instructorRes) => {
             setInstructorData(instructorRes.data);
         }).catch((error) => {
             console.log(error);
         })
-},[]);
+},[fetchAgain]);
 
     const changeSubscriptionState = () => {
         if (studentConfiguration.studentStatus !== 'Cancelled') {
-            axios.put(`https://ratel-may.herokuapp.com/api/students/${changableSubscriptionState._id}`, { subscription_state: studentConfiguration.studentStatus, instructor: studentConfiguration.studentInstructor })
+            axios.put(`http://localhost:5000/api/students/${changableSubscriptionState._id}`, { subscription_state: studentConfiguration.studentStatus, instructor: studentConfiguration.studentInstructor }).then((res)=>{
+                setFetchAgain(fetchAgain+1);
+            }).catch((error)=>{
+                console.log(error);
+            })
         } else {
             console.log(studentConfiguration.studentStatus);
-            axios.put(`https://ratel-may.herokuapp.com/api/students/${changableSubscriptionState._id}`, { subscription_state: studentConfiguration.studentStatus, instructor: '' })
+            axios.put(`http://localhost:5000/api/students/${changableSubscriptionState._id}`, { subscription_state: studentConfiguration.studentStatus, instructor: '' }).then((res)=>{
+                setFetchAgain(fetchAgain+1);
+            }).catch((error)=>{
+                console.log(error);
+            })
         }
         distroyAlert();
     }
+
     return (
         <>
             <div className={StudentSubscriptionStyles['student-user-data-container']}>
@@ -208,8 +224,18 @@ const StudentSubscriptionState = ({ setSpecificStudentJoiningRequestData, setIsS
                                 </Form.Select>
                                 <small className="text-danger">{errors.statusError}</small>
                             </div>
+                                
 
-                            {studentConfiguration.studentStatus !== '' && studentConfiguration.studentStatus !== 'Cancelled' ? <div>
+                            {changableSubscriptionState.instructor !== null &&  changableSubscriptionState.instructor !== undefined?<div>
+                                <Form.Label htmlFor="studentInstructor">Instructor</Form.Label>
+                                <Form.Select name="student_instructor" id="studentInstructor" className={`${errors.instructorError ? StudentSubscriptionStyles['errors'] : ''}`} onChange={setConfiguration}>
+                                    <option value="">Select</option>
+                                    {instructorData.map((instructor) => (
+                                        <option key={instructor._id} value={instructor._id}>{instructor.name}</option>
+                                    ))}
+                                </Form.Select>
+                                <small className="text-danger">{errors.instructorError}</small>
+                            </div>:studentConfiguration.studentStatus !== '' && studentConfiguration.studentStatus !== 'Cancelled' ? <div>
                                 <Form.Label htmlFor="studentInstructor">Instructor</Form.Label>
                                 <Form.Select name="student_instructor" id="studentInstructor" className={`${errors.instructorError ? StudentSubscriptionStyles['errors'] : ''}`} onChange={setConfiguration}>
                                     <option value="">Select</option>
@@ -219,7 +245,7 @@ const StudentSubscriptionState = ({ setSpecificStudentJoiningRequestData, setIsS
                                 </Form.Select>
                                 <small className="text-danger">{errors.instructorError}</small>
                             </div> : null}
-                            {studentConfiguration.studentStatus !== '' && studentConfiguration.studentStatus === 'Cancelled' ? <button type="submit" className={`${studentConfiguration.studentStatus === '' || errors.statusError || errors.instructorError ? StudentSubscriptionStyles['disabled-btn'] : StudentSubscriptionStyles['btn']}`}>Save<FaSave style={{ margin: '0px 0 1px 3px' }} size={15} /></button> : <button type="submit" className={`${studentConfiguration.studentStatus === '' || studentConfiguration.studentInstructor === '' || errors.statusError || errors.instructorError ? StudentSubscriptionStyles['disabled-btn'] : StudentSubscriptionStyles['btn']}`}>Save<FaSave style={{ margin: '0px 0 1px 3px' }} size={15} /></button>}
+                            {studentConfiguration.studentStatus !== '' && studentConfiguration.studentStatus === 'Cancelled' ? <button type="submit" className={`${studentConfiguration.studentStatus === '' || errors.statusError || errors.instructorError ? StudentSubscriptionStyles['disabled-btn'] : StudentSubscriptionStyles['btn']}`}>Save<FaSave style={{ margin: '0px 0 1px 3px' }} size={15} /></button> : changableSubscriptionState.instructor !== null && changableSubscriptionState.instructor !== undefined?<button type="submit" className={`${ StudentSubscriptionStyles['btn']}`}>Save<FaSave style={{ margin: '0px 0 1px 3px' }} size={15} /></button>  :<button type="submit" className={`${studentConfiguration.studentStatus === '' || studentConfiguration.studentInstructor === '' || errors.statusError || errors.instructorError ? StudentSubscriptionStyles['disabled-btn'] : StudentSubscriptionStyles['btn']}`}>Save<FaSave style={{ margin: '0px 0 1px 3px' }} size={15} /></button>}
                         </form>
                     </div></div> : null}
             </div>
