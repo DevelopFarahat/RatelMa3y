@@ -111,9 +111,10 @@ function App() {
               left: -8,
               alignItems: "center",
               pointerEvents: "none",
+              overflow: 'hidden'
             }}
           >
-            <RoomSideBar />
+            <RoomSideBar hideMain={hideMain}/>
           </div>
         </UserProvider>
       </div>

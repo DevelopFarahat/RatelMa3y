@@ -7,6 +7,7 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { useFormik } from "formik";
 import { useTranslation } from "react-i18next";
+import axios from 'axios'
 
 const initialValues = {
   userName: "",
@@ -15,9 +16,12 @@ const initialValues = {
   message: "",
 };
 const onSubmit = (values) => {
-  console.log("Form data", values);
-  //TODO: make a place for storing contacts in backend
-  alert("Welcome ,,, " + " " + values.userName);
+  
+  axios.post('http://localhost:5000/api/contacts',{name: values.userName,content: values.message, email: values.email, phone: values.phone }).then((res)=> {
+    if(res.status == 200){
+      alert('sent successfully')
+    }
+  })
 };
 const validate = (values) => {
   let errors = {};
@@ -50,6 +54,7 @@ const validate = (values) => {
   }
   return errors;
 };
+
 function Contact() {
   const [t, i18n] = useTranslation();
   const formik = useFormik({

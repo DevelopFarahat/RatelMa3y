@@ -91,14 +91,26 @@ export default function Room({
                 ///TODO: api/session/:id
                 //TODO: see if 20 min trick can be applied
                 axios
-                  .put("http://localhost:5000/api/sessions/" + session._id, {})
+                  .put(
+                    "http://localhost:5000/api/sessions/" + session._id,
+                    body
+                  )
                   .then((res) => setUser({ ...user, in_session: session }))
-                  .catch((err) => console.log("Maybe you should redial"));
+                  .catch((err) => console.log("Maybe you should reconnect"));
 
-                //editting the iframe as needed
-                // const iFrame = document.querySelector("iframe");
-                // $('body').append(sideBar)
-                // document.body.insertAdjacentHTML("beforeend",)
+                let field = "students";
+                if (user.role == "instructor") field = "instructors";
+                axios
+                  .put(`http://localhost:5000/api/${field}/${user._id}`, {
+                    sessions: [session],
+                  })
+                  .then((res) =>
+                    console.log(
+                      "should add to sessions in the student array",
+                      res
+                    )
+                  )
+                  .catch((err) => console.log("field problem", err));
               })
 
               .on("left-meeting", () => {

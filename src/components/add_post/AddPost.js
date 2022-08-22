@@ -7,7 +7,7 @@ import { BsFillFileEarmarkPostFill } from "react-icons/bs";
 import CircleGif from "../../assets/images/check-circle.gif";
 import formEmptyFieldSadEmoji from "../../assets/images/emotions.png";
 import axios from "axios";
-import { post } from "jquery";
+
 const AddPost = () => {
   const [postData, setPostData] = useState({
     title: "",

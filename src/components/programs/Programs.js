@@ -25,7 +25,7 @@ function Programs() {
                 <img src={program1} alt='program1' />
               </div>
               <h4>{t("programs_h4")}</h4>
-              <button>{t("prorams_joinnow")}</button>
+              <button onClick={()=> navigate('/register')}>{t("prorams_joinnow")}</button>
             </div>
           </Col>
           <Col md={4}>
@@ -34,7 +34,7 @@ function Programs() {
                 <img src={program2} alt='program2' />
               </div>
               <h4>{t("programs_nourelbayan")}</h4>
-              <button>{t("prorams_joinnow")}</button>
+              <button onClick={()=> navigate('/register')}>{t("prorams_joinnow")}</button>
             </div>
           </Col>
           <Col md={4}>
@@ -43,7 +43,7 @@ function Programs() {
                 <img src={program3} alt='program3' />
               </div>
               <h4>{t("prorams_memorizing")}</h4>
-              <button>{t("prorams_joinnow")}</button>
+              <button onClick={()=> navigate('/register')}>{t("prorams_joinnow")}</button>
             </div>
           </Col>
         </Row>

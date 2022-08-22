@@ -10,14 +10,20 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { useFormik } from "formik";
 import { useTranslation } from "react-i18next";
+import axios from 'axios'
 const initialValues = {
   userName: "",
   email: "",
   phone: "",
+  content: ""
 };
 const onSubmit = (values) => {
-  console.log("Form data", values);
-  alert("Welcome ,,, " + " " + values.userName);
+  
+  axios.post('http://localhost:5000/api/contacts',{name: values.userName,content: values.content, email: values.email, phone: values.phone }).then((res)=> {
+    if(res.status == 200){
+      alert('sent successfully')
+    }
+  })
 };
 const validate = (values) => {
   let errors = {};
@@ -104,6 +110,7 @@ function ContactUs() {
                   controlId='exampleForm.ControlTextarea1'>
                   <Form.Control
                     as='textarea'
+                    name="content"
                     placeholder='Your Message'
                     rows={4}
                   />

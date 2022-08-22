@@ -12,9 +12,9 @@ import { BsRecordCircleFill, BsCircleFill } from "react-icons/bs";
 import { BiTimeFive } from "react-icons/bi";
 import { MdDateRange } from "react-icons/md";
 import { ImPhoneHangUp } from "react-icons/im";
-import { FaCalendarTimes } from 'react-icons/fa'
+import { FaCalendarTimes } from "react-icons/fa";
 
-function Sessions({ setIsRoomPrepared, setShowSidebar,setHideMain }) {
+function Sessions({ setIsRoomPrepared, setShowSidebar, setHideMain }) {
   const [modalShow, setModalShow] = useState(false);
   const [sessions, setsessions] = useState([]);
   //TODO: still a problem to redirect
@@ -24,27 +24,25 @@ function Sessions({ setIsRoomPrepared, setShowSidebar,setHideMain }) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if(!user) user = JSON.parse(localStorage.getItem('user'));
+    if (!user) user = JSON.parse(localStorage.getItem("user"));
 
     //Get Sessions for this specific user or get all if admin
 
-    fetchSessions()
+    fetchSessions();
   }, []);
 
+  function fetchSessions() {
+    let sessions_url =
+      "http://localhost:5000/api/sessions" +
+      (["Admin", "Supervisor"].includes(user.privileges)
+        ? ""
+        : "?userId=" + user._id);
 
-function fetchSessions(){
-  
-  let sessions_url =
-  "http://localhost:5000/api/sessions" +
-  (["Admin", "Supervisor"].includes(user.privileges)
-    ? ""
-    : "?userId=" + user._id);
-
-axios
-  .get(sessions_url)
-  .then((res) => setsessions(res.data.reverse()))
-  .catch((err) => console.error(err));
-}
+    axios
+      .get(sessions_url)
+      .then((res) => setsessions(res.data.reverse()))
+      .catch((err) => console.error(err));
+  }
 
   console.log("user is ", user);
 
@@ -78,10 +76,10 @@ axios
         ended_at: Date.now(),
       })
       .then((res) => {
-        fetchSessions()
+        fetchSessions();
         //Then delete room in the third party
         axios
-          .delete("https://api.daily.co/v1/rooms/"+session.room_id)
+          .delete("https://api.daily.co/v1/rooms/" + session.room_id)
           .then((ress) => console.log(ress.status))
           .catch((err) => console.error(err.message));
       })
@@ -99,7 +97,7 @@ axios
       />
 
       <div className="container">
-        {(user) && user.role == "instructor" && (
+        {user && user.role == "instructor" && (
           <Button
             variant="success"
             className="my-4"
@@ -115,19 +113,31 @@ axios
               justifyContent: "center",
               alignItems: "center",
               height: "100%",
-              textAlign: 'center',
-              
+              textAlign: "center",
+
               margin: 24,
             }}
           >
-            <FaCalendarTimes size="160" color="#198754"/>
-            <div style={{marginTop: 16, fontSize: 24}}>No sessions yet</div>
+            <FaCalendarTimes size="160" color="#198754" />
+            <div style={{ marginTop: 16, fontSize: 24 }}>No sessions yet</div>
           </div>
         ) : (
           sessions?.map((session, index) => {
-            let { notes, eval_current, eval_previous } = getEvaluation(
-              session.evaluations
-            );
+            let notes = "";
+            let c_eval = 0;
+            let p_eval = 0;
+
+            if (session.evaluations) {
+              let obj = session.evaluations.find(
+                (evalu) => evalu.student._id == user._id
+              );
+              if (obj) {
+                notes = obj.notes;
+                c_eval = obj.current_eval;
+                p_eval = obj.previously_eval;
+              }
+            } else console.log("مفيهاش يسطا", session);
+
             let date = new Date(session.created_at);
             let dateClearified = date.toLocaleString("default", {
               day: "numeric",
@@ -162,6 +172,19 @@ axios
                       {session.created_by.name}
                     </span>
                   </h6>
+                  {user && user.role == "student" && (
+                    <>
+                      <h6>
+                        Memorizing Evaluation:{" "}
+                        <span style={{ fontWeight: 300 }}>{p_eval}</span>
+                      </h6>
+                      <h6>
+                        Contribution Evaluation:{" "}
+                        <span style={{ fontWeight: 300 }}>{c_eval}</span>
+                      </h6>
+                    </>
+                  )}
+
                   {!session.is_live && (
                     <div>
                       <h6>
@@ -170,20 +193,16 @@ axios
                           {session?.ended_at?.replace("T", " ").slice(0, -8)}
                         </span>
                       </h6>
-
+{/* 
                       {user.role == "student" && (
                         <>
                           <h6>
                             Memorizing Previous:
-                            <span style={{ fontWeight: 300 }}>
-                              {eval_previous}
-                            </span>
+                            <span style={{ fontWeight: 300 }}>{p_eval}</span>
                           </h6>
                           <h6>
                             Performance in session:
-                            <span style={{ fontWeight: 300 }}>
-                              {eval_current}
-                            </span>
+                            <span style={{ fontWeight: 300 }}>{c_eval}</span>
                           </h6>
                           {notes && (
                             <h6>
@@ -192,7 +211,7 @@ axios
                             </h6>
                           )}
                         </>
-                      )}
+                      )} */}
                     </div>
                   )}
 
@@ -209,7 +228,9 @@ axios
                           <h6>
                             Attended:{" "}
                             <span style={{ fontWeight: 300 }}>
-                              {session.attendants?.includes(user._id)}
+                              {session.attendants?.includes(user._id)
+                                ? "true"
+                                : "false"}
                             </span>
                           </h6>
                         )}
@@ -227,7 +248,7 @@ axios
                         </h6>
                         <h6>
                           Session No.:{" "}
-                          <span style={{ fontWeight: 300 }}>{index + 1}</span>
+                          <span style={{ fontWeight: 300 }}>{sessions.length - index}</span>
                         </h6>
                       </Accordion.Body>
                     </Accordion.Item>
@@ -245,26 +266,28 @@ axios
                     style={{ justifyContent: "center", alignItems: "center" }}
                   >
                     <MdDateRange /> {dateClearified}{" "}
-                    <BiTimeFive style={{ marginLeft: 16 }} /> {time}
+                    <BiTimeFive style={{ marginLeft: 16 }} /> {time} (GMT)
                   </div>
 
                   {session.is_live && (
                     <div>
-                      {/* TODO */}
-                      <Button
-                        variant="outline-danger"
-                        className="mx-2"
-                        onClick={endSession.bind(this,session)}
-                      >
-                        <ImPhoneHangUp className="mx-1" />
-                        <span>End</span>
-                      </Button>
+                      {(session.created_by._id == user._id ||
+                        user.privileges == "Admin") && (
+                        <Button
+                          variant="outline-danger"
+                          className="mx-2"
+                          onClick={endSession.bind(this, session)}
+                        >
+                          <ImPhoneHangUp className="mx-1" />
+                          <span>End</span>
+                        </Button>
+                      )}
                       <Link to="/sessions/room" state={{ session: session }}>
                         <Button
                           variant="success"
                           onClick={() => setIsRoomPrepared(true)}
                         >
-                        <span>Join</span>                          
+                          <span>Join</span>
                           <IoEnter />
                         </Button>
                       </Link>

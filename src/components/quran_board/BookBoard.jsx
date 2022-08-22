@@ -879,7 +879,7 @@ const BookBoard = () => {
         className="quran-surah-settings"
         style={{ backgroundColor: "#038674", color: "white" }}
       >
-        <div>
+        <div className="d-none d-sm-flex ">
           <Form.Label>سورة</Form.Label>
           <Form.Select
             onChange={(event) => (
@@ -896,7 +896,7 @@ const BookBoard = () => {
             ))}
           </Form.Select>
         </div>
-        <div>
+        <div style={{minWidth: 200}}>
           <Form.Label>صفحة</Form.Label>
           <Form.Select onChange={(event) => setPageNumber(event.target.value)}>
             <option>اختر</option>

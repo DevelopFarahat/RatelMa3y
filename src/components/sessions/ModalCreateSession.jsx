@@ -169,7 +169,7 @@ axios
         <Button onClick={props.onHide} className="btn-secondary">
           Close
         </Button>
-        <Button onClick={createSession} vatiant="success">
+        <Button onClick={createSession} vatiant="success" className={"btn-success"}>
           Create
         </Button>
       </Modal.Footer>

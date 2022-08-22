@@ -7,8 +7,7 @@ import { AiFillLock } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import UserContext from "../utils/UserContext";
-import { useSnackbar } from 'notistack';
-
+import { useSnackbar } from "notistack";
 
 export default function Login() {
   const schema = yup.object().shape({
@@ -18,7 +17,7 @@ export default function Login() {
 
   const navigate = useNavigate();
   const { user, setUser } = useContext(UserContext);
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar()
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
   //TODO: not working properly for a reason
   // //if user is already logged in redirect to home
@@ -32,23 +31,25 @@ export default function Login() {
   };
   const onSubmit = async (values) => {
     console.log("Form data", values);
-    let first = await axios.post("http://localhost:5000/api/auth/login", {
-      email: values.email,
-      password: values.password,
-    });
-    if (first.status == 200) {
-      //Login Successfully
-      localStorage.setItem("accessToken", first.data.accessToken);
-      localStorage.setItem("user_name", first.data.name);
-      localStorage.setItem("user_id", first.data._id);
-      localStorage.setItem("user_email", first.data.email);
-      localStorage.setItem("user", JSON.stringify(first.data));
+    axios
+      .post("http://localhost:5000/api/auth/login", {
+        email: values.email,
+        password: values.password,
+      })
+      .then((res) => {
+        if (res.status == 200) {
+          //Login Successfully
+          localStorage.setItem("accessToken", res.data.accessToken);
+          localStorage.setItem("user_name", res.data.name);
+          localStorage.setItem("user_id", res.data._id);
+          localStorage.setItem("user_email", res.data.email);
+          localStorage.setItem("user", JSON.stringify(res.data));
 
-      setUser(first.data);
-      navigate("../home", { replace: true });
-    } else 
-      return enqueueSnackbar('Incorrect email or password')
-    
+          setUser(res.data);
+          navigate("../home", { replace: true });
+        } else return enqueueSnackbar("Incorrect email or password");
+      })
+      .catch((err) => enqueueSnackbar("Incorrect email or password"));
   };
   const validate = (values) => {
     let errors = {};
@@ -109,7 +110,6 @@ export default function Login() {
             />
 
             {formik.touched.email && formik.errors.email ? (
-              
               <Form.Control.Feedback type="invalid">
                 {formik.errors.email}
               </Form.Control.Feedback>
@@ -137,13 +137,7 @@ export default function Login() {
           </InputGroup>
 
           <div className="d-grid gap-2">
-            <Button
-              type="submit"
-              variant="success"
-              className="mb-4"
-              size="lg"
-              onClick={formik.handleSubmit}
-            >
+            <Button type="submit" variant="success" className="mb-4" size="lg">
               Log in
             </Button>
           </div>
