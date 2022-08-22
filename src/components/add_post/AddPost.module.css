@@ -18,6 +18,9 @@
 }
 .add-post-main-container > .image-posting-settings-container{
   width:30%;
+  display: flex;
+  flex-direction: column;
+
 }
 .post-image-area {
     height: 259px;
@@ -41,6 +44,7 @@
   height: 150px;
 }
 .button-container {
+  margin-top:36px;
   position: relative;
   border-radius: 5px;
   cursor: pointer;

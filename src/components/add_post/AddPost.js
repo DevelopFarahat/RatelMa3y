@@ -145,6 +145,7 @@ const AddPost = () => {
               ""
             )}
           </div>
+          <div>
           <div className={AddPostStyles["button-group"]}>
             <div className={` ${AddPostStyles["button-container"]}`}>
               <button type="button">
@@ -165,9 +166,10 @@ const AddPost = () => {
             type="button"
             className={`${AddPostStyles["btn"]} ${AddPostStyles["clear-btn"]}`}
             onClick={clearImagePath}
-          >
+            style={{ marginTop: "21px" }}>
             Clear <MdOutlineClear size={15} style={{ marginTop: "-3px" }} />
           </button>
+          </div>
         </div>
         <div className={AddPostStyles["post-title-content-container"]}>
           <div>

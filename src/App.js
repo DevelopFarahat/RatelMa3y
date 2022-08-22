@@ -11,7 +11,7 @@ import AddPost from "./components/add_post/AddPost";
 import Student from "./components/students/Students";
 import PostsBoard from "./components/posts_board/Posts_board";
 import PostDetails from "./components/post_details/PostDetails";
-import RegistrationForm from "./components/register-form/RegistrationForm";
+import RegistrationForm from "./components/registration-form/RegistrationForm";
 import { useTranslation } from "react-i18next";
 import Footer from "./components/footer/Footer";
 import ScrollToTop from "./utils/ScrollToTop";

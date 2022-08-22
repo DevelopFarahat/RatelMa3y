@@ -40,6 +40,7 @@ const PostsBoard = () => {
   },[])
 
 
+
   return (
     <div className={PostBoardStyles['post-board']}>
       {

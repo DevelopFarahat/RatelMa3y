@@ -78,3 +78,24 @@
     color: rgba(49,49,49,.8);
 }
 
+@media screen and (max-width:988px){
+    .post-main-container{
+        flex-direction: column;
+    }
+    .post-image{
+        width:99%;
+        background-position: center center;
+        object-fit: cover;
+    }
+}
+@media screen and (max-width:680px){
+    .post-details{
+        width:99%;
+    }
+    .post-main-container{
+        padding:0;
+    }
+    .post-header{
+        padding-left: 9px;
+    }
+}
