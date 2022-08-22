@@ -7,7 +7,6 @@ import { BsFillFileEarmarkPostFill } from "react-icons/bs";
 import CircleGif from "../../assets/images/check-circle.gif";
 import formEmptyFieldSadEmoji from "../../assets/images/emotions.png";
 import axios from "axios";
-import { post } from "jquery";
 const AddPost = () => {
   const [postData, setPostData] = useState({
     title: "",
@@ -145,6 +144,7 @@ const AddPost = () => {
               ""
             )}
           </div>
+          <div>
           <div className={AddPostStyles["button-group"]}>
             <div className={` ${AddPostStyles["button-container"]}`}>
               <button type="button">
@@ -166,8 +166,9 @@ const AddPost = () => {
             className={`${AddPostStyles["btn"]} ${AddPostStyles["clear-btn"]}`}
             onClick={clearImagePath}
           >
-            Clear <MdOutlineClear size={15} style={{ marginTop: "-3px" }} />
+            Clear <MdOutlineClear size={15} style={{ marginTop: "35px" }} />
           </button>
+          </div>
         </div>
         <div className={AddPostStyles["post-title-content-container"]}>
           <div>
