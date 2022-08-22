@@ -165,8 +165,8 @@ const AddPost = () => {
             type="button"
             className={`${AddPostStyles["btn"]} ${AddPostStyles["clear-btn"]}`}
             onClick={clearImagePath}
-          >
-            Clear <MdOutlineClear size={15} style={{ marginTop: "35px" }} />
+            style={{ marginTop: "21px" }}>
+            Clear <MdOutlineClear size={15} style={{ marginTop: "-3px" }} />
           </button>
           </div>
         </div>
