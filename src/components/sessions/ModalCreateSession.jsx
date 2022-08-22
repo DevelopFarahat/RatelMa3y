@@ -13,8 +13,8 @@ export default function ModalCreateSession(props) {
 
   const [options, setOptions] = useState([]); //For the dropdown
   const [participants, setParticipants] = useState([]);
-  const [isExam,setIsExam] = useState(false)
-  const { user } = useContext(UserContext)
+  const [isExam, setIsExam] = useState(false);
+  const { user } = useContext(UserContext);
 
   //TODO: make options asyncLater with this vid https://www.youtube.com/watch?v=3u_ulMvTYZI
 
@@ -23,7 +23,7 @@ export default function ModalCreateSession(props) {
       //Add students as options to select
 
       // let first = await axios.get("http://localhost:5000/api/students");
-      
+
       let opts = user.students?.map((stu) => ({
         value: stu._id,
         label: stu.name,
@@ -74,12 +74,9 @@ export default function ModalCreateSession(props) {
       "http://localhost:5000/api/sessions",
       {
         room_id: rid.slice(0, -3),
-        
         members_with_access: participants,
         created_by: localStorage.getItem("user_id"),
-        previously_reached: {
-          
-        },
+        previously_reached: {},
         evaluations: [],
         is_live: true,
         attendants: [],
@@ -91,26 +88,40 @@ export default function ModalCreateSession(props) {
         },
       }
     );
-    console.log(first);
+    // console.log(first);
 
     //Show the added session
 
-    props.setsessions(
-      props.sessions.concat({
-        room_id: localStorage.getItem("user_id") + "-" + date,
-        chat: [],
-        members_with_access: participants,
-        created_by: localStorage.getItem("user_id"),
-        previously_reached: "Surah Al Ekhlas",
-        evaluations: [],
-        is_live: true,
-        currently_inside: [localStorage.getItem("user_id")],
-        created_at: date,
-        started_at: date,
-      })
-    );
+    fetchSessions()
+    // props.setsessions(
+    //   props.sessions.unshift({
+    //     room_id: localStorage.getItem("user_id") + "-" + date,
+    //     members_with_access: participants,
+    //     created_by: localStorage.getItem("user_id"),
+    //     previously_reached: "Surah Al Ekhlas",
+    //     evaluations: [],
+    //     is_live: true,
+    //     created_at: date,
+    //     started_at: date,
+    //   })
+    // );
     props.onHide();
   }
+
+  
+function fetchSessions(){
+  
+  let sessions_url =
+  "http://localhost:5000/api/sessions" +
+  (["Admin", "Supervisor"].includes(user.privileges)
+    ? ""
+    : "?userId=" + user._id);
+
+axios
+  .get(sessions_url)
+  .then((res) => props.setsessions(res.data.reverse()))
+  .catch((err) => console.error(err));
+}
 
   return (
     <Modal
@@ -135,32 +146,30 @@ export default function ModalCreateSession(props) {
           styles={dropdownColorStyles}
         />
 
-        <div>
-          <input
-            className="form-check-input m-2"
-            type="checkbox"
-            id="isExamCheckbox"
-            value={isExam}
-          />
-          <label
-            className="form-check-label"
-            htmlFor="isExamCheckbox"
-            style={{ fontWeight: 500, transform: 'translateY(3px)' }}
-          >
-            Is an exam
-          </label>
-        </div>
+        {false && (
+          <div>
+            <input
+              className="form-check-input m-2"
+              type="checkbox"
+              id="isExamCheckbox"
+              value={isExam}
+            />
+            <label
+              className="form-check-label"
+              htmlFor="isExamCheckbox"
+              style={{ fontWeight: 500, transform: "translateY(3px)" }}
+            >
+              Is an exam
+            </label>
+          </div>
+        )}
       </Modal.Body>
 
       <Modal.Footer>
         <Button onClick={props.onHide} className="btn-secondary">
           Close
         </Button>
-        <Button
-          onClick={createSession}
-          vatiant="success"
-          className="btn-success"
-        >
+        <Button onClick={createSession} vatiant="success">
           Create
         </Button>
       </Modal.Footer>

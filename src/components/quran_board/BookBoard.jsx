@@ -3,7 +3,7 @@ import axios from "axios";
 import { TiStarburst } from "react-icons/ti";
 import "./quran_board.css";
 import { Form, Modal } from "react-bootstrap";
-import Popover from 'react-bootstrap/Popover';
+import Popover from "react-bootstrap/Popover";
 
 const BookBoard = () => {
   let nameOfsurahQuran = [
@@ -875,7 +875,10 @@ const BookBoard = () => {
   }, [pages, pageNumber]);
   return (
     <>
-      <div className="quran-surah-settings" style={{backgroundColor: '#038674',color: 'white'}}>
+      <div
+        className="quran-surah-settings"
+        style={{ backgroundColor: "#038674", color: "white" }}
+      >
         <div>
           <Form.Label>سورة</Form.Label>
           <Form.Select
@@ -895,7 +898,7 @@ const BookBoard = () => {
         </div>
         <div>
           <Form.Label>صفحة</Form.Label>
-          <Form.Select onChange={(event) => setPageNumber(event.target.value)} >
+          <Form.Select onChange={(event) => setPageNumber(event.target.value)}>
             <option>اختر</option>
             {pages.length === 0 ? (
               <option key={1} value={1}>
@@ -910,17 +913,21 @@ const BookBoard = () => {
             )}
           </Form.Select>
         </div>
-        <div>
-          <Form.Label>جزء</Form.Label>
-          <Form.Select onChange={(event) => getSouarOfJuz(event.target.value)}>
-            <option>اختر</option>
-            {juzArr.map((juzNum) => (
-              <option value={juzNum} key={juzNum}>
-                الجزء{juzNum}
-              </option>
-            ))}
-          </Form.Select>
-        </div>
+        {false && (
+          <div>
+            <Form.Label>جزء</Form.Label>
+            <Form.Select
+              onChange={(event) => getSouarOfJuz(event.target.value)}
+            >
+              <option>اختر</option>
+              {juzArr.map((juzNum) => (
+                <option value={juzNum} key={juzNum}>
+                  الجزء{juzNum}
+                </option>
+              ))}
+            </Form.Select>
+          </div>
+        )}
       </div>
       <div
         style={{
@@ -973,7 +980,7 @@ const BookBoard = () => {
           </span>
         ))}
       </div>
-      </>
+    </>
   );
 };
 

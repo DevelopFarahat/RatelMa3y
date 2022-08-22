@@ -14,7 +14,7 @@ import { MdDateRange } from "react-icons/md";
 import { ImPhoneHangUp } from "react-icons/im";
 import { FaCalendarTimes } from 'react-icons/fa'
 
-function Sessions({ setIsRoomPrepared }) {
+function Sessions({ setIsRoomPrepared, setShowSidebar,setHideMain }) {
   const [modalShow, setModalShow] = useState(false);
   const [sessions, setsessions] = useState([]);
   //TODO: still a problem to redirect
@@ -28,17 +28,23 @@ function Sessions({ setIsRoomPrepared }) {
 
     //Get Sessions for this specific user or get all if admin
 
-    let sessions_url =
-      "http://localhost:5000/api/sessions" +
-      (["Admin", "Supervisor"].includes(user.privileges)
-        ? ""
-        : "?userId=" + user._id);
-
-    axios
-      .get(sessions_url)
-      .then((res) => setsessions(res.data.reverse()))
-      .catch((err) => console.error(err));
+    fetchSessions()
   }, []);
+
+
+function fetchSessions(){
+  
+  let sessions_url =
+  "http://localhost:5000/api/sessions" +
+  (["Admin", "Supervisor"].includes(user.privileges)
+    ? ""
+    : "?userId=" + user._id);
+
+axios
+  .get(sessions_url)
+  .then((res) => setsessions(res.data.reverse()))
+  .catch((err) => console.error(err));
+}
 
   console.log("user is ", user);
 
@@ -65,16 +71,17 @@ function Sessions({ setIsRoomPrepared }) {
     };
   }
 
-  function endSession(sessionId,room_id) {
+  function endSession(session) {
     axios
-      .put("http://localhost:5000/api/sessions/" + sessionId, {
+      .put("http://localhost:5000/api/sessions/" + session._id, {
         is_live: false,
         ended_at: Date.now(),
       })
       .then((res) => {
+        fetchSessions()
         //Then delete room in the third party
         axios
-          .delete("https://api.daily.co/v1/rooms/"+room_id)
+          .delete("https://api.daily.co/v1/rooms/"+session.room_id)
           .then((ress) => console.log(ress.status))
           .catch((err) => console.error(err.message));
       })
@@ -108,10 +115,13 @@ function Sessions({ setIsRoomPrepared }) {
               justifyContent: "center",
               alignItems: "center",
               height: "100%",
+              textAlign: 'center',
+              
               margin: 24,
             }}
           >
-            <FaCalendarTimes/>
+            <FaCalendarTimes size="160" color="#198754"/>
+            <div style={{marginTop: 16, fontSize: 24}}>No sessions yet</div>
           </div>
         ) : (
           sessions?.map((session, index) => {
@@ -242,19 +252,19 @@ function Sessions({ setIsRoomPrepared }) {
                     <div>
                       {/* TODO */}
                       <Button
-                        variant="outline-secondary"
+                        variant="outline-danger"
                         className="mx-2"
-                        onClick={endSession}
+                        onClick={endSession.bind(this,session)}
                       >
                         <ImPhoneHangUp className="mx-1" />
-                        End
+                        <span>End</span>
                       </Button>
                       <Link to="/sessions/room" state={{ session: session }}>
                         <Button
                           variant="success"
                           onClick={() => setIsRoomPrepared(true)}
                         >
-                          Join
+                        <span>Join</span>                          
                           <IoEnter />
                         </Button>
                       </Link>

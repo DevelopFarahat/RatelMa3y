@@ -13,8 +13,11 @@ import {
 import BookBoard from "../quran_board/BookBoard";
 import DailyIframe from "@daily-co/daily-js";
 
-export default function Room({  setHideMain, setShowSidebar, setIsRoomPrepared }) {
-
+export default function Room({
+  setHideMain,
+  setShowSidebar,
+  setIsRoomPrepared,
+}) {
   const navigate = useNavigate();
   const { user, setUser } = useContext(UserContext);
 
@@ -23,11 +26,12 @@ export default function Room({  setHideMain, setShowSidebar, setIsRoomPrepared }
 
   const id = session.room_id;
 
-  async function attend(){
-    //TODO: complete this 
-    let time = await axios.get("http://localhost:5000/api/sessions/"+session._id)
-    
-  }
+  // async function attend() {
+  //   //TODO: complete this
+  //   let time = await axios.get(
+  //     "http://localhost:5000/api/sessions/" + session._id
+  //   );
+  // }
 
   useEffect(() => {
     axios.get("http://localhost:5000/video-api-url").then((res) => {
@@ -38,13 +42,13 @@ export default function Room({  setHideMain, setShowSidebar, setIsRoomPrepared }
         .then(async (res) => {
           if (res.status === 200) {
             //TODO: navBar and footer slide to the top when the session start
-            
+
             const callFrame = await DailyIframe.createFrame({
               iframeStyle: {
                 position: "absolute",
                 width: "100%",
                 height: "104%",
-                overflow: 'hidden',
+                overflow: "hidden",
                 marginTop: "-30px",
                 border: "0",
                 zIndex: 0,
@@ -76,19 +80,20 @@ export default function Room({  setHideMain, setShowSidebar, setIsRoomPrepared }
 
               .on("joined-meeting", () => {
                 console.log("YASTA joined");
-                setShowSidebar(true)
+                setShowSidebar(true);
                 let body = {
-                  attendants: [user._id]
-                }
+                  attendants: [user._id],
+                };
 
-
-                
-                if(session.created_by == user._id) body.started_at = Date.now()
+                if (session.created_by == user._id)
+                  body.started_at = Date.now();
                 //TODO: started_at
                 ///TODO: api/session/:id
                 //TODO: see if 20 min trick can be applied
-                axios.put('http://localhost:5000/api/sessions/'+session._id,{
-                }).then((res)=> setUser({...user,in_session: session}) ).catch((err)=> console.log('Maybe you should redial'))
+                axios
+                  .put("http://localhost:5000/api/sessions/" + session._id, {})
+                  .then((res) => setUser({ ...user, in_session: session }))
+                  .catch((err) => console.log("Maybe you should redial"));
 
                 //editting the iframe as needed
                 // const iFrame = document.querySelector("iframe");
@@ -100,8 +105,8 @@ export default function Room({  setHideMain, setShowSidebar, setIsRoomPrepared }
                 //When you left the room
 
                 setHideMain(false);
-                setShowSidebar(false)
-                setIsRoomPrepared(false)
+                setShowSidebar(false);
+                setIsRoomPrepared(false);
                 const e = document.querySelector("iframe");
                 e.parentElement.removeChild(e);
                 navigate("../sessions");
@@ -117,6 +122,5 @@ export default function Room({  setHideMain, setShowSidebar, setIsRoomPrepared }
     });
   }, [id]);
 
-  return <>
-  </>;
+  return <></>;
 }

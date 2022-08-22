@@ -12,7 +12,8 @@ import { useTranslation } from "react-i18next";
 import "../../App.css";
 import FooterCss from "./Footer.module.css";
 
-function Footer() {
+function Footer(props) {
+  const {t} = useTranslation()
   return (
     <div className={FooterCss.footer} style={{transitionDuration: "3s" ,transform: props.isRoomPrepared? "translateY(300px)":"translateY(0px)"}}>
       <div className={FooterCss.innerfooter}>

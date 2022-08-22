@@ -11,8 +11,10 @@ import NavCss from "./Navbar.module.css";
 import { BrowserRouter as Router, Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import UserContext from "../../utils/UserContext";
+import { useTranslation } from "react-i18next";
 
 function NavBar({ i18n, isRoomPrepared }) {
+  const {t} = useTranslation()
 
   function changeLang(e) {
     if (e.target.innerHTML == "en") {

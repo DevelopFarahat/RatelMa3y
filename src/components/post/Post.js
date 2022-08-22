@@ -7,6 +7,7 @@ import {TbUrgent} from "react-icons/tb";
    //
 const Post = (props) => {
 
+    //TODO: أكد على فرحات عدل دي عشان تاخد الصور من الباك ولا لأ
     return (
         <>
      {console.log(props.latestPost._id)}

@@ -14,6 +14,7 @@ export default function RoomSideBar() {
   const target = useRef(null);
   const target2 = useRef(null);
   const { user } = useContext(UserContext);
+  console.log('usrr', user)
 
   //TODO: using just a simple div to animate it once the button get clicked
   //TODO: when scrolling on overlay it gives a glitch
