@@ -2,7 +2,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import UserContext from "../../utils/UserContext";
-import './formik.css';
+import './formik.module.css';
 
 
 function Formikform() {

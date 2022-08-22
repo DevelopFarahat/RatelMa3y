@@ -39,7 +39,7 @@ const PostsBoard = () => {
  //   axios.delete(`https://ratel-may.herokuapp.com/api/events/62fd6bd6a32dd427e57f71f9`).then(())
   },[])
 
-  console.log(post);
+
 
   return (
     <div className={PostBoardStyles['post-board']}>
