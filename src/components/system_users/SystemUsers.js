@@ -689,8 +689,9 @@ const SystemUsers = () => {
         axios
             .get(`https://ratel-may.herokuapp.com/api/instructors`)
             .then((res) => {
-                initialResponse.current = res.data;
-                setAccountsData(res.data);
+                initialResponse.current = res.data.data;
+                setAccountsData(res.data.data);
+                console.log(res.data.data);
             })
             .catch((error) => {
                 console.log(error);

@@ -1,0 +1,321 @@
+
+.registration-form-main-container{
+    width:80%;
+    margin:10px auto 0 auto;
+    padding: 15px;
+    display: flex;
+    flex-direction:column;
+    justify-content: flex-start;
+    align-items:flex-start;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    position:relative;
+}
+.form-main-container{
+    width:100%;
+    height:100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+.registration-form-img-container{
+    flex: 0 0 45%;
+    height:94%;
+}
+.registration-form-img-container >  img {
+    display: block;
+    margin: auto;
+    width:100%;
+    height:90%;
+    object-fit: contain;
+}
+.student-form{
+    flex: 0 0 55%;
+    padding: 20px;
+}
+.student-form > div:first-child+div{
+    padding: 0 20px 0 20px;
+}
+.step-5-container{
+
+    padding:0 !important;
+}
+.registration-form-hint{
+    width:100%;
+    font-size: 1.5rem;
+    font-family: 'Times New Roman', Times, serif;
+    letter-spacing: .5px;
+    word-spacing: 1px;
+    line-height: 1.2;
+    color: #040000;
+    font-weight: bold;
+}
+.registration-form-hint{
+    color:#c2a054;
+}
+.registration-form-hint-on-step-1-2-3-4{
+    box-sizing: border-box;
+    padding: 0 10px 0 22px;
+}
+.registration-form-hint > span{
+    color: #038674;
+    display: block;
+    padding: 10px 0 10px 0;
+   
+}
+.std-registration-form-controls {
+    padding: 8px;
+    font-size: 1rem;
+    color: #000;
+  }
+.step-button-container{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+.form-steps-container{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    
+}
+.days-check-box-container , .hours-check-box-container,.programs-check-box-container {
+    border: 1px solid #ced4da;
+    border-radius: 0.375rem;
+    margin: 15px 0 1px 0;
+  
+  }
+  .hours-check-box-container >  div{
+    width: 33.33%;
+  }
+  .days-check-box-container > div , .hours-check-box-container >  div ,.programs-check-box-container > div{
+    display: inline-block;
+    vertical-align: top;
+    padding: 10px;
+    text-align: center;
+  
+  }
+  .programs-check-box-container > div{
+
+    width: calc(100%/3);
+  }
+  .days-check-box-container > div > check , .hours-check-box-container > div > check , .programs-check-box-container > div > check{
+    display: block;
+    margin: auto;
+  }
+.btn {
+    width: 25%;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+    text-align: center;
+    font-size: 1rem;
+    text-transform: capitalize;
+    padding: 8px 8px;
+    background-color: #038674;
+    margin-top: 20px;
+    color: #ffffff;
+  }
+  .disabled-btn {
+    width: 25%;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+    text-align: center;
+    font-size: 1rem;
+    text-transform: capitalize;
+    padding: 8px 8px;
+    margin-top: 20px;
+    color: #ffffff;
+    background-color: #666666;
+    opacity: 0.3;
+    cursor:not-allowed !important;
+  }
+.circle{
+    width:50px;
+    height:50px;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+    text-align: center;
+    padding-top: 11px;
+    border:1px solid #dadada;
+  }
+  .coloredCircle{
+    background-color: #038674;
+    border:1px solid #038674;
+    color: #FFFFFF;
+    transition: all .5s ease;
+    -webkit-transition: all .5s ease;
+    -moz-transition: all .5s ease;
+    -ms-transition: all .5s ease;
+    -o-transition: all .5s ease;
+}
+  .line{
+    width:50px;
+    height:2px;
+    background:#dadada;
+  }
+  .coloredLine{
+
+    background:#038674;
+    transition: all .25s ease;
+    -webkit-transition: all .25s ease;
+    -moz-transition: all .25s ease;
+    -ms-transition: all .25s ease;
+    -o-transition: all .25s ease;
+  }
+  .errors{
+    border-color: #f6003c !important;
+  }
+  .errors:focus{
+  box-shadow:   0 0 0 0.25rem rgba(246,0,60,.25) !important;
+  border-color: #f6003c !important;
+  
+}
+.registration-error-alert{
+  width:40%;
+  height:200px;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  position:absolute;
+  transform: translate(-50%,-50%);
+  -webkit-transform: translate(-50%,-50%);
+  -moz-transform: translate(-50%,-50%);
+  -ms-transform: translate(-50%,-50%);
+  -o-transform: translate(-50%,-50%);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  background:#FFFFFF;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  animation: moveAlert .5s 1 ease-in-out;
+  -webkit-animation: moveAlert 1s 1 ease-in-out;
+ animation-fill-mode: both;
+}
+@keyframes moveAlert {
+
+  0%{
+
+    top:46%;
+    left:50%;
+    transition: all .5s ease-in-out;
+    -webkit-transition: all .5s ease-in-out;
+    -moz-transition: all .5s ease-in-out;
+    -ms-transition: all .5s ease-in-out;
+    -o-transition: all .5s ease-in-out;
+}
+100%{
+  top:50%;
+  left:50%;
+  transition: all .5s ease-in-out;
+  -webkit-transition: all .5s ease-in-out;
+  -moz-transition: all .5s ease-in-out;
+  -ms-transition: all .5s ease-in-out;
+  -o-transition: all .5s ease-in-out;
+}
+  
+}
+.registration-error-alert >  *{
+
+  margin:10px 0 10px 0;
+}
+.registration-error-alert > img{
+  width:50px;
+  height:50px;
+}
+.registration-error-alert >  span{
+
+  font-size:1.2rem;
+  letter-spacing: .5;
+  word-spacing: 1px;
+  text-transform: capitalize;
+  line-height: 1.5;
+  font-family:'Times New Roman', Times, serif;
+  text-align: center;
+  font-weight: bold;
+  color:#FA0026;
+}
+@media screen and (max-width:996px) {
+
+  .btn,.disabled-btn{
+   width:43%
+  }
+
+.student-form > div:first-child+div{
+    padding: 0;
+}
+.registration-form-hint-on-step-1-2-3-4{
+  box-sizing: border-box;
+  padding: 0;
+}
+}
+@media screen and (max-width:768px) {
+  .registration-form-img-container{
+    display: none;
+  }
+  .student-form{
+    flex: 0 0 100%;
+  }
+}
+@media screen  and (max-width:599px){
+  .registration-form-main-container{
+    width:95%;
+    flex-direction: row;
+    margin: 43px auto 0 auto;
+  }
+  .student-form{
+    padding: 20px 10px 20px 20px;
+  }
+  .form-steps-container{
+    width:10%;
+    flex-direction: column;
+  }
+  .line{
+    width:2px;
+    height:45px;
+    background: #dadada;
+  }
+  .coloredLine{
+    background:#038674;
+  }
+}
+@media screen and (max-width:422px) {
+  .registration-form-main-container{
+    
+    align-items: center;
+  }
+  .hours-check-box-container > div{
+    display: block;
+    width: 100%;
+  }
+  .btn,.disabled-btn{
+    width:47%;
+  }
+  .registration-form-hint > span{
+    font-size: 1.3rem;
+  }
+}

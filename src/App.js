@@ -11,7 +11,7 @@ import AddPost from "./components/add_post/AddPost";
 import Student from "./components/students/Students";
 import PostsBoard from "./components/posts_board/Posts_board";
 import PostDetails from "./components/post_details/PostDetails";
-import RegistrationForm from "./components/registration-form/RegistrationForm";
+import StudentRegistrationForm from "./components/student_registration/StudentRegistrationForm";
 import { useTranslation } from "react-i18next";
 import Footer from "./components/footer/Footer";
 import ScrollToTop from "./utils/ScrollToTop";
@@ -93,7 +93,7 @@ function App() {
                 </Route>
                 <Route
                   path="register"
-                  element={<RegistrationForm i18n={i18n} t={t} />}
+                  element={<StudentRegistrationForm i18n={i18n} t={t} />}
                 />
                 <Route path="*" element={<Navigate to="home" replace />} />
               </Routes>
