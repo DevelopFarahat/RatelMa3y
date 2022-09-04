@@ -7,13 +7,9 @@ import {TbUrgent} from "react-icons/tb";
    //
 const Post = (props) => {
 let re = /\n-/gi;
-props.post.content.replaceAll(/\n-/gim," ")
+props.post.content.replace(/\n-/gim," ")
     //TODO: أكد على فرحات عدل دي عشان تاخد الصور من الباك ولا لأ
-    console.log('cascsccsc',props.post.article_img)
-    
-        //  Privacy and Security
     return (
-
         <>
     {console.log()}
         {props.post._id === props.latestPost._id?props.post.latest = true:null}

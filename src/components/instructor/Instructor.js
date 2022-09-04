@@ -333,8 +333,8 @@ console.log(instructorData);
         axios
             .get(`http://localhost:5000/api/instructors/${event.currentTarget.id}`)
             .then((res) => {
-                initialResponseSpecificInstructorData.current = res.data.data;
-                setSelectedInstructorData(res.data.data);
+                initialResponseSpecificInstructorData.current = res.data;
+                setSelectedInstructorData(res.data);
                 console.log(res.data.data);
             })
             .catch((error) => {

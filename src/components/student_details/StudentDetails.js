@@ -6,7 +6,11 @@ import Present from "../../assets/images/attendance.png";
 import absence from "../../assets/images/absence.png";
 import { BiReset } from "react-icons/bi";
 import Form from 'react-bootstrap/Form';
-const StudentDetails = ({ specificStudentJoiningRequestData, setSpecificStudentJoiningRequestData, initialSpecificStudentJoiningRequestData, isStudentRequestDataVisible, isStudentRatelDataVisible, setIsStudentRequestDataVisible, setIsStudentRatelDataVisible }) => {
+import DateTimeImage from "../../assets/images/date-time.png";
+import DateTimeColoredImage from "../../assets/images/date-time-colored.png";
+import { VscChromeClose } from "react-icons/vsc";
+import { AiFillPayCircle } from "react-icons/ai";
+const StudentDetails = ({fetchSpecificStudentDataAgain,specificStudentJoiningRequestData, setSpecificStudentJoiningRequestData, initialSpecificStudentJoiningRequestData, isStudentRequestDataVisible, isStudentRatelDataVisible, setIsStudentRequestDataVisible, setIsStudentRatelDataVisible }) => {
   let programes = [{ id: 0, name: "programprogr1" }, { id: 1, name: "programprogr2" }, { id: 2, name: "programprogr3" },]
   let days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   let working_hours = [{ id: 0, hour: "from 2:30 pm to 5:30 pm" }, { id: 1, hour: "from 2:30 pm to 5:30 pm" }, { id: 2, hour: "from 2:30 pm to 5:30 pm" }, { id: 3, hour: "from 2:30 pm to 5:30 pm" }];
@@ -20,50 +24,38 @@ const StudentDetails = ({ specificStudentJoiningRequestData, setSpecificStudentJ
     { id: 6, name: "Friday", att: 'working_days' }
   ];
   let workingHoursArr = [
-    ["8:00 am", "10:00 pm"],
-    ["10:00 am", "12:00 pm"],
-    ["12:00 pm", "2:00 pm"],
-    ["2:00 pm", "4:00 pm"],
-    ["4:00 pm", "6:00 pm"],
-    ["6:00 pm", "8:00 pm"],
-    ["8:00 pm", "10:00 pm"],
-    ["10:00 pm", "12:00 am"],
+    ["  8:00 am", " 10:00 pm"],
+    [" 10:00 am", " 12:00 pm"],
+    [" 12:00 pm", " 2:00 pm"],
+    [" 2:00 pm", " 4:00 pm"],
+    [" 4:00 pm", " 6:00 pm"],
+    [" 6:00 pm", " 8:00 pm"],
+    [" 8:00 pm", " 10:00 pm"],
+    [" 10:00 pm", " 12:00 am"],
 ];
-  console.log(specificStudentJoiningRequestData);
-  let sessions = [{ _id: 0, is_live: false, created_at: "2022-08-14T12:07:43.020Z" }, { _id: 1, is_live: true, created_at: "2022-08-16T12:07:43.020Z" }
-    , { _id: 2, is_live: true, created_at: "2022-07-14T12:07:43.020Z" }, { _id: 3, is_live: true, created_at: "2022-08-19T12:07:43.020Z" }, { _id: 4, is_live: false, created_at: "2022-05-1T12:07:43.020Z" }];
-  const [sess, setSess] = useState(specificStudentJoiningRequestData.sessions);
+const [isDateTimeVisable,setIsDateTimeVisable] = useState(false);
   const toogleViewOfStudentRequestData = () => {
     setIsStudentRequestDataVisible(current => !current);
     setIsStudentRatelDataVisible(current => !current);
-    console.log(isStudentRequestDataVisible);
-    console.log(isStudentRatelDataVisible);
+
   }
   const toogleViewOfStudentRatelData = () => {
     setIsStudentRatelDataVisible(current => !current);
     setIsStudentRequestDataVisible(current => !current);
-    console.log(isStudentRequestDataVisible);
-    console.log(isStudentRatelDataVisible);
   }
 
   const sortSessions = (event) => {
-
     let sortedSessionsArr = [];
-
-    
     for (let i = 0; i < specificStudentJoiningRequestData.sessions.length; i++) {
-      console.log(specificStudentJoiningRequestData.sessions[i].attendants.length === 0)
      if(specificStudentJoiningRequestData.sessions[i].attendants.length){
-      for(let j = 0 ; j < specificStudentJoiningRequestData.sessions[i].attendants.length;j++){
-        if(specificStudentJoiningRequestData._id === specificStudentJoiningRequestData.sessions[i].attendants[j]){
-          console.log("yes true");
-          specificStudentJoiningRequestData.sessions[i].isStudentPersent = true;
-          sortedSessionsArr.push(specificStudentJoiningRequestData.sessions[i]);
-        }else{
-          specificStudentJoiningRequestData.sessions[i].isStudentPersent = false;
-          sortedSessionsArr.push(specificStudentJoiningRequestData.sessions[i]);
-        }
+      if (specificStudentJoiningRequestData.sessions[i].attendants.find((studentId)=>specificStudentJoiningRequestData._id === studentId) !== undefined){
+        specificStudentJoiningRequestData.sessions[i].isStudentPersent = true;
+        sortedSessionsArr.push(specificStudentJoiningRequestData.sessions[i]);
+      }else{
+        specificStudentJoiningRequestData.sessions[i].isStudentPersent = false;
+        sortedSessionsArr.push(specificStudentJoiningRequestData.sessions[i]);
       }
+      
 
     }else{
       specificStudentJoiningRequestData.sessions[i].isStudentPersent = false;
@@ -72,22 +64,9 @@ const StudentDetails = ({ specificStudentJoiningRequestData, setSpecificStudentJ
       
     }
 
-    setSpecificStudentJoiningRequestData({...specificStudentJoiningRequestData,sessions:sortedSessionsArr})
-    /*
-    for (let i = 0; i < sess.length; i++) {
-
-      if (sess[i].is_live === true) {
-        sortedSessionsArr.push(sess[i]);
-      } else {
-        sortedSessionsArr.push(sess[i]);
-      }
-    }
-    */
+   
     switch(event.target.value){
       case "byPresent":
-      
-        
-    
         sortedSessionsArr.sort((a, b) => {
           return Number(b.isStudentPersent) - Number(a.isStudentPersent);
         });
@@ -97,17 +76,6 @@ const StudentDetails = ({ specificStudentJoiningRequestData, setSpecificStudentJ
           sortedSessionsArr.sort((a, b) => {
             return Number(a.isStudentPersent) - Number(b.isStudentPersent);
           });
-          /*
-          sortedSessionsArr.length = 0;
-          for (let i = 0; i < sess.length; i++) {
-          if (sess[i].is_live === false) {
-        
-            sortedSessionsArr.push(sess[i]);
-          } else {
-            sortedSessionsArr.push(sess[i]);
-          }
-        }
-        */
         break;
         case "dateASC":
           sortedSessionsArr.sort((a, b) => {
@@ -124,22 +92,7 @@ const StudentDetails = ({ specificStudentJoiningRequestData, setSpecificStudentJ
         default :
 
     }
-     
-        /*
-   
-      */
-      
-    
-   
-   
-
-    //  setSpecificStudentJoiningRequestData({ ...specificStudentJoiningRequestData, sessions: sortedSessionsArr })
-
-    setSess(sortedSessionsArr);
-
-
-
-
+    setSpecificStudentJoiningRequestData({...specificStudentJoiningRequestData,sessions:sortedSessionsArr})
   }
 
 
@@ -147,58 +100,113 @@ const StudentDetails = ({ specificStudentJoiningRequestData, setSpecificStudentJ
     setSpecificStudentJoiningRequestData(initialSpecificStudentJoiningRequestData.current);
  
   }
-
-
-
+  const showDateTimeContainer = ()=>{
+    setIsDateTimeVisable(true);
+  }
+  const hideDateTimeContainer = ()=>{
+    setIsDateTimeVisable(false);
+  }
   return (
-
+    
     <>
-    {console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>")}
-    {console.log(specificStudentJoiningRequestData)}
-    {console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>")}
       <div className={StudentDetailsStyles['student-details-main-container']}>
         {Object.keys(specificStudentJoiningRequestData).length === 0 ? <img src={EmptyDataImage} className={StudentDetailsStyles['empty-data-img']} alt="Empty" /> : specificStudentJoiningRequestData.subscription_state !== 'Cancelled' ? <div className={StudentDetailsStyles['settings-header']}>
           <span className={`${isStudentRequestDataVisible ? StudentDetailsStyles['taps-shadow'] : ''} ${StudentDetailsStyles['joinnig-request-data-tap']}`} onClick={toogleViewOfStudentRatelData}>Joinnig Request Data</span>   {specificStudentJoiningRequestData.subscription_state !== 'Pending' ? <span className={`${isStudentRatelDataVisible ? StudentDetailsStyles['taps-shadow'] : ''} ${StudentDetailsStyles['ratel-student-data-tap']}`} onClick={toogleViewOfStudentRequestData}>Ratel Student Data</span> : null}
         </div> : <img src={EmptyDataImage} className={StudentDetailsStyles['empty-data-img']} alt="Empty" />}
-        {Object.keys(specificStudentJoiningRequestData).length !== 0 && specificStudentJoiningRequestData.subscription_state !== 'Cancelled' ? isStudentRequestDataVisible && specificStudentJoiningRequestData.subscription_state !== 'Cancelled' ? <div className={StudentDetailsStyles['student-request-joinnig-info-main-container']}>
+        {Object.keys(specificStudentJoiningRequestData).length !== 0 && specificStudentJoiningRequestData.subscription_state !== 'Cancelled' ? isStudentRequestDataVisible && specificStudentJoiningRequestData.subscription_state !== 'Cancelled' ? <div className={StudentDetailsStyles['student-request-joinnig-info-main-container']} style={{overflow:isDateTimeVisable?'hidden':'auto'}}>
           {/* request */}
+          <div className={StudentDetailsStyles['student-table-main-header']}>
+            <span>Student Data</span>
+           {isDateTimeVisable?<img  src={DateTimeColoredImage} onClick={showDateTimeContainer}  alt="date-time"/> :<img  src={DateTimeImage} onClick={showDateTimeContainer}  alt="date-time"/>}
+            </div>
+            {isDateTimeVisable?<div className={StudentDetailsStyles['date-time-container-main']}>
+            <VscChromeClose size={30} onClick={hideDateTimeContainer} className={StudentDetailsStyles['close-date-time-container']}/>
+            <div className={StudentDetailsStyles['student-sessions-days']}>
+            {specificStudentJoiningRequestData.program_prefs.pref_days.length !== 0 ?specificStudentJoiningRequestData.program_prefs.pref_days.map((sessionDay,index)=>(
+            sessionDay !== -1?<span key={index}>{days[sessionDay]}</span>:null
+            )):null}
+            </div>
+            <div className={StudentDetailsStyles['student-sessions-hours']}>
+            {specificStudentJoiningRequestData.program_prefs.pref_times_of_day.length !== 0 ?specificStudentJoiningRequestData.program_prefs.pref_times_of_day.map((sessionHour,index)=>(
+            sessionHour[0][1] !== 0?<span key={index}>{workingHoursArr[index]}</span>:null
+            )):null}
+            </div>
+            </div>:null}
+            
+
           <table className={StudentDetailsStyles['requested-joinnig-student-table']}>
             <thead>
               <tr>
                 <th >Name</th>
                 <td>{specificStudentJoiningRequestData.name}</td>
-                {specificStudentJoiningRequestData.subscription_state !== 'Pending' && specificStudentJoiningRequestData.instructor.age !== null?
-                <th colSpan={"2"}>Instructor</th>:null}
+              
+                {specificStudentJoiningRequestData.subscription_state !== 'Pending' && specificStudentJoiningRequestData.instructor !== null?
+                <th colSpan={"2"}>Instructor</th>:<th colSpan={"2"}>Additinal Info</th>}
               </tr>
               <tr>
               <th>Age</th>
                 <td>{specificStudentJoiningRequestData.age}</td>
-                {specificStudentJoiningRequestData.subscription_state !== 'Pending' && specificStudentJoiningRequestData.instructor.name !== null?<>
+              
+                {specificStudentJoiningRequestData.subscription_state !== 'Pending' && specificStudentJoiningRequestData.instructor !== null?<>
                 <th>Name</th>
-                <td>{specificStudentJoiningRequestData.instructor.name}</td></>:null}
+                <td>{specificStudentJoiningRequestData.instructor.name}</td></>:<><th>Program</th><td>{specificStudentJoiningRequestData.program_prefs.type}</td></>}
               </tr>
               <tr>
                 <th>Gender</th>
                 <td>{specificStudentJoiningRequestData.gender}</td>
-                {specificStudentJoiningRequestData.subscription_state !== 'Pending' && specificStudentJoiningRequestData.instructor.gender !== null?<>
+                
+                {specificStudentJoiningRequestData.subscription_state !== 'Pending' && specificStudentJoiningRequestData.instructor !== null?<>
                 <th>Gender</th>
-                <td>{specificStudentJoiningRequestData.instructor.gender}</td></>:null}
+                <td>{specificStudentJoiningRequestData.instructor.gender}</td></>:<><th>Sessions Per Week</th><td>{specificStudentJoiningRequestData.program_prefs.sessions_in_week}</td></>}
               </tr>
               <tr>
                 <th>State</th>
                 <td>{specificStudentJoiningRequestData.state}</td>
-                {specificStudentJoiningRequestData.subscription_state !== 'Pending' && specificStudentJoiningRequestData.instructor.state !== null?<>
+              
+                {specificStudentJoiningRequestData.subscription_state !== 'Pending' && specificStudentJoiningRequestData.instructor !== null?<>
                 <th>State</th>
-                <td>{specificStudentJoiningRequestData.instructor.state}</td></>:null}
+                <td>{specificStudentJoiningRequestData.instructor.state}</td></>:<><th>Surah preferred to start from</th><td>{specificStudentJoiningRequestData.started_from_surah}</td></>}
               </tr>
               <tr>
                 <th>Mobile</th>
                 <td>{specificStudentJoiningRequestData.mobile}</td>
+                 {specificStudentJoiningRequestData.subscription_state === 'Pending' && (specificStudentJoiningRequestData.instructor === null ||specificStudentJoiningRequestData.instructor === undefined)?<>
+                 <th>Qur'an Surah Or Juiz Reached Before</th>
+                 <td>{specificStudentJoiningRequestData.reached_surah}</td>
+                 </>:<><th colSpan={"2"}> Additinal Info</th></>}
+              </tr>
+              <tr>
+                <th>Whats Number</th>
+                <td>{specificStudentJoiningRequestData.whatsapp_number}</td>
+                {specificStudentJoiningRequestData.subscription_state !== 'Pending' && specificStudentJoiningRequestData.instructor !== null?<>
+                <th>Program</th>
+                <td>{specificStudentJoiningRequestData.program_prefs.type}</td>
+                </>:null}
+              </tr>
+              <tr>
+                <th>Certificate</th>
+                <td>{specificStudentJoiningRequestData.certificate}</td>
+                {specificStudentJoiningRequestData.subscription_state !== 'Pending' && specificStudentJoiningRequestData.instructor !== null?<>
+                <th>Sessions Per Week</th><td>{specificStudentJoiningRequestData.program_prefs.sessions_in_week}</td>
+                </>:null}
               </tr>
               <tr>
                 <th>Email</th>
                 <td>{specificStudentJoiningRequestData.email}</td>
+                {specificStudentJoiningRequestData.subscription_state !== 'Pending' && specificStudentJoiningRequestData.instructor !== null?<>
+                <th>Surah preferred to start from</th><td>{specificStudentJoiningRequestData.started_from_surah}</td>
+                </>:null}
               </tr>
+              {specificStudentJoiningRequestData.subscription_state !== "Pending" && specificStudentJoiningRequestData.instructor !== null && specificStudentJoiningRequestData.started_in !== null?<>
+              <tr>
+                <th>Started At</th>
+                <td>{specificStudentJoiningRequestData.started_in}</td>
+                <th>Qur'an Surah Or Juiz Reached Before</th>
+                 <td>{specificStudentJoiningRequestData.reached_surah}</td>
+              </tr>
+              </>:null}
+              <tr></tr>
+              {/*
               <tr>
                 <th rowSpan="2">Program Preferred</th>
                 <th>Program Type</th>
@@ -210,6 +218,7 @@ const StudentDetails = ({ specificStudentJoiningRequestData, setSpecificStudentJ
                 {!specificStudentJoiningRequestData.program_prefs.pref_days ? <td>{""}</td> : <td><span>{specificStudentJoiningRequestData.program_prefs.pref_days.map((prefD, index) => (prefD !== -1? <span key={index}>{days[index]}</span>:null))}</span></td>}
                 {!specificStudentJoiningRequestData.program_prefs.pref_times_of_day ? <td>{""}</td> : <td><span>{specificStudentJoiningRequestData.program_prefs.pref_times_of_day.map((prefTimeD, index) => (prefTimeD[1] !== 0? <div key={index}><span>from</span>{" "}<span>{workingHoursArr[index][prefTimeD[0]]}</span>{" "}<span>to</span>{" "}<span>{workingHoursArr[index][prefTimeD[1]]}</span></div>:null))}</span></td>}
               </tr>
+               */}
             </thead>
           </table>
 
@@ -242,11 +251,13 @@ const StudentDetails = ({ specificStudentJoiningRequestData, setSpecificStudentJ
               <tbody>
                 {specificStudentJoiningRequestData.sessions !== null && specificStudentJoiningRequestData.sessions !== undefined?
                 specificStudentJoiningRequestData.sessions.map((session)=>(
-             
+                 
+                  
                   <tr key={session._id} id={session._id}>
-                    {session.attendants.length !== 0 && session.attendants !== null && session.attendants !== undefined?<td>{session.attendants.map((atten)=>(
-                      specificStudentJoiningRequestData._id === atten?<img src={Present} key={atten} alt="attendance" style={{display:'block',margin:'auto',width:'25%'}}/>:<img src={absence} key={session._id} alt="absence" style={{display:'block',margin:'auto',width:'18%'}} />
-                    ))}</td>:session.attendants.length === 0?<td><img src={absence}  alt="absence" style={{display:'block',margin:'auto',width:'18%'}}/></td>:<td>{"ff "}</td>}
+
+                    {session.attendants.length !== 0 && session.attendants !== null && session.attendants !== undefined?<td>
+                    {session.attendants.find((studentId)=> specificStudentJoiningRequestData._id === studentId) !== undefined?<img src={Present} alt="attendance" style={{display:'block',margin:'auto',width:'25%'}}/>:<img src={absence}  alt="absence" style={{display:'block',margin:'auto',width:'18%'}} />}
+                    </td>:session.attendants.length === 0?<td><img src={absence}  alt="absence" style={{display:'block',margin:'auto',width:'18%'}}/></td>:<td>{"ff "}</td>}
                      <td>{session.created_at.split("T")[0]}</td>
                     </tr>
                 )):null}

@@ -687,7 +687,7 @@ const SystemUsers = () => {
     }
     useEffect(() => {
         axios
-            .get(`https://ratel-may.herokuapp.com/api/instructors`)
+            .get(`http://localhost:5000/api/instructors`)
             .then((res) => {
                 initialResponse.current = res.data.data;
                 setAccountsData(res.data.data);

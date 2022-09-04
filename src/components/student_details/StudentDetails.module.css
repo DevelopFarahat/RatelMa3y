@@ -41,15 +41,15 @@
 }
 .student-request-joinnig-info-main-container {
   padding: 20px 0 0 0;
-  overflow: auto;
-  overflow: auto;
+ /* overflow: auto;*/
   width: 100%;
   height: 85%;
+  position: relative;
 }
 .requested-joinnig-student-table {
-  width: 120%;
+  width: 100%;
 }
-.requested-joinnig-student-table > thead > tr > th,
+.requested-joinnig-student-table  > tr > th,
 td {
   font-size: 1rem;
   text-transform: capitalize;
@@ -135,6 +135,92 @@ td {
   border-left: 0;
   border-right: 0;
   background-color: #038674;
+}
+.student-table-main-header{
+  width:100%;
+  padding:15px;
+  background-color: #c2a054;
+  position: sticky;
+  top:-21px;
+  left: 0;
+  color:#ffffff;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.student-table-main-header >  span{
+  font-size: 1rem;
+  font-family: 'Times New Roman', Times, serif;
+  font-weight: bold;
+  text-align: center;
+  line-height: 1.5;
+  text-transform: capitalize;
+  flex: 0 0 80%;
+}
+.student-table-main-header > img {
+  width:30px;
+  cursor: pointer;
+  object-fit: contain;
+  
+}
+.date-time-container-main{
+  width:100%;
+  position: absolute;
+  top:19px;
+  left:0;
+  height:100%;
+  background-color: rgba(4,0,0,.7);
+}
+.close-date-time-container{
+  color: #ffffff;
+    position: absolute;
+    top: 15px;
+    left: 12px;
+    cursor: pointer;
+}
+.close-date-time-container:hover{
+  color: #038674;
+}
+.student-sessions-days,.student-sessions-hours{
+  width:95%;
+  border: 1px solid #dadada;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  margin: 60px auto 0 auto;
+background-color: #dadada;
+  overflow:auto;
+  height:30%;
+}
+.student-sessions-hours{
+  margin: 10px auto 0 auto;
+  height:44%;
+}
+.student-sessions-days >  span,.student-sessions-hours > span{
+    font-size: 1rem;
+    font-family: 'Times New Roman', Times, serif;
+    line-height: 1.5;
+    text-transform: capitalize;
+    text-align: center;
+    color: #FFFFFF;
+    background-color:#038674;
+    border-radius:5px ;
+    -webkit-border-radius:5px ;
+    -moz-border-radius:5px ;
+    -ms-border-radius:5px ;
+    -o-border-radius:5px ;
+    padding: 5px 10px 5px 10px;
+    margin: 0 3px 0 3px;
 }
 .no-result {
   position: absolute;
