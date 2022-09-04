@@ -1,5 +1,3 @@
-/** @format */
-
 import React from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
@@ -10,20 +8,14 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { useFormik } from "formik";
 import { useTranslation } from "react-i18next";
-import axios from 'axios'
+import axios from "axios";
+import { useSnackbar } from "notistack";
+
 const initialValues = {
   userName: "",
   email: "",
   phone: "",
-  content: ""
-};
-const onSubmit = (values) => {
-  
-  axios.post('http://localhost:5000/api/contacts',{name: values.userName,content: values.content, email: values.email, phone: values.phone }).then((res)=> {
-    if(res.status == 200){
-      alert('sent successfully')
-    }
-  })
+  content: "",
 };
 const validate = (values) => {
   let errors = {};
@@ -48,6 +40,24 @@ const validate = (values) => {
 };
 
 function ContactUs() {
+  const onSubmit = (values, { resetForm }) => {
+    axios
+      .post("http://localhost:5000/api/contacts", {
+        name: values.userName,
+        content: values.message,
+        email: values.email,
+        phone: values.phone,
+      })
+      .then((res) => {
+        if (res.status == 200) {
+        }
+      });
+
+    enqueueSnackbar("Sent Successfully", { variant: "success" });
+    resetForm();
+  };
+
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const [t, i18n] = useTranslation();
   const formik = useFormik({
     initialValues,
@@ -60,58 +70,59 @@ function ContactUs() {
         <Container>
           <FaHeadphones className={ContctUsCss.contacticon} />
           <h2>{t("contactus_title")}</h2>
-          <p className='lead'>{t("contactus_text")}</p>
+          <p className="lead">{t("contactus_text")}</p>
           <Form>
             <Row>
               <Col md={6}>
-                <Form.Group className='mb-3' controlId='formBasicUserName'>
+                <Form.Group className="mb-3" controlId="formBasicUserName">
                   <Form.Control
-                    type='text'
-                    name='userName'
-                    placeholder='Enter user name'
+                    type="text"
+                    name="userName"
+                    placeholder="Enter user name"
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     value={formik.values.userName}
                   />
                   {formik.touched.userName && formik.errors.userName ? (
-                    <div className='error'>{formik.errors.userName}</div>
+                    <div className="error">{formik.errors.userName}</div>
                   ) : null}
                 </Form.Group>
-                <Form.Group className='mb-3' controlId='formBasicEmail'>
+                <Form.Group className="mb-3" controlId="formBasicEmail">
                   <Form.Control
-                    type='email'
-                    name='email'
-                    placeholder='Enter your email'
+                    type="email"
+                    name="email"
+                    placeholder="Enter your email"
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     value={formik.values.email}
                   />
                   {formik.touched.email && formik.errors.email ? (
-                    <div className='error'>{formik.errors.email}</div>
+                    <div className="error">{formik.errors.email}</div>
                   ) : null}
                 </Form.Group>
-                <Form.Group className='mb-3' controlId='formBasicPhone'>
+                <Form.Group className="mb-3" controlId="formBasicPhone">
                   <Form.Control
-                    type='number'
-                    name='phone'
-                    placeholder='Enter phone: +20 xxxxxxx'
+                    type="number"
+                    name="phone"
+                    placeholder="Enter phone: +20 xxxxxxx"
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     value={formik.values.phone}
                   />
                   {formik.touched.phone && formik.errors.phone ? (
-                    <div className='error'>{formik.errors.phone}</div>
+                    <div className="error">{formik.errors.phone}</div>
                   ) : null}
                 </Form.Group>
               </Col>
-              <Col md={6}>  
+              <Col md={6}>
                 <Form.Group
-                  className='mb-3'
-                  controlId='exampleForm.ControlTextarea1'>
+                  className="mb-3"
+                  controlId="exampleForm.ControlTextarea1"
+                >
                   <Form.Control
-                    as='textarea'
+                    as="textarea"
                     name="content"
-                    placeholder='Your Message'
+                    placeholder="Your Message"
                     rows={4}
                   />
                 </Form.Group>

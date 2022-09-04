@@ -27,5 +27,13 @@ body{
 }
 
 .colorTest{
-  color: #fff
+  color: rgba(255, 255, 255, 0.471)
+}
+
+
+.jsx-3467701036 {
+  display: block;
+  height: 24px;
+  stroke: currentColor;
+  width: 24px;
 }

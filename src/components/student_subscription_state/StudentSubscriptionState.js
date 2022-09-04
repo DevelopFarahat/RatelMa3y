@@ -116,10 +116,10 @@ const StudentSubscriptionState = ({ setSpecificStudentJoiningRequestData, setIsS
         };
 
         axios.get(`https://ratel-may.herokuapp.com/api/students/${stdObji._id}`).then((res) => {
-            initialSpecificStudentJoiningRequestData.current = res.data;
-            setSpecificStudentJoiningRequestData(res.data);
+            initialSpecificStudentJoiningRequestData.current = res.data.data;
+            setSpecificStudentJoiningRequestData(res.data.data);
            
-            console.log(res.data);
+            console.log(res.data.data);
         }).catch((error) => {
             console.log(error);
         }, headers);
@@ -137,13 +137,13 @@ const StudentSubscriptionState = ({ setSpecificStudentJoiningRequestData, setIsS
     }
     useEffect(() => {
         axios.get('http://localhost:5000/api/students').then((res) => {
-            initialResponse.current = res.data;
-            setStudentData(res.data)
+            initialResponse.current = res.data.data;
+            setStudentData(res.data.data)
         }, (error) => {
             console.log(error);
         });
         axios.get(`http://localhost:5000/api/instructors`).then((instructorRes) => {
-            setInstructorData(instructorRes.data);
+            setInstructorData(instructorRes.data.data);
         }).catch((error) => {
             console.log(error);
         })

@@ -16,8 +16,16 @@ export default function Login() {
   });
 
   const navigate = useNavigate();
-  const { user, setUser } = useContext(UserContext);
+  const { setIsLoading, user, setUser } = useContext(UserContext);
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+
+  // useEffect(() => {
+  //   setIsLoading(false);
+  //   return () => {
+  //     console.log('Unmounted')
+  //     setIsLoading(true);
+  //   };
+  // }, []);
 
   //TODO: not working properly for a reason
   // //if user is already logged in redirect to home

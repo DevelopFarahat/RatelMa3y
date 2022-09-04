@@ -4,6 +4,7 @@ const UserContext = createContext();
 
 export function UserProvider({ children }) {
   const [user, setUser] = useState();
+  const [isLoading, setIsLoading] = useState(false);
   //أنا كنت باشوف هو ليه الكونتكست مبياخدش التحديثات مع التغيير في المستخدم
 
   useEffect(() => {
@@ -16,7 +17,7 @@ export function UserProvider({ children }) {
   }, [localStorage.getItem("accessToken")]);
 
   return (
-    <UserContext.Provider value={{ user, setUser }}>
+    <UserContext.Provider value={{ user, setUser, isLoading,setIsLoading }}>
       {children}
     </UserContext.Provider>
   );

@@ -51,26 +51,43 @@ const AddPost = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData();
-    data.append("article_img", img);
     data.append("content", postData.content);
     data.append("title", postData.title);
-    data.append("date", new Date().toLocaleString('en-US', { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }));
+    data.append("article_img", img);
+    // data.append(
+    //   "date",
+    //   new Date().toLocaleString("en-US", {
+    //     weekday: "long",
+    //     year: "numeric",
+    //     month: "short",
+    //     day: "numeric",
+    //     hour: "2-digit",
+    //     minute: "2-digit",
+    //   })
+    // );
     //Upload on the server
 
     //========================== FARAHAT
 
-    if (img !== undefined && img !== null && postData.content !== "" && postData.title !== "") {
+    if (
+      img &&
+      postData.content !== "" &&
+      postData.title !== ""
+    ) {
+      // axios.post('http://httpbin.org/anything',data).then((res)=> console.log("sent",res))
       axios
         .post("http://localhost:5000/api/events", data)
-        .then((res) => console.log("results", res.data))
+        .then((res) => {
+          setIsUserMadeAPost(true);
+          setPostData({
+            title: "",
+            content: "",
+          });
+          setImg(null);
+          setPostImage("");
+          console.log("results", res.data);
+        })
         .catch((err) => console.error(err));
-      setIsUserMadeAPost(true);
-      setPostData({
-        title:'',
-        content:''
-      })
-      setImg(null);
-      setPostImage('');
     } else {
       if (img === undefined || img === null) {
         setIsThereAnyFormFieldEmpty(true);
@@ -92,7 +109,7 @@ const AddPost = () => {
           contentError: "Please Set Post Content",
         });
         setIsThereAnyFormFieldEmpty(true);
-      } 
+      }
     }
     setTimeout(() => {
       setIsUserMadeAPost(false);
@@ -146,29 +163,31 @@ const AddPost = () => {
             )}
           </div>
           <div>
-          <div className={AddPostStyles["button-group"]}>
-            <div className={` ${AddPostStyles["button-container"]}`}>
-              <button type="button">
-                Upload <RiFolder5Fill size={15} style={{ marginTop: "-3px" }} />
-              </button>
-              <Form.Control
-                type="file"
-                id="file"
-                name="post_img"
-                onChange={(event) => {
-                  setImg(event.target.files[0]);
-                  openFile(event);
-                }}
-              />
+            <div className={AddPostStyles["button-group"]}>
+              <div className={` ${AddPostStyles["button-container"]}`}>
+                <button type="button">
+                  Upload{" "}
+                  <RiFolder5Fill size={15} style={{ marginTop: "-3px" }} />
+                </button>
+                <Form.Control
+                  type="file"
+                  id="file"
+                  name="post_img"
+                  onChange={(event) => {
+                    setImg(event.target.files[0]);
+                    openFile(event);
+                  }}
+                />
+              </div>
             </div>
-          </div>
-          <button
-            type="button"
-            className={`${AddPostStyles["btn"]} ${AddPostStyles["clear-btn"]}`}
-            onClick={clearImagePath}
-            style={{ marginTop: "21px" }}>
-            Clear <MdOutlineClear size={15} style={{ marginTop: "-3px" }} />
-          </button>
+            <button
+              type="button"
+              className={`${AddPostStyles["btn"]} ${AddPostStyles["clear-btn"]}`}
+              onClick={clearImagePath}
+              style={{ marginTop: "21px" }}
+            >
+              Clear <MdOutlineClear size={15} style={{ marginTop: "-3px" }} />
+            </button>
           </div>
         </div>
         <div className={AddPostStyles["post-title-content-container"]}>

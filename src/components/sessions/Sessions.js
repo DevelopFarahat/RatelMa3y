@@ -8,20 +8,23 @@ import axios from "axios";
 import UserContext from "../../utils/UserContext";
 import { IoEnter } from "react-icons/io5";
 import { useNavigate, Link } from "react-router-dom";
-import { BsRecordCircleFill, BsCircleFill } from "react-icons/bs";
+import { BsCircleFill } from "react-icons/bs";
 import { BiTimeFive } from "react-icons/bi";
 import { MdDateRange } from "react-icons/md";
 import { ImPhoneHangUp } from "react-icons/im";
 import { FaCalendarTimes } from "react-icons/fa";
+import { ErrorBoundary } from "react-error-boundary";
+import ErrorFallback from "../../utils/error";
 
-function Sessions({ setIsRoomPrepared, setShowSidebar, setHideMain }) {
+function Sessions({ setIsRoomPrepared }) {
   const [modalShow, setModalShow] = useState(false);
   const [sessions, setsessions] = useState([]);
+  const { setIsLoading } = useContext(UserContext);
   //TODO: still a problem to redirect
   //TODO: Responsive Design
 
-  const { user, setUser } = useContext(UserContext);
-  const navigate = useNavigate();
+  const { user } = useContext(UserContext);
+  // const navigate = useNavigate();
 
   useEffect(() => {
     if (!user) user = JSON.parse(localStorage.getItem("user"));
@@ -32,6 +35,7 @@ function Sessions({ setIsRoomPrepared, setShowSidebar, setHideMain }) {
   }, []);
 
   function fetchSessions() {
+    setIsLoading(true);
     let sessions_url =
       "http://localhost:5000/api/sessions" +
       (["Admin", "Supervisor"].includes(user.privileges)
@@ -40,11 +44,14 @@ function Sessions({ setIsRoomPrepared, setShowSidebar, setHideMain }) {
 
     axios
       .get(sessions_url)
-      .then((res) => setsessions(res.data.reverse()))
-      .catch((err) => console.error(err));
+      .then((res) => {
+        setsessions(res.data.reverse());
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        setIsLoading(false);
+      });
   }
-
-  console.log("user is ", user);
 
   function getEvaluation(arr) {
     if (!arr || arr.length == 0)
@@ -73,21 +80,23 @@ function Sessions({ setIsRoomPrepared, setShowSidebar, setHideMain }) {
     axios
       .put("http://localhost:5000/api/sessions/" + session._id, {
         is_live: false,
+        room_id: session.room_id,
         ended_at: Date.now(),
       })
-      .then((res) => {
+      .then(() => {
         fetchSessions();
-        //Then delete room in the third party
-        axios
-          .delete("https://api.daily.co/v1/rooms/" + session.room_id)
-          .then((ress) => console.log(ress.status))
-          .catch((err) => console.error(err.message));
       })
       .catch((err) => console.error(err.message));
   }
 
   return (
-    <>
+    <ErrorBoundary
+      FallbackComponent={ErrorFallback}
+      onReset={() => {
+        // reset the state of your app so the error doesn't happen again
+        console.log("resetted");
+      }}
+    >
       <ModalCreateSession
         show={modalShow}
         user={user}
@@ -97,15 +106,17 @@ function Sessions({ setIsRoomPrepared, setShowSidebar, setHideMain }) {
       />
 
       <div className="container">
-        {user && user.role == "instructor" && (
-          <Button
-            variant="success"
-            className="my-4"
-            onClick={() => setModalShow(true)}
-          >
-            Create New Session +
-          </Button>
-        )}
+        <div className={RoomCSS.card}>
+          {user && user.role == "instructor" && (
+            <Button
+              variant="success"
+              className="my-4"
+              onClick={() => setModalShow(true)}
+            >
+              Create New Session +
+            </Button>
+          )}
+        </div>
         {sessions?.length == 0 ? (
           <div
             style={{
@@ -148,6 +159,7 @@ function Sessions({ setIsRoomPrepared, setShowSidebar, setHideMain }) {
               minute: "numeric",
               hour: "numeric",
             });
+
             return (
               <Card className={RoomCSS.card} key={session._id}>
                 <Card.Header className="text-center">
@@ -193,7 +205,7 @@ function Sessions({ setIsRoomPrepared, setShowSidebar, setHideMain }) {
                           {session?.ended_at?.replace("T", " ").slice(0, -8)}
                         </span>
                       </h6>
-{/* 
+                      {/* 
                       {user.role == "student" && (
                         <>
                           <h6>
@@ -248,7 +260,9 @@ function Sessions({ setIsRoomPrepared, setShowSidebar, setHideMain }) {
                         </h6>
                         <h6>
                           Session No.:{" "}
-                          <span style={{ fontWeight: 300 }}>{sessions.length - index}</span>
+                          <span style={{ fontWeight: 300 }}>
+                            {sessions.length - index}
+                          </span>
                         </h6>
                       </Accordion.Body>
                     </Accordion.Item>
@@ -299,7 +313,7 @@ function Sessions({ setIsRoomPrepared, setShowSidebar, setHideMain }) {
           })
         )}
       </div>
-    </>
+    </ErrorBoundary>
   );
 }
 export default Sessions;

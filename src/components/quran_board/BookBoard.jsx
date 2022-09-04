@@ -2,8 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { TiStarburst } from "react-icons/ti";
 import "./quran_board.css";
-import { Form, Modal } from "react-bootstrap";
-import Popover from "react-bootstrap/Popover";
+import { Form  } from "react-bootstrap";
 
 const BookBoard = () => {
   let nameOfsurahQuran = [
@@ -250,6 +249,7 @@ const BookBoard = () => {
     596, 596, 597, 597, 598, 598, 599, 599, 600, 600, 601, 601, 601, 602, 602,
     602, 603, 603, 603, 604, 604, 604, 604,
   ];
+
   let pagesArr = [];
   const [book, setBook] = useState([]);
   const [pages, setPages] = useState([]);
@@ -873,6 +873,10 @@ const BookBoard = () => {
       })
       .catch((err) => console.log(err));
   }, [pages, pageNumber]);
+
+  function selectAyah(e){
+    console.log('you get ',e?.target?.value)
+  }
   return (
     <>
       <div
@@ -941,33 +945,36 @@ const BookBoard = () => {
         }}
       >
         {book.map((ayah, index) => (
-          <span key={`${ayah.page}-${ayah.number}`}>
+          <span key={`${ayah.page}-${ayah.number}`} style={{ lineHeight: 2}}>
             {ayah.text.startsWith("بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ") ? (
               <>
-                <h1 style={{ textAlign: "center", padding: "30px" }}>
+                <h2 style={{ textAlign: "center", padding: "16px" }}>
                   {ayah.text.substring(0, 39)}
-                </h1>
+                </h2>
                 <span>{ayah.text.substring(39, ayah.text.length)}</span>
               </>
             ) : (
               ayah.text
             )}
             {ayah.sajda}{" "}
-            <span style={{ position: "relative", textAlign: "center" }}>
+
+            <div style={{ position: "relative", textAlign: "center", width: 36,height: 20, display: 'inline-block', cursor: 'pointer' }} onClick={selectAyah}>
               {" "}
               <TiStarburst
                 color="#038674"
                 size={36}
-                style={{ position: "relative", top: "2px", left: "-1px" }}
+                style={{ position: "absolute", top: '-20%',bottom: 0, left: "0%" }}
               />{" "}
               <span
                 style={{
                   position: "absolute",
+                  display: 'table',
+                
                   marginLeft: "auto",
                   marginRight: "auto",
                   fontSize: 12,
-                  top: 3,
-                  left: 3,
+                  top: '3%',
+                  left: "0%",
                   bottom: 0,
                   right: 0,
                   textAlign: "center",
@@ -976,7 +983,7 @@ const BookBoard = () => {
               >
                 {ayah.numberInSurah}
               </span>
-            </span>
+            </div>
           </span>
         ))}
       </div>

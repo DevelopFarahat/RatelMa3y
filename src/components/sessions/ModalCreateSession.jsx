@@ -24,10 +24,10 @@ export default function ModalCreateSession(props) {
 
       // let first = await axios.get("http://localhost:5000/api/students");
 
-      let opts = user.students?.map((stu) => ({
+      let opts = user?.students?.map((stu) => ({
         value: stu._id,
         label: stu.name,
-      }));
+      }))?? [] ;
       setOptions(opts);
     }
     fetchData();

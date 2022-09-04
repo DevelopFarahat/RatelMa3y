@@ -24,14 +24,86 @@ padding-right: 90%;
 }
 .btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
     background-color: #0d3b39;
-    width: 20%;
+    width: 80%;
     height: 150%;
 }
 .errormessage{
-
     color: red;
 }
 .formone{
 
     margin-right: 5%;
+    
+}
+.formone .Field:focus{
+    box-shadow: none;
+    background-color: #038674;
+}
+/* .formone .Field{
+    
+    background-color: #038674;
+    width: 80%;
+} */
+form-control:focus{
+
+    color: #0d3b39;
+}
+.Field{
+    background-color: #038674;
+}
+.fieldd1{
+
+
+    background-color: #0d3b39;
+}
+.form-control{
+
+    color: #0d3b39;
+}
+.btnsubmit{
+     color: bisque;
+    background-color: #0d3b39;
+    width:80%;
+    height: 20%;
+    margin-bottom: 30%;
+}
+label{
+    font-size: 15px;
+  color: #bfa155;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+.registration {
+    padding: 100px 0 15px;
+    margin-left: 10%;
+    margin-right: 10%;
+  }
+  .container .form-control:focus{
+
+    color: #0d3b39;
+  }
+  .container h2 {
+    font-size: 37px;
+    color: #bfa155;
+    margin-bottom: 45px;
+  }
+  .container h2 span {
+    color: #038674;
+    border-bottom: 1px solid #038674;
+    padding-bottom: 5px;
+  }
+  .Field:focus{
+    box-shadow:none
+    }
+  .formsec{
+
+    margin-top: none;
+  }
+  .divspace{
+
+    height: 100px;
+  }
+  .errormessage{
+    
+    color: red;
 }
