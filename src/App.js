@@ -15,7 +15,7 @@ import AddPost from "./components/add_post/AddPost";
 import Student from "./components/students/Students";
 import PostsBoard from "./components/posts_board/Posts_board";
 import PostDetails from "./components/post_details/PostDetails";
-import RegistrationForm from "./components/registration-form/RegistrationForm";
+import StudentRegistrationForm from "./components/student_registration/StudentRegistrationForm";
 import { useTranslation } from "react-i18next";
 import Footer from "./components/footer/Footer";
 import ScrollToTop from "./utils/ScrollToTop";
@@ -97,22 +97,22 @@ function App() {
               <Route path="events" element={<PostsBoard />} />
               <Route path="events/:id" element={<PostDetails />} />
 
-              <Route path="adminPanel" element={<AdminPanel />}>
-                <Route index element={<SystemUsers />} />
-                <Route path="systemUsers" index element={<SystemUsers />} />
-                <Route path="addPost" element={<AddPost />} />
-                <Route path="students" element={<Student />} />
-                <Route path="instructors" element={<Instructor />} />
-              </Route>
-              <Route
-                path="register"
-                element={<RegistrationForm i18n={i18n} t={t} />}
-              />
-              <Route path="*" element={<Navigate to="home" replace />} />
-            </Routes>
+                <Route path="adminPanel" element={<AdminPanel />}>
+                  <Route index element={<SystemUsers />} />
+                  <Route path="systemUsers" index element={<SystemUsers />} />
+                  <Route path="addPost" element={<AddPost />} />
+                  <Route path="students" element={<Student />} />
+                  <Route path="instructors" element={<Instructor />} />
+                </Route>
+                <Route
+                  path="register"
+                  element={<StudentRegistrationForm i18n={i18n} t={t} />}
+                />
+                <Route path="*" element={<Navigate to="home" replace />} />
+              </Routes>
+            </div>
+            <Footer isRoomPrepared={isRoomPrepared}/>
           </div>
-          <Footer isRoomPrepared={isRoomPrepared} />
-        </div>
 
         <div
           style={{
