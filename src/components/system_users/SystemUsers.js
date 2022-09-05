@@ -69,25 +69,6 @@ const SystemUsers = () => {
         { id: 1, programName: "Noor Bayan" },
         { id: 2, programName: "Memorizing" },
     ];
-    /*
-            let systemDataAccountsArr = [{ id: 1, username: "devfarahat", fullname: "mohamed farahat", privilege: "instructor", mobile: "01150849567" }
-                , { id: 2, username: "codeLoop", fullname: "mohamed gamal", privilege: "admin", mobile: "0119798663" },
-            { id: 3, username: "rashed123", fullname: "mohamed rashed", privilege: "supervisor", mobile: "012966788974" },
-            { id: 4, username: "magdy22", fullname: "mohamed magdy", privilege: "supervisor", mobile: "01977464" },
-            { id: 5, username: "magdy22", fullname: "mohamed magdy", privilege: "supervisor", mobile: "01977464" },
-            { id: 6, username: "magdy22", fullname: "mohamed magdy", privilege: "supervisor", mobile: "01977464" },
-            { id: 7, username: "magdy22", fullname: "mohamed magdy", privilege: "supervisor", mobile: "01977464" },
-            { id: 8, username: "magdy22", fullname: "mohamed magdy", privilege: "supervisor", mobile: "01977464" },
-            { id: 9, username: "magdy22", fullname: "mohamed magdy", privilege: "supervisor", mobile: "01977464" },
-            { id: 10, username: "magdy22", fullname: "mohamed magdy", privilege: "supervisor", mobile: "01977464" },
-            { id: 11, username: "magdy22", fullname: "mohamed magdy", privilege: "supervisor", mobile: "01977464" },
-            { id: 12, username: "magdy22", fullname: "mohamed magdy", privilege: "supervisor", mobile: "01977464" },
-            { id: 13, username: "magdy22", fullname: "mohamed magdy", privilege: "supervisor", mobile: "01977464" },
-            { id: 14, username: "magdy22", fullname: "mohamed magdy", privilege: "supervisor", mobile: "01977464" },
-            { id: 15, username: "magdy22", fullname: "mohamed magdy", privilege: "supervisor", mobile: "01977464" },
-            { id: 16, username: "magdy22", fullname: "mohamed magdy", privilege: "supervisor", mobile: "01977464" },
-            { id: 17, username: "magdy22", fullname: "mohamed magdy", privilege: "supervisor", mobile: "01977464" }];
-        */
      const [t, i18n] = useTranslation();
     const [isArabic, setIsArabic] = useState(false);
     useEffect(() => {
@@ -106,11 +87,6 @@ const SystemUsers = () => {
     const [isUserCreateNewAccount,setIsUserCreateNewAccount]   = useState(false);
     const [isUserMadeAnyUpdateToAnyAccount,setIsUserMadeAnyUpdateToAnyAccount] = useState(false);
     const initialResponse = useRef();
-    const programsRef = useRef(null);
-    const genderRef = useRef(null);
-    const stateRef = useRef(null);
-    const privilagesRef = useRef(null);
-    const addOrUpdateBtnRef = useRef(null);
     const [workingDays, setWorkingDays] = useState({
         d0: "",
         d1: "",
@@ -206,42 +182,45 @@ const SystemUsers = () => {
 
     const handleAppointmentInDays = (event) => {
         setCheckedDays({
-            ...checkedDays,
-            [event.target.id]: !checkedDays[event.target.id],
+          ...checkedDays,
+          [event.target.id]: !checkedDays[event.target.id],
         });
         if (event.target.checked) {
-            setWorkingDays({
-                ...workingDays,
-                [event.target.id]: event.target.value,
-            });
-   
+          setWorkingDays({
+            ...workingDays,
+            [event.target.id]: event.target.value,
+          });
         } else {
-            let workingDaysCloneObji = workingDays;
-
-            let arr = Object.values(workingDaysCloneObji);
-            arr[event.target.value] = -1;
-            //arr.splice(event.target.value, 1);
-            setWorkingDays(arr);
+          setWorkingDays({
+            ...workingDays,
+            [`d${event.target.value}`]:""
+          });
         }
-    };
-    const handleApoointmentInHours = (event) => {
+      };
+      const handleApoointmentInHours = (event) => {
         setCheckedHours({
-            ...checkedHours,
-            [event.target.id]: !checkedHours[event.target.id],
+          ...checkedHours,
+          [event.target.id]: !checkedHours[event.target.id],
         });
         if (event.target.checked) {
-            setWorkingHours({
-                ...WorkingHours,
-                [event.target.id]: workingHoursCheckedValuesArr[event.target.value],
-            });
+          setWorkingHours({
+            ...WorkingHours,
+            [event.target.id]: workingHoursCheckedValuesArr[event.target.value],
+          });
         } else {
-            let workingHoursCloneObji = WorkingHours;
-            let arr = Object.values(workingHoursCloneObji);
-
-            arr[event.target.value] = [0, 0];
-            setWorkingHours(arr);
+          /*
+          let workingHoursCloneObji = WorkingHours;
+          let arr = Object.values(workingHoursCloneObji);
+    
+          arr[event.target.value] = [0, 0];
+          setWorkingHours(arr);
+          */
+          setWorkingHours({
+            ...WorkingHours,
+            [`h${event.target.value}`]:""
+          })
         }
-    };
+      };
     const handlerRowClicked = useCallback((event) => {
         const id = event.currentTarget.id;
         setSelectedRow(id);
@@ -827,7 +806,6 @@ console.log(fetchAgain);
                                 id="programs"
                                 name="programs"
                                 value={userData.programs}
-                                ref={programsRef}
                                 onChange={handleChange}
                                 className={`${SystemUsersStyles["system-user-form-controls"]} ${errors.programsError ? SystemUsersStyles["errors"] : ""
                                     }`}
@@ -895,7 +873,6 @@ console.log(fetchAgain);
                             <Form.Select
                                 name="gender"
                                 id="gender"
-                                ref={genderRef}
                                 value={userData.gender}
                                 onChange={handleChange.bind(this)}
                                 className={`${SystemUsersStyles["system-user-form-controls"]} ${errors.genderError ? SystemUsersStyles["errors"] : ""
@@ -912,7 +889,6 @@ console.log(fetchAgain);
                             <Form.Select
                                 name="state"
                                 id="state"
-                                ref={stateRef}
                                 value={userData.state}
                                 onChange={handleChange}
                                 className={`${SystemUsersStyles["system-user-form-controls"]} ${errors.stateError ? SystemUsersStyles["errors"] : ""
@@ -945,7 +921,6 @@ console.log(fetchAgain);
                             <Form.Label htmlFor="privileges">{t("systemusers_privillage")}</Form.Label>
                             <Form.Select
                                 id="privileges"
-                                ref={privilagesRef}
                                 name="Privileges"
                                 value={userData.privileges}
                                 onChange={handleChange}

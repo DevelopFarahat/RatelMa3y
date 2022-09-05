@@ -41,7 +41,6 @@
 }
 .student-request-joinnig-info-main-container {
   padding: 20px 0 0 0;
- /* overflow: auto;*/
   width: 100%;
   height: 85%;
   position: relative;
@@ -49,65 +48,21 @@
 .requested-joinnig-student-table {
   width: 100%;
 }
-.requested-joinnig-student-table  > tr > th,
-td {
+.requested-joinnig-student-table , .requested-joinnig-student-table > tr , .requested-joinnig-student-table > thead > tr >  th,
+.requested-joinnig-student-table > tbody > tr  > td {
   font-size: 1rem;
   text-transform: capitalize;
   letter-spacing: 0.5px;
   word-spacing: 1px;
   text-align: center;
+  padding: 10px;
 }
-.requested-joinnig-student-table > thead > tr > td > span {
-  display: block;
-  margin: auto;
-  text-align: center;
-}
-.requested-joinnig-student-table > thead > tr > td > span > span {
-  width: 305px;
-  margin: 10px auto;
-  text-align: center;
-  display: block;
-}
-.requested-joinnig-student-table
-  > thead
-  > tr
-  > td
-  > span
-  > div , .requested-joinnig-student-table
-  > thead
-  > tr
-  > td
-  > span
-  > div
-  > span{
-
-    margin: 20px auto;
-    width:305px;
-    text-transform: uppercase;
-    text-align:justify;
-  }
-.requested-joinnig-student-table
-  > thead
-  > tr
-  > td
-  > span
-  > div
-  > span:nth-child(1),
-.requested-joinnig-student-table
-  > thead
-  > tr
-  > td
-  > span
-  > div
-  > span:nth-child(3) {
-
-  color: #c2a054;
-}
-.requested-joinnig-student-table > thead > tr > th {
+.requested-joinnig-student-table > thead > tr >  th {
   border-top: 1px solid #dadada;
   background-color: #c2a054;
   color: #ffffff;
 }
+
 .requested-joinnig-student-table > thead > tr:nth-child(even) {
   background-color: #dadada;
 }
@@ -139,18 +94,16 @@ td {
 .student-table-main-header{
   width:100%;
   padding:15px;
-  background-color: #c2a054;
-  position: sticky;
-  top:-21px;
-  left: 0;
+  background-color: #038674;
   color:#ffffff;
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
   align-items: center;
+  margin-bottom: 6px;
 }
 .student-table-main-header >  span{
-  font-size: 1rem;
+  font-size: 1.2rem;
   font-family: 'Times New Roman', Times, serif;
   font-weight: bold;
   text-align: center;
@@ -175,8 +128,8 @@ td {
 .close-date-time-container{
   color: #ffffff;
     position: absolute;
-    top: 15px;
-    left: 12px;
+    top: 5px;
+    left: 3px;
     cursor: pointer;
 }
 .close-date-time-container:hover{
@@ -184,7 +137,6 @@ td {
 }
 .student-sessions-days,.student-sessions-hours{
   width:95%;
-  border: 1px solid #dadada;
   border-radius: 5px;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
@@ -197,10 +149,10 @@ td {
   justify-content: center;
   align-items: center;
   padding: 10px;
-  margin: 60px auto 0 auto;
-background-color: #dadada;
+  margin: 44px auto 0 auto;
+  background-color: #FFFFFF;
   overflow:auto;
-  height:30%;
+  height:33%;
 }
 .student-sessions-hours{
   margin: 10px auto 0 auto;
@@ -221,6 +173,73 @@ background-color: #dadada;
     -o-border-radius:5px ;
     padding: 5px 10px 5px 10px;
     margin: 0 3px 0 3px;
+}
+.table-wrapper {
+  width: 99%;
+  height: 83%;
+  overflow: auto;
+  position: relative;
+}
+.table-wrapper:last-of-type{
+  height: 98%;
+}
+.student-session-date-time-table {
+  width: 99%;
+  margin: auto;
+ 
+}
+.student-session-date-time-table,
+.student-session-date-time-table > thead > tr,
+.student-session-date-time-table > tbody > tr >  td,
+.student-session-date-time-table > thead > tr >  th {
+  padding:10px 6px 10px 6px;
+  text-align: center;
+  font-size: 1rem;
+  letter-spacing: .5px;
+  border:none;
+  font-family: 'Times New Roman', Times, serif;
+}
+.student-session-date-time-table > thead > tr {
+  background-color: #c2a054;
+  color: #ffffff;
+}
+.student-session-date-time-table > thead > tr >  th{
+  border-left: 1px solid #dadada;
+}
+.student-session-date-time-table > thead > tr >  th:nth-child(1){
+  border-left: none;
+}
+.student-session-date-time-table > tbody > tr:nth-child(2n+2) {
+  background-color:#c2a054;
+  color: #FFFFFF;
+
+}
+.student-session-date-time-table > tbody > tr:nth-child(2n+2) > td{
+  border-left: 1px solid #dadada;
+  text-transform: capitalize;
+}
+.table-wrapper::-webkit-scrollbar {
+  width: 20px;
+}
+
+.table-wrapper::-webkit-scrollbar-track {
+  background-color: #e4e4e4;
+  border-radius: 100px;
+}
+
+.table-wrapper::-webkit-scrollbar-thumb {
+  border-radius: 100px;
+  border: 6px solid rgba(0, 0, 0, 0.18);
+  border-left: 0;
+  border-right: 0;
+  background-color: #038674;
+}
+.student-session-days-hours-img{
+  width:40px;
+  height:40px;
+  display:block;
+  margin: auto;
+  object-fit: contain;
 }
 .no-result {
   position: absolute;
@@ -286,10 +305,10 @@ background-color: #dadada;
   width: 99%;
   margin: auto;
 }
-.system-accounts-table,
-tr,
-td,
-th {
+.student-session-info-table,
+.student-session-info-table > tr,
+.student-session-info-table > tbody > tr > td,
+.student-session-info-table > thead > tr > th {
   padding: 10px;
   text-align: center;
   font-size: 1rem;

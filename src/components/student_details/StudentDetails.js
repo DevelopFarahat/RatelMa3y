@@ -6,13 +6,14 @@ import Present from "../../assets/images/attendance.png";
 import absence from "../../assets/images/absence.png";
 import { BiReset } from "react-icons/bi";
 import Form from 'react-bootstrap/Form';
-import DateTimeImage from "../../assets/images/date-time.png";
-import DateTimeColoredImage from "../../assets/images/date-time-colored.png";
+import dateTimeSessionImage from "../../assets/images/dateTimeSessions.png";
+import  DateTimeImage from "../../assets/images/date-time.png";
 import { VscChromeClose } from "react-icons/vsc";
 import { AiFillPayCircle } from "react-icons/ai";
+import axios from "axios";
 const StudentDetails = ({fetchSpecificStudentDataAgain,specificStudentJoiningRequestData, setSpecificStudentJoiningRequestData, initialSpecificStudentJoiningRequestData, isStudentRequestDataVisible, isStudentRatelDataVisible, setIsStudentRequestDataVisible, setIsStudentRatelDataVisible }) => {
   let programes = [{ id: 0, name: "programprogr1" }, { id: 1, name: "programprogr2" }, { id: 2, name: "programprogr3" },]
-  let days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  let days = ['Saturday','Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
   let working_hours = [{ id: 0, hour: "from 2:30 pm to 5:30 pm" }, { id: 1, hour: "from 2:30 pm to 5:30 pm" }, { id: 2, hour: "from 2:30 pm to 5:30 pm" }, { id: 3, hour: "from 2:30 pm to 5:30 pm" }];
   let namesOfDaysOfTheWeek = [
     { id: 0, name: "Saturday", att: 'working_days' },
@@ -106,8 +107,13 @@ const [isDateTimeVisable,setIsDateTimeVisable] = useState(false);
   const hideDateTimeContainer = ()=>{
     setIsDateTimeVisable(false);
   }
+  /*
+  useEffect(()=>{
+    axios.delete(``)
+  },[])
+  */
   return (
-    
+
     <>
       <div className={StudentDetailsStyles['student-details-main-container']}>
         {Object.keys(specificStudentJoiningRequestData).length === 0 ? <img src={EmptyDataImage} className={StudentDetailsStyles['empty-data-img']} alt="Empty" /> : specificStudentJoiningRequestData.subscription_state !== 'Cancelled' ? <div className={StudentDetailsStyles['settings-header']}>
@@ -117,19 +123,97 @@ const [isDateTimeVisable,setIsDateTimeVisable] = useState(false);
           {/* request */}
           <div className={StudentDetailsStyles['student-table-main-header']}>
             <span>Student Data</span>
-           {isDateTimeVisable?<img  src={DateTimeColoredImage} onClick={showDateTimeContainer}  alt="date-time"/> :<img  src={DateTimeImage} onClick={showDateTimeContainer}  alt="date-time"/>}
+              <img  src={DateTimeImage} onClick={showDateTimeContainer}  alt="date-time"/>
             </div>
             {isDateTimeVisable?<div className={StudentDetailsStyles['date-time-container-main']}>
             <VscChromeClose size={30} onClick={hideDateTimeContainer} className={StudentDetailsStyles['close-date-time-container']}/>
             <div className={StudentDetailsStyles['student-sessions-days']}>
-            {specificStudentJoiningRequestData.program_prefs.pref_days.length !== 0 ?specificStudentJoiningRequestData.program_prefs.pref_days.map((sessionDay,index)=>(
-            sessionDay !== -1?<span key={index}>{days[sessionDay]}</span>:null
-            )):null}
+          
+            <div className={StudentDetailsStyles["table-wrapper"]}>
+          <table
+            className={
+              StudentDetailsStyles[
+                "student-session-date-time-table"
+              ]
+            }
+          >
+            <thead>
+              <tr>
+                {days.map((wDays,index) => (
+                  <th key={index}>{wDays}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                {specificStudentJoiningRequestData.program_prefs.pref_days !== null &&
+                specificStudentJoiningRequestData.program_prefs.pref_days!== undefined
+                  ? specificStudentJoiningRequestData.program_prefs.pref_days.map(
+                      (sessionDay, index) => (
+                        <td key={index}>
+                          {sessionDay === index ? (
+                            <img
+                            className={StudentDetailsStyles['student-session-days-hours-img']}
+                              src={dateTimeSessionImage}
+                              alt="correctDateTimeSession"
+                            />
+                          ) : (
+                            ""
+                          )}
+                        </td>
+                      )
+                    )
+                  : null}
+              </tr>
+            </tbody>
+          </table>
+        </div>
             </div>
             <div className={StudentDetailsStyles['student-sessions-hours']}>
-            {specificStudentJoiningRequestData.program_prefs.pref_times_of_day.length !== 0 ?specificStudentJoiningRequestData.program_prefs.pref_times_of_day.map((sessionHour,index)=>(
-            sessionHour[0][1] !== 0?<span key={index}>{workingHoursArr[index]}</span>:null
-            )):null}
+            <div className={StudentDetailsStyles["table-wrapper"]}>
+          <table
+            className={
+              StudentDetailsStyles[
+                "student-session-date-time-table"
+              ]
+            }
+          >
+            <thead>
+              <tr>
+                <th> 8:00 am : 10:00 pm</th>
+                <th> 10:00 am : 12:00 pm</th>
+                <th> 12:00 pm : 2:00 pm</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+              {!specificStudentJoiningRequestData.program_prefs.pref_times_of_day ? specificStudentJoiningRequestData.program_prefs.pref_times_of_day[0][1] !== 0?<td><img src={dateTimeSessionImage} className={StudentDetailsStyles['student-session-days-hours-img']} alt="correctDateTimeSession"/></td>:<td>{""}</td>:<td>{""}</td>}
+              {!specificStudentJoiningRequestData.program_prefs.pref_times_of_day ? specificStudentJoiningRequestData.program_prefs.pref_times_of_day[1][1] !== 0?<td><img src={dateTimeSessionImage} className={StudentDetailsStyles['student-session-days-hours-img']} alt="correctDateTimeSession"/></td>:<td>{""}</td>:<td>{""}</td>}
+              {!specificStudentJoiningRequestData.program_prefs.pref_times_of_day ? specificStudentJoiningRequestData.program_prefs.pref_times_of_day[2][1] !== 0?<td><img src={dateTimeSessionImage} className={StudentDetailsStyles['student-session-days-hours-img']} alt="correctDateTimeSession"/></td>:<td>{""}</td>:<td>{""}</td>} 
+              </tr>
+              <tr>
+                <td>2:00 pm : 4:00 pm</td>
+                <td>4:00 pm : 6:00 pm</td>
+                <td>6:00 pm :  8:00 pm</td>
+              </tr>
+              <tr>
+              {!specificStudentJoiningRequestData.program_prefs.pref_times_of_day ?specificStudentJoiningRequestData.program_prefs.pref_times_of_day[3][1] !== 0?<td><img src={dateTimeSessionImage} className={StudentDetailsStyles['student-session-days-hours-img']} alt="correctDateTimeSession"/></td>:<td>{""}</td>:<td>{""}</td>}
+              {!specificStudentJoiningRequestData.program_prefs.pref_times_of_day ?specificStudentJoiningRequestData.program_prefs.pref_times_of_day[4][1] !== 0?<td><img src={dateTimeSessionImage} className={StudentDetailsStyles['student-session-days-hours-img']} alt="correctDateTimeSession"/></td>:<td>{""}</td>:<td>{""}</td>}
+              {!specificStudentJoiningRequestData.program_prefs.pref_times_of_day ?specificStudentJoiningRequestData.program_prefs.pref_times_of_day[5][1] !== 0?<td><img src={dateTimeSessionImage} className={StudentDetailsStyles['student-session-days-hours-img']} alt="correctDateTimeSession"/></td>:<td>{""}</td>:<td>{""}</td>} 
+              </tr>
+              <tr>
+                <td>8:00 pm : 10:00 pm</td>
+                <td>10:00 pm : 12:00 am</td>
+              </tr>
+              <tr>
+                
+              {!specificStudentJoiningRequestData.program_prefs.pref_times_of_day ?specificStudentJoiningRequestData.program_prefs.pref_times_of_day[6][1] !== 0?<td><img src={dateTimeSessionImage} className={StudentDetailsStyles['student-session-days-hours-img']} alt="correctDateTimeSession"/></td>:<td>{""}</td>:<td>{""}</td>}
+              {!specificStudentJoiningRequestData.program_prefs.pref_times_of_day ?specificStudentJoiningRequestData.program_prefs.pref_times_of_day[7][1] !== 0?<td><img src={dateTimeSessionImage} className={StudentDetailsStyles['student-session-days-hours-img']} alt="correctDateTimeSession"/></td>:<td>{""}</td>:<td>{""}</td>}
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
             </div>
             </div>:null}
             
@@ -206,19 +290,6 @@ const [isDateTimeVisable,setIsDateTimeVisable] = useState(false);
               </tr>
               </>:null}
               <tr></tr>
-              {/*
-              <tr>
-                <th rowSpan="2">Program Preferred</th>
-                <th>Program Type</th>
-                <th>Preferred Days</th>
-                <th>Preferred Times</th>
-              </tr>
-              <tr>
-                {!specificStudentJoiningRequestData.program_prefs.type ? <td>{""}</td> : <td><span>{specificStudentJoiningRequestData.program_prefs.type}</span></td>}
-                {!specificStudentJoiningRequestData.program_prefs.pref_days ? <td>{""}</td> : <td><span>{specificStudentJoiningRequestData.program_prefs.pref_days.map((prefD, index) => (prefD !== -1? <span key={index}>{days[index]}</span>:null))}</span></td>}
-                {!specificStudentJoiningRequestData.program_prefs.pref_times_of_day ? <td>{""}</td> : <td><span>{specificStudentJoiningRequestData.program_prefs.pref_times_of_day.map((prefTimeD, index) => (prefTimeD[1] !== 0? <div key={index}><span>from</span>{" "}<span>{workingHoursArr[index][prefTimeD[0]]}</span>{" "}<span>to</span>{" "}<span>{workingHoursArr[index][prefTimeD[1]]}</span></div>:null))}</span></td>}
-              </tr>
-               */}
             </thead>
           </table>
 

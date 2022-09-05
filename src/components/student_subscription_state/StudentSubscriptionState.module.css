@@ -43,9 +43,9 @@
    
   }
   .student-accounts-table,
-  tr,
-  td,
-  th {
+  .student-accounts-table>tr,
+  .student-accounts-table > tbody > tr > td,
+  .student-accounts-table > thead > tr > th {
     padding: 10px;
     text-align: left;
     font-size: 1rem;

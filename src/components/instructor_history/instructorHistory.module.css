@@ -30,9 +30,9 @@
     margin: auto;
   }
   .system-accounts-table,
-  tr,
-  td,
-  th {
+  .system-accounts-table > tr,
+  .system-accounts-table > tbody > tr >  td,
+  .system-accounts-table > thead > tr > th {
     padding: 10px;
     text-align: center;
     font-size: 1rem;

@@ -41,34 +41,22 @@
   position: relative;
 }
 .instructor-table {
-  width: 99%;
+  width: 205%;
   margin: auto;
 }
 .instructor-table,
-tr,
-td,
-th {
+.instructor-table > tr,
+.instructor-table > tbody > tr >  td,
+.instructor-table > thead > tr >  th {
   padding: 10px;
   text-align: center;
   font-size: 1rem;
   letter-spacing: 0.5px;
   border: none;
 }
-.instructor-table > tbody > tr > td:nth-child(7) > span,
-.instructor-table > tbody > tr > td:nth-child(8) > span,
-.instructor-table > tbody > tr > td:nth-child(9) > span,
-.instructor-table > tbody > tr > td:nth-child(10) > span,
-.instructor-table > tbody > tr > td:nth-child(11) > span,
-.instructor-table > tbody > tr > td:nth-child(12) > span {
-  display: block;
-  width: 240px;
-}
-.instructor-table > tbody > tr > td > span > span{
+.instructor-table > tbody > tr > td > span > span , .instructor-table > tbody > tr > td > span {
   display: block;
   margin:20px auto;
-}
-.instructor-table > tbody > tr > td > span > div {
-  margin: 20px auto;
 }
 
 .instructor-table > thead > tr {
@@ -97,17 +85,9 @@ th {
   -o-transition: all 0.3s ease-in-out;
   cursor: pointer;
 }
-.instructor-table > tbody > tr > td > span > div > span > span:nth-child(1),
-.instructor-table > tbody > tr > td > span > div > span >  span:nth-child(3) {
-  color: #c2a054;
-}
-.instructor-table > tbody > tr:hover td > span > div > span >  span{
-  color: #FFFFFF;
-}
 .table-wrapper::-webkit-scrollbar {
   width: 20px;
 }
-
 .table-wrapper::-webkit-scrollbar-track {
   background-color: #e4e4e4;
   border-radius: 100px;
@@ -142,8 +122,8 @@ th {
   margin: auto;
   width:40%;
 }
-.available-img{
-  width:62%;
+.absence-img{
+  width:25%;
 }
 .online-sessions,.offline-instructor-sessions{
   width:30px;
@@ -157,7 +137,7 @@ th {
   margin: auto;
 }
 .offline-instructor-sessions{
-  background-color: #FA0026;
+  background-color: #E8222D;
 }
 .no-result {
   position: absolute;

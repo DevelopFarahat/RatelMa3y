@@ -315,9 +315,6 @@ const StudentSubscriptionState = ({fetchSpecificStudentDataAgain,setFetchSpecifi
         }).catch((error) => {
             console.log(error);
         }, headers);
-
-        stdObji.subscription_state === 'Pending' ? setIsStudentRequestDataVisible(true) : setIsStudentRequestDataVisible(false);
-        stdObji.subscription_state !== "Pending" && "Cancelled" ? setIsStudentRatelDataVisible(true) : setIsStudentRatelDataVisible(false);
         handlerRowClicked(event);
     }
     const distroyAlert = () => {

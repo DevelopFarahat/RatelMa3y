@@ -3,7 +3,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useContext } from "react";
 import UserContext from "../../utils/UserContext";
 import { useSnackbar } from "notistack";
-import "./formik.module.css";
+import   "./formik.module.css";
 
 const validatename = RegExp(/^[a-z A-Z]+ [a-z A-Z]+$/);
 const validateEmail = RegExp(/^\w+@\w+.(com|net|org)$/i);

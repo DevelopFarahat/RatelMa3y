@@ -1,4 +1,4 @@
-import react, { useState } from "react";
+import react, { useState,useCallback } from "react";
 import InstructorHistoryStyles from "./instructorHistory.module.css";
 import EmptyDataImage from "../../assets/images/empty.png";
 import NoResultFiltaration from "../../assets/images/no-result.png";
@@ -7,6 +7,7 @@ import { BiReset } from "react-icons/bi";
 import Form from "react-bootstrap/Form";
 const InstructorHistory = ({col1Name,col2Name,col3Name,arrName,selectedInstructorData,initialResponseSpecificInstructorData, setSelectedInstructorData }) => {
     const [filterValue, setFilterValue] = useState('');
+    const [selectedRow, setSelectedRow] = useState(-1);
     const filterAccounts = () => {
         console.log(filterValue);
         let filtarationArr = [];
@@ -28,8 +29,7 @@ const InstructorHistory = ({col1Name,col2Name,col3Name,arrName,selectedInstructo
 
 
 
-            //selectedInstructorData.students = filtarationArr;
-            //console.log(selectedInstructorData);
+           
         }
         filterValue !== '' ? setSelectedInstructorData({ ...selectedInstructorData, students: filtarationArr }) : setSelectedInstructorData(selectedInstructorData);
 
@@ -44,6 +44,10 @@ const InstructorHistory = ({col1Name,col2Name,col3Name,arrName,selectedInstructo
     const handleFiltaration = (event) => {
         setFilterValue(event.target.value);
     }
+    const handlerRowClicked = useCallback((event) => {
+        const id = event.currentTarget.id;
+        setSelectedRow(id);
+    }, []);
     return (
         <>
             {selectedInstructorData[arrName] === undefined || selectedInstructorData[arrName].length === 0 ? <img src={EmptyDataImage} className={InstructorHistoryStyles['no-result']} alt="no-result" /> : <>
@@ -65,7 +69,7 @@ const InstructorHistory = ({col1Name,col2Name,col3Name,arrName,selectedInstructo
                         </thead>
                         <tbody>
                             {selectedInstructorData[arrName].map((stdData) => (
-                                <tr key={stdData._id} id={stdData._id}>
+                                <tr key={stdData._id} id={stdData._id} onClick={handlerRowClicked} style={{ background: selectedRow === stdData._id ? '#038674' : '', color: selectedRow === stdData._id ? '#FFFFFF' : '', boxShadow: selectedRow === stdData._id ? `rgba(0, 0, 0, 0.2) 0 6px 20px 0 rgba(0, 0, 0, 0.19)` : '' }}>
                                     <td>{stdData.name}</td>
                                     <td>{stdData.email}</td>
                                     <td>{stdData.mobile}</td>
