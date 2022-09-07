@@ -7,7 +7,6 @@ const Students = () => {
     const [isStudentRatelDataVisible,setIsStudentRatelDataVisible] = useState(false);
     const initialSpecificStudentJoiningRequestData = useRef();
 
-
     return (
         <>
         <StudentDetails initialSpecificStudentJoiningRequestData={initialSpecificStudentJoiningRequestData} specificStudentJoiningRequestData={specificStudentJoiningRequestData} setSpecificStudentJoiningRequestData={setSpecificStudentJoiningRequestData} setIsStudentRequestDataVisible={setIsStudentRequestDataVisible} setIsStudentRatelDataVisible={setIsStudentRatelDataVisible} isStudentRequestDataVisible={isStudentRequestDataVisible} isStudentRatelDataVisible={isStudentRatelDataVisible}/>

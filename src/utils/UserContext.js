@@ -9,11 +9,13 @@ export function UserProvider({ children }) {
 
   useEffect(() => {
     const accToken = localStorage.getItem("accessToken");
-    if (accToken == null) return setUser(null);
+    if (accToken === null) return setUser(null);
+
+    const userInLocal = JSON.parse(localStorage.getItem('user'))?? {}
     
     let decoded = accToken.split(".")[1];
-    setUser({...user,...JSON.parse(atob(decoded))});
-    console.log("user",user);
+    setUser({...userInLocal,...JSON.parse(atob(decoded))});
+    console.warn("User State here",user);
   }, [localStorage.getItem("accessToken")]);
 
   return (

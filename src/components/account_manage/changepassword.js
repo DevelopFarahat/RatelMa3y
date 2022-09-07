@@ -1,16 +1,14 @@
 import axios from "axios";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import { useContext } from "react";
-import UserContext from "../../utils/UserContext";
 import { useSnackbar } from "notistack";
+import { FaUnlockAlt } from "react-icons/fa";
 
 // import "./changepassword.module.css";
 
-const validatepass = RegExp(/^[\d]{8}$/);
+const validatepass = RegExp(/^\w{8,}$/);
 
-function Changepassword() {
-  const { user } = useContext(UserContext);
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+function Changepassword({ user, setUser }) {
+  const { enqueueSnackbar } = useSnackbar();
 
   return (
     <Formik
@@ -22,28 +20,31 @@ function Changepassword() {
       validate={(values) => {
         const errors = {};
         if (!validatepass.test(values.password)) {
-          errors.password = "Please enter  8 numbers ";
+          errors.password = "Please enter atleast 8 chars";
         }
         if (!validatepass.test(values.newpassword)) {
-          errors.newpassword = "Please enter  8 numbers ";
+          errors.newpassword = "Please enter atleast 8 chars";
         }
         if (values.confirmpass != values.newpassword) {
           errors.confirmpass = "Password is not match";
         }
         return errors;
       }}
-      onSubmit={(values) => {
-        console.log(values);
+      onSubmit={(values, {resetForm}) => {
 
-        let field = user.role == "instructor" ? "instructors" : "students";
+        let field = user.role === "instructor" ? "instructors" : "students";
 
         axios
           .put(`http://localhost:5000/api/${field}/${user._id}`, {
+            email: user.email,
             password: values.newpassword,
             old_password: values.password,
           })
-          .then(() => enqueueSnackbar("Changed", { variant: "success" }))
-          .catch(() => enqueueSnackbar("Something went wrong"));
+          .then(() => {
+            enqueueSnackbar("Changed", { variant: "success" });
+            resetForm()            
+          })
+          .catch((err) => enqueueSnackbar("Something went wrong",err));
       }}
     >
       {() => {
@@ -59,8 +60,9 @@ function Changepassword() {
                   borderRadius: 16,
                 }}
               >
-                <h2>
-                  <span> Change </span> Password
+                <h2 style={{ marginLeft: 16, marginBottom: 24 }}>
+                  <FaUnlockAlt style={{ marginRight: 16 }} />
+                  Change Password
                 </h2>
               </div>
               <Form className="formsec">

@@ -109,7 +109,6 @@ export default function Forgot() {
   }
 
   function putNewPassword(){
-    console.log('resetData',resetData)
     axios.put(`http://localhost:5000/api/${resetData.field}/${resetData._id}`,{
       ...resetData
     }).then((res)=>{
@@ -130,20 +129,8 @@ export default function Forgot() {
     })
   }
 
-  //TODO: do it as Accordion
   return (
     <>
-      {/* <Accordion defaultActiveKey="0">
-        <Card>
-          <Card.Header>
-            <button eventKey="1">Click me!</button>
-          </Card.Header>
-          <Accordion.Collapse eventKey="1">
-            <Card.Body>Hello! I'm another body</Card.Body>
-          </Accordion.Collapse>
-        </Card>
-      </Accordion> */}
-
       <div
         className="container text-center"
         style={{ height: "100%", marginTop: 64, marginBottom: 32 }}
@@ -169,9 +156,6 @@ export default function Forgot() {
               placeholder="Email"
               onChange={(e) => {
                 setResetData({ ...resetData,email: e.target.value });
-                // let objEr = errors;
-                // delete objEr.email;
-                // setErrors(objEr);
               }}
               disabled={verified}
               isInvalid={"email" in errors}
@@ -202,9 +186,6 @@ export default function Forgot() {
                   className="col-6"
                   size="md"
                   onChange={(e) => {
-                    // let objEr = errors;
-                    // delete objEr.pin;
-                    // setErrors(objEr);
                     setResetData({ ...resetData,pin: e.target.value });
                   }}
                 />
@@ -237,9 +218,6 @@ export default function Forgot() {
                     className="col-6"
                     size="md"
                     onChange={(e) => {
-                      // let objEr = errors;
-                      // delete objEr.password;
-                      // setErrors(objEr);
                       setResetData({ ...resetData,password: e.target.value });
                     }}
                   />

@@ -1,18 +1,16 @@
 import axios from "axios";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import { useContext } from "react";
-import UserContext from "../../utils/UserContext";
 import { useSnackbar } from "notistack";
 import "./formik.module.css";
+import sty from "./formik.module.css"
 
 const validatename = RegExp(/^[a-z A-Z]+ [a-z A-Z]+$/);
 const validateEmail = RegExp(/^\w+@\w+.(com|net|org)$/i);
 const validateAge = RegExp(/^([5-9]|[1-5]\d|60)$/);
 
 const validatemobile = RegExp(/^[+](2011|2012|2015|2010)[\d]{7,}$/);
-function Formikform() {
-  const { user, setUser } = useContext(UserContext);
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+function Formikform({ user, setUser }) {
+  const { enqueueSnackbar } = useSnackbar();
 
   return (
     <Formik
@@ -20,8 +18,10 @@ function Formikform() {
         name: user.name,
         age: user.age,
         email: user.email,
+        gender: user.gender,
         mobile: user.mobile,
         state: user.state,
+        subscription_state: user.subscription_state,
       }}
       validate={(values) => {
         const errors = {};
@@ -47,30 +47,31 @@ function Formikform() {
         return errors;
       }}
       onSubmit={(values) => {
+        delete values.subscription_state;
         console.log(values);
 
-        delete values.state;
-        console.log(values);
+        let field = user.role === "instructor" ? "instructors" : "students";
 
-        let field = user.role == "instructor" ? "instructors" : "students";
-
-        axios
-          .put(`http://localhost:5000/api/${field}/${user._id}`, values)
-          .then(() => enqueueSnackbar("Saved", { variant: "success" }))
+        axios.put(`http://localhost:5000/api/${field}/${user._id}`, values)
+          .then(() => {
+            setUser({ ...user, ...values });
+            // localStorage.setItem(JSON.stringify(user))
+            enqueueSnackbar("Saved", { variant: "success" });
+          })
           .catch(() => enqueueSnackbar("Something went wrong"));
       }}
     >
       {() => {
         return (
           <>
-            <div className="container">
+            <div className={`container ${sty['form_size']}`}>
               <h2>
-                <span> Manage </span> Account
+                Manage Account
               </h2>
               <Form className="formone">
                 <div className="containercol  d-flex justify-content-center row mb-3">
                   <div>
-                    <label className="form-label">name </label>
+                    <label className="form-label">Name </label>
                     <Field
                       required
                       className="form-control"
@@ -84,7 +85,7 @@ function Formikform() {
                     <ErrorMessage name="name" />
                   </div>
                   <div>
-                    <label className="form-label ">age</label>
+                    <label className="form-label ">Age</label>
                     <Field
                       required
                       name="age"
@@ -98,9 +99,8 @@ function Formikform() {
                     <ErrorMessage name="age" />
                   </div>
 
-                  {/* //start */}
                   <div>
-                    <label className=" form-label">email</label>
+                    <label className=" form-label">Email</label>
                     <Field
                       required
                       disabled
@@ -111,11 +111,28 @@ function Formikform() {
                     ></Field>
                   </div>
                   <br />
+
+                  {user.role === "student" && (
+                    <div>
+                      <div>
+                        <label className=" form-label">
+                          Subscription State
+                        </label>
+                        <Field
+                          disabled
+                          name="subscription_state"
+                          type="text"
+                          className="form-control"
+                          placeholder="State"
+                        ></Field>
+                      </div>
+                    </div>
+                  )}
                   <div style={{ color: "red" }}>
                     <ErrorMessage name="email" />
                   </div>
                   <div>
-                    <label className="form-label">mobile</label>
+                    <label className="form-label">Mobile</label>
                     <Field
                       required
                       name="mobile"
@@ -129,7 +146,7 @@ function Formikform() {
                   </div>
                   <br />
                   <div>
-                    <label className="form-label">state</label>
+                    <label className="form-label">State</label>
                     <Field
                       required
                       name="state"
@@ -145,14 +162,16 @@ function Formikform() {
                       <label className="formcontrol mb-3 form-label">
                         Gender
                       </label>
-                      <select
+                      <Field
                         required
+                        name="gender"
+                        component="select"
                         className="form-select"
-                        aria-label="Default select example"
+                        placeholder="select gender"
                       >
-                        <option value="1">Male</option>
-                        <option value="2">Female</option>
-                      </select>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                      </Field>
                     </div>
                     <div></div>
                     <br />

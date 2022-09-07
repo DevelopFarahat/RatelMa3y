@@ -1,6 +1,6 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { Button, Form, InputGroup } from "react-bootstrap";
-import { Formik, Field, ErrorMessage, useFormik } from "formik";
+import { useFormik } from "formik";
 import * as yup from "yup";
 import { IoMdMail } from "react-icons/io";
 import { AiFillLock } from "react-icons/ai";
@@ -10,14 +10,10 @@ import UserContext from "../utils/UserContext";
 import { useSnackbar } from "notistack";
 
 export default function Login() {
-  const schema = yup.object().shape({
-    email: yup.string().email("Invalid email").required("Required"),
-    password: yup.string().required("Required"),
-  });
 
   const navigate = useNavigate();
-  const { setIsLoading, user, setUser } = useContext(UserContext);
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  const { setUser } = useContext(UserContext);
+  const { enqueueSnackbar } = useSnackbar();
 
   // useEffect(() => {
   //   setIsLoading(false);
@@ -38,14 +34,13 @@ export default function Login() {
     password: "",
   };
   const onSubmit = async (values) => {
-    console.log("Form data", values);
     axios
       .post("http://localhost:5000/api/auth/login", {
         email: values.email,
         password: values.password,
       })
       .then((res) => {
-        if (res.status == 200) {
+        if (res.status === 200) {
           //Login Successfully
           localStorage.setItem("accessToken", res.data.accessToken);
           localStorage.setItem("user_name", res.data.name);

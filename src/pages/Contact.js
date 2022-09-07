@@ -50,7 +50,7 @@ function Contact() {
         phone: values.phone,
       })
       .then((res) => {
-        if (res.status == 200) {
+        if (res.status === 200) {
           enqueueSnackbar("Sent Successfully", { variant: "success" });
           resetForm();
         }

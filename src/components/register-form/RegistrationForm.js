@@ -17,58 +17,8 @@ const initialValues = {
   Education: "",
 };
 const onSubmit = (values) => {
-  // const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-
-  // // {
-  //     name: ,
-  //     age: ,
-  //     gender: "Male",
-  //     state: ,
-  //     mobile: ,
-  //     email: ,
-  //     password: ,
-  //     certificate: String,
-  //     reached_surah: String,
-  //     whatsapp_number: String,
-  //     program_prefs: {
-  //         sessions_in_week: 2,
-  //         pref_days: [1,6],
-  //         pref_times_of_day: [[0,1],[0,1][0,0]]
-  //       },
-  // }
-
-  //TODO: just temp data for testing form
-  //TODO: verify his email with pin code message first
-
-  // axios
-  //   .post("http://localhost:5000/api/students", {
-  //     name: values.Name,
-  //     age: 23,
-  //     gender: "Male",
-  //     state: "Egypt",
-  //     mobile: values.phone,
-  //     email: values.email,
-  //     password: "test123",
-  //     certificate: values.Education,
-  //     whatsapp_number: values.Education,
-  //     program_prefs: {
-  //       sessions_in_week: 2,
-  //       pref_days: [1, 3, 6],
-  //       pref_times_of_day: [
-  //         [0, 1],
-  //         [0, 1],
-  //       ],
-  //     },
-  //   })
-  //   .then((res) => {
-  //     if (res.status != 200)
-  //       return 
-  //       // enqueueSnackbar("Incorrect email or password");
-  //   });
-
   console.log("Form data", values);
-  //TODO: make a place for storing contacts in backend
-  alert("Welcome ,,, " + " " + values.Name);
+  // alert("Welcome ,,, " + " " + values.Name);
 };
 const validate = (values) => {
   let errors = {};

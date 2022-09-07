@@ -12,6 +12,7 @@ const AddPost = () => {
   const [postData, setPostData] = useState({
     title: "",
     content: "",
+    lang: "ar"
   });
   const [img, setImg] = useState();
 
@@ -39,6 +40,7 @@ const AddPost = () => {
       ...postData,
       [event.target.name]: event.target.value,
     });
+    console.log('data',postData)
   };
 
   const clearImagePath = () => {
@@ -82,10 +84,10 @@ const AddPost = () => {
           setPostData({
             title: "",
             content: "",
+            lang: "ar"
           });
           setImg(null);
           setPostImage("");
-          console.log("results", res.data);
         })
         .catch((err) => console.error(err));
     } else {
@@ -200,6 +202,18 @@ const AddPost = () => {
               value={postData.title}
               onChange={handleChange}
             />
+            
+            <Form.Label htmlFor="postTitle">Language</Form.Label>
+            <Form.Select
+              id="postLang"
+              name="lang"
+              value={postData.lang}
+              onChange={handleChange}
+              placeholder={'Choose Language'}
+            >
+              <option value={'ar'}>عربي</option>
+              <option value={'en'}>English</option>
+            </Form.Select>
           </div>
           <div>
             <Form.Label htmlFor="postPargraph">Content</Form.Label>

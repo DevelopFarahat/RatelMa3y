@@ -69,7 +69,7 @@ export default function Room({
                   attendants: [user._id],
                 };
 
-                if (session.created_by == user._id)
+                if (session.created_by === user._id)
                   body.started_at = Date.now();
 
                 axios
@@ -80,19 +80,20 @@ export default function Room({
                   .then((res) => setUser({ ...user, in_session: session }))
                   .catch((err) => console.log("Maybe you should reconnect"));
 
-                let field = "students";
-                if (user.role == "instructor") field = "instructors";
-                axios
-                  .put(`http://localhost:5000/api/${field}/${user._id}`, {
-                    sessions: [session._id],
-                  })
-                  .then((res) =>
-                    console.log(
-                      "should add to sessions in the student array",
-                      res
-                    )
-                  )
-                  .catch((err) => console.log("field problem", err));
+                // let field = "students";
+                // if (user.role === "instructor") field = "instructors";
+
+                // axios
+                //   .put(`http://localhost:5000/api/${field}/${user._id}`, {
+                //     sessions: [session._id],
+                //   })
+                //   .then((res) =>
+                //     console.log(
+                //       "should add to sessions in the student array",
+                //       res
+                //     )
+                //   )
+                //   .catch((err) => console.log("field problem", err));
               })
 
               .on("left-meeting", () => {

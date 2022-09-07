@@ -1,6 +1,4 @@
-/** @format */
-
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
@@ -8,8 +6,7 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 import Navbar from "react-bootstrap/Navbar";
 import logo from "../../assets/images/logo.webp";
 import NavCss from "./Navbar.module.css";
-import { BrowserRouter as Router, Link, useNavigate } from "react-router-dom";
-import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
 import UserContext from "../../utils/UserContext";
 import { useTranslation } from "react-i18next";
 
@@ -17,7 +14,7 @@ function NavBar({ i18n, isRoomPrepared }) {
   const { t } = useTranslation();
 
   function changeLang(e) {
-    if (e.target.innerHTML == "en") {
+    if (e.target.innerHTML === "en") {
       e.target.innerHTML = "ar";
       i18n.changeLanguage("en");
     } else {
@@ -41,7 +38,7 @@ function NavBar({ i18n, isRoomPrepared }) {
       fixed="top"
       expand="lg"
       style={{
-        transitionDuration: "3s",
+        transition: "transform 3s",
         transform: isRoomPrepared ? "translateY(-120px)" : "translateY(0px)",
       }}
     >
@@ -70,7 +67,7 @@ function NavBar({ i18n, isRoomPrepared }) {
                 {t("navbar_rooms")}
               </Link>
             )}
-            {/* {user != null && user.role == "student" && false && (
+            {/* {user != null && user.role === "student" && false && (
               <Link className={NavCss.link} to={"/sessions"}>
                  {t("navbar_evaluations")}
               </Link>
@@ -79,12 +76,12 @@ function NavBar({ i18n, isRoomPrepared }) {
             <Link className={NavCss.link} to={"/about"}>
               {t("navbar_aboutus")}
             </Link>
-            {(!user || user.role == "student") && (
+            {(!user || user.role === "student") && (
               <Link className={NavCss.link} to={"/contact"}>
                 {t("navbar_contactus")}
               </Link>
             )}
-            {user && user.privileges == "Admin" && (
+            {user && user.privileges === "Admin" && (
               <Link to={"/adminPanel"}>
                 <Button variant="outline-success">
                   {" "}

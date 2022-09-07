@@ -41,7 +41,7 @@ function App() {
   const { isLoading } = useContext(UserContext)
 
   useEffect(() => {
-    setIsArabic(localStorage.getItem("i18nextLng") == "ar");
+    setIsArabic(localStorage.getItem("i18nextLng") === "ar");
   }, [localStorage.getItem("i18nextLng")]);
 
   const styles = {

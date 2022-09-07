@@ -7,6 +7,7 @@ import Select from "react-select";
 import axios from "axios";
 import { useContext } from "react";
 import UserContext from "../../utils/UserContext";
+import { useSnackbar } from "notistack";
 
 export default function ModalCreateSession(props) {
   //TODO: make participants accessable from above to have the ability to remove any student later
@@ -15,6 +16,7 @@ export default function ModalCreateSession(props) {
   const [participants, setParticipants] = useState([]);
   const [isExam, setIsExam] = useState(false);
   const { user } = useContext(UserContext);
+  const { enqueueSnackbar } = useSnackbar();
 
   //TODO: make options asyncLater with this vid https://www.youtube.com/watch?v=3u_ulMvTYZI
 
@@ -22,12 +24,12 @@ export default function ModalCreateSession(props) {
     async function fetchData() {
       //Add students as options to select
 
-      // let first = await axios.get("http://localhost:5000/api/students");
-
-      let opts = user?.students?.map((stu) => ({
-        value: stu._id,
-        label: stu.name,
-      }))?? [] ;
+      // let first = await .data.reverse is not a fun.get("http://localhost:5000/api/students");
+      let opts =
+        user?.students?.map((stu) => ({
+          value: stu._id,
+          label: stu.name,
+        })) ?? [];
       setOptions(opts);
     }
     fetchData();
@@ -61,7 +63,8 @@ export default function ModalCreateSession(props) {
   }
 
   async function createSession() {
-    if (participants == 0) return console.log("there are no participants");
+    if (participants.length === 0)
+      return enqueueSnackbar("there are no participants");
 
     participants[participants.length] = localStorage.getItem("user_id");
 
@@ -70,7 +73,7 @@ export default function ModalCreateSession(props) {
 
     let date = Date.now();
     let rid = localStorage.getItem("user_id") + "-" + date;
-    let first = await axios.post(
+    let resSession = await axios.post(
       "http://localhost:5000/api/sessions",
       {
         room_id: rid.slice(0, -3),
@@ -88,40 +91,30 @@ export default function ModalCreateSession(props) {
         },
       }
     );
-    // console.log(first);
 
     //Show the added session
+    let newSes = [resSession.data, ...props.sessions];
+    console.log("newSes", newSes);
 
-    fetchSessions()
-    // props.setsessions(
-    //   props.sessions.unshift({
-    //     room_id: localStorage.getItem("user_id") + "-" + date,
-    //     members_with_access: participants,
-    //     created_by: localStorage.getItem("user_id"),
-    //     previously_reached: "Surah Al Ekhlas",
-    //     evaluations: [],
-    //     is_live: true,
-    //     created_at: date,
-    //     started_at: date,
-    //   })
-    // );
+    props.setSessions(newSes);
     props.onHide();
   }
 
-  
-function fetchSessions(){
-  
-  let sessions_url =
-  "http://localhost:5000/api/sessions" +
-  (["Admin", "Supervisor"].includes(user.privileges)
-    ? ""
-    : "?userId=" + user._id);
+  function fetchSessions() {
+    let sessions_url =
+      "http://localhost:5000/api/sessions" +
+      (["Admin", "Supervisor"].includes(user.privileges)
+        ? ""
+        : "?userId=" + user._id);
 
-axios
-  .get(sessions_url)
-  .then((res) => props.setsessions(res.data.reverse()))
-  .catch((err) => console.error(err));
-}
+    axios
+      .get(sessions_url)
+      .then((res) => {
+        props.setSessions(res.data.data);
+        console.log("fetched", res.data.data);
+      })
+      .catch((err) => console.error(err));
+  }
 
   return (
     <Modal
@@ -169,7 +162,11 @@ axios
         <Button onClick={props.onHide} className="btn-secondary">
           Close
         </Button>
-        <Button onClick={createSession} vatiant="success" className={"btn-success"}>
+        <Button
+          onClick={createSession}
+          vatiant="success"
+          className={"btn-success"}
+        >
           Create
         </Button>
       </Modal.Footer>

@@ -49,7 +49,7 @@ function ContactUs() {
         phone: values.phone,
       })
       .then((res) => {
-        if (res.status == 200) {
+        if (res.status === 200) {
         }
       });
 
