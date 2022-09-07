@@ -45,7 +45,7 @@ function Sessions({ setIsRoomPrepared }) {
     axios
       .get(sessions_url)
       .then((res) => {
-        setsessions(res.data.reverse());
+        setsessions(res.data.data);
         setIsLoading(false);
       })
       .catch((err) => {

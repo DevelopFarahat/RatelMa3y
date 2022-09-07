@@ -11,28 +11,20 @@ import  DateTimeImage from "../../assets/images/date-time.png";
 import { VscChromeClose } from "react-icons/vsc";
 import { AiFillPayCircle } from "react-icons/ai";
 import axios from "axios";
+import { isLabelWithInternallyDisabledControl } from "@testing-library/user-event/dist/utils";
 const StudentDetails = ({fetchSpecificStudentDataAgain,specificStudentJoiningRequestData, setSpecificStudentJoiningRequestData, initialSpecificStudentJoiningRequestData, isStudentRequestDataVisible, isStudentRatelDataVisible, setIsStudentRequestDataVisible, setIsStudentRatelDataVisible }) => {
+  const [isToolTipShown,setIsToolTipShown] = useState(false);
   let programes = [{ id: 0, name: "programprogr1" }, { id: 1, name: "programprogr2" }, { id: 2, name: "programprogr3" },]
   let days = ['Saturday','Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
-  let working_hours = [{ id: 0, hour: "from 2:30 pm to 5:30 pm" }, { id: 1, hour: "from 2:30 pm to 5:30 pm" }, { id: 2, hour: "from 2:30 pm to 5:30 pm" }, { id: 3, hour: "from 2:30 pm to 5:30 pm" }];
-  let namesOfDaysOfTheWeek = [
-    { id: 0, name: "Saturday", att: 'working_days' },
-    { id: 1, name: "Sunday", att: 'working_days' },
-    { id: 2, name: "Monday", att: 'working_days' },
-    { id: 3, name: "Tuesday", att: 'working_days' },
-    { id: 4, name: "Wednesday", att: 'working_days' },
-    { id: 5, name: "Thursday", att: 'working_days' },
-    { id: 6, name: "Friday", att: 'working_days' }
-  ];
   let workingHoursArr = [
-    ["  8:00 am", " 10:00 pm"],
-    [" 10:00 am", " 12:00 pm"],
-    [" 12:00 pm", " 2:00 pm"],
-    [" 2:00 pm", " 4:00 pm"],
-    [" 4:00 pm", " 6:00 pm"],
-    [" 6:00 pm", " 8:00 pm"],
-    [" 8:00 pm", " 10:00 pm"],
-    [" 10:00 pm", " 12:00 am"],
+    ["8:00 am", " 10:00 pm"],
+    ["10:00 am", "12:00 pm"],
+    ["12:00 pm", "2:00 pm"],
+    ["2:00 pm", " 4:00 pm"],
+    ["4:00 pm", " 6:00 pm"],
+    ["6:00 pm", " 8:00 pm"],
+    ["8:00 pm", " 10:00 pm"],
+    ["10:00 pm", "12:00 am"],
 ];
 const [isDateTimeVisable,setIsDateTimeVisable] = useState(false);
   const toogleViewOfStudentRequestData = () => {
@@ -109,9 +101,16 @@ const [isDateTimeVisable,setIsDateTimeVisable] = useState(false);
   }
   /*
   useEffect(()=>{
-    axios.delete(``)
+    axios.delete(`http://localhost:5000/api/students/630fd01cf464db67a703f4bd`)
   },[])
   */
+ const displayToolTip = ()=>{
+  setIsToolTipShown(true);
+ }
+ const distroyToolTip = ()=>{
+  setIsToolTipShown(false);
+ }
+
   return (
 
     <>
@@ -121,14 +120,18 @@ const [isDateTimeVisable,setIsDateTimeVisable] = useState(false);
         </div> : <img src={EmptyDataImage} className={StudentDetailsStyles['empty-data-img']} alt="Empty" />}
         {Object.keys(specificStudentJoiningRequestData).length !== 0 && specificStudentJoiningRequestData.subscription_state !== 'Cancelled' ? isStudentRequestDataVisible && specificStudentJoiningRequestData.subscription_state !== 'Cancelled' ? <div className={StudentDetailsStyles['student-request-joinnig-info-main-container']} style={{overflow:isDateTimeVisable?'hidden':'auto'}}>
           {/* request */}
+         <div className={StudentDetailsStyles['show-daysTimes-tooltip']} style={{opacity:isToolTipShown?'1':'0',transition:isToolTipShown?'opacity .5s':''}}>
+            <span>Click to show days and hours</span>
+          </div>
           <div className={StudentDetailsStyles['student-table-main-header']}>
             <span>Student Data</span>
-              <img  src={DateTimeImage} onClick={showDateTimeContainer}  alt="date-time"/>
+              <img className={StudentDetailsStyles['date-time-icon']} onMouseOver={displayToolTip} onMouseOut={distroyToolTip}  src={DateTimeImage} onClick={showDateTimeContainer}  alt="date-time"/>
             </div>
             {isDateTimeVisable?<div className={StudentDetailsStyles['date-time-container-main']}>
             <VscChromeClose size={30} onClick={hideDateTimeContainer} className={StudentDetailsStyles['close-date-time-container']}/>
+            <div className={StudentDetailsStyles['days-hours-sessions-whol-container']}>
             <div className={StudentDetailsStyles['student-sessions-days']}>
-          
+  
             <div className={StudentDetailsStyles["table-wrapper"]}>
           <table
             className={
@@ -151,7 +154,8 @@ const [isDateTimeVisable,setIsDateTimeVisable] = useState(false);
                   ? specificStudentJoiningRequestData.program_prefs.pref_days.map(
                       (sessionDay, index) => (
                         <td key={index}>
-                          {sessionDay === index ? (
+                          
+                          {sessionDay !== -1 ? (
                             <img
                             className={StudentDetailsStyles['student-session-days-hours-img']}
                               src={dateTimeSessionImage}
@@ -187,9 +191,9 @@ const [isDateTimeVisable,setIsDateTimeVisable] = useState(false);
             </thead>
             <tbody>
               <tr>
-              {!specificStudentJoiningRequestData.program_prefs.pref_times_of_day ? specificStudentJoiningRequestData.program_prefs.pref_times_of_day[0][1] !== 0?<td><img src={dateTimeSessionImage} className={StudentDetailsStyles['student-session-days-hours-img']} alt="correctDateTimeSession"/></td>:<td>{""}</td>:<td>{""}</td>}
-              {!specificStudentJoiningRequestData.program_prefs.pref_times_of_day ? specificStudentJoiningRequestData.program_prefs.pref_times_of_day[1][1] !== 0?<td><img src={dateTimeSessionImage} className={StudentDetailsStyles['student-session-days-hours-img']} alt="correctDateTimeSession"/></td>:<td>{""}</td>:<td>{""}</td>}
-              {!specificStudentJoiningRequestData.program_prefs.pref_times_of_day ? specificStudentJoiningRequestData.program_prefs.pref_times_of_day[2][1] !== 0?<td><img src={dateTimeSessionImage} className={StudentDetailsStyles['student-session-days-hours-img']} alt="correctDateTimeSession"/></td>:<td>{""}</td>:<td>{""}</td>} 
+              {specificStudentJoiningRequestData!== undefined ?  specificStudentJoiningRequestData.program_prefs.pref_times_of_day[0][1]  !== 0?<td><img src={dateTimeSessionImage} className={StudentDetailsStyles['student-session-days-hours-img']} alt="correctDateTimeSession"/></td>:<td>{""}</td>:<td>{""}</td>}
+              {specificStudentJoiningRequestData!== undefined ?  specificStudentJoiningRequestData.program_prefs.pref_times_of_day[1][1] !== 0?<td><img src={dateTimeSessionImage} className={StudentDetailsStyles['student-session-days-hours-img']} alt="correctDateTimeSession"/></td>:<td>{""}</td>:<td>{""}</td>}
+              {specificStudentJoiningRequestData !== undefined ? specificStudentJoiningRequestData.program_prefs.pref_times_of_day[2][1]  !== 0?<td><img src={dateTimeSessionImage} className={StudentDetailsStyles['student-session-days-hours-img']} alt="correctDateTimeSession"/></td>:<td>{""}</td>:<td>{""}</td>} 
               </tr>
               <tr>
                 <td>2:00 pm : 4:00 pm</td>
@@ -197,9 +201,9 @@ const [isDateTimeVisable,setIsDateTimeVisable] = useState(false);
                 <td>6:00 pm :  8:00 pm</td>
               </tr>
               <tr>
-              {!specificStudentJoiningRequestData.program_prefs.pref_times_of_day ?specificStudentJoiningRequestData.program_prefs.pref_times_of_day[3][1] !== 0?<td><img src={dateTimeSessionImage} className={StudentDetailsStyles['student-session-days-hours-img']} alt="correctDateTimeSession"/></td>:<td>{""}</td>:<td>{""}</td>}
-              {!specificStudentJoiningRequestData.program_prefs.pref_times_of_day ?specificStudentJoiningRequestData.program_prefs.pref_times_of_day[4][1] !== 0?<td><img src={dateTimeSessionImage} className={StudentDetailsStyles['student-session-days-hours-img']} alt="correctDateTimeSession"/></td>:<td>{""}</td>:<td>{""}</td>}
-              {!specificStudentJoiningRequestData.program_prefs.pref_times_of_day ?specificStudentJoiningRequestData.program_prefs.pref_times_of_day[5][1] !== 0?<td><img src={dateTimeSessionImage} className={StudentDetailsStyles['student-session-days-hours-img']} alt="correctDateTimeSession"/></td>:<td>{""}</td>:<td>{""}</td>} 
+              {specificStudentJoiningRequestData !== undefined ? specificStudentJoiningRequestData.program_prefs.pref_times_of_day[3][1] !== 0?<td><img src={dateTimeSessionImage} className={StudentDetailsStyles['student-session-days-hours-img']} alt="correctDateTimeSession"/></td>:<td>{""}</td>:<td>{""}</td>}
+              {specificStudentJoiningRequestData !== undefined ? specificStudentJoiningRequestData.program_prefs.pref_times_of_day[4][1] !== 0?<td><img src={dateTimeSessionImage} className={StudentDetailsStyles['student-session-days-hours-img']} alt="correctDateTimeSession"/></td>:<td>{""}</td>:<td>{""}</td>}
+              {specificStudentJoiningRequestData !== undefined ? specificStudentJoiningRequestData.program_prefs.pref_times_of_day[5][1] !== 0?<td><img src={dateTimeSessionImage} className={StudentDetailsStyles['student-session-days-hours-img']} alt="correctDateTimeSession"/></td>:<td>{""}</td>:<td>{""}</td>} 
               </tr>
               <tr>
                 <td>8:00 pm : 10:00 pm</td>
@@ -207,17 +211,15 @@ const [isDateTimeVisable,setIsDateTimeVisable] = useState(false);
               </tr>
               <tr>
                 
-              {!specificStudentJoiningRequestData.program_prefs.pref_times_of_day ?specificStudentJoiningRequestData.program_prefs.pref_times_of_day[6][1] !== 0?<td><img src={dateTimeSessionImage} className={StudentDetailsStyles['student-session-days-hours-img']} alt="correctDateTimeSession"/></td>:<td>{""}</td>:<td>{""}</td>}
-              {!specificStudentJoiningRequestData.program_prefs.pref_times_of_day ?specificStudentJoiningRequestData.program_prefs.pref_times_of_day[7][1] !== 0?<td><img src={dateTimeSessionImage} className={StudentDetailsStyles['student-session-days-hours-img']} alt="correctDateTimeSession"/></td>:<td>{""}</td>:<td>{""}</td>}
+              {specificStudentJoiningRequestData!== undefined ?  specificStudentJoiningRequestData.program_prefs.pref_times_of_day[6][1] !== 0?<td><img src={dateTimeSessionImage} className={StudentDetailsStyles['student-session-days-hours-img']} alt="correctDateTimeSession"/></td>:<td>{""}</td>:<td>{""}</td>}
+              {specificStudentJoiningRequestData!== undefined ? specificStudentJoiningRequestData.program_prefs.pref_times_of_day[7][1] !== 0?<td><img src={dateTimeSessionImage} className={StudentDetailsStyles['student-session-days-hours-img']} alt="correctDateTimeSession"/></td>:<td>{""}</td>:<td>{""}</td>}
               </tr>
             </tbody>
           </table>
         </div>
-
+            </div>
             </div>
             </div>:null}
-            
-
           <table className={StudentDetailsStyles['requested-joinnig-student-table']}>
             <thead>
               <tr>
@@ -284,7 +286,7 @@ const [isDateTimeVisable,setIsDateTimeVisable] = useState(false);
               {specificStudentJoiningRequestData.subscription_state !== "Pending" && specificStudentJoiningRequestData.instructor !== null && specificStudentJoiningRequestData.started_in !== null?<>
               <tr>
                 <th>Started At</th>
-                <td>{specificStudentJoiningRequestData.started_in}</td>
+                <td>{specificStudentJoiningRequestData.started_in.split("T")[0]}</td>
                 <th>Qur'an Surah Or Juiz Reached Before</th>
                  <td>{specificStudentJoiningRequestData.reached_surah}</td>
               </tr>
@@ -322,34 +324,17 @@ const [isDateTimeVisable,setIsDateTimeVisable] = useState(false);
               <tbody>
                 {specificStudentJoiningRequestData.sessions !== null && specificStudentJoiningRequestData.sessions !== undefined?
                 specificStudentJoiningRequestData.sessions.map((session)=>(
-                 
-                  
                   <tr key={session._id} id={session._id}>
-
                     {session.attendants.length !== 0 && session.attendants !== null && session.attendants !== undefined?<td>
-                    {session.attendants.find((studentId)=> specificStudentJoiningRequestData._id === studentId) !== undefined?<img src={Present} alt="attendance" style={{display:'block',margin:'auto',width:'25%'}}/>:<img src={absence}  alt="absence" style={{display:'block',margin:'auto',width:'18%'}} />}
-                    </td>:session.attendants.length === 0?<td><img src={absence}  alt="absence" style={{display:'block',margin:'auto',width:'18%'}}/></td>:<td>{"ff "}</td>}
+                    {session.attendants.find((studentId)=> specificStudentJoiningRequestData._id === studentId) !== undefined?<img src={Present} alt="attendance" style={{display:'block',margin:'auto',width:'10%'}}/>:<img src={absence}  alt="absence" style={{display:'block',margin:'auto',width:'10%'}} />}
+                    </td>:session.attendants.length === 0?<td><img src={absence}  alt="absence" style={{display:'block',margin:'auto',width:'10%'}}/></td>:<td>{"ff "}</td>}
                      <td>{session.created_at.split("T")[0]}</td>
                     </tr>
                 )):null}
-
-                
               </tbody>
             </table>}
           </div>
-
-
-
-
-
-
-
         </div>:<img src={EmptyDataImage} className={StudentDetailsStyles['empty-data-img']} alt="Empty" /> : null}
-
-
-
-
-
       </div>
     </>
   )

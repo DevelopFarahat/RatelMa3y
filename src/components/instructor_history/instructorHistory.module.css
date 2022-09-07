@@ -12,6 +12,11 @@
   }
   .table-settings-container > label {
     flex: 0 0 15%;
+    color:#FFFFFF;
+    font-family: 'Times New Roman', Times, serif;
+    text-align: left;
+    text-transform: capitalize;
+    font-size: 1rem;
   }
   .table-settings-container > input {
     flex: 0 0 30%;
@@ -38,6 +43,7 @@
     font-size: 1rem;
     letter-spacing: .5px;
     border:none;
+    font-family: 'Times New Roman', Times, serif;
   }
   .system-accounts-table > thead > tr {
     background-color: #c2a054;
@@ -67,20 +73,28 @@
     -o-transition: all .3s ease-in-out;
   }
   .table-wrapper::-webkit-scrollbar {
-    width: 20px;
+    width: 15px;
   }
   .table-wrapper::-webkit-scrollbar-track {
     background-color: #e4e4e4;
-    border-radius: 100px;
-  }
+    border-radius: 70px;
+    -webkit-border-radius: 70px;
+    -moz-border-radius: 70px;
+    -ms-border-radius: 70px;
+    -o-border-radius: 70px;
+}
   
   .table-wrapper::-webkit-scrollbar-thumb {
-    border-radius: 100px;
+    border-radius: 70px;
     border: 6px solid rgba(0, 0, 0, 0.18);
     border-left: 0;
     border-right: 0;
     background-color: #038674;
-  }
+    -webkit-border-radius: 70px;
+    -moz-border-radius: 70px;
+    -ms-border-radius: 70px;
+    -o-border-radius: 70px;
+}
   .btn {
     width: 35%;
     outline: none;

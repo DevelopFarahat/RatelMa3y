@@ -56,6 +56,7 @@
   word-spacing: 1px;
   text-align: center;
   padding: 10px;
+  font-family: 'Times New Roman', Times, serif;
 }
 .requested-joinnig-student-table > thead > tr >  th {
   border-top: 1px solid #dadada;
@@ -76,24 +77,32 @@
   border: none;
 }
 .student-request-joinnig-info-main-container::-webkit-scrollbar {
-  width: 20px;
+  width: 15px;
 }
 
 .student-request-joinnig-info-main-container::-webkit-scrollbar-track {
   background-color: #e4e4e4;
-  border-radius: 100px;
+  border-radius: 70px;
+  -webkit-border-radius: 70px;
+  -moz-border-radius: 70px;
+  -ms-border-radius: 70px;
+  -o-border-radius: 70px;
 }
 
 .student-request-joinnig-info-main-container::-webkit-scrollbar-thumb {
-  border-radius: 100px;
+  border-radius: 70px;
   border: 6px solid rgba(0, 0, 0, 0.18);
   border-left: 0;
   border-right: 0;
   background-color: #038674;
+  -webkit-border-radius: 70px;
+  -moz-border-radius: 70px;
+  -ms-border-radius: 70px;
+  -o-border-radius: 70px;
 }
 .student-table-main-header{
   width:100%;
-  padding:15px;
+  padding:5px;
   background-color: #038674;
   color:#ffffff;
   display: flex;
@@ -135,6 +144,23 @@
 .close-date-time-container:hover{
   color: #038674;
 }
+.days-hours-sessions-whol-container{
+  width:99%;
+  height:304px;
+  background-color: #FFFFFF;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  display: flex;
+  flex-direction: column;
+  justify-content:flex-start;
+  align-items: center;
+  margin: 51px auto 0 auto;
+
+}
 .student-sessions-days,.student-sessions-hours{
   width:95%;
   border-radius: 5px;
@@ -149,14 +175,11 @@
   justify-content: center;
   align-items: center;
   padding: 10px;
-  margin: 44px auto 0 auto;
+  /*margin: 44px auto 0 auto;*/
   background-color: #FFFFFF;
   overflow:auto;
-  height:33%;
-}
-.student-sessions-hours{
-  margin: 10px auto 0 auto;
   height:44%;
+  margin-top: 10px ;
 }
 .student-sessions-days >  span,.student-sessions-hours > span{
     font-size: 1rem;
@@ -181,7 +204,7 @@
   position: relative;
 }
 .table-wrapper:last-of-type{
-  height: 98%;
+  height: 84%;
 }
 .student-session-date-time-table {
   width: 99%;
@@ -219,24 +242,32 @@
   text-transform: capitalize;
 }
 .table-wrapper::-webkit-scrollbar {
-  width: 20px;
+  width: 15px;
 }
 
 .table-wrapper::-webkit-scrollbar-track {
   background-color: #e4e4e4;
-  border-radius: 100px;
+  border-radius: 70x;
+  -webkit-border-radius: 70x;
+  -moz-border-radius: 70x;
+  -ms-border-radius: 70x;
+  -o-border-radius: 70x;
 }
 
 .table-wrapper::-webkit-scrollbar-thumb {
-  border-radius: 100px;
+  border-radius: 70px;
   border: 6px solid rgba(0, 0, 0, 0.18);
   border-left: 0;
   border-right: 0;
   background-color: #038674;
+  -webkit-border-radius: 70px;
+  -moz-border-radius: 70px;
+  -ms-border-radius: 70px;
+  -o-border-radius: 70px;
 }
 .student-session-days-hours-img{
-  width:40px;
-  height:40px;
+  width:30px;
+  height:30px;
   display:block;
   margin: auto;
   object-fit: contain;
@@ -286,6 +317,11 @@
 }
 .table-settings-container > label {
   flex: 0 0 15%;
+  font-size: 1rem;
+  font-family: 'Times New Roman', Times, serif;
+  color: #FFFFFF;
+  text-transform: capitalize;
+  text-align: left;
 }
 .table-settings-container > .form-sort-select {
   flex: 0 0 30%;
@@ -314,6 +350,7 @@
   font-size: 1rem;
   letter-spacing: 0.5px;
   border: none;
+  font-family: 'Times New Roman', Times, serif;
 }
 .student-session-info-table > thead > tr {
   background-color: #c2a054;
@@ -334,17 +371,60 @@
   background-color: #dadada;
 }
 .table-wrapper::-webkit-scrollbar {
-  width: 20px;
+  width: 15px;
 }
 .table-wrapper::-webkit-scrollbar-track {
   background-color: #e4e4e4;
-  border-radius: 100px;
+  border-radius: 70px;
+  -webkit-border-radius: 70px;
+  -moz-border-radius: 70px;
+  -ms-border-radius: 70px;
+  -o-border-radius: 70px;
 }
 
 .table-wrapper::-webkit-scrollbar-thumb {
-  border-radius: 100px;
+  border-radius: 70px;
   border: 6px solid rgba(0, 0, 0, 0.18);
   border-left: 0;
   border-right: 0;
   background-color: #038674;
+  -webkit-border-radius: 70px;
+  -moz-border-radius: 70px;
+  -ms-border-radius: 70px;
+  -o-border-radius: 70px;
 }
+.show-daysTimes-tooltip{
+  position: absolute;
+  top: 18%;
+  left: 52%;
+  width: 45%;
+  height: 43px;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  background-color: rgba(4,0,0,1);
+  padding: 8px 37px;
+}
+.show-daysTimes-tooltip > span{
+  color: #FFFFFF;
+  line-height: 1.5;
+  text-align: center;
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 1rem;
+  
+}
+.show-daysTimes-tooltip::after {
+  content: "";
+  position: absolute;
+  top: -49%;
+  left: 83%;
+  margin-top: -4px;
+  border-width: 14px;
+  border-style: solid;
+  border-color: transparent transparent rgba(4,0,0,1) transparent;
+ 
+}
+
+
