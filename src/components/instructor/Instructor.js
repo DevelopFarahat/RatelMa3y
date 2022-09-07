@@ -299,9 +299,7 @@ const Instructor = () => {
                 break;
 
             default:
-                console.log("hello");
         }
-        console.log(sortedInstructorArr);
         setInstructorData(
                 sortedInstructorArr
 
@@ -333,8 +331,8 @@ console.log(instructorData);
         axios
             .get(`http://localhost:5000/api/instructors/${event.currentTarget.id}`)
             .then((res) => {
-                initialResponseSpecificInstructorData.current = res.data.data;
-                setSelectedInstructorData(res.data.data);
+                initialResponseSpecificInstructorData.current = res.data;
+                setSelectedInstructorData(res.data);
                 console.log(res.data.data);
             })
             .catch((error) => {
@@ -434,8 +432,6 @@ console.log(instructorData);
                                     <th>State</th>
                                     <th>Email</th>
                                     <th>Mobile</th>
-                                    <th>Working Hours</th>
-                                    <th>Working Days</th>
                                     <th>Programs</th>
                                     <th>Started At</th>
                                     <th>Is Available</th>
@@ -466,55 +462,12 @@ console.log(instructorData);
                                         <td>{instructData.state}</td>
                                         <td>{instructData.email}</td>
                                         <td>{instructData.mobile}</td>
-                                        {instructData.prefs.working_hours ? (
-                                            <>
-                                                <td>
-                                                    <span>
-                                                        {instructData.prefs.working_hours.map(
-                                                            (work_h, index) =>
-                                                                work_h[1] !== 0 ? (
-                                                                    <div>
-                                                                        <span>
-                                                                            <span>From</span>{" "}
-                                                                            <span>{workingHoursArr[index][0]}</span>{" "}
-                                                                            <span>To</span>{" "}
-                                                                            <span>{workingHoursArr[index][1]}</span>
-                                                                        </span>
-                                                                    </div>
-                                                                ) : (
-                                                                    <span> </span>
-                                                                )
-                                                        )}
-                                                    </span>
-                                                </td>
-                                            </>
-                                        ) : (
-                                            <td>{""}</td>
-                                        )}
-                                        {instructData.prefs.working_days ? (
-                                            <>
-                                                <td>
-                                                    <span>
-                                                        {instructData.prefs.working_days.map(
-                                                            (work_d, index) =>
-                                                                work_d !== -1 ? (
-                                                                    <span>{days[index]}</span>
-                                                                ) : (
-                                                                    <span> </span>
-                                                                )
-                                                        )}
-                                                    </span>
-                                                </td>
-                                            </>
-                                        ) : (
-                                            <td>{""}</td>
-                                        )}
                                         {instructData.programs ? (
                                             <>
                                                 <td>
                                                     <span>
-                                                        {instructData.programs.map((pr) => (
-                                                            <span>{pr}</span>
+                                                        {instructData.programs.map((pr,index) => (
+                                                            <span key={index}>{pr}</span>
                                                         ))}
                                                     </span>
                                                 </td>

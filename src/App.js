@@ -28,6 +28,7 @@ import RoomSideBar from "./components/room-side-bar/RoomSideBar";
 import Forgot from "./pages/Forgot";
 import ManageAcc from "./pages/ManageAcc";
 import BookBoard from "./components/quran_board/BookBoard";
+import Messages from "./components/messages/message";
 // import { FileUploadPage } from "./components/test-post/TestPost";
 
 function App() {
@@ -103,6 +104,7 @@ function App() {
                   <Route path="addPost" element={<AddPost />} />
                   <Route path="students" element={<Student />} />
                   <Route path="instructors" element={<Instructor />} />
+                  <Route path="messages" element={<Messages/>} />
                 </Route>
                 <Route
                   path="register"

@@ -193,71 +193,62 @@
   
 }
 .registration-error-alert{
-  width:40%;
-  height:200px;
+  width: 35%;
+  height: 58px;
   border-radius: 5px;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   -ms-border-radius: 5px;
   -o-border-radius: 5px;
-  position:absolute;
+  position: absolute;
+  top: 5%;
+  left: 94%;
   transform: translate(-50%,-50%);
   -webkit-transform: translate(-50%,-50%);
   -moz-transform: translate(-50%,-50%);
   -ms-transform: translate(-50%,-50%);
   -o-transform: translate(-50%,-50%);
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  background:#FFFFFF;
+  box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%);
+  background: #FFFFFF;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  flex-direction: row;
+  justify-content: flex-start;
   align-items: center;
-  animation: moveAlert .5s 1 ease-in-out;
-  -webkit-animation: moveAlert 1s 1 ease-in-out;
- animation-fill-mode: both;
+  background-color: #FA0026;
 }
-@keyframes moveAlert {
+.registration-error-alert::after{
+  content: "";
+  position: absolute;
+  top: 89%;
+  left: 0%;
+  height: 2px;
+  background: #FFFFFF;
+  border-radius: 2px;
+  animation: decreaseWidth 1s 1 ease-in-out;
+  animation-fill-mode: forwards;
 
+}
+@keyframes decreaseWidth{
   0%{
+      width:99%;
+      transition: all .5s ease-in-out;
+  }
+  100%{
+      width:0%;
+      transition: all .5s ease-in-out;
+  }
+}
 
-    top:46%;
-    left:50%;
-    transition: all .5s ease-in-out;
-    -webkit-transition: all .5s ease-in-out;
-    -moz-transition: all .5s ease-in-out;
-    -ms-transition: all .5s ease-in-out;
-    -o-transition: all .5s ease-in-out;
-}
-100%{
-  top:50%;
-  left:50%;
-  transition: all .5s ease-in-out;
-  -webkit-transition: all .5s ease-in-out;
-  -moz-transition: all .5s ease-in-out;
-  -ms-transition: all .5s ease-in-out;
-  -o-transition: all .5s ease-in-out;
-}
-  
-}
-.registration-error-alert >  *{
-
-  margin:10px 0 10px 0;
-}
-.registration-error-alert > img{
-  width:50px;
-  height:50px;
-}
 .registration-error-alert >  span{
-
-  font-size:1.2rem;
-  letter-spacing: .5;
-  word-spacing: 1px;
-  text-transform: capitalize;
+  font-size: 1rem;
+  letter-spacing: 1px;
+  text-transform: lowercase;
   line-height: 1.5;
-  font-family:'Times New Roman', Times, serif;
+  font-family: 'Times New Roman', Times, serif;
   text-align: center;
   font-weight: bold;
-  color:#FA0026;
+  color: #FFFFFF;
+  padding-left: 2px;
 }
 @media screen and (max-width:996px) {
 

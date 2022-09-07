@@ -1,3 +1,19 @@
+.all-messages-main-container,.messages-content-main-container{
+    flex: 0 0 65%;
+    height:471px;
+    background: #FFFFFF;
+    padding: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+    position: relative;
+}
+.messages-content-main-container{
+    flex: 0 0 33%;
+}
 .table-settings-container {
     width: 99%;
     margin: auto;
@@ -11,18 +27,20 @@
     margin-bottom: 25px;
   }
   .table-settings-container > label {
-    flex: 0 0 15%;
-    color:#FFFFFF;
-    font-family: 'Times New Roman', Times, serif;
+    flex: 0 0 6%;
+    color: #FFFFFF;
     text-align: left;
     text-transform: capitalize;
-    font-size: 1rem;
+    font-family: 'Times New Roman', Times, serif;
   }
-  .table-settings-container > input {
-    flex: 0 0 30%;
+  .table-settings-container > input , .table-settings-container > select{
+    flex: 0 0 20%;
+  }
+  .table-settings-container > select{
+    cursor: pointer;
   }
   .table-settings-container > button {
-    flex: 0 0 25%;
+    flex: 0 0 15%;
   }
   .table-wrapper {
     width: 99%;
@@ -30,39 +48,38 @@
     overflow: auto;
     position: relative;
   }
-  .system-accounts-table {
+  .messages-table {
     width: 99%;
     margin: auto;
   }
-  .system-accounts-table,
-  .system-accounts-table > tr,
-  .system-accounts-table > tbody > tr >  td,
-  .system-accounts-table > thead > tr > th {
+  .messages-table,
+  .messages-table > tr,
+  .messages-table > tbody > tr > td,
+  .messages-table > thead > tr th {
     padding: 10px;
     text-align: center;
     font-size: 1rem;
     letter-spacing: .5px;
     border:none;
-    font-family: 'Times New Roman', Times, serif;
   }
-  .system-accounts-table > thead > tr {
+  .messages-table > thead > tr {
     background-color: #c2a054;
     color: #ffffff;
     position: sticky;
     top: -1px;
   }
-  .system-accounts-table > thead > tr > th{
+  .messages-table > thead > tr > th{
     border-left: 1px solid #dadada;
   }
   
-  .system-accounts-table > thead > tr >  th:nth-child(1),.system-accounts-table > thead > tr >  th:nth-child(5){
+  .messages-table > thead > tr >  th:nth-child(1),.messages-table > thead > tr >  th:nth-child(5){
     border-right: 1px solid #dadada;
   }
   
-  .system-accounts-table > tbody > tr:nth-child(even) {
+  .messages-table > tbody > tr:nth-child(even) {
     background-color: #dadada;
   }
-  .system-accounts-table > tbody > tr:hover{
+  .messages-table > tbody > tr:hover{
     background-color:#c2a054;
     color:#FFFFFF;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -71,6 +88,7 @@
     -moz-transition: all .3s ease-in-out;
     -ms-transition: all .3s ease-in-out;
     -o-transition: all .3s ease-in-out;
+    cursor: pointer;
   }
   .table-wrapper::-webkit-scrollbar {
     width: 15px;
@@ -112,21 +130,34 @@
     margin-top: 20px;
     color: #ffffff;
   }
-  .no-result {
+  .disabled-btn {
+    width: 35%;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+    text-align: center;
+    font-size: 1rem;
+    text-transform: capitalize;
+    padding: 8px 8px;
+    margin-top: 20px;
+    color: #ffffff;
+    background-color: #666666;
+    opacity: 0.3;
+    cursor:not-allowed !important;
+  }
+  .no-result{
     position: absolute;
-    top: 50%;
-    left: 50%;
+    top:50%;
+    left:50%;
     display: block;
     object-fit: cover;
-    transform: translate(-50%, -50%);
-    -webkit-transform: translate(-50%, -50%);
-    -moz-transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
-    -o-transform: translate(-50%, -50%);
-  }
-  .empty-data-img {
-    margin: auto;
-    padding: 88px;
-    display: block;
-    background-position: 50% 50%;
+    transform: translate(-50%,-50%);
+    -webkit-transform: translate(-50%,-50%);
+    -moz-transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    -o-transform: translate(-50%,-50%);
   }

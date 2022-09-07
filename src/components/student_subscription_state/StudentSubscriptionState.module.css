@@ -23,13 +23,20 @@
     margin-bottom: 25px;
   }
   .table-settings-container > label {
-    flex: 0 0 15%;
+    flex: 0 0 6%;
+    color: #FFFFFF;
+    font-family: 'Times New Roman', Times, serif;
+    text-transform: capitalize;
+    text-align: left;
   }
-  .table-settings-container > input {
-    flex: 0 0 30%;
+  .table-settings-container > input , .table-settings-container > select  {
+    flex: 0 0 25%;
+  }
+  .table-settings-container > select{
+    cursor: pointer;
   }
   .table-settings-container > button {
-    flex: 0 0 25%;
+    flex: 0 0 15%;
   }
   .table-wrapper {
     width: 99%;
@@ -43,14 +50,21 @@
    
   }
   .student-accounts-table,
-  tr,
-  td,
-  th {
+  .student-accounts-table>tr,
+  .student-accounts-table > tbody > tr > td,
+  .student-accounts-table > thead > tr > th {
     padding: 10px;
     text-align: center;
     font-size: 1rem;
     letter-spacing: .5px;
     border:none;
+    font-family: 'Times New Roman', Times, serif;
+  }
+  .student-accounts-table > tbody > tr > td:nth-child(3){
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row;
+    align-items: center;
   }
   .student-accounts-table > thead > tr {
     background-color: #c2a054;
@@ -79,23 +93,31 @@
     cursor: pointer;
 }
   .table-wrapper::-webkit-scrollbar {
-    width: 20px;
+    width: 15px;
   }
   
   .table-wrapper::-webkit-scrollbar-track {
     background-color: #e4e4e4;
-    border-radius: 100px;
-  }
+    border-radius: 70px;
+    -webkit-border-radius: 70px;
+    -moz-border-radius: 70px;
+    -ms-border-radius: 70px;
+    -o-border-radius: 70px;
+}
   
   .table-wrapper::-webkit-scrollbar-thumb {
-    border-radius: 100px;
+    border-radius: 70px;
     border: 6px solid rgba(0, 0, 0, 0.18);
     border-left: 0;
     border-right: 0;
     background-color: #038674;
-  }
+    -webkit-border-radius: 70px;
+    -moz-border-radius: 70px;
+    -ms-border-radius: 70px;
+    -o-border-radius: 70px;
+}
   .btn {
-    width: 35%;
+    width: 25%;
     outline: none;
     border: none;
     border-radius: 5px;
@@ -132,19 +154,9 @@
 
   }
 .setting-icon-hidden{
-    display: none;
-    margin-left: 10px;
-    cursor: pointer;
-    color: #FFFFFF;
-}
-.student-accounts-table > tbody > tr:hover .setting-icon-hidden{
     display: inline;
-    transition: all .5s ease-in-out;
-    -webkit-transition: all .5s ease-in-out;
-    -moz-transition: all .5s ease-in-out;
-    -ms-transition: all .5s ease-in-out;
-    -o-transition: all .5s ease-in-out;
-    color: #FFFFFF;
+    cursor: pointer;
+    float: right;
 }
 .dime-table{
   width: 100%;
@@ -179,16 +191,76 @@
   -ms-transform: translate(-50%,-50%);
   -o-transform: translate(-50%,-50%);
 }
+.student-sessions-days-hours{
+  width: 95%;
+  height: 380px;
+  overflow: auto;
+  padding: 10px;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  margin: 10px auto 10px auto;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  background-color: #FFFFFF;
+
+}
+.student-sessions-days-hours::-webkit-scrollbar {
+  width: 15px;
+}
+
+.student-sessions-days-hours::-webkit-scrollbar-track {
+  background-color: #e4e4e4;
+  border-radius: 70px;
+  -webkit-border-radius: 70px;
+  -moz-border-radius: 70px;
+  -ms-border-radius: 70px;
+  -o-border-radius: 70px;
+}
+
+.student-sessions-days-hours::-webkit-scrollbar-thumb {
+  border-radius: 70px;
+  border: 6px solid rgba(0, 0, 0, 0.18);
+  border-left: 0;
+  border-right: 0;
+  background-color: #038674;
+  -webkit-border-radius: 70px;
+  -moz-border-radius: 70px;
+  -ms-border-radius: 70px;
+  -o-border-radius: 70px;
+}
+.days-check-box-container , .hours-check-box-container,.programs-check-box-container {
+  border: 1px solid #ced4da;
+  border-radius: 0.375rem;
+  margin: 15px 0 1px 0;
+  background-color: #FFFFFF;
+
+}
+.hours-check-box-container >  div{
+  width: 33.33%;
+}
+.days-check-box-container > div , .hours-check-box-container >  div ,.programs-check-box-container > div{
+  display: inline-block;
+  vertical-align: top;
+  padding: 10px;
+  text-align: center;
+
+}
+.days-check-box-container > div > check , .hours-check-box-container > div > check , .programs-check-box-container > div > check{
+  display: block;
+  margin: auto;
+}
 .close-dime{
   color: #FFFFFF;
   cursor: pointer;
-  margin: 17px 0 0 17px;
 }
 .close-dime:hover{
   color: #038674;
 }
 .alert{
-  width:30%;
+  width:36%;
+  height:140px;
   padding:15px;
   background: #FFFFFF;
   border-radius: 5px;
@@ -198,31 +270,37 @@
   -o-border-radius: 5px;
   box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   position: absolute;
-  top:50%;
-  left:50%;
+  top:24%;
+  left:81%;
   transform: translate(-50%,-50%);
   -webkit-transform: translate(-50%,-50%);
   -moz-transform: translate(-50%,-50%);
   -ms-transform: translate(-50%,-50%);
   -o-transform: translate(-50%,-50%);
+  background:#FFFFFF;
 }
 .alert >  img{
-  width:33%;
+  width:15%;
   display: block;
   object-fit: cover;
   margin: auto;
 }
-.alert > span{
+.alert > p{
+  font-weight: bold;
+  text-align: justify;
+  margin: auto;
+  font-family: 'Times New Roman', Times, serif;
+}
+.alert > p > span{
   font-size:1rem;
   text-transform: capitalize;
   letter-spacing: .5px;
   word-spacing: 1px;
-  text-align: center;
+  text-align: justify;
   margin: auto;
-}
-.alert > span:nth-child(2){
+  font-family:'Times New Roman', Times, serif;
   color:#038674;
-  font-weight: bold;
+  text-align: center;
 }
 .no-result{
   position: absolute;

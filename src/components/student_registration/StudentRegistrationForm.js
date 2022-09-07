@@ -8,7 +8,8 @@ import Spinner from 'react-bootstrap/Spinner';
 import { useTranslation } from "react-i18next";
 import Form from "react-bootstrap/Form";
 import { ImUserPlus } from "react-icons/im";
-import RegistrationErrorIcon from "../../assets/images/registration_error_icon.svg";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import {MdError} from "react-icons/md";
 import axios from "axios";
 const StudentRegistrationForm = () => {
   const [t, i18n] = useTranslation();
@@ -245,13 +246,6 @@ const StudentRegistrationForm = () => {
         [event.target.id]: event.target.value,
       });
     } else {
-      /*
-      let workingDaysCloneObji = workingDays;
-
-      let arr = Object.values(workingDaysCloneObji);
-      arr[event.target.value] = -1;
-      */
-      //arr.splice(event.target.value, 1);
       setWorkingDays({
         ...workingDays,
         [`d${event.target.value}`]:""
@@ -449,12 +443,15 @@ const StudentRegistrationForm = () => {
         }
         setIsThereNewRegistration(true);
         
-        axios.post(`https://ratel-may.herokuapp.com/api/students`,finalStudentRegistrationDataObji).then((res)=>{
+        axios.post(`http://localhost:5000/api/students`,finalStudentRegistrationDataObji).then((res)=>{
           res.status === 200?navigate('/login'):setIsRegistrationErrorAlertVisible(true);
           console.log(res);
           setIsThereNewRegistration(false);
         }).catch((error)=>{
           setIsRegistrationErrorAlertVisible(true);
+          setTimeout(()=>{
+            setIsRegistrationErrorAlertVisible(false);
+          },1000)
           setIsThereNewRegistration(false);
           console.log(error);
         })
@@ -620,7 +617,7 @@ const StudentRegistrationForm = () => {
               StudentRegistrationFormStyles["registration-form-img-container"]
             }
           >
-            <img src={ReadQuranImg} alt="some pepole read quran" />
+            <LazyLoadImage src={ReadQuranImg} alt="some pepole read quran" />
           </div>
           <form
             className={StudentRegistrationFormStyles["student-form"]}
@@ -1266,7 +1263,7 @@ const StudentRegistrationForm = () => {
           </form>
         </div>
         {isRegistrationErrorAlertVisible?<div className={StudentRegistrationFormStyles['registration-error-alert']}>
-       <img src={RegistrationErrorIcon} alt="registration-error-icon"/>
+       <MdError size={45} color="#FFFFFF"/>
           <span>Something Went Wrong Please Try Again!</span>
         </div>:null}
      

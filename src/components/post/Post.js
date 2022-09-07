@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import PostStyles from "./Post.module.css";
 import { BsPersonFill } from "react-icons/bs";
 import { BsCalendarDate } from "react-icons/bs";
-import { TbUrgent } from "react-icons/tb";
-
+import {TbUrgent} from "react-icons/tb";
+   //
 const Post = (props) => {
 
   let date = new Date(props.post.date);

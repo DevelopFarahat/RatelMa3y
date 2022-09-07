@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Post from "../post/Post";
 import PostBoardStyles from "./PostsBoard.module.css";
 import axios from "axios";
@@ -30,6 +30,6 @@ const PostsBoard = () => {
         <Post key={post._id} post={post} latestPost={arr[0]} />
       ))}
     </div>
-  );
-};
+  )
+}
 export default PostsBoard;

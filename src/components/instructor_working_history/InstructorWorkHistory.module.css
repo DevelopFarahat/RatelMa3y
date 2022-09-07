@@ -12,6 +12,7 @@
   padding: 10px;
   position: relative;
 }
+
 .settings-header {
   width: 100%;
   padding: 10px;
@@ -47,4 +48,12 @@
   height:80%;
   position: relative;
   margin-top:13px
+}
+.instructor-working-date-time-tap{
+  width:100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  height: 100%;
 }

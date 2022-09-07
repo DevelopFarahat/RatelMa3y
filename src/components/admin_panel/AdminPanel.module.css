@@ -5,7 +5,7 @@
   flex-wrap: wrap;
   justify-content: space-around;
   align-items: flex-start;
-  margin-top: 18px;
+  margin-top: 4px;
   padding: 2px;
 }
 .admin-panel-navigation{
@@ -45,7 +45,12 @@
   font-size: 1rem;
   text-transform: capitalize;
   text-align: center;
-  box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  box-shadow: -1px 1px 10px 1px rgba(0,0,0,.6);
+  transform: scale(1.1,1.1);
+  -webkit-transform: scale(1.1,1.1);
+  -moz-transform: scale(1.1,1.1);
+  -ms-transform: scale(1.1,1.1);
+  -o-transform: scale(1.1,1.1);
 }
 .active-tap:hover{
   color: #FFFFFF;
