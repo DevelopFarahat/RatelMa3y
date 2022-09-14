@@ -149,7 +149,7 @@ export default function Login() {
             className="w-100"
             style={{ justifyContent: "space-between", display: "flex" }}
           >
-            <Link to="/forgotten" className="text-dark fw-700">
+            <Link to="/forgot-password" className="text-dark fw-700">
               Forgot your password?
             </Link>
             <Link to="/register">

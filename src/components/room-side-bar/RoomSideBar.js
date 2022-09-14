@@ -8,7 +8,7 @@ import { Formik, Field } from "formik";
 import axios from "axios";
 import { useSnackbar } from "notistack";
 import { FiCheckCircle } from "react-icons/fi";
-import { MdFactCheck } from 'react-icons/md'
+import { MdFactCheck } from "react-icons/md";
 
 export default function RoomSideBar({ hideMain }) {
   const [bookIsShown, showBook] = useState(false);
@@ -20,28 +20,25 @@ export default function RoomSideBar({ hideMain }) {
 
   useEffect(() => {
     if (user && user?.in_session && user?.in_session?.members_with_access) {
-      user.in_session.members_with_access.forEach((id) => {
-        if (id != user._id)
-          axios
-            .get("http://localhost:5000/api/students/" + id.toString())
-            .then((res) => {
-              let arr = [
-                {
-                  name: res.data.name,
-                  id: res.data._id,
-                },
-              ];
-              if (students.length != 0)
-                arr = [
-                  ...students,
-                  {
-                    name: res.data.name,
-                    id: res.data._id,
-                  },
-                ];
-              setStudents(arr);
-            })
-            .catch((err) => console.error(err));
+      let promiseArr = [];
+
+      user.in_session.members_with_access.forEach(async (id) => {
+        if (id != user._id) {
+          let r = axios.get(
+            "http://localhost:5000/api/students/" + id.toString()
+          );
+          promiseArr.push(r);
+        }
+      });
+
+      Promise.all(promiseArr).then((result) => {
+        for (let i = 0; i < result.length; i++) {
+          result[i] = {
+            name: result[i].data.name,
+            id: result[i].data._id,
+          };
+        }
+        setStudents(result);
       });
     }
   }, [user]);
@@ -153,9 +150,6 @@ export default function RoomSideBar({ hideMain }) {
   );
 }
 
-//TODO: handle 3-months Oral Exam
-//TODO: handle the submit review
-
 //*_*_*_*_*__*_*__*_*__*__*_*___*_*_*__*_*_*_*_*__*_*_*_*__*_*___*_**__*//
 //*_*_*_*_*__*_*__*_*__*__*_*___*_*_*__*_*_*_*_*__*_*_*_*__*_*___*_**__*//
 //*_*_*_*_*__*_*__*_*__*__*_*___*_*_*__*_*_*_*_*__*_*_*_*__*_*___*_**__*//
@@ -167,11 +161,23 @@ const EvaluationSheet = (props) => {
 
   const { user, setUser } = useContext(UserContext);
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-  const [submitted, setSubmitted] = useState(false);
-  const [alreadyTested, setAlreadyTested] = useState(false);
-  console.log("student", props.students);
+  const [isLoading, setIsLoading] = useState(false);
+  const [alreadyTested, setAlreadyTested] = useState([]);
 
-  //TODO: student id is not
+  useEffect(() => {
+    let arr = props.session.evaluations.map((ev) => ev.student) ?? [];
+    console.log("array already", arr);
+    setAlreadyTested(arr);
+  }, []);
+
+  //TODO: use this to get the evaluation
+  function getEvaluation(values, id) {
+    let evalu = props.session.evaluations.find((ev) => ev.student == id);
+    if (evalu) {
+      values.current_eval = evalu.current_eval;
+      values.prev_eval = evalu.prev_eval;
+    }
+  }
 
   return (
     <Formik
@@ -183,7 +189,29 @@ const EvaluationSheet = (props) => {
         is_exam: false,
       }}
       onSubmit={(values) => {
-        console.log(values);
+        console.log(values, props.session._id);
+        setIsLoading(true);
+        axios
+          .put(`http://localhost:5000/api/sessions/${props.session._id}`, {
+            evaluations: {
+              ...values,
+              _id: values.student,
+              evaluated_by: user._id,
+            },
+            is_exam: values.is_exam,
+          })
+          .then((res) => {
+            setIsLoading(false);
+            console.log("done", res);
+          })
+          .catch((err) => {
+            setIsLoading(false);
+            console.log("error", err);
+            //TODO: Show snackbar to show the error
+          });
+
+        console.log("resulted", alreadyTested, values.student);
+        setAlreadyTested([...alreadyTested, values.student]);
       }}
     >
       {(fprops) => (
@@ -201,7 +229,14 @@ const EvaluationSheet = (props) => {
                 >
                   <Form.Label>Select student</Form.Label>
 
-                  <FiCheckCircle style={{ display: alreadyTested? "initial":"none" }} color={'#4c6e59'}/>
+                  <FiCheckCircle
+                    style={{
+                      display: alreadyTested.includes(fprops.values.student)
+                        ? "initial"
+                        : "none",
+                    }}
+                    color={"#4c6e59"}
+                  />
                 </div>
                 {!props.students || props.students.length == 1}
                 <Field
@@ -211,12 +246,15 @@ const EvaluationSheet = (props) => {
                   placeholder="select student"
                   disabled={!props.students || props.students.length == 1}
                 >
-                  {props.students?.map((stud,index) => {
-                    if(index==0) fprops.values.student_id = stud.id
+                  {props.students?.map((stud, index) => {
+                    if (index == 0) fprops.values.student = stud.id;
                     //TODO: here you check if he already get tested
+                    // alreadyEval = props.evaluations.some(
+                    //   (stu) => stu._id == stud.id
+                    // )
                     return (
                       <option key={stud.id} value={stud.id}>
-                        {stud.name}
+                        {stud.name} {"&check;"}
                       </option>
                     );
                   })}
@@ -224,8 +262,10 @@ const EvaluationSheet = (props) => {
               </Form.Group>
 
               <Form.Group className="mb-3">
-                <Field type="checkbox" name="is_exam" id="is_exam"/>
-                <Form.Label className="ms-1" htmlFor="is_exam">General Exam</Form.Label>
+                <Field type="checkbox" name="is_exam" id="is_exam" />
+                <Form.Label className="ms-1" htmlFor="is_exam">
+                  General Exam
+                </Form.Label>
               </Form.Group>
 
               {!fprops.values.is_exam ? (
@@ -301,9 +341,11 @@ const EvaluationSheet = (props) => {
                 variant="success"
                 type="submit"
                 className="mt-4 mb-4"
-                // disabled={submitted}
+                disabled={isLoading}
               >
-                Submit
+                {alreadyTested.includes(fprops.values.student)
+                  ? "Update"
+                  : "Submit"}
               </Button>
             </Card.Body>
           </Form>

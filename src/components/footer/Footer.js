@@ -7,7 +7,7 @@ import logo from "../../assets/images/logo.webp";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import { BrowserRouter as Router, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import "../../App.css";
 import FooterCss from "./Footer.module.css";
@@ -66,7 +66,7 @@ function Footer(props) {
               </Link>
             </Col>
           </Row>
-          <p className={FooterCss.Ratelcopyright}>{t("footer_end")}</p>
+          <p className={FooterCss.Ratelcopyright}>{t("footer_end")}&copy;</p>
         </Container>
       </div>
     </div>

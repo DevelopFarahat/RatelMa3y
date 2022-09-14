@@ -125,7 +125,7 @@ function Contact() {
               <div className="error">{formik.errors.message}</div>
             ) : null}
           </Form.Group>
-          <Button variant="primary" type="submit">
+          <Button variant="success" type="submit">
             {t("submit")}
           </Button>
         </Form>

@@ -12,7 +12,7 @@ export default function ManageAcc() {
       <br />
 
       <div style={{ display: "flex", flexDirection: "row",flexWrap: 'wrap', alignItems: 'center', justifyContent: 'center'}}>
-        <img src={user.gender === "Male"? malePic: femalePic} alt="Logo" style={{minWidth: 200,maxHeight: 530}}/>
+        <img src={user?.gender === "Male"? malePic: femalePic} alt="Logo" style={{minWidth: 200,maxHeight: 530}}/>
         <Formikform user={user} setUser={setUser} />
       </div>
       <br />

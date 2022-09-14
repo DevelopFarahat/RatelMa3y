@@ -1,10 +1,6 @@
 import "./App.css";
 import NavBar from "./components/navbar/NavBar";
-import {
-  Routes,
-  Route,
-  Navigate,
-} from "react-router-dom";
+import { Routes, Route, Navigate, Outlet } from "react-router-dom";
 import Home from "./pages/Home";
 import Aboutus from "./pages/Aboutus";
 import Contact from "./pages/Contact";
@@ -27,9 +23,7 @@ import React, { useContext, useEffect, useState } from "react";
 import RoomSideBar from "./components/room-side-bar/RoomSideBar";
 import Forgot from "./pages/Forgot";
 import ManageAcc from "./pages/ManageAcc";
-import BookBoard from "./components/quran_board/BookBoard";
 import Messages from "./components/messages/message";
-// import { FileUploadPage } from "./components/test-post/TestPost";
 
 function App() {
   const [t, i18n] = useTranslation();
@@ -39,7 +33,7 @@ function App() {
   const [hideMain, setHideMain] = useState(false);
   const [showSidebar, setShowSidebar] = useState(false);
   const [isRoomPrepared, setIsRoomPrepared] = useState(false);
-  const { isLoading } = useContext(UserContext)
+  const { isLoading } = useContext(UserContext);
 
   useEffect(() => {
     setIsArabic(localStorage.getItem("i18nextLng") === "ar");
@@ -57,7 +51,7 @@ function App() {
   return (
     <>
       <div className="App" style={styles.body}>
-        {isLoading && (<LoadingScreen/>)}
+        {isLoading && <LoadingScreen />}
         <ScrollToTop />
         <div style={styles.hideableDiv}>
           <NavBar i18n={i18n} isRoomPrepared={isRoomPrepared} />
@@ -68,53 +62,70 @@ function App() {
               <Route path="/" element={<Navigate to="home" replace />} />
               <Route path="home" element={<Home />} />
               <Route path="about" element={<Aboutus />} />
-              <Route path="book" element={<BookBoard />} />
               <Route path="contact" element={<Contact />} />
-              <Route path="adminPanel" element={<AdminPanel />} />
-              <Route
-                path="sessions"
-                element={
-                  <Sessions
-                    textt={"test test"}
-                    setIsRoomPrepared={setIsRoomPrepared}
-                  />
-                }
-              />
-              <Route
-                path="sessions/room"
-                element={
-                  <Room
-                    setHideMain={setHideMain}
-                    setShowSidebar={setShowSidebar}
-                    setIsRoomPrepared={setIsRoomPrepared}
-                  />
-                }
-              />
 
-              <Route path="login" element={<Login />} />
-              <Route path="forgotten" element={<Forgot />} />
-              <Route path="account" element={<ManageAcc />} />
+
+              <Route element={<PrivateRoutes />}>
+                <Route
+                  path="sessions"
+                  element={
+                    <Sessions
+                      textt={"test test"}
+                      setIsRoomPrepared={setIsRoomPrepared}
+                    />
+                  }
+                />
+                <Route
+                  path="sessions/room"
+                  element={
+                    <Room
+                      setHideMain={setHideMain}
+                      setShowSidebar={setShowSidebar}
+                      setIsRoomPrepared={setIsRoomPrepared}
+                    />
+                  }
+                />
+              </Route>
+
+              <Route element={<NotLoggedInRoutes />}>
+                <Route path="login" element={<Login />} />
+                <Route path="forgot-password" element={<Forgot />} />
+                <Route
+                  path="register"
+                  element={<StudentRegistrationForm i18n={i18n} t={t} />}
+                />
+              </Route>
+
+              <Route element={<PrivateRoutes />}>
+                <Route path="account" element={<ManageAcc />} />
+              </Route>
 
               <Route path="events" element={<PostsBoard />} />
               <Route path="events/:id" element={<PostDetails />} />
 
+              <Route
+                element={
+                  <PrivateRoutes
+                    roleRequired="instructor"
+                    privilegesRequired="Admin"
+                  />
+                }
+              >
                 <Route path="adminPanel" element={<AdminPanel />}>
                   <Route index element={<SystemUsers />} />
                   <Route path="systemUsers" index element={<SystemUsers />} />
                   <Route path="addPost" element={<AddPost />} />
                   <Route path="students" element={<Student />} />
                   <Route path="instructors" element={<Instructor />} />
-                  <Route path="messages" element={<Messages/>} />
+                  <Route path="messages" element={<Messages />} />
                 </Route>
-                <Route
-                  path="register"
-                  element={<StudentRegistrationForm i18n={i18n} t={t} />}
-                />
-                <Route path="*" element={<Navigate to="home" replace />} />
-              </Routes>
-            </div>
-            <Footer isRoomPrepared={isRoomPrepared}/>
+              </Route>
+
+              <Route path="*" element={<Navigate to="home" replace />} />
+            </Routes>
           </div>
+          <Footer isRoomPrepared={isRoomPrepared} />
+        </div>
 
         <div
           style={{
@@ -136,79 +147,107 @@ function App() {
   );
 }
 
-const LoadingScreen = ()=> ( <div
-  style={{
-    height: "100vh",
-    width: "100%",
-    position: "fixed",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    zIndex: 2,
-    backgroundColor: "rgba(255, 255, 255, 0.471)",
-  }}
->
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 44 44"
-    className="jsx-3467701036"
+//TODO: test it on student, instructor and admin
+const PrivateRoutes = (props) => {
+  let auth = localStorage.getItem("accessToken");
+  if (!auth) return <Navigate to="/login" />;
+
+  let decoded = auth.split(".")[1];
+  let { role, privileges } = JSON.parse(atob(decoded));
+  console.log("role", role, "p", privileges);
+
+  if ("roleRequired" in props || "privilegesRequired" in props)
+    if (
+      props.roleRequired != role ||
+      !props.privilegesRequired.includes(privileges)
+    )
+      return <Navigate to="/login" />;
+
+  return <Outlet />;
+};
+
+const NotLoggedInRoutes = () => {
+  let auth = localStorage.getItem("accessToken");
+  if (auth) return <Navigate to="/home" />;
+
+  return <Outlet />;
+};
+
+const LoadingScreen = () => (
+  <div
+    style={{
+      height: "100vh",
+      width: "100%",
+      position: "fixed",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      zIndex: 2,
+      backgroundColor: "rgba(255, 255, 255, 0.471)",
+    }}
   >
-    <g
-      fill="none"
-      fillRule="evenodd"
-      strokeWidth="2"
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 44 44"
       className="jsx-3467701036"
     >
-      <circle cx="22" cy="22" r="19.4775" className="jsx-3467701036">
-        <animate
-          attributeName="r"
-          begin="0s"
-          dur="1.8s"
-          values="1; 20"
-          calcMode="spline"
-          keyTimes="0; 1"
-          keySplines="0.165, 0.84, 0.44, 1"
-          repeatCount="indefinite"
-          className="jsx-3467701036"
-        ></animate>
-        <animate
-          attributeName="stroke-opacity"
-          begin="0s"
-          dur="1.8s"
-          values="1; 0"
-          calcMode="spline"
-          keyTimes="0; 1"
-          keySplines="0.3, 0.61, 0.355, 1"
-          repeatCount="indefinite"
-          className="jsx-3467701036"
-        ></animate>
-      </circle>
-      <circle cx="22" cy="22" r="11.8787" className="jsx-3467701036">
-        <animate
-          attributeName="r"
-          begin="-0.9s"
-          dur="1.8s"
-          values="1; 20"
-          calcMode="spline"
-          keyTimes="0; 1"
-          keySplines="0.165, 0.84, 0.44, 1"
-          repeatCount="indefinite"
-          className="jsx-3467701036"
-        ></animate>
-        <animate
-          attributeName="stroke-opacity"
-          begin="-0.9s"
-          dur="1.8s"
-          values="1; 0"
-          calcMode="spline"
-          keyTimes="0; 1"
-          keySplines="0.3, 0.61, 0.355, 1"
-          repeatCount="indefinite"
-          className="jsx-3467701036"
-        ></animate>
-      </circle>
-    </g>
-  </svg>
-</div>)
+      <g
+        fill="none"
+        fillRule="evenodd"
+        strokeWidth="2"
+        className="jsx-3467701036"
+      >
+        <circle cx="22" cy="22" r="19.4775" className="jsx-3467701036">
+          <animate
+            attributeName="r"
+            begin="0s"
+            dur="1.8s"
+            values="1; 20"
+            calcMode="spline"
+            keyTimes="0; 1"
+            keySplines="0.165, 0.84, 0.44, 1"
+            repeatCount="indefinite"
+            className="jsx-3467701036"
+          ></animate>
+          <animate
+            attributeName="stroke-opacity"
+            begin="0s"
+            dur="1.8s"
+            values="1; 0"
+            calcMode="spline"
+            keyTimes="0; 1"
+            keySplines="0.3, 0.61, 0.355, 1"
+            repeatCount="indefinite"
+            className="jsx-3467701036"
+          ></animate>
+        </circle>
+        <circle cx="22" cy="22" r="11.8787" className="jsx-3467701036">
+          <animate
+            attributeName="r"
+            begin="-0.9s"
+            dur="1.8s"
+            values="1; 20"
+            calcMode="spline"
+            keyTimes="0; 1"
+            keySplines="0.165, 0.84, 0.44, 1"
+            repeatCount="indefinite"
+            className="jsx-3467701036"
+          ></animate>
+          <animate
+            attributeName="stroke-opacity"
+            begin="-0.9s"
+            dur="1.8s"
+            values="1; 0"
+            calcMode="spline"
+            keyTimes="0; 1"
+            keySplines="0.3, 0.61, 0.355, 1"
+            repeatCount="indefinite"
+            className="jsx-3467701036"
+          ></animate>
+        </circle>
+      </g>
+    </svg>
+  </div>
+);
 
 export default App;

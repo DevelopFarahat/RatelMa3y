@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState,useCallback,useRef } from "react";
 import Card from "react-bootstrap/Card";
 import Accordion from "react-bootstrap/Accordion";
 import RoomCSS from "./Sessions.module.css";
@@ -19,8 +19,10 @@ import ErrorFallback from "../../utils/error";
 function Sessions({ setIsRoomPrepared }) {
   const [modalShow, setModalShow] = useState(false);
   const [sessions, setSessions] = useState([]);
-  const { setIsLoading } = useContext(UserContext);
+  const { setIsLoading, isLoading } = useContext(UserContext);
   let { user } = useContext(UserContext);
+  let page = 1;
+
   //TODO: still a problem to redirect
   //TODO: Responsive Design
 
@@ -28,30 +30,50 @@ function Sessions({ setIsRoomPrepared }) {
 
   useEffect(() => {
     if (!user) user = JSON.parse(localStorage.getItem("user"));
+    if(!user) return
 
     //Get Sessions for this specific user or get all if admin
-
-    fetchSessions();
+    fetchSessions(page);
   }, []);
 
-  function fetchSessions() {
+  function fetchSessions(page) {
     setIsLoading(true);
     let sessions_url =
-      "http://localhost:5000/api/sessions" +
-      (["Admin", "Supervisor"].includes(user.privileges)
+      `http://localhost:5000/api/sessions?page=${page}` +
+      (["Admin", "Supervisor"].includes(user?.privileges)
         ? ""
         : "?userId=" + user._id);
 
     axios
       .get(sessions_url)
       .then((res) => {
-        setSessions(res.data.data);
+        setSessions(prev => [...new Set([...prev,...res.data.data])]);
         setIsLoading(false);
       })
       .catch((err) => {
         setIsLoading(false);
       });
   }
+  
+  //To observe last item
+  const observer = useRef();
+  const lastSessionElementRef = useCallback((node) => {
+    if (isLoading) return;
+
+    //TODO: assign it with total sessions count
+
+    if (observer.current) observer.current.disconnect();
+    observer.current = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        console.log("should run now", page);
+
+        fetchSessions(page + 1);
+        page = page + 1;
+      }
+    });
+    if (node) observer.current.observe(node);
+  }, []);
+
 
   function getEvaluation(arr) {
     if (!arr || arr.length === 0)
@@ -61,7 +83,7 @@ function Sessions({ setIsRoomPrepared }) {
         notes: "",
       };
 
-    let evaluation = arr.find((evalu) => evalu.student === user._id);
+    let evaluation = arr.find((evalu) => evalu.student === user?._id);
     if (!evaluation)
       return {
         eval_previous: 0,
@@ -78,7 +100,7 @@ function Sessions({ setIsRoomPrepared }) {
 
   function endSession(session) {
     axios
-      .put("http://localhost:5000/api/sessions/" + session._id, {
+      .put("http://localhost:5000/api/sessions/" + session?._id, {
         is_live: false,
         room_id: session.room_id,
         ended_at: Date.now(),
@@ -98,7 +120,7 @@ function Sessions({ setIsRoomPrepared }) {
 
     if (session.evaluations) {
       let obj = session.evaluations.find(
-        (evalu) => evalu.student._id === user._id
+        (evalu) => evalu.student?._id === user?._id
       );
       if (obj) {
         notes = obj.notes;
@@ -221,11 +243,17 @@ function Sessions({ setIsRoomPrepared }) {
                   </span>
                 </h6>
                 <h6>
+                  Notes:{" "}
+                  <span style={{ fontWeight: 300 }}>
+                    {notes}
+                  </span>
+                </h6>
+                {/* <h6>
                   Session No.:{" "}
                   <span style={{ fontWeight: 300 }}>
                     {sessions.length - index}
                   </span>
-                </h6>
+                </h6> */}
               </Accordion.Body>
             </Accordion.Item>
           </Accordion>
@@ -320,7 +348,9 @@ function Sessions({ setIsRoomPrepared }) {
           </div>
         ) : (
           sessions?.map((session, index) => {
-            return <SessionCard session={session} index={index} />;
+            if(index == sessions?.length -1)
+            return <div style={{width: '100%'}} ref={lastSessionElementRef}><SessionCard session={session} index={index} /></div>;
+            else return <SessionCard session={session} index={index} />;
           })
         )}
       </div>

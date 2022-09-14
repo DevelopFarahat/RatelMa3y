@@ -15,7 +15,6 @@ export function UserProvider({ children }) {
     
     let decoded = accToken.split(".")[1];
     setUser({...userInLocal,...JSON.parse(atob(decoded))});
-    console.warn("User State here",user);
   }, [localStorage.getItem("accessToken")]);
 
   return (

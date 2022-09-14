@@ -7,6 +7,7 @@ import App from "./App";
 import "./utils/i18n";
 import { SnackbarProvider } from "notistack";
 import { UserProvider } from "./utils/UserContext";
+import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -22,3 +23,5 @@ root.render(
   </SnackbarProvider>
   </UserProvider>
 );
+
+serviceWorkerRegistration.register();

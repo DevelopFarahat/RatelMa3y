@@ -40,7 +40,7 @@ export default function Forgot() {
     }
 
     axios
-      .post("http://localhost:5000/api/auth/request_pin", {
+      .post("https://ratel.cyclic.app/api/auth/request_pin", {
         email: resetData.email,
       })
       .then((res) => {
@@ -92,7 +92,7 @@ export default function Forgot() {
     }
 
     axios
-      .post("http://localhost:5000/api/auth/confirm_pin", {
+      .post("https://ratel.cyclic.app/api/auth/confirm_pin", {
         email: resetData.email,
         pin: resetData.pin,
       })
@@ -109,7 +109,7 @@ export default function Forgot() {
   }
 
   function putNewPassword(){
-    axios.put(`http://localhost:5000/api/${resetData.field}/${resetData._id}`,{
+    axios.put(`https://ratel.cyclic.app/api/${resetData.field}/${resetData._id}`,{
       ...resetData
     }).then((res)=>{
       if(res.status != 200){

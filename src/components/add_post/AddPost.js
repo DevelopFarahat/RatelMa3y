@@ -9,17 +9,16 @@ import formEmptyFieldSadEmoji from "../../assets/images/emotions.png";
 import axios from "axios";
 
 const AddPost = () => {
+
   const [postData, setPostData] = useState({
     title: "",
     content: "",
-    lang: "ar"
-  });
+    lang: "ar",
+  })
   const [img, setImg] = useState();
-
   const [postImage, setPostImage] = useState("");
   const [isUserMadeAPost, setIsUserMadeAPost] = useState(false);
-  const [isThereAnyFormFieldEmpty, setIsThereAnyFormFieldEmpty] =
-    useState(false);
+  const [isThereAnyFormFieldEmpty, setIsThereAnyFormFieldEmpty] = useState(false);
   const [error, setError] = useState({
     imgError: "",
     titleError: "",
@@ -40,7 +39,6 @@ const AddPost = () => {
       ...postData,
       [event.target.name]: event.target.value,
     });
-    console.log('data',postData)
   };
 
   const clearImagePath = () => {
@@ -48,63 +46,85 @@ const AddPost = () => {
     setPostImage("");
   };
 
+
   //Submit the form
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const data = new FormData();
-    data.append("article_img", img);
-    data.append("content", postData.content);
-    data.append("title", postData.title);
-    data.append("date", new Date().toLocaleString('en-US', { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }));
-    //Upload on the server
 
-    //========================== FARAHAT
+    if (!img) return console.error("No image selected");
 
-    if (img !== undefined && img !== null && postData.content !== "" && postData.title !== "") {
-      axios
-        .post("http://localhost:5000/api/events", data)
-        .then((res) => {
-          setIsUserMadeAPost(true);
-          setPostData({
-            title: "",
-            content: "",
-            lang: "ar"
+    const reader = new FileReader();
+    reader.readAsDataURL(img);
+    reader.onloadend = () => {
+      uploadImage(reader.result);
+    };
+    reader.onerror = () => {
+      return console.error("AHHHHHHHH!!");
+    };
+
+    function uploadImage(img) {
+
+      let cc = {
+        article_img: img,
+        content: postData.content,
+        title: postData.title,
+        lang: "ar"
+      };
+
+      //Upload on the server
+
+      if (
+        img !== undefined &&
+        img !== null &&
+        postData.content !== "" &&
+        postData.title !== ""
+      ) {
+        axios
+          .post("http://localhost:5000/api/events", cc)
+          .then((res) => {
+            setIsUserMadeAPost(true);
+            setPostData({
+              title: "",
+              content: "",
+              lang: "ar",
+            });
+            setImg(null);
+            setPostImage("");
+          })
+          .catch((err) => console.error(err));
+      } else {
+        if (img === undefined || img === null) {
+          setIsThereAnyFormFieldEmpty(true);
+          setError({
+            ...error,
+            imgError: "Please Set Post Image",
           });
-          setImg(null);
-          setPostImage("");
-        })
-        .catch((err) => console.error(err));
-    } else {
-      if (img === undefined || img === null) {
-        setIsThereAnyFormFieldEmpty(true);
-        setError({
-          ...error,
-          imgError: "Please Set Post Image",
-        });
+        }
+        if (postData.title.length === 0) {
+          setError({
+            ...error,
+            titleError: "Please Set Post Title",
+          });
+          setIsThereAnyFormFieldEmpty(true);
+        }
+        if (postData.content.length === 0) {
+          setError({
+            ...error,
+            contentError: "Please Set Post Content",
+          });
+          setIsThereAnyFormFieldEmpty(true);
+        }
       }
-      if (postData.title.length === 0) {
-        setError({
-          ...error,
-          titleError: "Please Set Post Title",
-        });
-        setIsThereAnyFormFieldEmpty(true);
-      }
-      if (postData.content.length === 0) {
-        setError({
-          ...error,
-          contentError: "Please Set Post Content",
-        });
-        setIsThereAnyFormFieldEmpty(true);
-      } 
+      setTimeout(() => {
+        setIsUserMadeAPost(false);
+      }, 1000);
     }
-    setTimeout(() => {
-      setIsUserMadeAPost(false);
-    }, 1000);
   };
   const distroyPostingFaildAlert = () => {
     setIsThereAnyFormFieldEmpty(false);
   };
+
   return (
     <>
       {isUserMadeAPost ? (
@@ -150,29 +170,31 @@ const AddPost = () => {
             )}
           </div>
           <div>
-          <div className={AddPostStyles["button-group"]}>
-            <div className={` ${AddPostStyles["button-container"]}`}>
-              <button type="button">
-                Upload <RiFolder5Fill size={15} style={{ marginTop: "-3px" }} />
-              </button>
-              <Form.Control
-                type="file"
-                id="file"
-                name="post_img"
-                onChange={(event) => {
-                  setImg(event.target.files[0]);
-                  openFile(event);
-                }}
-              />
+            <div className={AddPostStyles["button-group"]}>
+              <div className={` ${AddPostStyles["button-container"]}`}>
+                <button type="button">
+                  Upload{" "}
+                  <RiFolder5Fill size={15} style={{ marginTop: "-3px" }} />
+                </button>
+                <Form.Control
+                  type="file"
+                  id="file"
+                  name="post_img"
+                  onChange={(event) => {
+                    setImg(event.target.files[0]);
+                    openFile(event);
+                  }}
+                />
+              </div>
             </div>
-          </div>
-          <button
-            type="button"
-            className={`${AddPostStyles["btn"]} ${AddPostStyles["clear-btn"]}`}
-            onClick={clearImagePath}
-            style={{ marginTop: "21px" }}>
-            Clear <MdOutlineClear size={15} style={{ marginTop: "-3px" }} />
-          </button>
+            <button
+              type="button"
+              className={`${AddPostStyles["btn"]} ${AddPostStyles["clear-btn"]}`}
+              onClick={clearImagePath}
+              style={{ marginTop: "21px" }}
+            >
+              Clear <MdOutlineClear size={15} style={{ marginTop: "-3px" }} />
+            </button>
           </div>
         </div>
         <div className={AddPostStyles["post-title-content-container"]}>
@@ -185,17 +207,17 @@ const AddPost = () => {
               value={postData.title}
               onChange={handleChange}
             />
-            
+
             <Form.Label htmlFor="postTitle">Language</Form.Label>
             <Form.Select
               id="postLang"
               name="lang"
               value={postData.lang}
               onChange={handleChange}
-              placeholder={'Choose Language'}
+              placeholder={"Choose Language"}
             >
-              <option value={'ar'}>عربي</option>
-              <option value={'en'}>English</option>
+              <option value={"ar"}>عربي</option>
+              <option value={"en"}>English</option>
             </Form.Select>
           </div>
           <div>
