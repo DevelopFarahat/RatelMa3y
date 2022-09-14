@@ -8,164 +8,167 @@ import { AiFillFilter } from "react-icons/ai";
 import { BiReset } from "react-icons/bi";
 import availableIcon from "../../assets/images/checkmark.png";
 import absenceIcon from "../../assets/images/do-not-enter.png";
+import GreaterThanWhiteImage from "../../assets/images/greater-than-white.png";
+import GreaterThanGrayImage from "../../assets/images/greater-than-gray.png";
+import LessThanWhiteImage from "../../assets/images/less-than-white.png";
+import LessThanGrayImage from "../../assets/images/less-than-gray.png";
 import InstructorWorkHistory from "../instructor_working_history/InstructorWorkHistory";
 import { composeInitialProps } from "react-i18next";
 const Instructor = () => {
-    const instructorArr = [
-        {
-            _id: 1,
-            name: "mohamed",
-            age: 22,
-            gender: "male",
-            mobile: "+201150849567",
-            email: "mohamedfarahat366@gmail.com",
-            certificates: ["bachelor degree"],
-            state: "egypt",
-            working_days: [1, 2, 3, 4],
-            working_hours: ["from 2:30 pm to 5:30 pm", "from 2:30 pm to 5:30 pm"],
-            programs: ["تحفيظ"],
-            started_at: ["2022-08014"],
-            is_available: true,
-            in_session: true,
-        },
-        {
-            _id: 2,
-            name: "mohamed",
-            age: 23,
-            gender: "male",
-            mobile: "+201150849567",
-            email: "mohamedfarahat366@gmail.com",
-            certificates: ["bachelor degree"],
-            state: "egypt",
-            working_days: [1, 2],
-            working_hours: [
-                "from 2:30 pm to 5:30 pm",
-                "from 2:30 pm to 5:30 pm",
-                "from 2:30 pm to 5:30 pm",
-            ],
-            programs: ["تحفيظ", "2تحفيظ"],
-            started_at: ["2022-08014"],
-            is_available: false,
-            in_session: false,
-        },
-        {
-            _id: 3,
-            name: "mohamed",
-            age: 24,
-            gender: "male",
-            mobile: "+201150849567",
-            email: "mohamedfarahat366@gmail.com",
-            certificates: ["bachelor degree", "ddddd"],
-            state: "egypt",
-            working_days: [1, 2, 3, 4, 5],
-            working_hours: [
-                "from 2:30 pm to 5:30 pm",
-                "from 2:30 pm to 5:30 pm",
-                "from 2:30 pm to 5:30 pm",
-                "from 2:30 pm to 5:30 pm",
-            ],
-            programs: ["تحفيظ"],
-            started_at: ["2022-08014"],
-            is_available: true,
-            in_session: false,
-        },
-        {
-            _id: 4,
-            name: "nagwa",
-            age: 29,
-            gender: "female",
-            mobile: "+201150849567",
-            email: "mohamedfarahat366@gmail.com",
-            certificates: ["bachelor degree", "fddd", "dddddd"],
-            state: "egypt",
-            working_days: [1, 2, 3],
-            working_hours: [
-                "from 2:30 pm to 5:30 pm",
-                "from 2:30 pm to 5:30 pm",
-                "from 2:30 pm to 5:30 pm",
-                "from 2:30 pm to 5:30 pm",
-                "from 2:30 pm to 5:30 pm",
-            ],
-            programs: ["تحفيظ"],
-            started_at: ["2022-08014"],
-            is_available: true,
-            in_session: true,
-        },
-        {
-            _id: 5,
-            name: "mona",
-            age: 32,
-            gender: "female",
-            mobile: "+201150849567",
-            email: "mohamedfarahat366@gmail.com",
-            certificates: [
-                "bachelor degree",
-                "blaaa blaaa",
-                "blaaaaa",
-                "blaaaa",
-                "blaaaa",
-                "jjjaaa",
-            ],
-            state: "egypt",
-            working_days: [1, 2, 3],
-            working_hours: ["from 2:30 pm to 5:30 pm"],
-            programs: ["تحفيظ", "2تحفيظ", "3تحفيظ"],
-            started_at: ["2022-08014"],
-            is_available: false,
-            in_session: true,
-        },
-        {
-            _id: 6,
-            name: "ola",
-            age: 46,
-            gender: "female",
-            mobile: "+201150849567",
-            email: "mohamedfarahat366@gmail.com",
-            certificates: ["bachelor degree"],
-            state: "egypt",
-            working_days: [1, 2, 3],
-            working_hours: ["from 2:30 pm to 5:30 pm"],
-            programs: ["تحفيظ"],
-            started_at: ["2022-08014"],
-            is_available: true,
-            in_session: true,
-        },
-        {
-            _id: 7,
-            name: "mohamed",
-            age: 55,
-            gender: "male",
-            mobile: "+201150849567",
-            email: "mohamedfarahat366@gmail.com",
-            certificates: ["bachelor degree", "dddd", "dddd", "ddd", "ddd"],
-            state: "egypt",
-            working_days: [1],
-            working_hours: ["from 2:30 pm to 5:30 pm"],
-            programs: ["تحفيظ", "2تحفيظ", "3تحفيظ", "4تحفيظ"],
-            started_at: ["2022-08014"],
-            is_available: true,
-            in_session: true,
-        },
-    ];
-    let days = [
-        "Sunday",
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday",
-    ];
-    let workingHoursArr = [
-        ["8:00 am", "10:00 pm"],
-        ["10:00 am", "12:00 pm"],
-        ["12:00 pm", "2:00 pm"],
-        ["2:00 pm", "4:00 pm"],
-        ["4:00 pm", "6:00 pm"],
-        ["6:00 pm", "8:00 pm"],
-        ["8:00 pm", "10:00 pm"],
-        ["10:00 pm", "12:00 am"],
-    ];
+    const [pageNo,setPageNo] = useState([]);
+    const [pageNoCopy,setPageNoCopy] = useState([]);
+    const [pageNoArrLength,setPageNoArrLength] = useState(-1);
+    const [lastPage,setLastPage] = useState(-1);
+    const [currentPage,setCurrentPage] = useState(1);
+    //pagination functinality
+    const handleUpCommingPage = (event) => {
+        const id = event.currentTarget.id;
+            setCurrentPage(Number(id));
+        if(Number(id)>= 2 && Number(id) > currentPage){
+            //currentPage+1 
+               if(currentPage+1 !== pageNo[pageNo.length-1].index && Number(id) <= pageNo[pageNo.length-1].index  ){
+                //if(Number(id) !== pageNo[pageNo.length-1].index){
+                    let pageNoCopy = [...pageNo];
+                    console.log("yaa am farahat rakez");
+                    pageNoCopy.splice(0,1)
+                    setPageNo(pageNoCopy);
+               }else{
+                    if(Number(id) !== pageNoArrLength && Number(id) === 2 && lastPage.index !== 2){
+                    console.log("yaa rab saadny")
+                    let pNoCopy = [...pageNoCopy];
+                    pNoCopy.splice(0,1);
+                    setPageNo(pNoCopy);
+                }
+               
+               }
+        }
+  }
+    
+    const getThePreviousPages = (event)=>{
+        let pNo = {};
+        if(currentPage < pageNoArrLength  && pageNo.length === 2){ 
+            console.log("inshaa allah1")
+         /*
+                pageNo.reverse().splice(0,1);
+                pageNo.reverse();
+                */
+                if(currentPage-1 !== 1){
+                    console.log("insorna yaa allah");
+                    pageNo.reverse().splice(0,1);
+                    pageNo.reverse();
+                    pNo.id = (pageNo[0].index-1)
+                    pNo.index = (pageNo[0].index-1)
+                    pageNo.unshift(pNo);
+                    setPageNo(pageNo);
+                }else{
+                    setPageNo(pageNoCopy);
+                }
+                if(currentPage > 1)
+                setCurrentPage(currentPage-1);
+            
+            
+        }else{
+            if(pageNo.length !== 2){
+                console.log("inshaa allah")
+                console.log(currentPage)
+               /*
+                    pageNo.reverse().splice(0,1);
+                    pageNo.reverse();
+                    */
+                    console.log(currentPage)
+                    console.log(pageNoCopy)
+                    if(currentPage-1 !== 1){
+                        console.log("insorna yaa allah");
+                        pageNo.reverse().splice(0,1);
+                        pageNo.reverse();
+                        pNo.id = (pageNo[0].index-1)
+                        pNo.index = (pageNo[0].index-1)
+                        pageNo.unshift(pNo);
+                        setPageNo(pageNo);
+                    }else{
+                        console.log("mona zaki")
+                        console.log(pageNoCopy)
+                        setPageNo(pageNoCopy);
+                    }
+                    if(currentPage > 1)
+                    setCurrentPage(currentPage-1);
+            }else{
+                if(currentPage > 1)
+                setCurrentPage(currentPage-1);
+            }
+            console.log(pageNo);
+        }  
+    }
+    const getTheNextPages = (event)=>{
+        let pNo = {};
+       if(currentPage+1 <= 2){
+        if(currentPage+1 !== pageNo[pageNo.length-1].index && pageNo.length !== 2){
+              setCurrentPage(currentPage+1);
+           
+        }else{
+            setPageNo(pageNoCopy);
+                setCurrentPage(currentPage+1);
+        }
+       }else{
+        if( currentPage+1   >  pageNo[pageNo.length-1].index){
+            if( pageNo.length > 2){
+                console.log("ياكريم اكرمنا");
+                setCurrentPage(currentPage+1);
+            }else{
+                
+                if( currentPage !== pageNoArrLength ){
+                    console.log("hgvplm lk uk")
+                    /*
+                    let pNoCopy = [...pageNo];
+                    pNoCopy.splice(0,1);
+                    console.log(pNoCopy);
+                     setPageNo(pNoCopy);
+                     setCurrentPage(currentPage+1);
+                     */
+                     pageNo.splice(0,1);
+                     
+                     pNo.id = (currentPage+1)
+                     pNo.index = (currentPage+1)
+                     pageNo.push(pNo);
+                     setPageNo(pageNo);
+                    
+                     setCurrentPage(currentPage+1);
+                }else{
+                
+                    setCurrentPage(currentPage+1);
+                }
+                
+            }
+            
+        }else{
+  
+          //  if(currentPage === 2 && pageNo.length < 9){
+            if(currentPage === 2 && pageNo.length < pageNoArrLength){
+                console.log("yaa gamad ya farahat");
+                let pNoCopy = [...pageNoCopy];
+                pNoCopy.splice(0,1);
+                console.log(pNoCopy);
+                 setPageNo(pNoCopy);
+                 setCurrentPage(currentPage+1);
+            }else{
+                if(pageNo.length > 2){
+                    console.log("ahha")
+                    let pNoCopy = [...pageNo];
+                    pNoCopy.splice(0,1);
+                    console.log(pNoCopy);
+                     setPageNo(pNoCopy);
+                     setCurrentPage(currentPage+1);
+                }else{
+                    setCurrentPage(currentPage+1);
+                }
+              
+            }
+              
+        }
+       }
+       
+    }
+    // pagination functionality ended
     const [instructorData, setInstructorData] = useState([]);
     const [filterValue, setFilterValue] = useState("");
     const [selectedRow, setSelectedRow] = useState(-1);
@@ -203,34 +206,6 @@ const Instructor = () => {
                 }
                 
             }
-            /*
-                        else if(instructorData[i].prefs.working_days !== null && !instructorData[i].prefs.working_days !== undefined){
-                console.log("hello");
-                for(let j = 0 ; j < instructorData[i].prefs.working_days.length;j++ ){
-                   
-                    if(instructorData[i].prefs.working_days[j] !== -1){
-                      
-                       if(days[instructorData[i].prefs.working_days[j].toLowerCase()].includes(filterValue.toLowerCase())){
-                        filtarationArr.push(instructorData[i]);
-                       }
-                    }
-                }
-            }else {
-                if(instructorData[i].prefs.working_hours !== null && instructorData[i].prefs.working_hours !== undefined){
-                console.log("hello");
-                for(let j = 0 ; j < instructorData[i].prefs.working_hours.length;j++){
-                    if(instructorData[i].prefs.working_hours[i][1] !== 0){
-                        if(workingHoursArr[i][0].toLowerCase().includes(filterValue.toLowerCase()) || workingHoursArr[i][1].toLowerCase().includes(filterValue.toLowerCase())){
-                            filtarationArr.push(instructorData[i]);
-                        }else if(workingHoursArr[i][0].toLowerCase().includes(filterValue.toLowerCase()) && workingHoursArr[i][1].toLowerCase().includes(filterValue.toLowerCase())){
-                            filtarationArr.push(instructorData[i]);
-                        }
-                    }
-                }
-            }
-           
-        }
-            */ 
         }
         filterValue !== ""
             ? setInstructorData(filtarationArr)
@@ -344,18 +319,54 @@ console.log(instructorData);
 
     useEffect(() => {
         axios
-            .get(`http://localhost:5000/api/instructors`)
+            .get(`http://localhost:5000/api/instructors?limit=300&page=${currentPage}`)
             .then((res) => {
                 initialResponse.current = res.data.data;
                 setInstructorData(res.data.data);
+                let pageN =  Math.ceil(res.data.count/300);
+                let numOfPages = [];
+                for(let i = 0 ; i < pageN;i++){
+                  numOfPages.push({id:i+1,index:i+1});
+                }
+                setPageNoCopy(numOfPages);
+                setLastPage(numOfPages[numOfPages.length-1]);
+                numOfPages.reverse().splice(numOfPages[numOfPages.length-1],1);
+                setPageNoArrLength(numOfPages.length);
+                setPageNo(numOfPages.reverse());
             })
             .catch((error) => {
                 console.log(error);
             });
-    }, [fetchAgain]);
+    }, [fetchAgain,currentPage]);
 
     return (
         <>
+        <div className={InstructorStyles['instructor-main-container']}>
+
+
+        <div className={InstructorStyles['pagination-container']} style={{direction:'rtl'}}>
+                { 
+               pageNo !== undefined?<ul>
+                <button type="button" className={InstructorStyles['btn']} disabled={currentPage === 1?true:false} style={{cursor: 1 === currentPage?'not-allowed':'pointer',opacity:1 === currentPage?'.5':'1'  }}  onClick={getThePreviousPages}>
+               <img src={currentPage === 1?GreaterThanGrayImage:GreaterThanWhiteImage} alt="GreaterThan"/>
+                </button>
+                {pageNo.map((pN,index)=>(
+                  index < 2 ?
+                    <li key={pN.index} id={pN.index} style={{background:Number(currentPage)  === pN.index   ?'#c2a054':'',color:Number(currentPage)  === pN.index  ?'#FFFFFF':''}}  onClick={handleUpCommingPage}>{pN.index}</li>:null
+                ))}
+                <li className={InstructorStyles['pages-separator']}>{"..."}</li>
+                {lastPage !== undefined? 
+                <li id={lastPage.id} style={{background:Number(currentPage)  === lastPage.index  ?'#c2a054':'',color:Number(currentPage)  === lastPage.index?'#FFFFFF':''}}  onClick={handleUpCommingPage}>{lastPage.index}</li>:null}
+                
+                <button type="button" className={InstructorStyles['btn']} disabled={currentPage === lastPage.index?true:false} style={{cursor:currentPage === lastPage.index?'not-allowed':'pointer',opacity:currentPage === lastPage.index?'.5':'1' }}  onClick={getTheNextPages}>
+                    {lastPage !== undefined?<img src={currentPage === lastPage.index?LessThanGrayImage:LessThanWhiteImage} alt="lessThan"/>:null}
+                    </button>
+               </ul>:null
+                }
+            </div>
+
+
+            <div>
             <InstructorWorkHistory
                 selectedInstructorData={selectedInstructorData}
                 initialResponseSpecificInstructorData={
@@ -520,6 +531,8 @@ console.log(instructorData);
                         </table>
                     )}
                 </div>
+            </div>
+            </div>
             </div>
         </>
     );

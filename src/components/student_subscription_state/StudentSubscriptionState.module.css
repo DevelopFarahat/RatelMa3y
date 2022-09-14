@@ -270,7 +270,7 @@
   -o-border-radius: 5px;
   box-shadow:0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   position: absolute;
-  top:24%;
+  top:40%;
   left:81%;
   transform: translate(-50%,-50%);
   -webkit-transform: translate(-50%,-50%);
@@ -278,6 +278,12 @@
   -ms-transform: translate(-50%,-50%);
   -o-transform: translate(-50%,-50%);
   background:#FFFFFF;
+}
+.cancelled-action-alert{
+  width: 27%;
+  height: 124px;
+  top: 41.3%;
+  left: 85.6%;
 }
 .alert >  img{
   width:15%;
@@ -287,7 +293,7 @@
 }
 .alert > p{
   font-weight: bold;
-  text-align: justify;
+  text-align: center;
   margin: auto;
   font-family: 'Times New Roman', Times, serif;
 }

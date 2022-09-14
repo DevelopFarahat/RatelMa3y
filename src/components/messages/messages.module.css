@@ -1,3 +1,41 @@
+.messages-main{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+.messages-icon-container{
+  width:110px;
+  height:110px;
+  border-radius: 50%;
+  position:absolute;
+  top:0;
+  left:50%;
+  transform: translate(-50%,-50%);
+  -webkit-transform: translate(-50%,-50%);
+  -moz-transform: translate(-50%,-50%);
+  -ms-transform: translate(-50%,-50%);
+  -o-transform: translate(-50%,-50%);
+  background-color: #FFFFFF;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+}
+.messages-icon-container > img {
+  display:block;
+  margin: auto;
+  margin: 26px auto;
+}
+.messages-main > div+div{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: flex-start;
+}
 .all-messages-main-container,.messages-content-main-container{
     flex: 0 0 65%;
     height:471px;
@@ -13,6 +51,25 @@
 }
 .messages-content-main-container{
     flex: 0 0 33%;
+    align-self: center;
+    height:300px;
+    padding: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content:center;
+    align-items: center;
+}
+.messages-content-main-container > img{
+  width:32%;
+}
+.msg-content{
+  font-family: 'Times New Roman', Times, serif;
+  text-transform:capitalize;
+  text-align: justify;
+  color: #000000;
+  line-height: 1.5;
+  letter-spacing: .5px;
+  font-size: 1.2rem;
 }
 .table-settings-container {
     width: 99%;
@@ -160,4 +217,96 @@
     -moz-transform: translate(-50%,-50%);
     -ms-transform: translate(-50%,-50%);
     -o-transform: translate(-50%,-50%);
+  }
+  .pagination-container{
+
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .pagination-container > ul{
+    list-style-type: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+  .pagination-container > ul > li:not(.pages-separator){
+    flex: 0 0 39px;
+    padding: 10px;
+    font-size: 1rem;
+    font-family: 'Times New Roman', Times, serif;
+    line-height: 1.5;
+    text-align: center;
+    border: 1px solid #dadada;
+    margin: 10px;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+    cursor: pointer;
+    background:#038674;
+    color: #FFFFFF;
+  }
+  .pages-separator{
+    flex: 0 0 39px;
+    height: 46px;
+    cursor: auto;
+    color: #FFFFFF;
+    background-color: #c2a054;
+    font-size: 1.5rem;
+    font-weight: bold;
+    font-family: 'Times New Roman', Times, serif;
+    text-align: center;
+    border: 1px solid #dadada;
+    margin: 10px;
+    border-radius: 5px;
+    line-height: 1.5;
+    box-sizing: border-box;
+  }
+  .pagination-container > ul > li:hover:not(.pages-separator){
+    background-color: #c2a054 !important;
+    transform: scale(1.1,1.1);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    color: #FFFFFF;
+    transition: all .1s ease-in-out;
+    -webkit-transition: all .1s ease-in-out;
+    -moz-transition: all .1s ease-in-out;
+    -ms-transition: all .1s ease-in-out;
+    -o-transition: all .1s ease-in-out;
+    -webkit-transform: scale(1.1,1.1);
+    -moz-transform: scale(1.1,1.1);
+    -ms-transform: scale(1.1,1.1);
+    -o-transform: scale(1.1,1.1);
+  }
+  .pagination-container > ul > .btn {
+    flex: 0 0 35px;
+    height:46px;
+    padding: 10px;
+    outline: none;
+    border: none;
+    font-size: 1rem;
+    font-family: 'Times New Roman', Times, serif;
+    line-height: 1.5;
+    text-align: center;
+    border: 1px solid #dadada;
+    margin: 10px;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+    cursor: pointer;
+    background-color: #038674;
+    color:#FFFFFF;
+  }
+  .btn > img{
+    display: block;
+    margin: auto;
+    width:20px;
+    object-fit: contain;
   }

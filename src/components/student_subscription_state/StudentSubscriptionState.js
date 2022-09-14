@@ -14,8 +14,11 @@ import updateImageIcon from "../../assets/images/update.png";
 import Spinner from 'react-bootstrap/Spinner';
 import { useTranslation } from "react-i18next";
 const StudentSubscriptionState = ({
-  fetchSpecificStudentDataAgain,
-  setFetchSpecificStudentDataAgain,
+  currentPage,
+  setPageNoArrLength,
+  setLastPage,
+  setPageNoCopy,
+  setPageNo,
   setSpecificStudentJoiningRequestData,
   setIsStudentRequestDataVisible,
   initialSpecificStudentJoiningRequestData,
@@ -224,7 +227,6 @@ const StudentSubscriptionState = ({
   const handlerRowClicked = useCallback((event) => {
     const id = event.currentTarget.id;
     setSelectedRow(id);
-    setFetchSpecificStudentDataAgain((current) => current + 1);
   }, []);
   const toogleStudentStatus = (stdObject, event, index, process) => {
     event.stopPropagation();
@@ -340,13 +342,6 @@ const StudentSubscriptionState = ({
   };
   const handleSubmit = (event) => {
     event.preventDefault();
-    setStudentStatus((current) => !current);
-    setStudentConfiguration({
-      studentStatus: "",
-      studentInstructor: "",
-      started_in:""
-    });
-    //setStudentStatus(false);
     changeSubscriptionState();
   };
   const getStudentRatelMa3yJoiningRequestData = (stdObji, event) => {
@@ -371,19 +366,33 @@ const StudentSubscriptionState = ({
   };
   const distroyAlert = () => {
     setIsAlertVisible(true);
+    
     setTimeout(() => {
       setIsAlertVisible((current) => !current);
     }, 1000);
+    
   };
+  //
   useEffect(() => {
-    axios.get("http://localhost:5000/api/students").then(
+    axios.get(`http://localhost:5000/api/students?limit=300&page=${currentPage}`).then(
       (res) => {
-        initialResponse.current = res.data.data;
+        initialResponse.current =  res.data.data;
         setStudentData(res.data.data);
+        let pageN =  Math.ceil(res.data.count/300);
+        let numOfPages = [];
+        for(let i = 0 ; i < pageN;i++){
+          numOfPages.push({id:i+1,index:i+1});
+        }
+        setPageNoCopy(numOfPages);
+        setLastPage(numOfPages[numOfPages.length-1]);
+        numOfPages.reverse().splice(numOfPages[numOfPages.length-1],1);
+        setPageNoArrLength(numOfPages.length);
+        setPageNo(numOfPages.reverse());
       },
       (error) => {
         console.log(error);
       }
+      
     );
     axios
       .get(`http://localhost:5000/api/instructors?limit=10000000000`)
@@ -393,12 +402,11 @@ const StudentSubscriptionState = ({
       .catch((error) => {
         console.log(error);
       });
-  }, [fetchAgain]);
-
+  }, [fetchAgain,currentPage]);
   const changeSubscriptionState = (event) => {
-    console.log(changableSubscriptionState.instructor)
+    
     if (studentConfiguration.studentStatus !== "Cancelled" &&changableSubscriptionState.instructor === undefined) {
-  
+      setIsUserMakingUpdateOnStudentAccount(true);
       axios
         .put(
           `http://localhost:5000/api/students/${changableSubscriptionState._id}`,
@@ -409,16 +417,34 @@ const StudentSubscriptionState = ({
           }
         )
         .then((res) => {
+          setStudentStatus((current) => !current);
+          setStudentConfiguration({
+            studentStatus: "",
+            studentInstructor: "",
+            started_in:""
+          });
+          setIsUserMakingUpdateOnStudentAccount(false);
           setFetchAgain(fetchAgain + 1);
           distroyAlert();
           getStudentRatelMa3yJoiningRequestData(changableSubscriptionState,event);
+          /*
+          axios.put(`http://localhost:5000/api/instructors/${changableSubscriptionState.instructor}`,{students:changableSubscriptionState._id}).then((res)=>{
+
+          }).catch((error)=>{
+            console.log(error);
+          })
+          */
         })
         .catch((error) => {
             
           console.log(error);
         });
+
+
+        
       
     } else if(studentConfiguration.studentStatus !== "Cancelled"  && changableSubscriptionState.instructor !== undefined) {
+      setIsUserMakingUpdateOnStudentAccount(true);
       axios
         .put(
           `http://localhost:5000/api/students/${changableSubscriptionState._id}`,
@@ -428,14 +454,33 @@ const StudentSubscriptionState = ({
           }
         )
         .then((res) => {
-            distroyAlert();
+          setStudentStatus((current) => !current);
+          setStudentConfiguration({
+            studentStatus: "",
+            studentInstructor: "",
+            started_in:""
+          });
+          setIsUserMakingUpdateOnStudentAccount(false);
+           distroyAlert();
           setFetchAgain(fetchAgain + 1);
           getStudentRatelMa3yJoiningRequestData(changableSubscriptionState,event);
+          /*
+          if(studentConfiguration.studentInstructor !== ''){
+          axios.put(`http://localhost:5000/api/instructors/${changableSubscriptionState.instructor}`,{students:changableSubscriptionState._id}).then((res)=>{
+
+          }).catch((error)=>{
+            console.log(error);
+          })
+          
+        }
+        */
         })
+      
         .catch((error) => {
           console.log(error);
         });
     }else{
+      setIsUserMakingUpdateOnStudentAccount(true);
         axios
         .put(
           `http://localhost:5000/api/students/${changableSubscriptionState._id}`,
@@ -446,9 +491,23 @@ const StudentSubscriptionState = ({
           }
         )
         .then((res) => {
-            distroyAlert();
+          setStudentStatus((current) => !current);
+          setStudentConfiguration({
+            studentStatus: "",
+            studentInstructor: "",
+            started_in:""
+          });
+          setIsUserMakingUpdateOnStudentAccount(false);
+          distroyAlert();
           setFetchAgain(fetchAgain + 1);
           getStudentRatelMa3yJoiningRequestData(changableSubscriptionState,event);
+          /*
+          axios.put(`http://localhost:5000/api/instructors/${changableSubscriptionState.instructor}`,{students:''}).then((res)=>{
+
+          }).catch((error)=>{
+            console.log(error);
+          })
+          */
         })
         .catch((error) => {
           console.log(error);
@@ -501,7 +560,7 @@ const StudentSubscriptionState = ({
     }
     setRecommendedInstructorsData(recommendedInstructors);
   };
-  const changeStudentSessionsDayHours = ()=>{
+  const changeStudentSessionsDayHours = (event)=>{
     let wD = [];
     for (let i = 0; i < Object.values(workingDays).length; i++) {
         
@@ -536,11 +595,12 @@ const StudentSubscriptionState = ({
     }
     setIsUserMakingUpdateOnStudentAccount(true);
     axios.put(`http://localhost:5000/api/students/${changableSubscriptionState._id}`,program).then((res)=>{
-    console.log(res.date)
        distroyAlert();
        setFetchAgain(fetchAgain+1);
        setIsUserMakingUpdateOnStudentAccount(false);
-       closeDime();
+       setStudentStatus((current) => !current);
+       getStudentRatelMa3yJoiningRequestData(res.data,event);
+       
     }).catch((error)=>{
         console.log(error);
     })
@@ -889,8 +949,15 @@ const StudentSubscriptionState = ({
                           : false
                       }
                     >
-                      Save
-                      <FaSave style={{ margin: "0px 0 1px 3px" }} size={15} />
+                    {isUserMakingUpdateOnStudentAccount?<>
+                    <Spinner animation="grow" variant="light" style={{width:'10px',height:'10px',marginLeft:'3px'}} />
+                    <Spinner animation="grow" variant="light" style={{width:'10px',height:'10px',marginLeft:'3px'}} />
+                    <Spinner animation="grow" variant="light" style={{width:'10px',height:'10px',marginLeft:'3px'}} />
+                    <Spinner animation="grow" variant="light" style={{width:'10px',height:'10px',marginLeft:'3px'}} />
+                    </>:<>{"Save"}<FaSave style={{ margin: "0px 0 1px 3px" }} size={15} /></>
+                    }
+              
+                      
                     </button>
                   ) : changableSubscriptionState.instructor !== null &&
                     changableSubscriptionState.instructor !== undefined ? (
@@ -900,8 +967,13 @@ const StudentSubscriptionState = ({
                          StudentSubscriptionStyles["btn"]
                       }`}
                     >
-                      Save
-                      <FaSave style={{ margin: "0px 0 1px 3px" }} size={15} />
+                    {isUserMakingUpdateOnStudentAccount?<>
+                    <Spinner animation="grow" variant="light" style={{width:'10px',height:'10px',marginLeft:'3px'}} />
+                    <Spinner animation="grow" variant="light" style={{width:'10px',height:'10px',marginLeft:'3px'}} />
+                    <Spinner animation="grow" variant="light" style={{width:'10px',height:'10px',marginLeft:'3px'}} />
+                    <Spinner animation="grow" variant="light" style={{width:'10px',height:'10px',marginLeft:'3px'}} />
+                    </>:<>{"Save"}<FaSave style={{ margin: "0px 0 1px 3px" }} size={15} /></>
+                    }
                     </button>
                   ) : (
                     <button
@@ -927,8 +999,13 @@ const StudentSubscriptionState = ({
                           : false
                       }
                     >
-                      Save
-                      <FaSave style={{ margin: "0px 0 1px 3px" }} size={15} />
+                    {isUserMakingUpdateOnStudentAccount?<>
+                    <Spinner animation="grow" variant="light" style={{width:'10px',height:'10px',marginLeft:'3px'}} />
+                    <Spinner animation="grow" variant="light" style={{width:'10px',height:'10px',marginLeft:'3px'}} />
+                    <Spinner animation="grow" variant="light" style={{width:'10px',height:'10px',marginLeft:'3px'}} />
+                    <Spinner animation="grow" variant="light" style={{width:'10px',height:'10px',marginLeft:'3px'}} />
+                    </>:<>{"Save"}<FaSave style={{ margin: "0px 0 1px 3px" }} size={15} /></>
+                    }
                     </button>
                   )}
                 </form>
@@ -1069,13 +1146,13 @@ const StudentSubscriptionState = ({
         ) : null}
       </div>
       {isAlertVisible ? (
-        <div className={StudentSubscriptionStyles["alert"]}>
+        <div className={`${StudentSubscriptionStyles["alert"]} ${changableSubscriptionState.subscription_state !== "Pending"?StudentSubscriptionStyles['cancelled-action-alert']:''} `}>
           <img src={CircleGif} alt="gif-alert-circle" />
-          { changableSubscriptionState.instructor !== null && changableSubscriptionState.instructor !== undefined && changableSubscriptionState.subscription_state !== 'Cancelled' ? (
+          {changableSubscriptionState.instructor !== null && changableSubscriptionState.instructor !== undefined && changableSubscriptionState.subscription_state !== 'Cancelled'? (
             <p style={{width:'80%'}}><span> {JSON.parse(localStorage.getItem('user')).privileges}</span> hase  Updated <span>{changableSubscriptionState.name} </span>Account</p>
           ) :changableSubscriptionState.instructor === null && changableSubscriptionState.instructor === undefined && changableSubscriptionState.subscription_state ===  "Pending"?(
             <p style={{width:'80%'}}><span> {JSON.parse(localStorage.getItem('user')).privileges}</span> hase  Changed <span>{changableSubscriptionState.name} </span> Subscription State and setting Started  Date and Instructor Successfully</p>
-          ):changableSubscriptionState.subscription_state ===  "Pending"?(
+          ):changableSubscriptionState.subscription_state ===  "Cancelled"?(
             <p><span> {JSON.parse(localStorage.getItem('user')).privileges}</span> hase  Cancelled  <span>{changableSubscriptionState.name} </span> Account </p>
           ):null}
         </div>
