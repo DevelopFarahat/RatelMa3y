@@ -9,15 +9,15 @@ import LessThanGrayImage from "../../assets/images/less-than-gray.png";
 import {FaLessThan} from "react-icons/fa";
 const Students = () => {
     const [specificStudentJoiningRequestData,setSpecificStudentJoiningRequestData] = useState({});
+    const [studentSessionsDetails,setStudentSessionsDetails] = useState([]);
     const [isStudentRequestDataVisible,setIsStudentRequestDataVisible] = useState(true);
     const [isStudentRatelDataVisible,setIsStudentRatelDataVisible] = useState(false);
-    const initialSpecificStudentJoiningRequestData = useRef();
+    const initialStudentSessionsDetails = useRef();
     const [pageNo,setPageNo] = useState([]);
     const [pageNoCopy,setPageNoCopy] = useState([]);
     const [pageNoArrLength,setPageNoArrLength] = useState(-1);
     const [lastPage,setLastPage] = useState(-1);
     const [currentPage,setCurrentPage] = useState(1);
-    const [requestedPageNum,setRequestedPageNum] = useState(1);
 
     const handleUpCommingPage = (event) => {
         const id = event.currentTarget.id;
@@ -191,8 +191,8 @@ const Students = () => {
                 }
             </div>
         <div>
-        <StudentDetails initialSpecificStudentJoiningRequestData={initialSpecificStudentJoiningRequestData} specificStudentJoiningRequestData={specificStudentJoiningRequestData} setSpecificStudentJoiningRequestData={setSpecificStudentJoiningRequestData} setIsStudentRequestDataVisible={setIsStudentRequestDataVisible} setIsStudentRatelDataVisible={setIsStudentRatelDataVisible} isStudentRequestDataVisible={isStudentRequestDataVisible} isStudentRatelDataVisible={isStudentRatelDataVisible} />
-        <StudentSubscriptionState currentPage={currentPage} setPageNoArrLength={setPageNoArrLength} setLastPage={setLastPage} setPageNoCopy={setPageNoCopy} setPageNo={setPageNo}  initialSpecificStudentJoiningRequestData={initialSpecificStudentJoiningRequestData} setSpecificStudentJoiningRequestData={setSpecificStudentJoiningRequestData} setIsStudentRequestDataVisible={setIsStudentRequestDataVisible} setIsStudentRatelDataVisible={setIsStudentRatelDataVisible} />
+        <StudentDetails      studentSessionsDetails={studentSessionsDetails} setStudentSessionsDetails={setStudentSessionsDetails} initialStudentSessionsDetails={initialStudentSessionsDetails} specificStudentJoiningRequestData={specificStudentJoiningRequestData} setSpecificStudentJoiningRequestData={setSpecificStudentJoiningRequestData} setIsStudentRequestDataVisible={setIsStudentRequestDataVisible} setIsStudentRatelDataVisible={setIsStudentRatelDataVisible} isStudentRequestDataVisible={isStudentRequestDataVisible} isStudentRatelDataVisible={isStudentRatelDataVisible} />
+        <StudentSubscriptionState       setStudentSessionsDetails={setStudentSessionsDetails} currentPage={currentPage} setPageNoArrLength={setPageNoArrLength} setLastPage={setLastPage} setPageNoCopy={setPageNoCopy} setPageNo={setPageNo}  initialStudentSessionsDetails={initialStudentSessionsDetails} setSpecificStudentJoiningRequestData={setSpecificStudentJoiningRequestData} />
         </div>
         </div>
         </>

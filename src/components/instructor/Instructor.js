@@ -170,6 +170,8 @@ const Instructor = () => {
     }
     // pagination functionality ended
     const [instructorData, setInstructorData] = useState([]);
+    const [instructorSessionsDetails,setInstructorSessionsDetails] = useState([]);
+    const initialInstructorSessionsDetails = useRef();
     const [filterValue, setFilterValue] = useState("");
     const [selectedRow, setSelectedRow] = useState(-1);
     const [selectedInstructorData, setSelectedInstructorData] = useState([]);
@@ -258,8 +260,8 @@ const Instructor = () => {
             case "startedAtDSC":
                 sortedInstructorArr.sort((a, b) => {
                     return (
-                        new Date(b.started_at.split("T")).getTime() -
-                        new Date(a.started_at.split("T")).getTime()
+                        new Date(b.started_at.split("T")[0]).getTime() -
+                        new Date(a.started_at.split("T")[0]).getTime()
                     );
                 });
                 break;
@@ -267,8 +269,8 @@ const Instructor = () => {
             case "startedAtASC":
                 sortedInstructorArr.sort((a, b) => {
                     return (
-                        new Date(a.started_at.split("T")).getTime() -
-                        new Date(a.started_at.split("T")).getTime()
+                        new Date(a.started_at.split("T")[0]).getTime() -
+                        new Date(b.started_at.split("T")[0]).getTime()
                     );
                 });
                 break;
@@ -284,7 +286,6 @@ const Instructor = () => {
         const id = event.currentTarget.id;
         setSelectedRow(id);
     }, []);
-console.log(instructorData);
     const setInstructorAvailability = (event, instructorObji) => {
         let availability = event.currentTarget.id === "available" ? false : true;
         axios
@@ -302,17 +303,22 @@ console.log(instructorData);
 
     const getSpecificInstructorData = (event) => {
         event.stopPropagation();
-        console.log(event.currentTarget.id);
         axios
             .get(`http://localhost:5000/api/instructors/${event.currentTarget.id}`)
             .then((res) => {
                 initialResponseSpecificInstructorData.current = res.data;
                 setSelectedInstructorData(res.data);
-                console.log(res.data.data);
             })
             .catch((error) => {
                 console.log(error);
             });
+            axios.get(`http://localhost:5000/api/sessions?user_id=${event.currentTarget.id}`).then((res)=>{
+                initialInstructorSessionsDetails.current = res.data.data;
+                setInstructorSessionsDetails(res.data.data);
+
+            }).catch((error)=>{
+                console.log(error);
+            })
 
         handlerRowClicked(event);
     };
@@ -368,6 +374,9 @@ console.log(instructorData);
 
             <div>
             <InstructorWorkHistory
+                setInstructorSessionsDetails={setInstructorSessionsDetails}
+                instructorSessionsDetails={instructorSessionsDetails}
+                initialInstructorSessionsDetails={initialInstructorSessionsDetails}
                 selectedInstructorData={selectedInstructorData}
                 initialResponseSpecificInstructorData={
                     initialResponseSpecificInstructorData
@@ -443,7 +452,6 @@ console.log(instructorData);
                                     <th>State</th>
                                     <th>Email</th>
                                     <th>Mobile</th>
-                                    <th>Programs</th>
                                     <th>Started At</th>
                                     <th>Is Available</th>
                                     <th>In Session</th>
@@ -473,19 +481,6 @@ console.log(instructorData);
                                         <td>{instructData.state}</td>
                                         <td>{instructData.email}</td>
                                         <td>{instructData.mobile}</td>
-                                        {instructData.programs ? (
-                                            <>
-                                                <td>
-                                                    <span>
-                                                        {instructData.programs.map((pr,index) => (
-                                                            <span key={index}>{pr}</span>
-                                                        ))}
-                                                    </span>
-                                                </td>
-                                            </>
-                                        ) : (
-                                            <td>{""}</td>
-                                        )}
                                         <td>
                                             <span>{instructData.started_at.split("T")[0]}</span>
                                         </td>

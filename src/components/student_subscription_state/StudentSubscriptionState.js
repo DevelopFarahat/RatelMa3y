@@ -5,6 +5,7 @@ import { AiFillFilter } from "react-icons/ai";
 import { BiReset } from "react-icons/bi";
 import { FaSave } from "react-icons/fa";
 import { VscChromeClose } from "react-icons/vsc";
+import {FaTrash} from "react-icons/fa";
 import Form from "react-bootstrap/Form";
 import { AiFillSetting } from "react-icons/ai";
 import CircleGif from "../../assets/images/check-circle.gif";
@@ -19,10 +20,9 @@ const StudentSubscriptionState = ({
   setLastPage,
   setPageNoCopy,
   setPageNo,
+  setStudentSessionsDetails,
   setSpecificStudentJoiningRequestData,
-  setIsStudentRequestDataVisible,
-  initialSpecificStudentJoiningRequestData,
-  setIsStudentRatelDataVisible,
+  initialStudentSessionsDetails,
 }) => {
   const pindingSubscriptionStateArr = [
     { subscription_id: 1, subscription_name: "Active" },
@@ -52,6 +52,7 @@ const StudentSubscriptionState = ({
     {}
   );
   const [isAlertVisible, setIsAlertVisible] = useState(false);
+  const [isUserDeleteAnyAccount,setIsUserDeleteAnyAccount] = useState(false);
   const [typeOfProcess, setTypeOfProcess] = useState("");
   const [t, i18n] = useTranslation();
   const [workingDays, setWorkingDays] = useState({
@@ -227,8 +228,18 @@ const StudentSubscriptionState = ({
   const handlerRowClicked = useCallback((event) => {
     const id = event.currentTarget.id;
     setSelectedRow(id);
+
   }, []);
+  const getTotalPresentAndAbsence = (stdData)=>{
+
+
+
+
+
+  }
   const toogleStudentStatus = (stdObject, event, index, process) => {
+    if(stdObject.subscription_state !== "Cancelled"){
+
     event.stopPropagation();
     setChangableSubscriptionState(stdObject);
     setTypeOfProcess(process);
@@ -243,6 +254,7 @@ const StudentSubscriptionState = ({
     } else {
       setStudentStatus((current) => !current);
     }
+  }
   };
   const getStudentSessionsDaysAndTime = (stdObji) => {
     let sessionsHoursInitialObji = {};
@@ -281,7 +293,6 @@ const StudentSubscriptionState = ({
   };
 
   const gitInstructorOfSpecificStudentWorkingDaysAndHours = (stObj) => {
-    console.log(stObj.instructor);
     let disabledDaysInitialObject = {};
     let disabledHoursInitialObject = {};
     axios
@@ -345,24 +356,23 @@ const StudentSubscriptionState = ({
     changeSubscriptionState();
   };
   const getStudentRatelMa3yJoiningRequestData = (stdObji, event) => {
-    console.log("inshaa allah")
-    const headers = {
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "OPTIONS, GET, POST",
-    };
-
     axios
       .get(`http://localhost:5000/api/students/${stdObji._id}`)
       .then((res) => {
-        initialSpecificStudentJoiningRequestData.current = res.data;
+       // initialSpecificStudentJoiningRequestData.current = res.data;
         setSpecificStudentJoiningRequestData(res.data);
-
-        //console.log(res.data);
       })
       .catch((error) => {
         console.log(error);
-      }, headers);
+      });
+    axios.get(`http://localhost:5000/api/sessions?user_id=${stdObji._id}`).then((res)=>{
+      initialStudentSessionsDetails.current = res.data.data;
+      setStudentSessionsDetails(res.data.data);
+    }).catch((error)=>{
+      console.log(error);
+    })
     handlerRowClicked(event);
+    getTotalPresentAndAbsence(stdObji);
   };
   const distroyAlert = () => {
     setIsAlertVisible(true);
@@ -518,7 +528,6 @@ const StudentSubscriptionState = ({
   const getRecommendedInstructorsForEachStudent = (studentObject) => {
     let matchedDays = [];
     let matchedHours = [];
-    let isThereAnyMatchedPrograms = false;
     let recommendedInstructors = [];
     for (let i = 0; i < instructorData.length; i++) {
         //days
@@ -542,18 +551,11 @@ const StudentSubscriptionState = ({
 
         }
      }
-        for(let u = 0 ; u < instructorData[i].programs.length;u++){
-            if(instructorData[i].programs[u] === studentObject.program_prefs.type){
-                isThereAnyMatchedPrograms = true;
-            }
-        }
-      if (matchedDays.every((mD) => mD === true) === true && matchedHours.every((mH)=>mH === true) === true &&  isThereAnyMatchedPrograms === true ) {
+      if (matchedDays.every((mD) => mD === true) === true && matchedHours.every((mH)=>mH === true) === true ) {
         recommendedInstructors.push(instructorData[i]);
-        isThereAnyMatchedPrograms = false;
         matchedDays = [];
         matchedHours = [];
       }else{
-        isThereAnyMatchedPrograms = false;
         matchedDays = [];
         matchedHours = [];
       }
@@ -655,6 +657,20 @@ const StudentSubscriptionState = ({
     }
     setStudentData(studentDataCopy);
   }
+
+  const deleteStudent = (event,studentAccountObji)=>{
+    event.stopPropagation();
+    axios.delete(`http://localhost:5000/api/students/${studentAccountObji._id}`).then((res)=>{
+    setFetchAgain(fetchAgain+1);
+    setIsUserDeleteAnyAccount(true);
+    setTimeout(()=>{
+        setIsUserDeleteAnyAccount(false);
+    },1000)
+
+    }).catch((error)=>{
+      console.log(error);
+    })
+  }
   return (
 
     <>
@@ -737,11 +753,11 @@ const StudentSubscriptionState = ({
                     <td>{stdData.name}</td>
                     <td>{stdData.subscription_state}</td>
                     <td>
-                      {stdData.subscription_state !== "Cancelled" ? (
-                        <AiFillSetting
+                    <AiFillSetting
                           className={
                             StudentSubscriptionStyles["setting-icon-hidden"]
                           }
+                          style={{cursor:stdData.subscription_state === "Cancelled"?'not-allowed':'pointer',color:stdData.subscription_state === "Cancelled"?'#a2a9af':''}}
                           size={25}
                           onClick={(event) =>
                             toogleStudentStatus(
@@ -752,14 +768,13 @@ const StudentSubscriptionState = ({
                             )
                           }
                         />
-                      ) : null}
-                      {stdData.subscription_state !== "Cancelled" ? (
+
                         <FaCalendarTimes
                           className={
                             StudentSubscriptionStyles["setting-icon-hidden"]
                           }
                           style={{
-                            color: !stdData.instructor ? "#dadada" : "",
+                            color: !stdData.instructor ? "#a2a9af" : "",
                             cursor: !stdData.instructor
                               ? "not-allowed"
                               : "pointer",
@@ -774,7 +789,7 @@ const StudentSubscriptionState = ({
                             )
                           }
                         />
-                      ) : null}
+                      <FaTrash onClick={(event)=>deleteStudent(event,stdData)}/>
                     </td>
                   </tr>
                 ))}
@@ -1157,6 +1172,17 @@ const StudentSubscriptionState = ({
           ):null}
         </div>
       ) : null}
+      {isUserDeleteAnyAccount? (
+        <div className={StudentSubscriptionStyles["alert-container"]}>
+          <img src={CircleGif} alt="successfull" />
+          <span>
+            <span style={{ fontWeight: "bold", color: "#038674" }}>
+              {localStorage.getItem("user_name")}
+            </span>{" "}
+            Has Deleted  Student  Account Successfully
+          </span>
+        </div>
+      ):null}
     </>
   );
 };

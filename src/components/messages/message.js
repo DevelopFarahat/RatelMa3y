@@ -226,7 +226,7 @@ const Messages = ()=>{
                 break;
                 case "Unread":
                     messagesCopy.sort((a_messages,b_messages)=>{
-                        return a_messages.precedence - b_messages.precedence;
+                        return b_messages.precedence - a_messages.precedence;
                     });
                     break;
                     case "ASC":
@@ -248,8 +248,9 @@ const Messages = ()=>{
 
         setMsgContent(msg.content);
         if(msg.status === 'Unread'){
-            setFeatchAgain(featchAgain+1);
+            
             axios.put(`http://localhost:5000/api/contacts/${msg._id}`,{status:'Read'}).then((res)=>{
+                setFeatchAgain(featchAgain+1);
                 console.log(res.data)
             }).catch((error)=>{
                 console.log(error);
