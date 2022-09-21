@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useCallback } from "react";
 import StudentDetailsStyles from "./StudentDetails.module.css";
 import EmptyDataImage from "../../assets/images/empty.png";
 import NoResultFiltaration from "../../assets/images/no-result.png";
@@ -9,10 +9,13 @@ import Form from 'react-bootstrap/Form';
 import dateTimeSessionImage from "../../assets/images/dateTimeSessions.png";
 import  DateTimeImage from "../../assets/images/date-time.png";
 import { VscChromeClose } from "react-icons/vsc";
+import {AiFillFilter} from "react-icons/ai";
+import {MdKeyboardArrowDown} from "react-icons/md";
+import {MdKeyboardArrowUp} from "react-icons/md";
 import { AiFillPayCircle } from "react-icons/ai";
 import axios from "axios";
 import { isLabelWithInternallyDisabledControl } from "@testing-library/user-event/dist/utils";
-const StudentDetails = ({fetchSpecificStudentDataAgain,specificStudentJoiningRequestData, setSpecificStudentJoiningRequestData, initialSpecificStudentJoiningRequestData, isStudentRequestDataVisible, isStudentRatelDataVisible, setIsStudentRequestDataVisible, setIsStudentRatelDataVisible }) => {
+const StudentDetails = ({specificStudentJoiningRequestData,studentSessionsDetails,setStudentSessionsDetails, setSpecificStudentJoiningRequestData, initialStudentSessionsDetails, isStudentRequestDataVisible, isStudentRatelDataVisible, setIsStudentRequestDataVisible, setIsStudentRatelDataVisible }) => {
   const [isToolTipShown,setIsToolTipShown] = useState(false);
   let programes = [{ id: 0, name: "programprogr1" }, { id: 1, name: "programprogr2" }, { id: 2, name: "programprogr3" },]
   let days = ['Saturday','Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
@@ -27,6 +30,15 @@ const StudentDetails = ({fetchSpecificStudentDataAgain,specificStudentJoiningReq
     ["10:00 pm", "12:00 am"],
 ];
 const [isDateTimeVisable,setIsDateTimeVisable] = useState(false);
+const [selectedRow, setSelectedRow] = useState(-1);
+const [totalPresent,setTotalPresent] = useState(0);
+const [totalAbsence,setTotalAbsence] = useState(0);
+const [totalSession,setTotalSession] = useState(0);
+const [isSessionsMoreInfoOpend,setIsSessionsMoreInfoOpend] = useState(false);
+const [sessionsDate,setSessionsDate] = useState({
+  fromDate:'',
+  toDate:''
+})
   const toogleViewOfStudentRequestData = () => {
     setIsStudentRequestDataVisible(current => !current);
     setIsStudentRatelDataVisible(current => !current);
@@ -38,26 +50,25 @@ const [isDateTimeVisable,setIsDateTimeVisable] = useState(false);
   }
 
   const sortSessions = (event) => {
+    let studentSessionsDetailsCopy = [...studentSessionsDetails];
     let sortedSessionsArr = [];
-    for (let i = 0; i < specificStudentJoiningRequestData.sessions.length; i++) {
-     if(specificStudentJoiningRequestData.sessions[i].attendants.length){
-      if (specificStudentJoiningRequestData.sessions[i].attendants.find((studentId)=>specificStudentJoiningRequestData._id === studentId) !== undefined){
-        specificStudentJoiningRequestData.sessions[i].isStudentPersent = true;
-        sortedSessionsArr.push(specificStudentJoiningRequestData.sessions[i]);
+    for (let i = 0; i < studentSessionsDetailsCopy.length; i++) {
+     if(studentSessionsDetailsCopy[i].attendants.length){
+      if (studentSessionsDetailsCopy[i].attendants.find((studentId)=>specificStudentJoiningRequestData._id === studentId) !== undefined){
+        studentSessionsDetailsCopy[i].isStudentPersent = true;
+        sortedSessionsArr.push(studentSessionsDetailsCopy[i]);
       }else{
-        specificStudentJoiningRequestData.sessions[i].isStudentPersent = false;
-        sortedSessionsArr.push(specificStudentJoiningRequestData.sessions[i]);
+        studentSessionsDetailsCopy[i].isStudentPersent = false;
+        sortedSessionsArr.push(studentSessionsDetailsCopy[i]);
       }
-      
-
     }else{
-      specificStudentJoiningRequestData.sessions[i].isStudentPersent = false;
-          sortedSessionsArr.push(specificStudentJoiningRequestData.sessions[i]);
+      studentSessionsDetailsCopy[i].isStudentPersent = false;
+          sortedSessionsArr.push(studentSessionsDetailsCopy[i]);
     }
       
     }
 
-   
+   console.log(sortedSessionsArr);
     switch(event.target.value){
       case "byPresent":
         sortedSessionsArr.sort((a, b) => {
@@ -88,12 +99,13 @@ const [isDateTimeVisable,setIsDateTimeVisable] = useState(false);
         break;
       default:
     }
-    setSpecificStudentJoiningRequestData({...specificStudentJoiningRequestData,sessions:sortedSessionsArr})
+    //setSpecificStudentJoiningRequestData({...specificStudentJoiningRequestData,sessions:sortedSessionsArr})
+    setStudentSessionsDetails(sortedSessionsArr);
   }
 
 
   const resetSortSessions = () => {
-    setSpecificStudentJoiningRequestData(initialSpecificStudentJoiningRequestData.current);
+    setStudentSessionsDetails(initialStudentSessionsDetails.current);
  
   }
   const showDateTimeContainer = ()=>{
@@ -102,23 +114,68 @@ const [isDateTimeVisable,setIsDateTimeVisable] = useState(false);
   const hideDateTimeContainer = ()=>{
     setIsDateTimeVisable(false);
   }
-  /*
-  useEffect(()=>{
-    axios.delete(`http://localhost:5000/api/students/630fd01cf464db67a703f4bd`)
-  },[])
-  */
+  const handlerRowClicked = useCallback((event) => {
+    const id = event.currentTarget.id;
+    setSelectedRow(id);
+}, []);
  const displayToolTip = ()=>{
   setIsToolTipShown(true);
  }
  const distroyToolTip = ()=>{
   setIsToolTipShown(false);
  }
+ const handleSessionsDate=(event)=>{
+  setSessionsDate(
+    {
+      ...sessionsDate,
+      [event.target.id]:event.target.value
+    }
+  )
+      
+ }
+  const getAttendaceOnSpecificPeroidOfDate =(event)=>{
+    let sessionsFiltrated = [];
+    const studentSessionsDataCopy = [...initialStudentSessionsDetails.current];
+    if(sessionsDate.fromDate !== '' && sessionsDate.toDate !== ''){
+      for(let i = 0 ; i < studentSessionsDataCopy.length;i++){
+        if(new Date(sessionsDate.fromDate)  <= new Date(studentSessionsDataCopy[i].created_at.split("T")[0]).getTime()  && new Date(studentSessionsDataCopy[i].created_at.split("T")[0]).getTime()  <= new Date(sessionsDate.toDate) ){
+          sessionsFiltrated.push(studentSessionsDataCopy[i]);
+        }
+      }
+    }
+  setStudentSessionsDetails(sessionsFiltrated);
+  }
+  const openCloseMoreSessionInfo = ()=>{
+    setIsSessionsMoreInfoOpend(current=>!current);
+  }
+  useEffect(()=>{
+    let totalPresent = 0;
+    let totalAbsence = 0;
+    let totalNumberOfSession = 0;
+      const studentSessionsDataCopy = [...studentSessionsDetails];
+      for (let i = 0; i < studentSessionsDataCopy.length; i++) {
+        totalNumberOfSession+=1;
+       if(studentSessionsDataCopy[i].attendants.length !== 0){
+        console.log("hi");
+        if (studentSessionsDataCopy[i].attendants.find((studentId)=>specificStudentJoiningRequestData._id === studentId) !== undefined){
+          totalPresent+=1;
+        }else{
+         totalAbsence+=1;
+        }
+      }else{
+       totalAbsence+=1;
+      }
+  }
+  setTotalPresent(totalPresent);
+  setTotalAbsence(totalAbsence);
+  setTotalSession(totalNumberOfSession)
+  },[specificStudentJoiningRequestData,studentSessionsDetails])
 
   return (
     <>
       <div className={StudentDetailsStyles['student-details-main-container']}>
         {Object.keys(specificStudentJoiningRequestData).length === 0 ? <img src={EmptyDataImage} className={StudentDetailsStyles['empty-data-img']} alt="Empty" /> : specificStudentJoiningRequestData.subscription_state !== 'Cancelled' ? <div className={StudentDetailsStyles['settings-header']}>
-          <span className={`${isStudentRequestDataVisible ? StudentDetailsStyles['taps-shadow'] : ''} ${StudentDetailsStyles['joinnig-request-data-tap']}`} onClick={toogleViewOfStudentRatelData}>Joinnig Request Data</span>   {specificStudentJoiningRequestData.subscription_state !== 'Pending' ? <span className={`${isStudentRatelDataVisible ? StudentDetailsStyles['taps-shadow'] : ''} ${StudentDetailsStyles['ratel-student-data-tap']}`} onClick={toogleViewOfStudentRequestData}>Ratel Student Data</span> : null}
+          <span className={`${isStudentRequestDataVisible ? StudentDetailsStyles['taps-shadow'] : ''} ${StudentDetailsStyles['joinnig-request-data-tap']}`} onClick={toogleViewOfStudentRatelData}>Student Data</span>   {specificStudentJoiningRequestData.subscription_state !== 'Pending' ? <span className={`${isStudentRatelDataVisible ? StudentDetailsStyles['taps-shadow'] : ''} ${StudentDetailsStyles['ratel-student-data-tap']}`} onClick={toogleViewOfStudentRequestData}>Sessions Details</span> : null}
         </div> : <img src={EmptyDataImage} className={StudentDetailsStyles['empty-data-img']} alt="Empty" />}
         {Object.keys(specificStudentJoiningRequestData).length !== 0 && specificStudentJoiningRequestData.subscription_state !== 'Cancelled' ? isStudentRequestDataVisible && specificStudentJoiningRequestData.subscription_state !== 'Cancelled' ? <div className={StudentDetailsStyles['student-request-joinnig-info-main-container']} style={{overflow:isDateTimeVisable?'hidden':'auto'}}>
           {/* request */}
@@ -301,6 +358,7 @@ const [isDateTimeVisable,setIsDateTimeVisable] = useState(false);
           {/* ratel member */}
 
           <div className={StudentDetailsStyles['table-settings-container']}>
+            <section>
             <Form.Label htmlFor="sortStudentSessions">Sort</Form.Label>
             <Form.Select name="sort-student-sessions" id="sortStudentSessions" className={StudentDetailsStyles['form-sort-select']} onChange={sortSessions}>
               <option value="">Select</option>
@@ -313,24 +371,74 @@ const [isDateTimeVisable,setIsDateTimeVisable] = useState(false);
               <option value="dateDSC">DSC</option>
               </optgroup>
             </Form.Select>
+            </section>
+            <section>
+            <Form.Label htmlFor="fromDate">From Date</Form.Label>
+            <Form.Control type="date" name="date-from" id="fromDate"  value={sessionsDate.fromDate} onChange={handleSessionsDate}/>
+            </section>
+            <section>
+            <Form.Label htmlFor="toDate">To Date</Form.Label>
+            <Form.Control type="date" name="date-to" id="toDate"  value={sessionsDate.toDate} onChange={handleSessionsDate}/>
+            </section>
+            <section>
+            <button type="button" className={StudentDetailsStyles['btn']} onClick={getAttendaceOnSpecificPeroidOfDate}>Filter <AiFillFilter /></button>
             <button type="button" className={StudentDetailsStyles['btn']} onClick={resetSortSessions}>Reset<BiReset /></button>
+            </section>
+          </div>
+          <div className={`${StudentDetailsStyles['student-sessions-more-info'] } ${isSessionsMoreInfoOpend?StudentDetailsStyles['student-sessions-more-info-transition']:'' }`} style={{height:isSessionsMoreInfoOpend?'20%':'auto',bottom:isSessionsMoreInfoOpend?'62%':'78%'}}>
+            <div className={`${isSessionsMoreInfoOpend? StudentDetailsStyles['show-more-session-info']:StudentDetailsStyles['hide-more-session-info']}`}>
+            <Form.Label htmlFor="totalNumberOfSessions">Total Sessions</Form.Label>
+            <Form.Control type="number" name="totalNumberOfSessions" id="totalNumberOfSessions" readOnly value={totalSession}/>
+            </div>
+            <div className={`${isSessionsMoreInfoOpend? StudentDetailsStyles['show-more-session-info']:StudentDetailsStyles['hide-more-session-info']}`}>
+            <Form.Label htmlFor="totalPresent">Total Present</Form.Label>
+            <Form.Control type="number" name="totalPresent" id="totalPresent" readOnly value={totalPresent}/>
+            </div>
+            <div className={`${isSessionsMoreInfoOpend? StudentDetailsStyles['show-more-session-info']:StudentDetailsStyles['hide-more-session-info']}`}>
+            <Form.Label htmlFor="totalAbsence">Total Absence</Form.Label>
+            <Form.Control type="number" name="totalAbsence" id="totalAbsence" readOnly value={totalAbsence}/>
+            </div>
+           {isSessionsMoreInfoOpend?<MdKeyboardArrowUp onClick={openCloseMoreSessionInfo} className={StudentDetailsStyles['open-close-arrow-icon']} style={{transform:isSessionsMoreInfoOpend?'rotate(360deg)':'rotate(0deg)',bottom:isSessionsMoreInfoOpend?'67%':'-54%'}}/>:<MdKeyboardArrowDown onClick={openCloseMoreSessionInfo} className={StudentDetailsStyles['open-close-arrow-icon']} style={{transform:isSessionsMoreInfoOpend?'rotate(360deg)':'rotate(0deg)',bottom:isSessionsMoreInfoOpend?'67%':'-54%'}}/>}
           </div>
           <div className={StudentDetailsStyles['table-wrapper']}>
-            {specificStudentJoiningRequestData.sessions.length === 0 ? <img src={NoResultFiltaration} className={StudentDetailsStyles['no-result']} alt="no-result" /> : <table className={StudentDetailsStyles['student-session-info-table']}>
+            {studentSessionsDetails.length === 0 ? <img src={NoResultFiltaration} className={StudentDetailsStyles['no-result']} alt="no-result" /> : <table className={StudentDetailsStyles['student-session-info-table']}>
               <thead>
                 <tr>
                   <th>Attendance</th>
+                  <th>Current Evaluation</th>
+                  <th>Notes</th>
+                  <th>Instructor</th>
                   <th>Created At</th>
                 </tr>
               </thead>
               <tbody>
-                {specificStudentJoiningRequestData.sessions !== null && specificStudentJoiningRequestData.sessions !== undefined?
-                specificStudentJoiningRequestData.sessions.map((session)=>(
-                  <tr key={session._id} id={session._id}>
+                {studentSessionsDetails !== null && studentSessionsDetails !== undefined?
+                studentSessionsDetails.map((session)=>(
+                  <tr key={session._id} id={session._id}
+                  onClick={(event) => {
+                    handlerRowClicked(event);
+                }}
+                style={{
+                    background:
+                        selectedRow === session._id ? "#038674" : "",
+                    color: selectedRow === session._id ? "#FFFFFF" : "",
+                    boxShadow:
+                        selectedRow === session._id
+                            ? `rgba(0, 0, 0, 0.2) 0 6px 20px 0 rgba(0, 0, 0, 0.19)`
+                            : "",
+                }}>
                     {session.attendants.length !== 0 && session.attendants !== null && session.attendants !== undefined?<td>
-                    {session.attendants.find((studentId)=> specificStudentJoiningRequestData._id === studentId) !== undefined?<img src={Present} alt="attendance" style={{display:'block',margin:'auto',width:'10%'}}/>:<img src={absence}  alt="absence" style={{display:'block',margin:'auto',width:'10%'}} />}
-                    </td>:session.attendants.length === 0?<td><img src={absence}  alt="absence" style={{display:'block',margin:'auto',width:'10%'}}/></td>:<td>{"ff "}</td>}
-                     <td>{session.created_at.split("T")[0]}</td>
+                    {session.attendants.find((studentId)=> specificStudentJoiningRequestData._id === studentId) !== undefined?<img src={Present} alt="attendance" style={{display:'block',margin:'auto',width:'40px'}}/>:<img src={absence}  alt="absence" style={{display:'block',margin:'auto',width:'30px'}} />}
+                    </td>:session.attendants.length === 0?<td><img src={absence}  alt="absence" style={{display:'block',margin:'auto',width:'30px'}}/></td>:<td>{"ff "}</td>}
+                     {session.attendants.find((studentId)=> specificStudentJoiningRequestData._id === studentId) !== undefined?
+                     session.evaluations !== undefined?session.evaluations.map((ev)=>(
+                      <>
+                      <td>{ev.current_eval}</td>
+                      <td>{ev.notes}</td>
+                      </>
+                      )):null:<><td>{""}</td>{""}<td></td></>}
+                    <td>{session.created_by.name}</td>
+                    <td>{session.created_at.split("T")[0]}{" "}{" "}{session.created_at.split("T")[1]}</td>
                     </tr>
                 )):null}
               </tbody>

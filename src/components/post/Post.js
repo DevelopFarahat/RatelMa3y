@@ -18,17 +18,8 @@ const Post = (props) => {
 
   //  Privacy and Security
   return (
-    <Link
-      to={`/events/${props.post._id}`}
-      state={props.post}
-      className={PostStyles["read-more"]}
-      style={{
-        cursor: "auto",
-        textDecoration: "none",
-        width: "100%",
-        backgroundImage: "linear-gradient(to left,#f9f9f9, #ffffff)",
-      }}
-    >
+    <>
+      {console.log()}
       {props.post._id === props.latestPost._id
         ? (props.post.latest = true)
         : null}
@@ -36,37 +27,28 @@ const Post = (props) => {
         <img
           src={props.post.article_img}
           className={`${PostStyles["post-image"]}`}
-          style={{
-            cursor: "pointer",
-          }}
           alt="dd"
         />
-        <div style={{ minHeight: "100%" }}>
-          <h3
-            className={PostStyles["post-header"]}
-            style={{
-              cursor: "pointer",
-            }}
-          >
-            {props.post.title}
-          </h3>
+        <div>
+          <h3 className={PostStyles["post-header"]}>{props.post.title}</h3>
           {props.post.content.split(" ").length > 63 ? (
-            <span
-              className={PostStyles["post-details"]}
-              style={{
-                cursor: "pointer",
-                height: 200
-              }}
-            >
+            <p className={PostStyles["post-details"]}>
               {props.post.content.substring(0, 374)}
-            </span>
+              <Link
+                to={`/events/${props.post._id}`}
+                state={props.post}
+                className={PostStyles["read-more"]}
+              >
+                Read More....
+              </Link>
+            </p>
           ) : (
             <p className={PostStyles["post-details"]}>{props.post.content}</p>
           )}
 
           <span className={PostStyles["post-date"]}>
             <BsCalendarDate size={15} style={{ marginBottom: "4px" }} />{" "}
-            {dateClearified}
+            {props.post.date}
           </span>
         </div>
         {props.latestPost._id === props.post._id ? (
@@ -76,7 +58,7 @@ const Post = (props) => {
           </span>
         ) : null}
       </div>
-    </Link>
+    </>
   );
 };
 export default Post;

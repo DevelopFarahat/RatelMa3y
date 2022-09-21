@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import AddPostStyles from "./AddPost.module.css";
+import Spinner from 'react-bootstrap/Spinner';
 import Form from "react-bootstrap/Form";
 import { RiFolder5Fill } from "react-icons/ri";
 import { MdOutlineClear } from "react-icons/md";
@@ -19,6 +20,7 @@ const AddPost = () => {
   const [postImage, setPostImage] = useState("");
   const [isUserMadeAPost, setIsUserMadeAPost] = useState(false);
   const [isThereAnyFormFieldEmpty, setIsThereAnyFormFieldEmpty] = useState(false);
+  const [isThereAnyPostIsUploading,setIsThereAnyPostIsUploading] = useState(false);
   const [error, setError] = useState({
     imgError: "",
     titleError: "",
@@ -51,6 +53,7 @@ const AddPost = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    setIsThereAnyPostIsUploading(true)
 
     if (!img) return console.error("No image selected");
 
@@ -64,13 +67,15 @@ const AddPost = () => {
     };
 
     function uploadImage(img) {
-
+     // console.log(img);
       let cc = {
         article_img: img,
         content: postData.content,
         title: postData.title,
-        lang: "ar"
+        lang:postData.lang,
+         //date:new Date().toLocaleString('en-US', { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })
       };
+      console.log(cc);
 
       //Upload on the server
 
@@ -83,7 +88,11 @@ const AddPost = () => {
         axios
           .post("http://localhost:5000/api/events", cc)
           .then((res) => {
+            setIsThereAnyPostIsUploading(false);
             setIsUserMadeAPost(true);
+            setTimeout(()=>{
+              setIsUserMadeAPost(false);
+            },1000);
             setPostData({
               title: "",
               content: "",
@@ -155,6 +164,7 @@ const AddPost = () => {
         className={AddPostStyles["add-post-main-container"]}
         onSubmit={handleSubmit}
         encType="multipart/form-data"
+        method="post"
       >
         <div className={AddPostStyles["image-posting-settings-container"]}>
           <Form.Label htmlFor="postImage">Post Image</Form.Label>
@@ -234,7 +244,15 @@ const AddPost = () => {
         </div>
         <div className={AddPostStyles["posting-button-container"]}>
           <button type="submit" className={AddPostStyles["btn"]}>
-            Post <BsFillFileEarmarkPostFill size={15} />
+                    {isThereAnyPostIsUploading?<>
+                    <Spinner animation="grow" variant="light" style={{width:'10px',height:'10px',marginLeft:'3px'}} />
+                    <Spinner animation="grow" variant="light" style={{width:'10px',height:'10px',marginLeft:'3px'}} />
+                    <Spinner animation="grow" variant="light" style={{width:'10px',height:'10px',marginLeft:'3px'}} />
+                    <Spinner animation="grow" variant="light" style={{width:'10px',height:'10px',marginLeft:'3px'}} />
+                    <Spinner animation="grow" variant="light" style={{width:'10px',height:'10px',marginLeft:'3px'}} />
+                    <Spinner animation="grow" variant="light" style={{width:'10px',height:'10px',marginLeft:'3px'}} />
+                    </>:<>Post<BsFillFileEarmarkPostFill size={15} /></>
+                    }
           </button>
         </div>
       </form>

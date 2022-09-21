@@ -143,7 +143,7 @@ const StudentRegistrationForm = () => {
   ];
   const handleFormSteps = (event) => {
     event.preventDefault();
-    event.target.id === "firstStep"
+    event.currentTarget.id === "firstStep"
       ? setStudentRegistrationFormSteps({
           firstStep: true,
           secondStep: false,
@@ -151,7 +151,7 @@ const StudentRegistrationForm = () => {
           fourStep: false,
           fiveStep: false,
         })
-      : event.target.id === "secondStep"
+      : event.currentTarget.id === "secondStep"
       ? setStudentRegistrationFormSteps({
           firstStep: false,
           secondStep: true,
@@ -159,7 +159,7 @@ const StudentRegistrationForm = () => {
           fourStep: false,
           fiveStep: false,
         })
-      : event.target.id === "thirdStep"
+      : event.currentTarget.id === "thirdStep"
       ? setStudentRegistrationFormSteps({
           firstStep: false,
           secondStep: false,
@@ -167,7 +167,7 @@ const StudentRegistrationForm = () => {
           fourStep: false,
           fiveStep: false,
         })
-      : event.target.id === "firstStepPrevious"
+      : event.currentTarget.id === "firstStepPrevious"
       ? setStudentRegistrationFormSteps({
           firstStep: true,
           secondStep: false,
@@ -175,7 +175,7 @@ const StudentRegistrationForm = () => {
           fourStep: false,
           fiveStep: false,
         })
-      : event.target.id === "secondStepPrevious"
+      : event.currentTarget.id === "secondStepPrevious"
       ? setStudentRegistrationFormSteps({
           firstStep: false,
           secondStep: true,
@@ -183,7 +183,7 @@ const StudentRegistrationForm = () => {
           fourStep: false,
           fiveStep: false,
         })
-      : event.target.id === "thirdStepPrevious"
+      : event.currentTarget.id === "thirdStepPrevious"
       ? setStudentRegistrationFormSteps({
           firstStep: false,
           secondStep: false,
@@ -191,7 +191,7 @@ const StudentRegistrationForm = () => {
           fourStep: false,
           fiveStep: false,
         })
-      : event.target.id === "fourStepPrevious"
+      : event.currentTarget.id === "fourStepPrevious"
       ? setStudentRegistrationFormSteps({
           firstStep: false,
           secondStep: false,
@@ -199,7 +199,7 @@ const StudentRegistrationForm = () => {
           fourStep: true,
           fiveStep: false,
         })
-      : event.target.id === "fourStep"
+      : event.currentTarget.id === "fourStep"
       ? setStudentRegistrationFormSteps({
           firstStep: false,
           secondStep: false,

@@ -41,6 +41,12 @@
 .student-form > div:first-child+div{
     padding: 0 20px 0 20px;
 }
+.student-form > div:first-child+div> div > label{
+  font-family: 'Times New Roman', Times, serif;
+  text-transform:capitalize;
+  font-size: 1rem;
+  color: #040000;
+}
 .step-5-container{
 
     padding:0 !important;
@@ -103,6 +109,12 @@
     padding: 10px;
     text-align: center;
   
+  }
+  .days-check-box-container > div > label , .hours-check-box-container >  div > label{
+    font-family: 'Times New Roman', Times, serif;
+    text-transform:capitalize;
+    font-size: 1rem;
+    color: #040000;
   }
   .programs-check-box-container > div{
 
