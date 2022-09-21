@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { FaHeadphones } from "react-icons/fa";
@@ -17,29 +17,33 @@ const initialValues = {
   phone: "",
   content: "",
 };
-const validate = (values) => {
-  let errors = {};
-  if (!values.userName) {
-    errors.userName = "Required";
-  } else if (!/^(?:[A-Z]{2,15} ?\b){2,4}$/i.test(values.userName)) {
-    errors.userName = "Invalid user name";
-  }
-  /*************************************/
-  if (!values.email) {
-    errors.email = "Required";
-  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9._]+\.[A-Z]{2,4}$/i.test(values.email)) {
-    errors.email = "Invalid email format";
-  }
-  /*************************************/
-  if (!values.phone) {
-    errors.phone = "Required";
-  } else if (!/^[0-9]*$/i.test(values.phone)) {
-    errors.phone = "Invalid phone number!";
-  }
-  return errors;
-};
 
 function ContactUs() {
+
+  const validate = (values) => {
+    let errors = {};
+    if (!values.userName) {
+      errors.userName = t("keepintouch_required");
+    } else if (!/^(?:[A-Z]{2,15} ?\b){2,4}$/i.test(values.userName)) {
+      errors.userName = t("keepintouch_invalid_username");
+    }
+    /*************************************/
+    if (!values.email) {
+      errors.email = t("keepintouch_required");
+    } else if (
+      !/^[A-Z0-9._%+-]+@[A-Z0-9._]+\.[A-Z]{2,4}$/i.test(values.email)
+    ) {
+      errors.email = t("keepintouch_invalid_email");
+    }
+    /*************************************/
+    if (!values.phone) {
+      errors.phone = t("keepintouch_required");
+    } else if (!/^[0-9]*$/i.test(values.phone)) {
+      errors.phone = t("keepintouch_invalid_phone");
+    }
+    return errors;
+  };
+
   const onSubmit = (values, { resetForm }) => {
     axios
       .post("http://localhost:5000/api/contacts", {
@@ -57,8 +61,14 @@ function ContactUs() {
     resetForm();
   };
 
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  const [isArabic, setIsArabic] = useState(false);
   const [t, i18n] = useTranslation();
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  
+  useEffect(() => {
+    setIsArabic(localStorage.getItem("i18nextLng") === "ar");
+  }, [localStorage.getItem("i18nextLng")]);
+
   const formik = useFormik({
     initialValues,
     onSubmit,
@@ -67,7 +77,7 @@ function ContactUs() {
   return (
     <div className={ContctUsCss.contact}>
       <div className={ContctUsCss.innercontact}>
-        <Container>
+        <Container style={{direction: isArabic? 'rtl':'ltr'}}>
           <FaHeadphones className={ContctUsCss.contacticon} />
           <h2>{t("contactus_title")}</h2>
           <p className="lead">{t("contactus_text")}</p>
@@ -78,7 +88,7 @@ function ContactUs() {
                   <Form.Control
                     type="text"
                     name="userName"
-                    placeholder="Enter user name"
+                    placeholder={t("keepintouch_hint_username")}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     value={formik.values.userName}
@@ -91,7 +101,7 @@ function ContactUs() {
                   <Form.Control
                     type="email"
                     name="email"
-                    placeholder="Enter your email"
+                    placeholder={t("keepintouch_hint_email")}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     value={formik.values.email}
@@ -104,7 +114,7 @@ function ContactUs() {
                   <Form.Control
                     type="number"
                     name="phone"
-                    placeholder="Enter phone: +20 xxxxxxx"
+                    placeholder={t("keepintouch_hint_number")}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     value={formik.values.phone}
@@ -122,7 +132,7 @@ function ContactUs() {
                   <Form.Control
                     as="textarea"
                     name="content"
-                    placeholder="Your Message"
+                    placeholder={t("keepintouch_hint_msg")}
                     rows={4}
                   />
                 </Form.Group>

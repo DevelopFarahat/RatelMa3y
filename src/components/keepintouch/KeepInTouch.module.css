@@ -17,16 +17,16 @@
   justify-content: center;
 }
 .keepin input {
-  border-radius: 0;
+  border-radius: 8px 0px 0px 8px ;
   margin-right: -5px;
   font-size: 20px;
-  width: 265px;
+  width: fit-content;
 }
 .keepin button {
   height: 44px;
-  border-radius: 0;
-  font-size: 20px;
-  padding: 4px;
+  border-radius: 0px 8px 8px 0px;
+  font-size: 18px;
+  padding: 4px 12px;
 }
 .keepin button:focus,
 .keepin input:focus {

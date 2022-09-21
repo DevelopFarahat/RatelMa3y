@@ -7,8 +7,9 @@ import { FaUnlockAlt } from "react-icons/fa";
 
 const validatepass = RegExp(/^\w{8,}$/);
 
-function Changepassword({ user, setUser }) {
+function Changepassword({ user ,t }) {
   const { enqueueSnackbar } = useSnackbar();
+  let isArabic = t('us') !=='Us'
 
   return (
     <Formik
@@ -50,7 +51,7 @@ function Changepassword({ user, setUser }) {
       {() => {
         return (
           <>
-            <div className="container">
+            <div className="container" style={{direction: isArabic? 'rtl':'ltr'}}>
               <div
                 className="divspace"
                 style={{
@@ -60,22 +61,22 @@ function Changepassword({ user, setUser }) {
                   borderRadius: 16,
                 }}
               >
-                <h2 style={{ marginLeft: 16, marginBottom: 24 }}>
-                  <FaUnlockAlt style={{ marginRight: 16 }} />
-                  Change Password
+                <h2 style={{ marginLeft:isArabic?0: 16,marginRight:isArabic? 16:0, marginBottom: 24 }}>
+                  <FaUnlockAlt style={{ marginRight: isArabic? 0: 16,marginLeft:isArabic?16: 0 }} />
+                  {t('change_pass')}
                 </h2>
               </div>
               <Form className="formsec">
                 <div className="container  d-flex justify-content-center row mb-3">
                   {/* //start */}
                   <div className="mb-3">
-                    <label className="form-label">Password</label>
+                    <label className="form-label">{t('pass')}</label>
                     <Field
                       required
                       name="password"
                       type="password"
                       className="form-control"
-                      placeholder="password"
+                      placeholder={t('pass')}
                     ></Field>
                     <div style={{ color: "red" }}>
                       <ErrorMessage name="password" />
@@ -83,13 +84,13 @@ function Changepassword({ user, setUser }) {
                   </div>
                   <br />
                   <div className="mb-3">
-                    <label className="form-label">New Password</label>
+                    <label className="form-label">{t('new_pass')}</label>
                     <Field
                       required
                       name="newpassword"
                       type="password"
                       className="form-control"
-                      placeholder="new password"
+                      placeholder={t('new_pass')}
                     ></Field>
                     <div style={{ color: "red" }}>
                       <ErrorMessage name="newpassword" />
@@ -97,13 +98,13 @@ function Changepassword({ user, setUser }) {
                   </div>
                   <br />
                   <div className="mb-3">
-                    <label className="form-label">Confirm Password</label>
+                    <label className="form-label">{t('confirm_pass')}</label>
                     <Field
                       required
                       name="confirmpass"
                       type="password"
                       className="form-control"
-                      placeholder="confirm password"
+                      placeholder={t('confirm_pass')}
                     ></Field>
                     <div style={{ color: "red" }}>
                       <ErrorMessage name="confirmpass" />
@@ -114,7 +115,7 @@ function Changepassword({ user, setUser }) {
                   <div className="mb-3">
                     <button type="submit" className="btn btn-success">
                       {" "}
-                      Change Password{" "}
+                      {t('change_pass')}{" "}
                     </button>
                   </div>
                 </div>

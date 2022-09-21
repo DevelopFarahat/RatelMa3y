@@ -4,9 +4,11 @@ import PostStyles from "./Post.module.css";
 import { BsPersonFill } from "react-icons/bs";
 import { BsCalendarDate } from "react-icons/bs";
 import {TbUrgent} from "react-icons/tb";
+import { useTranslation } from "react-i18next";
    //
 const Post = (props) => {
 
+  const {t} = useTranslation()
   let date = new Date(props.post.date);
   let dateClearified = date.toLocaleString("default", {
     day: "numeric",
@@ -69,7 +71,7 @@ const Post = (props) => {
         </div>
         {props.latestPost._id === props.post._id ? (
           <span className={PostStyles["latest-post"]}>
-            {"Latest"}
+            {t('events_latest')}
             <TbUrgent style={{ marginBottom: "5px" }} />
           </span>
         ) : null}

@@ -8,22 +8,22 @@ import axios from "axios";
 
 function KeepInTuch() {
   const [t, i18n] = useTranslation();
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  const { enqueueSnackbar } = useSnackbar();
   const [ email , setEmail] = useState('')
 
   function confirm(){
-    axios.post('http://localhost:5000/api/events/subscripe ',{email: email}).then(()=>
-    enqueueSnackbar("We will keep you in touch",{variant: 'success'})
+    axios.post('http://localhost:5000/api/events/subscripe_request ',{email: email}).then(()=>
+    enqueueSnackbar("Check your email inbox to confirm.",{variant: 'info'})
      ).catch((err)=> console.error(err))
   }
   return (
     <div className={KeepCss.keepin}>
       <h2>{t("keepintouch_title")}</h2>   
-      <h4>Sign Up For Newsletter Don't Worry About Spam We Hate It Too</h4>
+      <h4>{t("keepintouch_texttitle")}</h4>
       <div className={KeepCss.keepinput}>
         <Form>
           <Form.Group className='mb-3' controlId='formBasicEmail'>
-            <Form.Control type='email' placeholder='Enter email' onChange={(e)=>setEmail(e.target.value)}/>
+            <Form.Control type='email' placeholder={t('keepintouch_hint_email')} onChange={(e)=>setEmail(e.target.value)}/>
           </Form.Group>
           <Button variant='danger' onClick={confirm}>{t("keepintouch_subscribe")}</Button>{" "}
         </Form>

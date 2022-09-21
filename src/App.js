@@ -40,9 +40,9 @@ function App() {
   }, [localStorage.getItem("i18nextLng")]);
 
   const styles = {
-    body: {
-      // direction: isArabic ? "rtl" : "ltr",
-    },
+    // body: {
+    //   // direction: isArabic ? "rtl" : "ltr",
+    // },
     hideableDiv: {
       display: hideMain ? "none" : "block",
     },
@@ -154,7 +154,6 @@ const PrivateRoutes = (props) => {
 
   let decoded = auth.split(".")[1];
   let { role, privileges } = JSON.parse(atob(decoded));
-  console.log("role", role, "p", privileges);
 
   if ("roleRequired" in props || "privilegesRequired" in props)
     if (

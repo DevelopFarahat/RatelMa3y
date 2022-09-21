@@ -41,28 +41,28 @@ function Footer(props) {
               </div>
             </Col>
             <Col>
-              <h4>Home page</h4>
+              <h4>{t('footer_homepage')}</h4>
               <Link className={FooterCss.link} to={"/home"}>
-                <span className={FooterCss.hoverable}>Home</span>
+                <span className={FooterCss.hoverable}>{t('footer_home')}</span>
               </Link>
               <Link className={FooterCss.link} to={"/events"}>
-                <span className={FooterCss.hoverable}>Events</span>
+                <span className={FooterCss.hoverable}>{t('footer_events')}</span>
               </Link>
               <Link className={FooterCss.link} to={"/about"}>
-                <span className={FooterCss.hoverable}>About us</span>
+                <span className={FooterCss.hoverable}>{t('footer_aboutus')}</span>
               </Link>
               <Link className={FooterCss.link} to={"/contact"}>
-                <span className={FooterCss.hoverable}>Contact us</span>
+                <span className={FooterCss.hoverable}>{t('footer_contactus')}</span>
               </Link>
             </Col>
             <Col>
-              <h4>Enrollment system</h4>
+              <h4>{t('footer_enrollmentsystem')}</h4>
               <br/> 
               <Link className={FooterCss.link} to={"/login"}>
-                <span className={FooterCss.hoverable}>Login</span>
+                <span className={FooterCss.hoverable}>{t('footer_login')}</span>
               </Link>
               <Link className={FooterCss.link} to={"/register"}>
-                <span className={FooterCss.hoverable}>Register</span>
+                <span className={FooterCss.hoverable}>{t('footer_registration')}</span>
               </Link>
             </Col>
           </Row>

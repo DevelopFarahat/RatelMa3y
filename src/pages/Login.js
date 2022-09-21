@@ -8,26 +8,14 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import UserContext from "../utils/UserContext";
 import { useSnackbar } from "notistack";
+import { useTranslation } from "react-i18next";
 
 export default function Login() {
 
   const navigate = useNavigate();
   const { setUser } = useContext(UserContext);
+  const { t } = useTranslation()
   const { enqueueSnackbar } = useSnackbar();
-
-  // useEffect(() => {
-  //   setIsLoading(false);
-  //   return () => {
-  //     console.log('Unmounted')
-  //     setIsLoading(true);
-  //   };
-  // }, []);
-
-  //TODO: not working properly for a reason
-  // //if user is already logged in redirect to home
-  // useEffect(()=>{
-  //   if(!user) navigate('../home')
-  // },[])
 
   const initialValues = {
     email: "",
@@ -50,23 +38,23 @@ export default function Login() {
 
           setUser(res.data);
           navigate("../home", { replace: true });
-        } else return enqueueSnackbar("Incorrect email or password");
+        } else return enqueueSnackbar(t('login_error_incorrect'));
       })
-      .catch((err) => enqueueSnackbar("Incorrect email or password"));
+      .catch(() => enqueueSnackbar(t('login_error_incorrect')));
   };
   const validate = (values) => {
     let errors = {};
     /*************************************/
     if (!values.email) {
-      errors.email = "Required";
+      errors.email = t('keepintouch_required');
     } else if (
       !/^[A-Z0-9._%+-]+@[A-Z0-9._]+\.[A-Z]{2,4}$/i.test(values.email)
     ) {
-      errors.email = "Invalid email format";
+      errors.email = t('keepintouch_invalid_email');
     }
     /*************************************/
     if (!values.password) {
-      errors.password = "Required";
+      errors.password = t('keepintouch_required');
     }
   };
 
@@ -76,7 +64,6 @@ export default function Login() {
     validate,
   });
 
-  //TODO: validation is fired early whenever I write one letter in any of fields
   return (
     <>
       <div
@@ -98,13 +85,13 @@ export default function Login() {
             margin: "auto",
           }}
         >
-          <h3 className="mb-4">Login your account</h3>
+          <h3 className="mb-4">{t('login_title')}</h3>
           <InputGroup className="mb-2">
             <InputGroup.Text>
               <IoMdMail />
             </InputGroup.Text>
             <Form.Control
-              placeholder="Email"
+              placeholder={t('login_email')}
               type="email"
               name="email"
               onChange={formik.handleChange}
@@ -124,7 +111,7 @@ export default function Login() {
               <AiFillLock />
             </InputGroup.Text>
             <Form.Control
-              placeholder="Password"
+              placeholder={t('login_password')}
               name="password"
               type="password"
               onChange={formik.handleChange}
@@ -141,7 +128,7 @@ export default function Login() {
 
           <div className="d-grid gap-2">
             <Button type="submit" variant="success" className="mb-4" size="lg">
-              Log in
+            {t('login_button')}
             </Button>
           </div>
 
@@ -150,10 +137,10 @@ export default function Login() {
             style={{ justifyContent: "space-between", display: "flex" }}
           >
             <Link to="/forgot-password" className="text-dark fw-700">
-              Forgot your password?
+            {t('login_forgot')}
             </Link>
             <Link to="/register">
-              <Button variant="outline-success">Register new account</Button>
+              <Button variant="outline-success">{t('login_register')}</Button>
             </Link>
           </div>
         </Form>

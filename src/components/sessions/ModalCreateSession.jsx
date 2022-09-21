@@ -8,10 +8,12 @@ import axios from "axios";
 import { useContext } from "react";
 import UserContext from "../../utils/UserContext";
 import { useSnackbar } from "notistack";
+import { useTranslation } from "react-i18next";
 
 export default function ModalCreateSession(props) {
   //TODO: make participants accessable from above to have the ability to remove any student later
 
+  const { t } = useTranslation();
   const [options, setOptions] = useState([]); //For the dropdown
   const [participants, setParticipants] = useState([]);
   const [isExam, setIsExam] = useState(false);
@@ -118,24 +120,26 @@ export default function ModalCreateSession(props) {
 
   return (
     <Modal
+    style={{direction: props.isArabic? "rtl":'ltr'}}
       {...props}
       size="lg"
       aria-labelledby="contained-modal-title-vcenter"
       centered
     >
-      <Modal.Header closeButton>
+      <Modal.Header>
         <Modal.Title id="contained-modal-title-vcenter">
-          Create New Session
+          {t("sessions_select_title")}
         </Modal.Title>
       </Modal.Header>
-      <Modal.Body>
+      <Modal.Body style={{ direction: props.isArabic ? "rtl" : "ltr" }}>
         <h4></h4>
-        <p>Choose participants who can join see the session</p>
+        <p>{t("sessions_select_info")}</p>
 
         <Select
           options={options}
           onChange={handleChange}
           isMulti
+          placeholder={t("sessions_select")}
           styles={dropdownColorStyles}
         />
 
@@ -160,14 +164,14 @@ export default function ModalCreateSession(props) {
 
       <Modal.Footer>
         <Button onClick={props.onHide} className="btn-secondary">
-          Close
+          {t("sessions_close")}
         </Button>
         <Button
           onClick={createSession}
           vatiant="success"
           className={"btn-success"}
         >
-          Create
+          {t("sessions_create_room")}
         </Button>
       </Modal.Footer>
     </Modal>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ContactCss from "./Contact.module.css";
 import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
@@ -14,33 +14,38 @@ const initialValues = {
   phone: "",
   message: "",
 };
-const validate = (values) => {
-  let errors = {};
-  if (!values.userName) {
-    errors.userName = "Required";
-  } else if (!/^(?:[A-Z]{2,15} ?\b){2,4}$/i.test(values.userName)) {
-    errors.userName = "Please enter your first and last names";
-  }
-  /*************************************/
-  if (!values.email) {
-    errors.email = "Required";
-  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9._]+\.[A-Z]{2,4}$/i.test(values.email)) {
-    errors.email = "Invalid email format";
-  }
-  /*************************************/
-  if (!values.phone) {
-    errors.phone = "Required";
-  } else if (!/^[0-9]*$/i.test(values.phone)) {
-    errors.phone = "Invalid phone number!";
-  }
-  /*************************************/
-  if (!values.message) {
-    errors.message = "Required";
-  }
-  return errors;
-};
 
 function Contact() {
+  const { t } = useTranslation();
+
+  const validate = (values) => {
+    let errors = {};
+    if (!values.userName) {
+      errors.userName = t('keepintouch_required');
+    } else if (!/^(?:[A-Z]{2,15} ?\b){2,4}$/i.test(values.userName)) {
+      errors.userName = t('keepintouch_invalid_username')
+    }
+    /*************************************/
+    if (!values.email) {
+      errors.email = t('keepintouch_required');
+    } else if (
+      !/^[A-Z0-9._%+-]+@[A-Z0-9._]+\.[A-Z]{2,4}$/i.test(values.email)
+    ) {
+      errors.email = t('keepintouch_invalid_email')
+    }
+    /*************************************/
+    if (!values.phone) {
+      errors.phone = t('keepintouch_required');
+    } else if (!/^[0-9]*$/i.test(values.phone)) {
+      errors.phone = t('keepintouch_invalid_number')
+    }
+    /*************************************/
+    if (!values.message) {
+      errors.message = t('keepintouch_required');
+    }
+    return errors;
+  };
+
   const onSubmit = (values, { resetForm }) => {
     axios
       .post("http://localhost:5000/api/contacts", {
@@ -57,8 +62,8 @@ function Contact() {
       });
   };
 
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-  const [t, i18n] = useTranslation();
+  const { enqueueSnackbar } = useSnackbar();
+
   const formik = useFormik({
     initialValues,
     onSubmit,
@@ -66,7 +71,10 @@ function Contact() {
   });
 
   return (
-    <div className={ContactCss.contact}>
+    <div
+      className={ContactCss.contact}
+      style={{ direction: t("us") === "Us" ? "ltr" : "rtl" }}
+    >
       <Container>
         <h2>
           <span>{t("contact")}</span> {t("us")}
@@ -76,7 +84,7 @@ function Contact() {
             <Form.Control
               type="text"
               name="userName"
-              placeholder="Enter full name"
+              placeholder={t("keepintouch_hint_username")}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.userName}
@@ -89,7 +97,7 @@ function Contact() {
             <Form.Control
               type="email"
               name="email"
-              placeholder="Enter your email"
+              placeholder={t("keepintouch_hint_email")}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.email}
@@ -102,7 +110,7 @@ function Contact() {
             <Form.Control
               type="number"
               name="phone"
-              placeholder="Enter phone: +20 xxxxxxx"
+              placeholder={t("keepintouch_hint_number")}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.phone}
@@ -115,7 +123,7 @@ function Contact() {
             <Form.Control
               as="textarea"
               name="message"
-              placeholder="Say some thing"
+              placeholder={t("contactus_hint_say_something")}
               rows={4}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}

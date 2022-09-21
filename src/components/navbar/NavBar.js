@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState,useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
@@ -25,12 +25,17 @@ function NavBar({ i18n, isRoomPrepared }) {
 
   const navigate = useNavigate();
   const { user, setUser } = useContext(UserContext);
+  const [isArabic, setIsArabic] = useState(false);
 
   async function logout() {
     setUser(null);
     localStorage.clear();
     navigate("../../home", { replace: true });
   }
+
+  useEffect(() => {
+    setIsArabic(localStorage.getItem("i18nextLng") === "ar");
+  }, [localStorage.getItem("i18nextLng")]);
 
   return (
     <Navbar
@@ -98,7 +103,7 @@ function NavBar({ i18n, isRoomPrepared }) {
               style={{ margin: 16, fontWeight: 500 }}
             >
               <NavDropdown.Item onClick={() => navigate("/account")}>
-                Account Info
+               {t('navbar_account')}
               </NavDropdown.Item>
 
               <NavDropdown.Divider />
@@ -113,15 +118,14 @@ function NavBar({ i18n, isRoomPrepared }) {
               </Button>
             </Link>
           )}
-          {false && (
             <Button
               className={NavCss.button}
               variant="outline-success"
               onClick={(e) => changeLang(e)}
             >
-              en
+              {isArabic? "en": "ar"}
             </Button>
-          )}
+          
         </Navbar.Collapse>
       </Container>
     </Navbar>

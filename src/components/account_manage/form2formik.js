@@ -9,8 +9,9 @@ const validateEmail = RegExp(/^\w+@\w+.(com|net|org)$/i);
 const validateAge = RegExp(/^([5-9]|[1-5]\d|60)$/);
 
 const validatemobile = RegExp(/^[+](2011|2012|2015|2010)[\d]{7,}$/);
-function Formikform({ user, setUser }) {
+function Formikform({ user, setUser, t }) {
   const { enqueueSnackbar } = useSnackbar();
+  let isArabic = t('us') !=='Us'
 
   return (
     <Formik
@@ -48,7 +49,6 @@ function Formikform({ user, setUser }) {
       }}
       onSubmit={(values) => {
         delete values.subscription_state;
-        console.log(values);
 
         let field = user.role === "instructor" ? "instructors" : "students";
 
@@ -64,20 +64,20 @@ function Formikform({ user, setUser }) {
       {() => {
         return (
           <>
-            <div className={`container ${sty['form_size']}`}>
+            <div className={`container ${sty['form_size']}`} style={{direction: isArabic? 'rtl':'ltr'}}>
               <h2>
-                Manage Account
+                {t('navbar_account')}
               </h2>
               <Form className="formone">
                 <div className="containercol  d-flex justify-content-center row mb-3">
                   <div>
-                    <label className="form-label">Name </label>
+                    <label className="form-label">{t('name')}</label>
                     <Field
                       required
                       className="form-control"
                       name="name"
                       type="text"
-                      placeholder="name"
+                      placeholder={t('name')}
                     ></Field>
                   </div>
                   <br />
@@ -85,13 +85,13 @@ function Formikform({ user, setUser }) {
                     <ErrorMessage name="name" />
                   </div>
                   <div>
-                    <label className="form-label ">Age</label>
+                    <label className="form-label ">{t('age')}</label>
                     <Field
                       required
                       name="age"
                       type="number"
                       className="form-control"
-                      placeholder="age"
+                      placeholder={t('age')}
                     ></Field>
                   </div>
                   <br />
@@ -100,14 +100,14 @@ function Formikform({ user, setUser }) {
                   </div>
 
                   <div>
-                    <label className=" form-label">Email</label>
+                    <label className=" form-label">{t('email')}</label>
                     <Field
                       required
                       disabled
                       name="email"
                       type="email"
                       className="form-control"
-                      placeholder="email"
+                      placeholder={t('email')}
                     ></Field>
                   </div>
                   <br />
@@ -116,14 +116,14 @@ function Formikform({ user, setUser }) {
                     <div>
                       <div>
                         <label className=" form-label">
-                          Subscription State
+                        {t('studentsub_substate')}
                         </label>
                         <Field
                           disabled
                           name="subscription_state"
                           type="text"
                           className="form-control"
-                          placeholder="State"
+                          placeholder={t('studentsub_substate')}
                         ></Field>
                       </div>
                     </div>
@@ -132,13 +132,13 @@ function Formikform({ user, setUser }) {
                     <ErrorMessage name="email" />
                   </div>
                   <div>
-                    <label className="form-label">Mobile</label>
+                    <label className="form-label">{t('systemusers_mobile')}</label>
                     <Field
                       required
                       name="mobile"
                       type="text"
                       className="form-control"
-                      placeholder="mobile"
+                      placeholder={t('systemusers_mobile')}
                     ></Field>
                     <div style={{ color: "red" }}>
                       <ErrorMessage name="mobile" />
@@ -146,13 +146,13 @@ function Formikform({ user, setUser }) {
                   </div>
                   <br />
                   <div>
-                    <label className="form-label">State</label>
+                    <label className="form-label">{t('state')}</label>
                     <Field
                       required
                       name="state"
                       type="text"
                       className="form-control"
-                      placeholder="state"
+                      placeholder={t('state')}
                     ></Field>
                   </div>
                   <br />
@@ -160,17 +160,17 @@ function Formikform({ user, setUser }) {
                     <div>
                       {" "}
                       <label className="formcontrol mb-3 form-label">
-                        Gender
+                        {t('gender')}
                       </label>
                       <Field
                         required
                         name="gender"
                         component="select"
                         className="form-select"
-                        placeholder="select gender"
+                        placeholder={t('gender')}
                       >
-                        <option value="Male">Male</option>
-                        <option value="Female">Female</option>
+                        <option value="Male">{t('male')}</option>
+                        <option value="Female">{t('female')}</option>
                       </Field>
                     </div>
                     <div></div>
@@ -183,7 +183,7 @@ function Formikform({ user, setUser }) {
                       style={{ minWidth: 100 }}
                     >
                       {" "}
-                      Save{" "}
+                      {t('save')}{" "}
                     </button>
                   </div>
                 </div>

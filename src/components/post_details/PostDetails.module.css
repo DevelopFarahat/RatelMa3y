@@ -23,7 +23,7 @@
   margin: auto;
   text-align: center;
   text-transform: capitalize;
-  font-weight: bold;
+  /* font-weight: bold; */
   font-size: 1rem;
   position: relative;
   background-image: linear-gradient(to bottom,rgb(244, 244, 244),white);

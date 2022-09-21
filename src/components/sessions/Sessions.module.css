@@ -3,6 +3,7 @@
 .card {
   width: 80%;
   margin: 30px auto;
+  /* direction: rtl; */
 }
 .AccordionItem {
   margin: 0 -16px -16px -16px;

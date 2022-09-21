@@ -3,6 +3,7 @@ import axios from "axios";
 import { TiStarburst } from "react-icons/ti";
 import "./quran_board.css";
 import { Form  } from "react-bootstrap";
+import { useTranslation } from "react-i18next";
 
 const BookBoard = () => {
   let nameOfsurahQuran = [
@@ -318,13 +319,7 @@ const BookBoard = () => {
         surahPages[1][1] = 81;
 
         setSourahPages(surahPages);
-        /*
-        starterPage.splice(3, starterPage.length);
-        starterPage.splice(0, 1);
-        starterPage[0] = 42;
-        console.log(starterPage);
-        setStarterPage(starterPage);
-        */
+       
         break;
       case 5:
         nameOfsurahQuran.splice(4, nameOfsurahQuran.length);
@@ -339,13 +334,7 @@ const BookBoard = () => {
         surahPages[0][0] = 82;
         surahPages[0][1] = 101;
         setSourahPages(surahPages);
-        /*
-        starterPage.splice(3, starterPage.length);
-        starterPage.splice(0, 1);
-        starterPage[0] = 42;
-        console.log(starterPage);
-        setStarterPage(starterPage);
-        */
+       
         break;
       case 6:
         nameOfsurahQuran.splice(5, nameOfsurahQuran.length);
@@ -362,19 +351,7 @@ const BookBoard = () => {
 
         setSourahPages(surahPages);
         console.log(surahPages);
-        /*
-        surahPages.splice(3, surahPages.length);
-        surahPages.shift();
-        surahPages[0][0] = 42;
-        surahPages[0][1] = 49;
-        surahPages[1][1] = 62;
-        setSourahPages(surahPages);
-        starterPage.splice(3, starterPage.length);
-        starterPage.splice(0, 1);
-        starterPage[0] = 42;
-        console.log(starterPage);
-        setStarterPage(starterPage);
-        */
+       
         break;
       case 7:
         nameOfsurahQuran.splice(6, nameOfsurahQuran.length);
@@ -382,19 +359,7 @@ const BookBoard = () => {
         nameOfsurahQuran.splice(0, 4);
         console.log(nameOfsurahQuran);
         setSouarName(nameOfsurahQuran);
-        /*
-        surahPages.splice(3, surahPages.length);
-        surahPages.shift();
-        surahPages[0][0] = 42;
-        surahPages[0][1] = 49;
-        surahPages[1][1] = 62;
-        setSourahPages(surahPages);
-        starterPage.splice(3, starterPage.length);
-        starterPage.splice(0, 1);
-        starterPage[0] = 42;
-        console.log(starterPage);
-        setStarterPage(starterPage);
-        */
+       
         break;
       case 8:
         nameOfsurahQuran.splice(7, nameOfsurahQuran.length);
@@ -402,19 +367,7 @@ const BookBoard = () => {
         nameOfsurahQuran.splice(0, 5);
         console.log(nameOfsurahQuran);
         setSouarName(nameOfsurahQuran);
-        /*
-        surahPages.splice(3, surahPages.length);
-        surahPages.shift();
-        surahPages[0][0] = 42;
-        surahPages[0][1] = 49;
-        surahPages[1][1] = 62;
-        setSourahPages(surahPages);
-        starterPage.splice(3, starterPage.length);
-        starterPage.splice(0, 1);
-        starterPage[0] = 42;
-        console.log(starterPage);
-        setStarterPage(starterPage);
-        */
+       
         break;
       case 9:
         nameOfsurahQuran.splice(8, nameOfsurahQuran.length);
@@ -422,19 +375,7 @@ const BookBoard = () => {
         nameOfsurahQuran.splice(0, 6);
         console.log(nameOfsurahQuran);
         setSouarName(nameOfsurahQuran);
-        /*
-        surahPages.splice(3, surahPages.length);
-        surahPages.shift();
-        surahPages[0][0] = 42;
-        surahPages[0][1] = 49;
-        surahPages[1][1] = 62;
-        setSourahPages(surahPages);
-        starterPage.splice(3, starterPage.length);
-        starterPage.splice(0, 1);
-        starterPage[0] = 42;
-        console.log(starterPage);
-        setStarterPage(starterPage);
-        */
+       
         break;
       case 10:
         nameOfsurahQuran.splice(9, nameOfsurahQuran.length);
@@ -442,19 +383,7 @@ const BookBoard = () => {
         nameOfsurahQuran.splice(0, 7);
         console.log(nameOfsurahQuran);
         setSouarName(nameOfsurahQuran);
-        /*
-        surahPages.splice(3, surahPages.length);
-        surahPages.shift();
-        surahPages[0][0] = 42;
-        surahPages[0][1] = 49;
-        surahPages[1][1] = 62;
-        setSourahPages(surahPages);
-        starterPage.splice(3, starterPage.length);
-        starterPage.splice(0, 1);
-        starterPage[0] = 42;
-        console.log(starterPage);
-        setStarterPage(starterPage);
-        */
+       
         break;
       case 11:
         nameOfsurahQuran.splice(11, nameOfsurahQuran.length);
@@ -462,19 +391,7 @@ const BookBoard = () => {
         nameOfsurahQuran.splice(0, 8);
         console.log(nameOfsurahQuran);
         setSouarName(nameOfsurahQuran);
-        /*
-        surahPages.splice(3, surahPages.length);
-        surahPages.shift();
-        surahPages[0][0] = 42;
-        surahPages[0][1] = 49;
-        surahPages[1][1] = 62;
-        setSourahPages(surahPages);
-        starterPage.splice(3, starterPage.length);
-        starterPage.splice(0, 1);
-        starterPage[0] = 42;
-        console.log(starterPage);
-        setStarterPage(starterPage);
-        */
+       
         break;
       case 12:
         nameOfsurahQuran.splice(12, nameOfsurahQuran.length);
@@ -482,19 +399,7 @@ const BookBoard = () => {
         nameOfsurahQuran.splice(0, 10);
         console.log(nameOfsurahQuran);
         setSouarName(nameOfsurahQuran);
-        /*
-        surahPages.splice(3, surahPages.length);
-        surahPages.shift();
-        surahPages[0][0] = 42;
-        surahPages[0][1] = 49;
-        surahPages[1][1] = 62;
-        setSourahPages(surahPages);
-        starterPage.splice(3, starterPage.length);
-        starterPage.splice(0, 1);
-        starterPage[0] = 42;
-        console.log(starterPage);
-        setStarterPage(starterPage);
-        */
+       
         break;
       case 13:
         nameOfsurahQuran.splice(14, nameOfsurahQuran.length);
@@ -502,19 +407,7 @@ const BookBoard = () => {
         nameOfsurahQuran.splice(0, 11);
         console.log(nameOfsurahQuran);
         setSouarName(nameOfsurahQuran);
-        /*
-        surahPages.splice(3, surahPages.length);
-        surahPages.shift();
-        surahPages[0][0] = 42;
-        surahPages[0][1] = 49;
-        surahPages[1][1] = 62;
-        setSourahPages(surahPages);
-        starterPage.splice(3, starterPage.length);
-        starterPage.splice(0, 1);
-        starterPage[0] = 42;
-        console.log(starterPage);
-        setStarterPage(starterPage);
-        */
+       
         break;
       case 14:
         nameOfsurahQuran.splice(16, nameOfsurahQuran.length);
@@ -522,19 +415,7 @@ const BookBoard = () => {
         nameOfsurahQuran.splice(0, 14);
         console.log(nameOfsurahQuran);
         setSouarName(nameOfsurahQuran);
-        /*
-        surahPages.splice(3, surahPages.length);
-        surahPages.shift();
-        surahPages[0][0] = 42;
-        surahPages[0][1] = 49;
-        surahPages[1][1] = 62;
-        setSourahPages(surahPages);
-        starterPage.splice(3, starterPage.length);
-        starterPage.splice(0, 1);
-        starterPage[0] = 42;
-        console.log(starterPage);
-        setStarterPage(starterPage);
-        */
+       
         break;
       case 15:
         nameOfsurahQuran.splice(18, nameOfsurahQuran.length);
@@ -542,19 +423,7 @@ const BookBoard = () => {
         nameOfsurahQuran.splice(0, 16);
         console.log(nameOfsurahQuran);
         setSouarName(nameOfsurahQuran);
-        /*
-        surahPages.splice(3, surahPages.length);
-        surahPages.shift();
-        surahPages[0][0] = 42;
-        surahPages[0][1] = 49;
-        surahPages[1][1] = 62;
-        setSourahPages(surahPages);
-        starterPage.splice(3, starterPage.length);
-        starterPage.splice(0, 1);
-        starterPage[0] = 42;
-        console.log(starterPage);
-        setStarterPage(starterPage);
-        */
+       
         break;
       case 16:
         nameOfsurahQuran.splice(20, nameOfsurahQuran.length);
@@ -562,19 +431,7 @@ const BookBoard = () => {
         nameOfsurahQuran.splice(0, 17);
         console.log(nameOfsurahQuran);
         setSouarName(nameOfsurahQuran);
-        /*
-        surahPages.splice(3, surahPages.length);
-        surahPages.shift();
-        surahPages[0][0] = 42;
-        surahPages[0][1] = 49;
-        surahPages[1][1] = 62;
-        setSourahPages(surahPages);
-        starterPage.splice(3, starterPage.length);
-        starterPage.splice(0, 1);
-        starterPage[0] = 42;
-        console.log(starterPage);
-        setStarterPage(starterPage);
-        */
+       
         break;
       case 17:
         nameOfsurahQuran.splice(22, nameOfsurahQuran.length);
@@ -582,19 +439,7 @@ const BookBoard = () => {
         nameOfsurahQuran.splice(0, 20);
         console.log(nameOfsurahQuran);
         setSouarName(nameOfsurahQuran);
-        /*
-        surahPages.splice(3, surahPages.length);
-        surahPages.shift();
-        surahPages[0][0] = 42;
-        surahPages[0][1] = 49;
-        surahPages[1][1] = 62;
-        setSourahPages(surahPages);
-        starterPage.splice(3, starterPage.length);
-        starterPage.splice(0, 1);
-        starterPage[0] = 42;
-        console.log(starterPage);
-        setStarterPage(starterPage);
-        */
+       
         break;
       case 18:
         nameOfsurahQuran.splice(25, nameOfsurahQuran.length);
@@ -602,19 +447,7 @@ const BookBoard = () => {
         nameOfsurahQuran.splice(0, 22);
         console.log(nameOfsurahQuran);
         setSouarName(nameOfsurahQuran);
-        /*
-        surahPages.splice(3, surahPages.length);
-        surahPages.shift();
-        surahPages[0][0] = 42;
-        surahPages[0][1] = 49;
-        surahPages[1][1] = 62;
-        setSourahPages(surahPages);
-        starterPage.splice(3, starterPage.length);
-        starterPage.splice(0, 1);
-        starterPage[0] = 42;
-        console.log(starterPage);
-        setStarterPage(starterPage);
-        */
+       
         break;
       case 19:
         nameOfsurahQuran.splice(27, nameOfsurahQuran.length);
@@ -622,19 +455,7 @@ const BookBoard = () => {
         nameOfsurahQuran.splice(0, 24);
         console.log(nameOfsurahQuran);
         setSouarName(nameOfsurahQuran);
-        /*
-        surahPages.splice(3, surahPages.length);
-        surahPages.shift();
-        surahPages[0][0] = 42;
-        surahPages[0][1] = 49;
-        surahPages[1][1] = 62;
-        setSourahPages(surahPages);
-        starterPage.splice(3, starterPage.length);
-        starterPage.splice(0, 1);
-        starterPage[0] = 42;
-        console.log(starterPage);
-        setStarterPage(starterPage);
-        */
+       
         break;
       case 20:
         nameOfsurahQuran.splice(29, nameOfsurahQuran.length);
@@ -642,19 +463,7 @@ const BookBoard = () => {
         nameOfsurahQuran.splice(0, 26);
         console.log(nameOfsurahQuran);
         setSouarName(nameOfsurahQuran);
-        /*
-        surahPages.splice(3, surahPages.length);
-        surahPages.shift();
-        surahPages[0][0] = 42;
-        surahPages[0][1] = 49;
-        surahPages[1][1] = 62;
-        setSourahPages(surahPages);
-        starterPage.splice(3, starterPage.length);
-        starterPage.splice(0, 1);
-        starterPage[0] = 42;
-        console.log(starterPage);
-        setStarterPage(starterPage);
-        */
+       
         break;
       case 21:
         nameOfsurahQuran.splice(33, nameOfsurahQuran.length);
@@ -662,19 +471,7 @@ const BookBoard = () => {
         nameOfsurahQuran.splice(0, 28);
         console.log(nameOfsurahQuran);
         setSouarName(nameOfsurahQuran);
-        /*
-        surahPages.splice(3, surahPages.length);
-        surahPages.shift();
-        surahPages[0][0] = 42;
-        surahPages[0][1] = 49;
-        surahPages[1][1] = 62;
-        setSourahPages(surahPages);
-        starterPage.splice(3, starterPage.length);
-        starterPage.splice(0, 1);
-        starterPage[0] = 42;
-        console.log(starterPage);
-        setStarterPage(starterPage);
-        */
+       
         break;
       case 22:
         nameOfsurahQuran.splice(36, nameOfsurahQuran.length);
@@ -682,19 +479,7 @@ const BookBoard = () => {
         nameOfsurahQuran.splice(0, 32);
         console.log(nameOfsurahQuran);
         setSouarName(nameOfsurahQuran);
-        /*
-        surahPages.splice(3, surahPages.length);
-        surahPages.shift();
-        surahPages[0][0] = 42;
-        surahPages[0][1] = 49;
-        surahPages[1][1] = 62;
-        setSourahPages(surahPages);
-        starterPage.splice(3, starterPage.length);
-        starterPage.splice(0, 1);
-        starterPage[0] = 42;
-        console.log(starterPage);
-        setStarterPage(starterPage);
-        */
+       
         break;
       case 23:
         nameOfsurahQuran.splice(39, nameOfsurahQuran.length);
@@ -702,19 +487,7 @@ const BookBoard = () => {
         nameOfsurahQuran.splice(0, 35);
         console.log(nameOfsurahQuran);
         setSouarName(nameOfsurahQuran);
-        /*
-        surahPages.splice(3, surahPages.length);
-        surahPages.shift();
-        surahPages[0][0] = 42;
-        surahPages[0][1] = 49;
-        surahPages[1][1] = 62;
-        setSourahPages(surahPages);
-        starterPage.splice(3, starterPage.length);
-        starterPage.splice(0, 1);
-        starterPage[0] = 42;
-        console.log(starterPage);
-        setStarterPage(starterPage);
-        */
+       
         break;
       case 24:
         nameOfsurahQuran.splice(41, nameOfsurahQuran.length);
@@ -722,19 +495,7 @@ const BookBoard = () => {
         nameOfsurahQuran.splice(0, 38);
         console.log(nameOfsurahQuran);
         setSouarName(nameOfsurahQuran);
-        /*
-        surahPages.splice(3, surahPages.length);
-        surahPages.shift();
-        surahPages[0][0] = 42;
-        surahPages[0][1] = 49;
-        surahPages[1][1] = 62;
-        setSourahPages(surahPages);
-        starterPage.splice(3, starterPage.length);
-        starterPage.splice(0, 1);
-        starterPage[0] = 42;
-        console.log(starterPage);
-        setStarterPage(starterPage);
-        */
+       
         break;
       case 25:
         nameOfsurahQuran.splice(45, nameOfsurahQuran.length);
@@ -742,19 +503,7 @@ const BookBoard = () => {
         nameOfsurahQuran.splice(0, 40);
         console.log(nameOfsurahQuran);
         setSouarName(nameOfsurahQuran);
-        /*
-        surahPages.splice(3, surahPages.length);
-        surahPages.shift();
-        surahPages[0][0] = 42;
-        surahPages[0][1] = 49;
-        surahPages[1][1] = 62;
-        setSourahPages(surahPages);
-        starterPage.splice(3, starterPage.length);
-        starterPage.splice(0, 1);
-        starterPage[0] = 42;
-        console.log(starterPage);
-        setStarterPage(starterPage);
-        */
+       
         break;
       case 26:
         nameOfsurahQuran.splice(51, nameOfsurahQuran.length);
@@ -762,19 +511,7 @@ const BookBoard = () => {
         nameOfsurahQuran.splice(0, 45);
         console.log(nameOfsurahQuran);
         setSouarName(nameOfsurahQuran);
-        /*
-        surahPages.splice(3, surahPages.length);
-        surahPages.shift();
-        surahPages[0][0] = 42;
-        surahPages[0][1] = 49;
-        surahPages[1][1] = 62;
-        setSourahPages(surahPages);
-        starterPage.splice(3, starterPage.length);
-        starterPage.splice(0, 1);
-        starterPage[0] = 42;
-        console.log(starterPage);
-        setStarterPage(starterPage);
-        */
+       
         break;
       case 27:
         nameOfsurahQuran.splice(57, nameOfsurahQuran.length);
@@ -782,19 +519,7 @@ const BookBoard = () => {
         nameOfsurahQuran.splice(0, 50);
         console.log(nameOfsurahQuran);
         setSouarName(nameOfsurahQuran);
-        /*
-        surahPages.splice(3, surahPages.length);
-        surahPages.shift();
-        surahPages[0][0] = 42;
-        surahPages[0][1] = 49;
-        surahPages[1][1] = 62;
-        setSourahPages(surahPages);
-        starterPage.splice(3, starterPage.length);
-        starterPage.splice(0, 1);
-        starterPage[0] = 42;
-        console.log(starterPage);
-        setStarterPage(starterPage);
-        */
+       
         break;
       case 28:
         nameOfsurahQuran.splice(66, nameOfsurahQuran.length);
@@ -802,19 +527,7 @@ const BookBoard = () => {
         nameOfsurahQuran.splice(0, 57);
         console.log(nameOfsurahQuran);
         setSouarName(nameOfsurahQuran);
-        /*
-        surahPages.splice(3, surahPages.length);
-        surahPages.shift();
-        surahPages[0][0] = 42;
-        surahPages[0][1] = 49;
-        surahPages[1][1] = 62;
-        setSourahPages(surahPages);
-        starterPage.splice(3, starterPage.length);
-        starterPage.splice(0, 1);
-        starterPage[0] = 42;
-        console.log(starterPage);
-        setStarterPage(starterPage);
-        */
+       
         break;
       case 29:
         nameOfsurahQuran.splice(77, nameOfsurahQuran.length);
@@ -822,19 +535,7 @@ const BookBoard = () => {
         nameOfsurahQuran.splice(0, 66);
         console.log(nameOfsurahQuran);
         setSouarName(nameOfsurahQuran);
-        /*
-        surahPages.splice(3, surahPages.length);
-        surahPages.shift();
-        surahPages[0][0] = 42;
-        surahPages[0][1] = 49;
-        surahPages[1][1] = 62;
-        setSourahPages(surahPages);
-        starterPage.splice(3, starterPage.length);
-        starterPage.splice(0, 1);
-        starterPage[0] = 42;
-        console.log(starterPage);
-        setStarterPage(starterPage);
-        */
+       
         break;
       case 30:
         nameOfsurahQuran.splice(114, nameOfsurahQuran.length);
@@ -842,19 +543,7 @@ const BookBoard = () => {
         nameOfsurahQuran.splice(0, 77);
         console.log(nameOfsurahQuran);
         setSouarName(nameOfsurahQuran);
-        /*
-        surahPages.splice(3, surahPages.length);
-        surahPages.shift();
-        surahPages[0][0] = 42;
-        surahPages[0][1] = 49;
-        surahPages[1][1] = 62;
-        setSourahPages(surahPages);
-        starterPage.splice(3, starterPage.length);
-        starterPage.splice(0, 1);
-        starterPage[0] = 42;
-        console.log(starterPage);
-        setStarterPage(starterPage);
-        */
+       
         break;
       default:
       //console.log(juzNumber);
@@ -868,11 +557,12 @@ const BookBoard = () => {
       .get(`https://api.alquran.cloud/v1/page/${pageNumber}/ar.asad`)
       .then((res) => {
         // console.log(res.data.data.ayahs);
-        console.log("ah ya farahat ah");
         setBook(res.data.data.ayahs);
       })
       .catch((err) => console.log(err));
   }, [pages, pageNumber]);
+  const {t} = useTranslation();
+
 
   function selectAyah(e){
     console.log('you get ',e?.target?.value)
@@ -884,7 +574,7 @@ const BookBoard = () => {
         style={{ backgroundColor: "#038674", color: "white" }}
       >
         <div className="d-none d-sm-flex ">
-          <Form.Label>سورة</Form.Label>
+          <Form.Label>{t('surah')}</Form.Label>
           <Form.Select
             onChange={(event) => (
               // eslint-disable-next-line no-sequences
@@ -892,7 +582,7 @@ const BookBoard = () => {
               setPageNumber(starterPage[event.target.value])
             )}
           >
-            <option>اختر</option>
+            <option>{t('choose')}</option>
             {souarNames.map((surahName, index) => (
               <option key={index} value={index}>
                 {surahName}
@@ -901,9 +591,9 @@ const BookBoard = () => {
           </Form.Select>
         </div>
         <div style={{minWidth: 200}}>
-          <Form.Label>صفحة</Form.Label>
+          <Form.Label>{t('page')}</Form.Label>
           <Form.Select onChange={(event) => setPageNumber(event.target.value)}>
-            <option>اختر</option>
+            <option>{t('choose')}</option>
             {pages.length === 0 ? (
               <option key={1} value={1}>
                 1
@@ -919,14 +609,14 @@ const BookBoard = () => {
         </div>
         {false && (
           <div>
-            <Form.Label>جزء</Form.Label>
+            <Form.Label>{t('juz')}</Form.Label>
             <Form.Select
               onChange={(event) => getSouarOfJuz(event.target.value)}
             >
-              <option>اختر</option>
+              <option>{t('choose')}</option>
               {juzArr.map((juzNum) => (
                 <option value={juzNum} key={juzNum}>
-                  الجزء{juzNum}
+                  {t('juz')}{juzNum}
                 </option>
               ))}
             </Form.Select>
