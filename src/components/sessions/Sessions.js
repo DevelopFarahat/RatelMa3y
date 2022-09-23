@@ -14,7 +14,7 @@ import axios from "axios";
 import UserContext from "../../utils/UserContext";
 import { IoEnter } from "react-icons/io5";
 import { useNavigate, Link } from "react-router-dom";
-import { BsCircleFill } from "react-icons/bs";
+import { BsCircleFill, BsTable } from "react-icons/bs";
 import { BiTimeFive } from "react-icons/bi";
 import { MdDateRange } from "react-icons/md";
 import { ImPhoneHangUp } from "react-icons/im";
@@ -22,11 +22,13 @@ import { FaCalendarTimes } from "react-icons/fa";
 import { ErrorBoundary } from "react-error-boundary";
 import ErrorFallback from "../../utils/error";
 import { useTranslation } from "react-i18next";
+import ModalTable from "./ModalTable";
 
 function Sessions({ setIsRoomPrepared }) {
   const { t } = useTranslation();
   const [isArabic, setIsArabic] = useState(false);
   const [modalShow, setModalShow] = useState(false);
+  const [tableShow, setTableShow] = useState(false);
   const [sessions, setSessions] = useState([]);
   const { setIsLoading, isLoading, setUser } = useContext(UserContext);
   let { user } = useContext(UserContext);
@@ -183,7 +185,11 @@ function Sessions({ setIsRoomPrepared }) {
     }
 
     return (
-      <Card className={RoomCSS.card} key={session._id} style={{direction: isArabic? 'rtl': 'ltr'}}>
+      <Card
+        className={RoomCSS.card}
+        key={session._id}
+        style={{ direction: isArabic ? "rtl" : "ltr" }}
+      >
         <Card.Header className="text-center">
           {session.is_live ? (
             <span
@@ -213,10 +219,12 @@ function Sessions({ setIsRoomPrepared }) {
                 {t("sessions_mem_eval")}{" "}
                 <span style={{ fontWeight: 300 }}>{p_eval}</span>
               </h6>
-              <h6>
-                {t("sessions_cur_eval")}{" "}
-                <span style={{ fontWeight: 300 }}>{c_eval}</span>
-              </h6>
+              {!session.is_exam && (
+                <h6>
+                  {t("sessions_cur_eval")}{" "}
+                  <span style={{ fontWeight: 300 }}>{c_eval}</span>
+                </h6>
+              )}
             </>
           )}
 
@@ -224,7 +232,13 @@ function Sessions({ setIsRoomPrepared }) {
             <div>
               <h6>
                 {t("sessions_ended_at")}{" "}
-                <span style={{ fontWeight: 300, marginLeft:isArabic? 0:17,marginRight:isArabic? 17:0 }}>
+                <span
+                  style={{
+                    fontWeight: 300,
+                    marginLeft: isArabic ? 0 : 17,
+                    marginRight: isArabic ? 17 : 0,
+                  }}
+                >
                   {timeEnded}
                 </span>
               </h6>
@@ -250,12 +264,12 @@ function Sessions({ setIsRoomPrepared }) {
             </div>
           )}
 
-          <Accordion defaultActiveKey="1" style={{direction:'ltr'}}>
+          <Accordion defaultActiveKey="1" style={{ direction: "ltr" }}>
             <Accordion.Item className={RoomCSS.AccordionItem} eventKey="0">
               <Accordion.Header className="RoomAccordionHeader">
                 {t("sessions_more_about")}
               </Accordion.Header>
-              <Accordion.Body style={{direction: isArabic? 'rtl': 'ltr'}}>
+              <Accordion.Body style={{ direction: isArabic ? "rtl" : "ltr" }}>
                 {user.role === "student" && (
                   <h6>
                     {t("sessions_attended")}{" "}
@@ -300,7 +314,7 @@ function Sessions({ setIsRoomPrepared }) {
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
-            direction: 'ltr'
+            direction: "ltr",
           }}
         >
           <div style={{ justifyContent: "center", alignItems: "center" }}>
@@ -355,6 +369,7 @@ function Sessions({ setIsRoomPrepared }) {
         console.log("resetted");
       }}
     >
+      
       <ModalCreateSession
         show={modalShow}
         isArabic={isArabic}
@@ -364,16 +379,32 @@ function Sessions({ setIsRoomPrepared }) {
         sessions={sessions}
       />
 
+      <ModalTable
+        show={tableShow}
+        user={user}
+        onHide={() => setTableShow(false)}
+      />
+
       <div className="container">
         <div className={RoomCSS.card}>
           {user && user.role === "instructor" && (
-            <Button
-              variant="success"
-              className="my-4"
-              onClick={() => setModalShow(true)}
-            >
-              {t("sessions_select_title")} +
-            </Button>
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+              <Button
+                variant="success"
+                className="my-4"
+                onClick={() => setModalShow(true)}
+              >
+                {t("sessions_select_title")} +
+              </Button>
+
+              <Button
+                variant="success"
+                className="my-4"
+                onClick={() => setTableShow(true)}
+              >
+                <BsTable style={{ marginRight: 8 }} /> {t("sessions_table")}
+              </Button>
+            </div>
           )}
         </div>
         {sessions?.length === 0 ? (

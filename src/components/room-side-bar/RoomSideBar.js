@@ -9,8 +9,7 @@ import { useSnackbar } from "notistack";
 import { FiCheckCircle } from "react-icons/fi";
 import { MdFactCheck } from "react-icons/md";
 import { useTranslation } from "react-i18next";
-
-
+import Spinner from "react-bootstrap/Spinner";
 
 export default function RoomSideBar({ hideMain }) {
   const [bookIsShown, showBook] = useState(false);
@@ -160,11 +159,11 @@ export default function RoomSideBar({ hideMain }) {
 
 const EvaluationSheet = (props) => {
   const { user } = useContext(UserContext);
-  const { t } = useTranslation()
+  const { t } = useTranslation();
   const { enqueueSnackbar } = useSnackbar();
   const [isLoading, setIsLoading] = useState(false);
   const [alreadyTested, setAlreadyTested] = useState([]);
-  const [evaluationsList, setEvaluationsList] = useState([])
+  const [evaluationsList, setEvaluationsList] = useState([]);
 
   useEffect(() => {
     setEvaluationsList(props.session.evaluations);
@@ -173,6 +172,7 @@ const EvaluationSheet = (props) => {
   }, []);
 
   //TODO: use this to get the evaluation
+  //TODO: also reset when changing student from the dropdown
   function getEvaluation(values, id) {
     let evalu = props.session.evaluations.find((ev) => ev.student == id);
     if (evalu) {
@@ -181,19 +181,53 @@ const EvaluationSheet = (props) => {
     }
   }
 
+  function getEvaluationOrResetIfNew(val, fprops) {
+    let evaluation = -1;
+
+    if (alreadyTested.includes(val))
+      evaluation = evaluationsList.find(
+        (eva) => eva.student === val
+      )
+
+    if (evaluation === -1) {
+      evaluation= {
+        previously_eval: 10,
+        current_eval: 10,
+        total_eval: 10,
+        notes: ""
+      }
+    }
+
+    fprops.values.previously_eval = evaluation.previously_eval
+    fprops.values.current_eval = evaluation.current_eval
+    fprops.values.total_eval = evaluation.total_eval
+    fprops.values.notes = evaluation.notes
+    fprops.values.is_exam = evaluation.is_exam
+  }
+
   return (
     <Formik
       initialValues={{
         evaluated_by: user._id,
         current_eval: 10,
         previously_eval: 10,
+        total_eval: 10,
         notes: "",
-        student: "",
+        student: props?.students[0]?.id,
         is_exam: false,
       }}
+      
       onSubmit={(values) => {
-        console.log(values, props.session._id);
+
+        if (values.is_exam) {
+          delete values.current_eval;
+          delete values.previously_eval;
+        } else {
+          delete values.total_eval;
+        }
+
         setIsLoading(true);
+
         axios
           .put(`http://localhost:5000/api/sessions/${props.session._id}`, {
             evaluations: {
@@ -212,15 +246,25 @@ const EvaluationSheet = (props) => {
             enqueueSnackbar("Error: " + err);
           });
 
-        console.log("resulted", alreadyTested, values.student);
         setAlreadyTested([...alreadyTested, values.student]);
         setEvaluationsList([...evaluationsList, values]);
       }}
     >
       {(fprops) => (
-        <Card style={{ flex: 1, paddingTop: 16, width: 240, marginLeft: t('us')!== "Us"? 0: 16,marginRight: t('us')!== "Us"? 16:0,direction: t('us')!== "Us"? 'rtl':'ltr'}}>
+        <Card
+          style={{
+            flex: 1,
+            paddingTop: 16,
+            width: 240,
+            marginLeft: t("us") !== "Us" ? 0 : 16,
+            marginRight: t("us") !== "Us" ? 16 : 0,
+            direction: t("us") !== "Us" ? "rtl" : "ltr",
+          }}
+        >
           <Form onSubmit={fprops.handleSubmit}>
-            <Card.Title className="mx-3 fs-4">{t('evaluations_title')}</Card.Title>
+            <Card.Title className="mx-3 fs-4">
+              {t("evaluations_title")}
+            </Card.Title>
             <Card.Body>
               <Form.Group className="mb-3">
                 <div
@@ -230,16 +274,26 @@ const EvaluationSheet = (props) => {
                     alignItems: "center",
                   }}
                 >
-                  <Form.Label>{t('login_select_student')}</Form.Label>
+                  <Form.Label>{t("login_select_student")}</Form.Label>
 
-                  <FiCheckCircle
-                    style={{
-                      display: alreadyTested.includes(fprops.values.student)
-                        ? "initial"
-                        : "none",
-                    }}
-                    color={"#4c6e59"}
-                  />
+                  <span>
+                    <Spinner
+                      animation="grow"
+                      variant="secondary"
+                      style={{
+                        display: isLoading ? "initial" : "none",
+                      }}
+                    />
+
+                    <FiCheckCircle
+                      style={{
+                        display: alreadyTested.includes(fprops.values.student)
+                          ? "initial"
+                          : "none",
+                      }}
+                      color={"#4c6e59"}
+                    />
+                  </span>
                 </div>
                 {!props.students || props.students.length == 1}
                 <Field
@@ -247,14 +301,13 @@ const EvaluationSheet = (props) => {
                   component="select"
                   className="form-select"
                   placeholder="select student"
+                  onChange={(e) => {
+                    fprops.setFieldValue("student", e.target.value);
+                    getEvaluationOrResetIfNew(e.target.value, fprops);
+                  }}
                   disabled={!props.students || props.students.length == 1}
                 >
-                  {props.students?.map((stud, index) => {
-                    if (index == 0) fprops.values.student = stud.id;
-                    //TODO: here you check if he already get tested
-                    // alreadyEval = props.evaluations.some(
-                    //   (stu) => stu._id == stud.id
-                    // )
+                  {props.students?.map((stud) => {
                     return (
                       <option key={stud.id} value={stud.id}>
                         {stud.name}
@@ -267,19 +320,19 @@ const EvaluationSheet = (props) => {
               <Form.Group className="mb-3">
                 <Field type="checkbox" name="is_exam" id="is_exam" />
                 <Form.Label className="ms-1 me-1" htmlFor="is_exam">
-                  {t('evaluations_general_exam')}
+                  {t("evaluations_general_exam")}
                 </Form.Label>
               </Form.Group>
 
               {!fprops.values.is_exam ? (
                 <div>
                   <Form.Group className="mb-3">
-                    <Form.Label>{t('sessions_mem_eval')}</Form.Label>
+                    <Form.Label>{t("sessions_mem_eval")}</Form.Label>
                     <Field
                       name="previously_eval"
                       component="select"
                       className="form-select"
-                      placeholder={t('evaluations_eval_holder')}
+                      placeholder={t("evaluations_eval_holder")}
                     >
                       {Array.from(Array(11).keys())
                         .reverse()
@@ -292,13 +345,13 @@ const EvaluationSheet = (props) => {
                   </Form.Group>
 
                   <Form.Group className="mb-3">
-                    <Form.Label>{t('sessions_cur_eval')}</Form.Label>
+                    <Form.Label>{t("sessions_cur_eval")}</Form.Label>
 
                     <Field
                       name="current_eval"
                       component="select"
                       className="form-select"
-                      placeholder={t('evaluations_eval_holder')}
+                      placeholder={t("evaluations_eval_holder")}
                     >
                       {Array.from(Array(11).keys())
                         .reverse()
@@ -312,12 +365,12 @@ const EvaluationSheet = (props) => {
                 </div>
               ) : (
                 <Form.Group className="mb-3">
-                  <Form.Label>{t('sessions_exam_eval')}</Form.Label>
+                  <Form.Label>{t("sessions_exam_eval")}</Form.Label>
                   <Field
-                    name="previously_eval"
+                    name="total_eval"
                     component="select"
                     className="form-select"
-                    placeholder={t('evaluations_eval_holder')}
+                    placeholder={t("evaluations_eval_holder")}
                   >
                     {Array.from(Array(11).keys())
                       .reverse()
@@ -330,14 +383,16 @@ const EvaluationSheet = (props) => {
                 </Form.Group>
               )}
 
-              <Form.Label style={{ marginTop: 16 }}>{t('sessions_notes')}</Form.Label>
+              <Form.Label style={{ marginTop: 16 }}>
+                {t("sessions_notes")}
+              </Form.Label>
               <Field
                 as="textarea"
                 rows={2}
                 name="notes"
                 type="text"
                 className="form-control"
-                placeholder={t('sessions_notes_holder')}
+                placeholder={t("sessions_notes_holder")}
               ></Field>
 
               <Button
@@ -348,7 +403,7 @@ const EvaluationSheet = (props) => {
                   isLoading || alreadyTested.includes(fprops.values.student)
                 }
               >
-                {t('sessions_eval_submit')}
+                {t("sessions_eval_submit")}
               </Button>
             </Card.Body>
           </Form>

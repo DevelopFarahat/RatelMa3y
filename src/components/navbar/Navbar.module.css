@@ -20,10 +20,11 @@
   font-weight: 500;
   text-decoration: none;
   margin: 0 16px;
+  transition-duration: .1s;
 }
 .link:hover {
   color: #01332c;
-  border-bottom: 1px solid #c2a054;
+  border-bottom: 3px solid #f2c667;
 }
 .button {
   background: #038674;

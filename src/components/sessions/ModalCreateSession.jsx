@@ -20,18 +20,22 @@ export default function ModalCreateSession(props) {
   const { user } = useContext(UserContext);
   const { enqueueSnackbar } = useSnackbar();
 
-  //TODO: make options asyncLater with this vid https://www.youtube.com/watch?v=3u_ulMvTYZI
-
   useEffect(() => {
     async function fetchData() {
       //Add students as options to select
-
-      // let first = await .data.reverse is not a fun.get("http://localhost:5000/api/students");
       let opts =
         user?.students?.map((stu) => ({
           value: stu._id,
           label: stu.name,
         })) ?? [];
+
+      //Sort students for easy access
+      opts.sort(function (a, b) {
+        var textA = a.label.toUpperCase();
+        var textB = b.label.toUpperCase();
+        return textA < textB ? -1 : textA > textB ? 1 : 0;
+      });
+
       setOptions(opts);
     }
     fetchData();
@@ -102,25 +106,25 @@ export default function ModalCreateSession(props) {
     props.onHide();
   }
 
-  function fetchSessions() {
-    let sessions_url =
-      "http://localhost:5000/api/sessions" +
-      (["Admin", "Supervisor"].includes(user.privileges)
-        ? ""
-        : "?userId=" + user._id);
+  // function fetchSessions() {
+  //   let sessions_url =
+  //     "http://localhost:5000/api/sessions" +
+  //     (["Admin", "Supervisor"].includes(user.privileges)
+  //       ? ""
+  //       : "?userId=" + user._id);
 
-    axios
-      .get(sessions_url)
-      .then((res) => {
-        props.setSessions(res.data.data);
-        console.log("fetched", res.data.data);
-      })
-      .catch((err) => console.error(err));
-  }
+  //   axios
+  //     .get(sessions_url)
+  //     .then((res) => {
+  //       props.setSessions(res.data.data);
+  //       console.log("fetched", res.data.data);
+  //     })
+  //     .catch((err) => console.error(err));
+  // }
 
   return (
     <Modal
-    style={{direction: props.isArabic? "rtl":'ltr'}}
+      style={{ direction: props.isArabic ? "rtl" : "ltr" }}
       {...props}
       size="lg"
       aria-labelledby="contained-modal-title-vcenter"

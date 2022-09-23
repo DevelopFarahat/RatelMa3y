@@ -28,8 +28,10 @@ function NavBar({ i18n, isRoomPrepared }) {
   const [isArabic, setIsArabic] = useState(false);
 
   async function logout() {
+    let lang = localStorage.getItem('i18nextLng')
     setUser(null);
     localStorage.clear();
+    localStorage.setItem('i18nextLng',lang)
     navigate("../../home", { replace: true });
   }
 
