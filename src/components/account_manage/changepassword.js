@@ -76,7 +76,6 @@ function Changepassword({ user ,t }) {
                       name="password"
                       type="password"
                       className="form-control"
-                      placeholder={t('pass')}
                     ></Field>
                     <div style={{ color: "red" }}>
                       <ErrorMessage name="password" />
@@ -90,7 +89,6 @@ function Changepassword({ user ,t }) {
                       name="newpassword"
                       type="password"
                       className="form-control"
-                      placeholder={t('new_pass')}
                     ></Field>
                     <div style={{ color: "red" }}>
                       <ErrorMessage name="newpassword" />
@@ -104,7 +102,6 @@ function Changepassword({ user ,t }) {
                       name="confirmpass"
                       type="password"
                       className="form-control"
-                      placeholder={t('confirm_pass')}
                     ></Field>
                     <div style={{ color: "red" }}>
                       <ErrorMessage name="confirmpass" />

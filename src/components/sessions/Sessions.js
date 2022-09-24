@@ -97,30 +97,30 @@ function Sessions({ setIsRoomPrepared }) {
     if (node) observer.current.observe(node);
   }, []);
 
-  function getEvaluation(arr) {
-    if (!arr || arr.length === 0)
-      return {
-        eval_previous: 0,
-        eval_current: 0,
-        notes: "",
-      };
+  // function getEvaluation(arr) {
+  //   if (!arr || arr.length === 0)
+  //     return {
+  //       eval_previous: 0,
+  //       eval_current: 0,
+  //       notes: "",
+  //     };
 
-    let evaluation = arr.find((evalu) => evalu.student === user?._id);
-    if (!evaluation)
-      return {
-        eval_previous: 0,
-        eval_current: 0,
-        notes: "",
-      };
+  //   let evaluation = arr.find((evalu) => evalu.student === user?._id);
+  //   if (!evaluation)
+  //     return {
+  //       eval_previous: 0,
+  //       eval_current: 0,
+  //       notes: "",
+  //     };
 
-    return {
-      eval_previous: evaluation.previously_eval,
-      eval_current: evaluation.current_eval,
-      notes: evaluation.notes,
-    };
-  }
+  //   return {
+  //     eval_previous: evaluation.previously_eval,
+  //     eval_current: evaluation.current_eval,
+  //     notes: evaluation.notes,
+  //   };
+  // }
 
-  function endSession(session, index) {
+  function endSession(session) {
     axios
       .put("http://localhost:5000/api/sessions/" + session?._id, {
         is_live: false,
@@ -369,7 +369,7 @@ function Sessions({ setIsRoomPrepared }) {
         console.log("resetted");
       }}
     >
-      
+
       <ModalCreateSession
         show={modalShow}
         isArabic={isArabic}

@@ -23,19 +23,27 @@ export default function ModalCreateSession(props) {
   useEffect(() => {
     async function fetchData() {
       //Add students as options to select
-      let opts =
-        user?.students?.map((stu) => ({
+      let opts = [];
+
+      if (["Supervisor", "Admin"].includes(user?.privileges)) {
+        let arr = await axios.get("http://localhost:5000/api/students");
+        opts = arr.data.data.map((stu) => ({
           value: stu._id,
           label: stu.name,
-        })) ?? [];
+        }));
+      } else {
+        opts = user?.students?.map((stu) => ({
+          value: stu._id,
+          label: stu.name,
+        }));
+      }
 
       //Sort students for easy access
       opts.sort(function (a, b) {
-        var textA = a.label.toUpperCase();
-        var textB = b.label.toUpperCase();
+        let textA = a.label.toUpperCase();
+        let textB = b.label.toUpperCase();
         return textA < textB ? -1 : textA > textB ? 1 : 0;
       });
-
       setOptions(opts);
     }
     fetchData();
