@@ -447,6 +447,8 @@ const Instructor = () => {
                             <thead>
                                 <tr>
                                     <th>Name</th>
+                                    <th>Students N</th>
+                                    <th>Sessions N</th>
                                     <th>Age</th>
                                     <th>Gender</th>
                                     <th>State</th>
@@ -476,6 +478,8 @@ const Instructor = () => {
                                         }}
                                     >
                                         <td>{instructData.name}</td>
+                                        <td>{instructData.students.length}</td>
+                                        <td>{instructData.sessions.length}</td>
                                         <td>{instructData.age}</td>
                                         <td>{instructData.gender}</td>
                                         <td>{instructData.state}</td>

@@ -11,6 +11,8 @@ import MessagesIcon from "../../assets/images/messages.png";
 import { useTranslation } from "react-i18next";
 import {AiFillFilter} from "react-icons/ai";
 import {BiReset} from "react-icons/bi";
+import CircleGif from "../../assets/images/check-circle.gif";
+import {FaTrash} from "react-icons/fa";
 import axios from "axios";
 const Messages = ()=>{
     const [pageNo,setPageNo] = useState([]);
@@ -175,8 +177,9 @@ const Messages = ()=>{
     const [messages,setMessages] = useState([]);
     const [msgContent,setMsgContent] = useState("");
     const [selectedRow, setSelectedRow] = useState(-1);
-    const [featchAgain,setFeatchAgain] = useState(0);
+    const [fetchAgain,setFetchAgain] = useState(0);
     const [filterValue, setFilterValue] = useState("");
+    const [isUserDeleteAnyMsg,setIsUserDeleteAnymsg] = useState(false);
     const initialResponse = useRef();
 
 
@@ -250,7 +253,7 @@ const Messages = ()=>{
         if(msg.status === 'Unread'){
             
             axios.put(`http://localhost:5000/api/contacts/${msg._id}`,{status:'Read'}).then((res)=>{
-                setFeatchAgain(featchAgain+1);
+                setFetchAgain(fetchAgain+1);
                 console.log(res.data)
             }).catch((error)=>{
                 console.log(error);
@@ -258,6 +261,19 @@ const Messages = ()=>{
         }
     
        
+    }
+    const deleteMessage = (event,msg)=>{
+        event.stopPropagation();
+        axios.delete(`http://localhost:5000/api/contacts/${msg._id}`).then((res)=>{
+        setFetchAgain(fetchAgain+1);
+        setIsUserDeleteAnymsg(true);
+        setTimeout(()=>{
+            setIsUserDeleteAnymsg(false);
+        },1000)
+    
+        }).catch((error)=>{
+    
+        })
     }
     useEffect(()=>{
         axios.get(`http://localhost:5000/api/contacts?limit=300&page=${currentPage}`).then((res)=>{
@@ -287,9 +303,20 @@ const Messages = ()=>{
         }).catch((error)=>{
             console.log(error);
         })
-    },[featchAgain,currentPage])
+    },[fetchAgain,currentPage])
     return(
+
         <>
+        {isUserDeleteAnyMsg?<>
+            <div className={MessagesStyles["alert-container"]}>
+              <img src={CircleGif} alt="successfull" />
+              <span>
+                <span style={{ fontWeight: "bold", color: "#038674" }}>
+                  {localStorage.getItem("user_name")}
+                </span>{" "}
+                Has Deleted  Message Successfully
+              </span>
+            </div></>:null}
         <div className={MessagesStyles['messages-main']}>
         <div className={MessagesStyles['pagination-container']} style={{direction:'rtl'}}>
                 { 
@@ -385,6 +412,7 @@ const Messages = ()=>{
                                     <th>Phone</th>
                                     <th>Date</th>
                                     <th>Status</th>
+                                    <th>Settings</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -395,6 +423,7 @@ const Messages = ()=>{
                                         <td>{ms.phone}</td>
                                         <td>{ms.date.split("T")[0]}</td>
                                         <td>{ms.status}</td>
+                                        <td><FaTrash  onClick={(event)=>deleteMessage(event,ms)}/></td>
                                     </tr>
                                 ))}
                             </tbody>
