@@ -227,6 +227,7 @@
   "Thursday":"Thursday",
   "Friday":"Friday",
   "Working_Hours":"Working Hours",
-  "login_select_student": "Student"
-  
+  "login_select_student": "Student",
+  "PM":"PM",
+  "AM":"AM"  
 }

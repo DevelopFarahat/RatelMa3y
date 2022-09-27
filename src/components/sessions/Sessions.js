@@ -274,7 +274,7 @@ function Sessions({ setIsRoomPrepared }) {
                   <h6>
                     {t("sessions_attended")}{" "}
                     <span style={{ fontWeight: 300 }}>
-                      {session.attendants?.includes(user._id)
+                      {session.attendants?.includes(user?._id)
                         ? "true"
                         : "false"}
                     </span>
@@ -330,10 +330,10 @@ function Sessions({ setIsRoomPrepared }) {
             <BiTimeFive /> {time}
           </div>
 
-          {session.is_live && (
+          {session.is_live && user && (
             <div>
-              {(session.created_by._id === user._id ||
-                user.privileges === "Admin") && (
+              {(session.created_by?._id === user?._id ||
+                user?.privileges === "Admin") && (
                 <Button
                   variant="outline-danger"
                   className="mx-2"
