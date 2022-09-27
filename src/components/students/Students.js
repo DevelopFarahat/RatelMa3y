@@ -183,12 +183,12 @@ const Students = () => {
                 <li className={studentStyles['pages-separator']}>{"..."}</li>
                 {lastPage !== undefined? 
                 <li id={lastPage.id} style={{background:Number(currentPage)  === lastPage.index  ?'#c2a054':'',color:Number(currentPage)  === lastPage.index?'#FFFFFF':''}}  onClick={handleUpCommingPage}>{lastPage.index}</li>:null}
-                
+                {lastPage !== undefined?
                 <button type="button" className={studentStyles['btn']} disabled={currentPage === lastPage.index?true:false} style={{cursor:currentPage === lastPage.index?'not-allowed':'pointer',opacity:currentPage === lastPage.index?'.5':'1' }}  onClick={getTheNextPages}>
                     {lastPage !== undefined?<img src={currentPage === lastPage.index?LessThanGrayImage:LessThanWhiteImage} alt="lessThan"/>:null}
-                    </button>
-               </ul>:null
-                }
+                    </button>:null}
+               </ul>:null}
+                
             </div>
         <div>
         <StudentDetails      studentSessionsDetails={studentSessionsDetails} setStudentSessionsDetails={setStudentSessionsDetails} initialStudentSessionsDetails={initialStudentSessionsDetails} specificStudentJoiningRequestData={specificStudentJoiningRequestData} setSpecificStudentJoiningRequestData={setSpecificStudentJoiningRequestData} setIsStudentRequestDataVisible={setIsStudentRequestDataVisible} setIsStudentRatelDataVisible={setIsStudentRatelDataVisible} isStudentRequestDataVisible={isStudentRequestDataVisible} isStudentRatelDataVisible={isStudentRatelDataVisible} />

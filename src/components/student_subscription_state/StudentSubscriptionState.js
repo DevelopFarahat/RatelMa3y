@@ -14,6 +14,7 @@ import { FaCalendarTimes } from "react-icons/fa";
 import updateImageIcon from "../../assets/images/update.png";
 import Spinner from 'react-bootstrap/Spinner';
 import { useTranslation } from "react-i18next";
+import { object } from "yup";
 const StudentSubscriptionState = ({
   currentPage,
   setPageNoArrLength,
@@ -64,7 +65,7 @@ const StudentSubscriptionState = ({
     d5: "",
     d6: "",
   });
-  const [disabledDays, setDisabledDays] = useState({
+  const [prefsDays,setPrefsDays] = useState({
     d0: false,
     d1: false,
     d2: false,
@@ -72,34 +73,8 @@ const StudentSubscriptionState = ({
     d4: false,
     d5: false,
     d6: false,
-  });
-  const [disabledHours, setDisabledHours] = useState({
-    h0: false,
-    h1: false,
-    h2: false,
-    h3: false,
-    h4: false,
-    h5: false,
-    h6: false,
-    h6: false,
-  });
-  const day0 = useRef(null);
-  const day1 = useRef(null);
-  const day2 = useRef(null);
-  const day3 = useRef(null);
-  const day4 = useRef(null);
-  const day5 = useRef(null);
-  const day6 = useRef(null);
-  const [checkedDays, setCheckedDays] = useState({
-    d0: false,
-    d1: false,
-    d2: false,
-    d3: false,
-    d4: false,
-    d5: false,
-    d6: false,
-  });
-  const [checkedHours, setCheckedHours] = useState({
+  })
+  const [prefsHoursD0,setPrefsHoursD0] = useState({
     h0: false,
     h1: false,
     h2: false,
@@ -109,7 +84,104 @@ const StudentSubscriptionState = ({
     h6: false,
     h7: false,
   });
-  const [WorkingHours, setWorkingHours] = useState({
+  const [prefsHoursD1,setPrefsHoursD1] = useState({
+    h0: false,
+    h1: false,
+    h2: false,
+    h3: false,
+    h4: false,
+    h5: false,
+    h6: false,
+    h7: false,
+  })
+  const [prefsHoursD2,setPrefsHoursD2] = useState({
+    h0: false,
+    h1: false,
+    h2: false,
+    h3: false,
+    h4: false,
+    h5: false,
+    h6: false,
+    h7: false,
+  })
+  const [prefsHoursD3,setPrefsHoursD3] = useState({
+    h0: false,
+    h1: false,
+    h2: false,
+    h3: false,
+    h4: false,
+    h5: false,
+    h6: false,
+    h7: false,
+  })
+  const [prefsHoursD4,setPrefsHoursD4] = useState({
+    h0: false,
+    h1: false,
+    h2: false,
+    h3: false,
+    h4: false,
+    h5: false,
+    h6: false,
+    h7: false,
+  })
+  const [prefsHoursD5,setPrefsHoursD5] = useState({
+    h0: false,
+    h1: false,
+    h2: false,
+    h3: false,
+    h4: false,
+    h5: false,
+    h6: false,
+    h7: false,
+  })
+  const [prefsHoursD6,setPrefsHoursD6] = useState({
+    h0: false,
+    h1: false,
+    h2: false,
+    h3: false,
+    h4: false,
+    h5: false,
+    h6: false,
+    h7: false,
+  })
+  const [disabledDays, setDisabledDays] = useState({
+    d0: false,
+    d1: false,
+    d2: false,
+    d3: false,
+    d4: false,
+    d5: false,
+    d6: false,
+  });
+  const [disabledDaysRadio, setDisabledDaysRadio] = useState({
+    d0: false,
+    d1: false,
+    d2: false,
+    d3: false,
+    d4: false,
+    d5: false,
+    d6: false,
+  });
+  const [checkedDays, setCheckedDays] = useState({
+    d0: false,
+    d1: false,
+    d2: false,
+    d3: false,
+    d4: false,
+    d5: false,
+    d6: false,
+  });
+  const [checkedHoursD0, setCheckedHoursD0] = useState({
+    h0: false,
+    h1: false,
+    h2: false,
+    h3: false,
+    h4: false,
+    h5: false,
+    h6: false,
+    h7: false,
+  });
+  const [WorkingHoursD0, setWorkingHoursD0] = useState({
     h0: "",
     h1: "",
     h2: "",
@@ -118,6 +190,196 @@ const StudentSubscriptionState = ({
     h5: "",
     h6: "",
     h7: "",
+  });
+  const [disabledHoursD0, setDisabledHoursD0] = useState({
+    h0: false,
+    h1: false,
+    h2: false,
+    h3: false,
+    h4: false,
+    h5: false,
+    h6: false,
+    h7:false
+  });
+  const [checkedHoursD1, setCheckedHoursD1] = useState({
+    h0: false,
+    h1: false,
+    h2: false,
+    h3: false,
+    h4: false,
+    h5: false,
+    h6: false,
+    h7: false,
+  });
+  const [WorkingHoursD1, setWorkingHoursD1] = useState({
+    h0: "",
+    h1: "",
+    h2: "",
+    h3: "",
+    h4: "",
+    h5: "",
+    h6: "",
+    h7: "",
+  });
+  const [disabledHoursD1, setDisabledHoursD1] = useState({
+    h0: false,
+    h1: false,
+    h2: false,
+    h3: false,
+    h4: false,
+    h5: false,
+    h6: false,
+    h7:false
+  });
+  const [checkedHoursD2, setCheckedHoursD2] = useState({
+    h0: false,
+    h1: false,
+    h2: false,
+    h3: false,
+    h4: false,
+    h5: false,
+    h6: false,
+    h7: false,
+  });
+  const [WorkingHoursD2, setWorkingHoursD2] = useState({
+    h0: "",
+    h1: "",
+    h2: "",
+    h3: "",
+    h4: "",
+    h5: "",
+    h6: "",
+    h7: "",
+  });
+  const [disabledHoursD2, setDisabledHoursD2] = useState({
+    h0: false,
+    h1: false,
+    h2: false,
+    h3: false,
+    h4: false,
+    h5: false,
+    h6: false,
+    h7:false
+  });
+  const [checkedHoursD3, setCheckedHoursD3] = useState({
+    h0: false,
+    h1: false,
+    h2: false,
+    h3: false,
+    h4: false,
+    h5: false,
+    h6: false,
+    h7: false,
+  });
+  const [WorkingHoursD3, setWorkingHoursD3] = useState({
+    h0: "",
+    h1: "",
+    h2: "",
+    h3: "",
+    h4: "",
+    h5: "",
+    h6: "",
+    h7: "",
+  });
+  const [disabledHoursD3, setDisabledHoursD3] = useState({
+    h0: false,
+    h1: false,
+    h2: false,
+    h3: false,
+    h4: false,
+    h5: false,
+    h6: false,
+    h7:false
+  });
+  const [checkedHoursD4, setCheckedHoursD4] = useState({
+    h0: false,
+    h1: false,
+    h2: false,
+    h3: false,
+    h4: false,
+    h5: false,
+    h6: false,
+    h7: false,
+  });
+  const [WorkingHoursD4, setWorkingHoursD4] = useState({
+    h0: "",
+    h1: "",
+    h2: "",
+    h3: "",
+    h4: "",
+    h5: "",
+    h6: "",
+    h7: "",
+  });
+  const [disabledHoursD4, setDisabledHoursD4] = useState({
+    h0: false,
+    h1: false,
+    h2: false,
+    h3: false,
+    h4: false,
+    h5: false,
+    h6: false,
+    h7:false
+  });
+  const [checkedHoursD5, setCheckedHoursD5] = useState({
+    h0: false,
+    h1: false,
+    h2: false,
+    h3: false,
+    h4: false,
+    h5: false,
+    h6: false,
+    h7: false,
+  });
+  const [WorkingHoursD5, setWorkingHoursD5] = useState({
+    h0: "",
+    h1: "",
+    h2: "",
+    h3: "",
+    h4: "",
+    h5: "",
+    h6: "",
+    h7: "",
+  });
+  const [disabledHoursD5, setDisabledHoursD5] = useState({
+    h0: false,
+    h1: false,
+    h2: false,
+    h3: false,
+    h4: false,
+    h5: false,
+    h6: false,
+    h7:false
+  });
+  const [checkedHoursD6, setCheckedHoursD6] = useState({
+    h0: false,
+    h1: false,
+    h2: false,
+    h3: false,
+    h4: false,
+    h5: false,
+    h6: false,
+    h7: false,
+  });
+  const [WorkingHoursD6, setWorkingHoursD6] = useState({
+    h0: "",
+    h1: "",
+    h2: "",
+    h3: "",
+    h4: "",
+    h5: "",
+    h6: "",
+    h7: "",
+  });
+  const [disabledHoursD6, setDisabledHoursD6] = useState({
+    h0: false,
+    h1: false,
+    h2: false,
+    h3: false,
+    h4: false,
+    h5: false,
+    h6: false,
+    h7:false
   });
   let Working_hours = [
     { id: 0, appointment: " 8:00 am to 10:00 pm", att: "h0" },
@@ -139,14 +401,14 @@ const StudentSubscriptionState = ({
     [0, 1],
     [0, 1],
   ];
-  const handleApoointmentInHours = (event) => {
-    setCheckedHours({
-      ...checkedHours,
-      [event.target.id]: !checkedHours[event.target.id],
+  const handleApoointmentInHoursD0 = (event) => {
+    setCheckedHoursD0({
+      ...checkedHoursD0,
+      [event.target.id]: !checkedHoursD0[event.target.id],
     });
     if (event.target.checked) {
-      setWorkingHours({
-        ...WorkingHours,
+      setWorkingHoursD0({
+        ...WorkingHoursD0,
         [event.target.id]: workingHoursCheckedValuesArr[event.target.value],
       });
     } else {
@@ -157,12 +419,157 @@ const StudentSubscriptionState = ({
           arr[event.target.value] = [0, 0];
           setWorkingHours(arr);
           */
-      setWorkingHours({
-        ...WorkingHours,
+      setWorkingHoursD0({
+        ...WorkingHoursD0,
         [`h${event.target.value}`]: "",
       });
     }
   };
+  const handleApoointmentInHoursD1 = (event) => {
+    setCheckedHoursD1({
+      ...checkedHoursD1,
+      [event.target.id]: !checkedHoursD1[event.target.id],
+    });
+    if (event.target.checked) {
+      setWorkingHoursD1({
+        ...WorkingHoursD1,
+        [event.target.id]: workingHoursCheckedValuesArr[event.target.value],
+      });
+    } else {
+      /*
+          let workingHoursCloneObji = WorkingHours;
+          let arr = Object.values(workingHoursCloneObji);
+    
+          arr[event.target.value] = [1, 1];
+          setWorkingHours(arr);
+          */
+      setWorkingHoursD1({
+        ...WorkingHoursD1,
+        [`h${event.target.value}`]: "",
+      });
+    }
+  };
+  const handleApoointmentInHoursD2 = (event) => {
+    setCheckedHoursD2({
+      ...checkedHoursD2,
+      [event.target.id]: !checkedHoursD2[event.target.id],
+    });
+    if (event.target.checked) {
+      setWorkingHoursD2({
+        ...WorkingHoursD2,
+        [event.target.id]: workingHoursCheckedValuesArr[event.target.value],
+      });
+    } else {
+      /*
+          let workingHoursCloneObji = WorkingHours;
+          let arr = Object.values(workingHoursCloneObji);
+    
+          arr[event.target.value] = [2, 2];
+          setWorkingHours(arr);
+          */
+      setWorkingHoursD2({
+        ...WorkingHoursD2,
+        [`h${event.target.value}`]: "",
+      });
+    }
+  };
+  const handleApoointmentInHoursD3 = (event) => {
+    setCheckedHoursD3({
+      ...checkedHoursD3,
+      [event.target.id]: !checkedHoursD3[event.target.id],
+    });
+    if (event.target.checked) {
+      setWorkingHoursD3({
+        ...WorkingHoursD3,
+        [event.target.id]: workingHoursCheckedValuesArr[event.target.value],
+      });
+    } else {
+      /*
+          let workingHoursCloneObji = WorkingHours;
+          let arr = Object.values(workingHoursCloneObji);
+    
+          arr[event.target.value] = [3, 3];
+          setWorkingHours(arr);
+          */
+      setWorkingHoursD3({
+        ...WorkingHoursD3,
+        [`h${event.target.value}`]: "",
+      });
+    }
+  };
+  const handleApoointmentInHoursD4 = (event) => {
+    setCheckedHoursD4({
+      ...checkedHoursD4,
+      [event.target.id]: !checkedHoursD4[event.target.id],
+    });
+    if (event.target.checked) {
+      setWorkingHoursD4({
+        ...WorkingHoursD4,
+        [event.target.id]: workingHoursCheckedValuesArr[event.target.value],
+      });
+    } else {
+      /*
+          let workingHoursCloneObji = WorkingHours;
+          let arr = Object.values(workingHoursCloneObji);
+    
+          arr[event.target.value] = [4, 4];
+          setWorkingHours(arr);
+          */
+      setWorkingHoursD4({
+        ...WorkingHoursD4,
+        [`h${event.target.value}`]: "",
+      });
+    }
+  };
+  const handleApoointmentInHoursD5 = (event) => {
+    setCheckedHoursD5({
+      ...checkedHoursD5,
+      [event.target.id]: !checkedHoursD5[event.target.id],
+    });
+    if (event.target.checked) {
+      setWorkingHoursD5({
+        ...WorkingHoursD5,
+        [event.target.id]: workingHoursCheckedValuesArr[event.target.value],
+      });
+    } else {
+      /*
+          let workingHoursCloneObji = WorkingHours;
+          let arr = Object.values(workingHoursCloneObji);
+    
+          arr[event.target.value] = [5, 5];
+          setWorkingHours(arr);
+          */
+      setWorkingHoursD5({
+        ...WorkingHoursD5,
+        [`h${event.target.value}`]: "",
+      });
+    }
+  };
+  const handleApoointmentInHoursD6 = (event) => {
+    setCheckedHoursD6({
+      ...checkedHoursD6,
+      [event.target.id]: !checkedHoursD6[event.target.id],
+    });
+    if (event.target.checked) {
+      setWorkingHoursD6({
+        ...WorkingHoursD6,
+        [event.target.id]: workingHoursCheckedValuesArr[event.target.value],
+      });
+    } else {
+      /*
+          let workingHoursCloneObji = WorkingHours;
+          let arr = Object.values(workingHoursCloneObji);
+    
+          arr[event.target.value] = [6, 6];
+          setWorkingHours(arr);
+          */
+      setWorkingHoursD6({
+        ...WorkingHoursD6,
+        [`h${event.target.value}`]: "",
+      });
+    }
+  };
+  
   const handleAppointmentInDays = (event) => {
     setCheckedDays({
       ...checkedDays,
@@ -174,19 +581,83 @@ const StudentSubscriptionState = ({
         [event.target.id]: event.target.value,
       });
     } else {
-      /*
-          let workingDaysCloneObji = workingDays;
-    
-          let arr = Object.values(workingDaysCloneObji);
-          arr[event.target.value] = -1;
-          */
-      //arr.splice(event.target.value, 1);
       setWorkingDays({
         ...workingDays,
         [`d${event.target.value}`]: "",
       });
     }
   };
+
+  const [checkDaysRadio,setCheckDaysRadio] = useState({
+    d0:false,
+    d1:false,
+    d2:false,
+    d3:false,
+    d4:false,
+    d5:false,
+    d6:false
+  })
+  const handleAppointmentInDaysRadio = (event)=>{
+    event.currentTarget.id === "d0"?
+    setCheckDaysRadio({
+      d0:true,
+      d1:false,
+      d2:false,
+      d3:false,
+      d4:false,
+      d5:false,
+      d6:false
+    }): event.currentTarget.id === "d1"? setCheckDaysRadio({
+      d0:false,
+      d1:true,
+      d2:false,
+      d3:false,
+      d4:false,
+      d5:false,
+      d6:false
+    }): event.currentTarget.id === "d2"? setCheckDaysRadio({
+      d0:false,
+      d1:false,
+      d2:true,
+      d3:false,
+      d4:false,
+      d5:false,
+      d6:false
+    }): event.currentTarget.id === "d3"? setCheckDaysRadio({
+      d0:false,
+      d1:false,
+      d2:false,
+      d3:true,
+      d4:false,
+      d5:false,
+      d6:false
+    }): event.currentTarget.id === "d4"? setCheckDaysRadio({
+      d0:false,
+      d1:false,
+      d2:false,
+      d3:false,
+      d4:true,
+      d5:false,
+      d6:false
+    }): event.currentTarget.id === "d5"? setCheckDaysRadio({
+      d0:false,
+      d1:false,
+      d2:false,
+      d3:false,
+      d4:false,
+      d5:true,
+      d6:false
+    }): setCheckDaysRadio({
+      d0:false,
+      d1:false,
+      d2:false,
+      d3:false,
+      d4:false,
+      d5:false,
+      d6:true
+    })
+  }
+  
   const [studentConfiguration, setStudentConfiguration] = useState({
     studentStatus: "",
     studentInstructor: "",
@@ -257,43 +728,86 @@ const StudentSubscriptionState = ({
   }
   };
   const getStudentSessionsDaysAndTime = (stdObji) => {
+    
     let sessionsHoursInitialObji = {};
     let sessionsHoursCheckedInitialObji = {};
+    let prefsSessionsDaysInitialObject = {};
+    let prefsSessionsHoursInitialObject = {};
+    let studentBusyDaysAndHours = {};
     let sessionsDaysInitialObji = {};
     let sessionsDaysCheckedInitialObji = {};
     for (let i = 0; i < stdObji.program_prefs.pref_days.length; i++) {
       if (stdObji.program_prefs.pref_days[i] !== -1) {
-        sessionsDaysInitialObji[`d${i}`] = stdObji.program_prefs.pref_days[i];
-        sessionsDaysCheckedInitialObji[`d${i}`] = true;
+        prefsSessionsDaysInitialObject[`d${i}`] = true;
+       for(let x = 0 ; x < Object.entries(stdObji.busy)[i][1].length;x++){
+        if( typeof Object.entries(stdObji.busy)[i][1][x] === 'object' && !Array.isArray(Object.entries(stdObji.busy)[i][1][x])){
+          studentBusyDaysAndHours[`dh${i}`] = true;
+        }else{
+          studentBusyDaysAndHours[`dh${i}`] = false;
+        }
+       }
       } else {
-        sessionsDaysInitialObji[`d${i}`] = stdObji.program_prefs.pref_days[i];
-        sessionsDaysCheckedInitialObji[`d${i}`] = false;
+        prefsSessionsDaysInitialObject[`d${i}`] = false;
       }
     }
+    
     for (let i = 0; i < stdObji.program_prefs.pref_times_of_day.length; i++) {
       if (stdObji.program_prefs.pref_times_of_day[i][1] !== 0) {
+        prefsSessionsHoursInitialObject[`h${i}`] = true;
+        /*
         sessionsHoursInitialObji[`h${i}`] = [
           stdObji.program_prefs.pref_times_of_day[i][0],
           stdObji.program_prefs.pref_times_of_day[i][1],
         ];
         sessionsHoursCheckedInitialObji[`h${i}`] = true;
+        */
       } else {
+        prefsSessionsHoursInitialObject[`h${i}`] = false;
+        /*
         sessionsHoursInitialObji[`h${i}`] = [
           stdObji.program_prefs.pref_times_of_day[i][0],
           stdObji.program_prefs.pref_times_of_day[i][1],
         ];
         sessionsHoursCheckedInitialObji[`h${i}`] = false;
+        */
       }
     }
+    
+    /*
     setWorkingDays(sessionsDaysInitialObji);
     setCheckedDays(sessionsDaysCheckedInitialObji);
+   
     setWorkingHours(sessionsHoursInitialObji);
     setCheckedHours(sessionsHoursCheckedInitialObji);
-    gitInstructorOfSpecificStudentWorkingDaysAndHours(stdObji);
+    */
+    for (let i = 0; i < stdObji.program_prefs.pref_days.length; i++) {
+      if (stdObji.program_prefs.pref_days[i] !== -1) {
+        if(i === 0 ){
+          setPrefsHoursD0(prefsSessionsHoursInitialObject);
+        }else if (i === 1){
+          setPrefsHoursD1(prefsSessionsHoursInitialObject);
+        }else if (i === 2){
+          setPrefsHoursD2(prefsSessionsHoursInitialObject);
+        }else if (i === 3){
+          setPrefsHoursD3(prefsSessionsHoursInitialObject);
+        }else if (i === 4){
+          setPrefsHoursD4(prefsSessionsHoursInitialObject);
+        }else if (i === 5){
+          setPrefsHoursD5(prefsSessionsHoursInitialObject);
+        }else{
+          setPrefsHoursD6(prefsSessionsHoursInitialObject);
+        }
+      }
+    }
+  setPrefsDays(prefsSessionsDaysInitialObject);
+      
+  gitInstructorOfSpecificStudentWorkingDaysAndHours(stdObji);
+
   };
 
   const gitInstructorOfSpecificStudentWorkingDaysAndHours = (stObj) => {
     let disabledDaysInitialObject = {};
+    let disabledDaysRadioInitialObject = {};
     let disabledHoursInitialObject = {};
     axios
       .get(`http://localhost:5000/api/instructors/${stObj.instructor}`)
@@ -302,20 +816,52 @@ const StudentSubscriptionState = ({
         for (let i = 0; i < res.data.prefs.working_days.length; i++) {
           if (res.data.prefs.working_days[i] === -1) {
             disabledDaysInitialObject[`d${i}`] = true;
+            disabledDaysRadioInitialObject[`d${i}`] = true;
+          }else{
+            disabledDaysInitialObject[`d${i}`] = false;
+            disabledDaysRadioInitialObject[`d${i}`] = false;
+          }
+        
+        }
+         
+        for(let i = 0 ; i <res.data.prefs.working_hours.length;i++ ){
+          if(res.data.prefs.working_hours[i][1] === 0){
+            disabledHoursInitialObject[`h${i}`] = true;
+          }else{
+            disabledHoursInitialObject[`h${i}`] = false;
+          }  
+        }
+
+                
+        
+        for (let i = 0; i < res.data.prefs.working_days.length; i++) {
+          if (res.data.prefs.working_days[i] !== -1) {
+            if(i === 0 ){
+              setDisabledHoursD0(disabledHoursInitialObject);
+            }else if (i === 1){
+              setDisabledHoursD1(disabledHoursInitialObject);
+            }else if (i === 2){
+              setDisabledHoursD2(disabledHoursInitialObject);
+            }else if (i === 3){
+              setDisabledHoursD3(disabledHoursInitialObject);
+            }else if (i === 4){
+              setDisabledHoursD4(disabledHoursInitialObject);
+            }else if (i === 5){
+              setDisabledHoursD5(disabledHoursInitialObject);
+            }else{
+              setDisabledHoursD6(disabledHoursInitialObject);
+            }
           }
         }
-        setDisabledDays(disabledDaysInitialObject);
-        for(let i = 0 ; i < res.data.prefs.working_hours.length;i++ ){
-            if(res.data.prefs.working_hours[i][1] === 0){
-                disabledHoursInitialObject[`h${i}`] = true;
-                    }      
-            }
-            setDisabledHours(disabledHoursInitialObject);
+           
+           setDisabledDays(disabledDaysInitialObject);
+           setDisabledDaysRadio(disabledDaysRadioInitialObject);
             
       })
       .catch((error) => {
         console.log(error);
       });
+    
   };
   const closeDime = () => {
     setStudentStatus((current) => !current);
@@ -526,6 +1072,93 @@ const StudentSubscriptionState = ({
   };
 
   const getRecommendedInstructorsForEachStudent = (studentObject) => {
+   let matchedDays = [];
+   let matchedHours = [];
+   let recommendedInstructors = [];
+    let avaliableDayaHours = {};
+    for (let i = 0; i < instructorData.length; i++) {
+      //days
+    for (let j = 0; j < instructorData[i].prefs.working_days.length; j++) {
+      if(instructorData[i].prefs.working_days[j] !== -1){
+        if (instructorData[i].prefs.working_days[j] === Number(Object.entries(instructorData[i].busy)[j][0])) {
+          avaliableDayaHours[`${instructorData[i].prefs.working_days[j]}`] = [];
+         //hours
+        if(Object.entries(instructorData[i].busy)[j][1].length === 0 ){
+          for(let x = 0 ; x <instructorData[i].prefs.working_hours.length;x++ ){
+            if(instructorData[i].prefs.working_hours[x][1] !== 0 ){
+             avaliableDayaHours[`${instructorData[i].prefs.working_days[j]}`].push([0,0]);
+            }else{
+              avaliableDayaHours[`${instructorData[i].prefs.working_days[j]}`].push([-1,-1]);
+            }
+          }
+        }else{
+              for(let insIndex = 0 ; insIndex <instructorData[i].prefs.working_hours.length;insIndex++){
+                console.log(Object.entries(instructorData[i].busy)[j][1][insIndex] )
+
+                  if(typeof  Object.entries(instructorData[i].busy)[j][1][insIndex] === 'object' && !Array.isArray(Object.entries(instructorData[i].busy)[j][1][insIndex])){
+                  if(instructorData[i].prefs.working_hours[insIndex][1] !== 0 ){
+                    avaliableDayaHours[`${instructorData[i].prefs.working_days[j]}`].push([0,1]);
+                  }
+                }else{
+                  console.log(Object.entries(instructorData[i].busy)[j][1][insIndex])
+                  if(instructorData[i].prefs.working_hours[insIndex][1] !== 0  && Object.entries(instructorData[i].busy)[j][1][insIndex][1] === 0){
+                    avaliableDayaHours[`${instructorData[i].prefs.working_days[j]}`].push([0,0]);
+                  }else{
+                    avaliableDayaHours[`${instructorData[i].prefs.working_days[j]}`].push([-1,-1]);
+                  }
+                }
+                
+              }
+            }
+        
+        }
+        
+      }
+    }
+    console.log(avaliableDayaHours);
+    for(let stdIndex = 0 ; stdIndex <studentObject.program_prefs.pref_days.length;stdIndex++ ){
+      if(studentObject.program_prefs.pref_days[stdIndex] !== -1){
+        for(let u = 0 ; u <Object.keys(avaliableDayaHours).length;u++ ){
+          if(Number(Object.keys(avaliableDayaHours)[u]) === studentObject.program_prefs.pref_days[stdIndex]){
+            matchedDays.push(true);
+              for(let s = 0 ; s < Object.entries(avaliableDayaHours)[u][1].length;s++){
+                for(let prefHoursIndex = 0 ;prefHoursIndex< studentObject.program_prefs.pref_times_of_day.length;prefHoursIndex++){
+                  if(studentObject.program_prefs.pref_times_of_day[prefHoursIndex][1] !== 0){
+                    if(studentObject.program_prefs.pref_times_of_day[prefHoursIndex][1]  === 1 && Object.entries(avaliableDayaHours)[u][1][s][1] === 0){
+                      matchedHours.push(true)
+                    }else{
+                      matchedHours.push(false);
+                    }
+                  }
+                }
+             
+              }
+          }else{
+            matchedDays.push(false);
+          }
+        }
+      }
+    }
+    if (matchedDays.filter((mD) => mD === true).length >= Number(studentObject.program_prefs.sessions_in_week) && matchedHours.filter((mH)=>mH === true).length >= Number(studentObject.program_prefs.sessions_in_week)) {
+      recommendedInstructors.push(instructorData[i]);
+      matchedDays = [];
+      matchedHours = [];
+      avaliableDayaHours = {};
+    }
+    else{
+      matchedDays = [];
+      matchedHours = [];
+      avaliableDayaHours = {};
+    }
+
+  }
+  setRecommendedInstructorsData(recommendedInstructors);
+
+
+
+   // }
+
+    /*
     let matchedDays = [];
     let matchedHours = [];
     let recommendedInstructors = [];
@@ -561,9 +1194,19 @@ const StudentSubscriptionState = ({
       }
     }
     setRecommendedInstructorsData(recommendedInstructors);
+    */
   };
   const changeStudentSessionsDayHours = (event)=>{
+    
     let wD = [];
+    let stdwHoursD0 = [];
+    let stdwHoursD1 = [];
+    let stdwHoursD2 = [];
+    let stdwHoursD3 = [];
+    let stdwHoursD4 = [];
+    let stdwHoursD5 = [];
+    let stdwHoursD6 = [];
+   
     for (let i = 0; i < Object.values(workingDays).length; i++) {
         
         if (Object.values(workingDays)[i] === "") {
@@ -571,20 +1214,109 @@ const StudentSubscriptionState = ({
             wD.push(emptyWorkingDayInitialValue);
         }else{
             wD.push(Number(Object.values(workingDays)[i]));
-        }
-    }
-    let wHours = [];
 
-    for (let i = 0; i < Object.values(WorkingHours).length; i++) {
-        if (Object.values(WorkingHours)[i] === "") {
-            let emptyWorkingHourInitialValue = (Object.values(WorkingHours)[i] = [
+        }
+  
+    }
+    for (let i = 0; i < Object.values(WorkingHoursD0).length; i++) {
+        if (Object.values(WorkingHoursD0)[i] === "") {
+            let emptyWorkingHourInitialValue = (Object.values(WorkingHoursD0)[i] = [
                 0, 0,
             ]);
-            wHours.push(emptyWorkingHourInitialValue);
+           stdwHoursD0.push(emptyWorkingHourInitialValue);  
         } else {
-            wHours.push(Object.values(WorkingHours)[i]);
+         //stdwHoursD0.push(Object.values(WorkingHoursD0)[i]);
+         stdwHoursD0.push({"stdIds":[changableSubscriptionState._id],"max":1})
         }
     }
+    for (let i = 0; i < Object.values(WorkingHoursD1).length; i++) {
+      if (Object.values(WorkingHoursD1)[i] === "") {
+          let emptyWorkingHourInitialValue = (Object.values(WorkingHoursD1)[i] = [
+              0, 0,
+          ]);
+          stdwHoursD1.push(emptyWorkingHourInitialValue);
+      } else {
+       // stdwHoursD1.push(Object.values(WorkingHoursD1)[i]);
+       stdwHoursD1.push({"stdIds":[changableSubscriptionState._id],"max":1})
+      }
+  }
+  for (let i = 0; i < Object.values(WorkingHoursD2).length; i++) {
+    if (Object.values(WorkingHoursD2)[i] === "") {
+        let emptyWorkingHourInitialValue = (Object.values(WorkingHoursD2)[i] = [
+            0, 0,
+        ]);
+        stdwHoursD2.push(emptyWorkingHourInitialValue);
+    } else {
+     // stdwHoursD2.push(Object.values(WorkingHoursD2)[i]);
+     stdwHoursD2.push({"stdIds":[changableSubscriptionState._id],"max":1})
+    }
+}
+for (let i = 0; i < Object.values(WorkingHoursD3).length; i++) {
+  if (Object.values(WorkingHoursD3)[i] === "") {
+      let emptyWorkingHourInitialValue = (Object.values(WorkingHoursD3)[i] = [
+          0, 0,
+      ]);
+      stdwHoursD3.push(emptyWorkingHourInitialValue);
+  } else {
+    //stdwHoursD3.push(Object.values(WorkingHoursD3)[i]);
+    stdwHoursD3.push({"stdIds":[changableSubscriptionState._id],"max":1})
+  }
+}
+for (let i = 0; i < Object.values(WorkingHoursD4).length; i++) {
+  if (Object.values(WorkingHoursD4)[i] === "") {
+      let emptyWorkingHourInitialValue = (Object.values(WorkingHoursD4)[i] = [
+          0, 0,
+      ]);
+      stdwHoursD4.push(emptyWorkingHourInitialValue);
+  } else {
+    //stdwHoursD4.push(Object.values(WorkingHoursD4)[i]);
+    stdwHoursD4.push({"stdIds":[changableSubscriptionState._id],"max":1})
+  }
+}
+for (let i = 0; i < Object.values(WorkingHoursD5).length; i++) {
+  if (Object.values(WorkingHoursD5)[i] === "") {
+      let emptyWorkingHourInitialValue = (Object.values(WorkingHoursD5)[i] = [
+          0, 0,
+      ]);
+      stdwHoursD5.push(emptyWorkingHourInitialValue);
+  } else {
+   // stdwHoursD5.push(Object.values(WorkingHoursD5)[i]);
+   stdwHoursD5.push({"stdIds":[changableSubscriptionState._id],"max":1})
+  }
+}
+for (let i = 0; i < Object.values(WorkingHoursD6).length; i++) {
+  if (Object.values(WorkingHoursD6)[i] === "") {
+      let emptyWorkingHourInitialValue = (Object.values(WorkingHoursD6)[i] = [
+          0, 0,
+      ]);
+      stdwHoursD6.push(emptyWorkingHourInitialValue);
+  } else {
+   // stdwHoursD6.push(Object.values(WorkingHoursD6)[i]);
+   stdwHoursD6.push({"stdIds":[changableSubscriptionState._id],"max":1})
+  }
+}
+let studentBusy = {};
+    for(let i = 0 ; i <wD.length;i++){
+      if(Number(Object.keys(changableSubscriptionState.busy)[i]) === wD[i]){
+        if( i === 0 )
+        studentBusy[`${i}`] = stdwHoursD0;
+        if( i === 1 )
+        studentBusy[`${i}`] = stdwHoursD1;
+        if( i === 2 )
+        studentBusy[`${i}`] = stdwHoursD2;
+        if( i === 3 )
+        studentBusy[`${i}`] = stdwHoursD3;
+        if( i === 4 )
+        studentBusy[`${i}`] = stdwHoursD4;
+        if( i === 5 )
+        studentBusy[`${i}`] = stdwHoursD5;
+        if( i === 6 )
+        studentBusy[`${i}`] = stdwHoursD6;
+      }else{
+        studentBusy[`${i}`] = [];
+      }
+    }
+    /*
     let program = {
       "program_prefs":{
         "type":changableSubscriptionState.program_prefs.type,
@@ -595,17 +1327,432 @@ const StudentSubscriptionState = ({
       }
        
     }
+    */
     setIsUserMakingUpdateOnStudentAccount(true);
-    axios.put(`http://localhost:5000/api/students/${changableSubscriptionState._id}`,program).then((res)=>{
+    let instructorBusy = {};
+   axios.get(`http://localhost:5000/api/instructors/${changableSubscriptionState.instructor}`).then((res)=>{
+    for(let i = 0 ; i < wD.length;i++ ){
+      if(Number(Object.keys(res.data.busy)[i]) === wD[i]){
+        for(let x = 0 ; x < res.data.prefs.working_hours.length;x++){
+          if(res.data.prefs.working_hours[x][1] === 0){
+            stdwHoursD0[x] = [-1,-1];
+            stdwHoursD1[x] = [-1,-1];
+            stdwHoursD2[x] = [-1,-1];
+            stdwHoursD3[x] = [-1,-1];
+            stdwHoursD4[x] = [-1,-1];
+            stdwHoursD5[x] = [-1,-1];
+            stdwHoursD6[x] = [-1,-1];
+          }
+        }
+        if( i === 0 ){
+          if( Object.entries(res.data.busy)[i][1].find((obji)=> typeof obji === 'object'&&  !Array.isArray(obji)) !== undefined){
+            for(let c = 0 ; c <Object.entries(res.data.busy)[i][1].length;c++){
+               if(typeof Object.entries(res.data.busy)[i][1][c] === 'object' &&  !Array.isArray(Object.entries(res.data.busy)[i][1][c])){
+                 if((Object.entries(res.data.busy)[i][1][c]['stdIds'].find((sId)=> sId === changableSubscriptionState._id)) === undefined && (typeof  stdwHoursD0[c] === 'object' &&  !Array.isArray(stdwHoursD0[c]))){
+                  let previouslyStdIds = [...Object.entries(res.data.busy)[i][1][c]['stdIds']];
+                  previouslyStdIds.push(changableSubscriptionState._id);
+                  let max = Object.entries(res.data.busy)[i][1][c].max;
+                  max+=1;
+                   stdwHoursD0[c] = {"stdIds":previouslyStdIds,"max":max}
+                 }
+               }else{
+                if(stdwHoursD0[c][1] === 1)
+                stdwHoursD0[c] = Object.entries(res.data.busy)[i][1][c];
+               }
+             }
+             instructorBusy[`${i}`] = stdwHoursD0;
+            
+            }else{
+              instructorBusy[`${i}`] = stdwHoursD0;
+            }
+          
+        }
+       
+        if( i === 1 ){
+          if( Object.entries(res.data.busy)[i][1].find((obji)=> typeof obji === 'object'&&  !Array.isArray(obji)) !== undefined){
+            for(let c = 0 ; c <Object.entries(res.data.busy)[i][1].length;c++){
+               if(typeof Object.entries(res.data.busy)[i][1][c] === 'object' &&  !Array.isArray(Object.entries(res.data.busy)[i][1][c])){
+                 if((Object.entries(res.data.busy)[i][1][c]['stdIds'].find((sId)=> sId === changableSubscriptionState._id)) === undefined && (typeof  stdwHoursD1[c] === 'object' &&  !Array.isArray(stdwHoursD1[c]))){
+                  let previouslyStdIds = [...Object.entries(res.data.busy)[i][1][c]['stdIds']];
+                  previouslyStdIds.push(changableSubscriptionState._id);
+                  let max = Object.entries(res.data.busy)[i][1][c].max;
+                  max+=1;
+                   stdwHoursD1[c] = {"stdIds":previouslyStdIds,"max":max}
+                 }
+               }else{
+                if(stdwHoursD1[c][1] === 1)
+                stdwHoursD1[c] = Object.entries(res.data.busy)[i][1][c];
+               }
+             }
+             instructorBusy[`${i}`] = stdwHoursD1;
+            
+            }else{
+              instructorBusy[`${i}`] = stdwHoursD1;
+            }
+       
+        }
+       
+        if( i === 2 ){
+          if( Object.entries(res.data.busy)[i][1].find((obji)=> typeof obji === 'object'&&  !Array.isArray(obji)) !== undefined){
+          for(let c = 0 ; c <Object.entries(res.data.busy)[i][1].length;c++){
+             if(typeof Object.entries(res.data.busy)[i][1][c] === 'object' &&  !Array.isArray(Object.entries(res.data.busy)[i][1][c])){
+               if((Object.entries(res.data.busy)[i][1][c]['stdIds'].find((sId)=> sId === changableSubscriptionState._id)) === undefined && (typeof  stdwHoursD2[c] === 'object' &&  !Array.isArray(stdwHoursD2[c]))){
+                let previouslyStdIds = [...Object.entries(res.data.busy)[i][1][c]['stdIds']];
+                previouslyStdIds.push(changableSubscriptionState._id);
+                let max = Object.entries(res.data.busy)[i][1][c].max;
+                max+=1;
+                 stdwHoursD2[c] = {"stdIds":previouslyStdIds,"max":max}
+               }
+             }else{
+              if(stdwHoursD2[c][1] === 1)
+              stdwHoursD2[c] = Object.entries(res.data.busy)[i][1][c];
+             }
+           }
+           instructorBusy[`${i}`] = stdwHoursD2;
+          
+          }else{
+            instructorBusy[`${i}`] = stdwHoursD2;
+          }
+        
+       
+        }
+       
+        if( i === 3 ){
+          if( Object.entries(res.data.busy)[i][1].find((obji)=> typeof obji === 'object'&&  !Array.isArray(obji)) !== undefined){
+            for(let c = 0 ; c <Object.entries(res.data.busy)[i][1].length;c++){
+               if(typeof Object.entries(res.data.busy)[i][1][c] === 'object' &&  !Array.isArray(Object.entries(res.data.busy)[i][1][c])){
+                 if((Object.entries(res.data.busy)[i][1][c]['stdIds'].find((sId)=> sId === changableSubscriptionState._id)) === undefined && (typeof  stdwHoursD3[c] === 'object' &&  !Array.isArray(stdwHoursD3[c]))){
+                  let previouslyStdIds = [...Object.entries(res.data.busy)[i][1][c]['stdIds']];
+                  previouslyStdIds.push(changableSubscriptionState._id);
+                  let max = Object.entries(res.data.busy)[i][1][c].max;
+                  max+=1;
+                   stdwHoursD3[c] = {"stdIds":previouslyStdIds,"max":max}
+                 }
+               }else{
+                if(stdwHoursD3[c][1] === 1)
+                stdwHoursD3[c] = Object.entries(res.data.busy)[i][1][c];
+               }
+             }
+             instructorBusy[`${i}`] = stdwHoursD3;
+            
+            }else{
+              instructorBusy[`${i}`] = stdwHoursD3;
+            }
+          
+        }
+        
+        if( i === 4 ){
+          if( Object.entries(res.data.busy)[i][1].find((obji)=> typeof obji === 'object'&&  !Array.isArray(obji)) !== undefined){
+            for(let c = 0 ; c <Object.entries(res.data.busy)[i][1].length;c++){
+               if(typeof Object.entries(res.data.busy)[i][1][c] === 'object' &&  !Array.isArray(Object.entries(res.data.busy)[i][1][c])){
+                 if((Object.entries(res.data.busy)[i][1][c]['stdIds'].find((sId)=> sId === changableSubscriptionState._id)) === undefined && (typeof  stdwHoursD4[c] === 'object' &&  !Array.isArray(stdwHoursD4[c]))){
+                  let previouslyStdIds = [...Object.entries(res.data.busy)[i][1][c]['stdIds']];
+                  previouslyStdIds.push(changableSubscriptionState._id);
+                  let max = Object.entries(res.data.busy)[i][1][c].max;
+                  max+=1;
+                   stdwHoursD4[c] = {"stdIds":previouslyStdIds,"max":max}
+                 }
+               }else{
+                if(stdwHoursD4[c][1] === 1)
+                stdwHoursD4[c] = Object.entries(res.data.busy)[i][1][c];
+               }
+             }
+             instructorBusy[`${i}`] = stdwHoursD4;
+            
+            }else{
+              instructorBusy[`${i}`] = stdwHoursD4;
+            }
+           
+        }
+     
+        if( i === 5 ){
+          if( Object.entries(res.data.busy)[i][1].find((obji)=> typeof obji === 'object'&&  !Array.isArray(obji)) !== undefined){
+            for(let c = 0 ; c <Object.entries(res.data.busy)[i][1].length;c++){
+               if(typeof Object.entries(res.data.busy)[i][1][c] === 'object' &&  !Array.isArray(Object.entries(res.data.busy)[i][1][c])){
+                 if((Object.entries(res.data.busy)[i][1][c]['stdIds'].find((sId)=> sId === changableSubscriptionState._id)) === undefined && (typeof  stdwHoursD5[c] === 'object' &&  !Array.isArray(stdwHoursD5[c]))){
+                  let previouslyStdIds = [...Object.entries(res.data.busy)[i][1][c]['stdIds']];
+                  previouslyStdIds.push(changableSubscriptionState._id);
+                  let max = Object.entries(res.data.busy)[i][1][c].max;
+                  max+=1;
+                   stdwHoursD5[c] = {"stdIds":previouslyStdIds,"max":max}
+                 }
+               }else{
+                if(stdwHoursD5[c][1] === 1)
+                stdwHoursD5[c] = Object.entries(res.data.busy)[i][1][c];
+               }
+             }
+             instructorBusy[`${i}`] = stdwHoursD5;
+            
+            }else{
+              instructorBusy[`${i}`] = stdwHoursD5;
+            }
+      
+        }
+        
+        if( i === 6 ){
+          if( Object.entries(res.data.busy)[i][1].find((obji)=> typeof obji === 'object'&&  !Array.isArray(obji)) !== undefined){
+            for(let c = 0 ; c <Object.entries(res.data.busy)[i][1].length;c++){
+               if(typeof Object.entries(res.data.busy)[i][1][c] === 'object' &&  !Array.isArray(Object.entries(res.data.busy)[i][1][c])){
+                 if((Object.entries(res.data.busy)[i][1][c]['stdIds'].find((sId)=> sId === changableSubscriptionState._id)) === undefined && (typeof  stdwHoursD6[c] === 'object' &&  !Array.isArray(stdwHoursD6[c]))){
+                  let previouslyStdIds = [...Object.entries(res.data.busy)[i][1][c]['stdIds']];
+                  previouslyStdIds.push(changableSubscriptionState._id);
+                  let max = Object.entries(res.data.busy)[i][1][c].max;
+                  max+=1;
+                   stdwHoursD6[c] = {"stdIds":previouslyStdIds,"max":max}
+                 }
+               }else{
+                if(stdwHoursD6[c][1] === 1)
+                stdwHoursD6[c] = Object.entries(res.data.busy)[i][1][c];
+               }
+             }
+             instructorBusy[`${i}`] = stdwHoursD6;
+            
+            }else{
+              instructorBusy[`${i}`] = stdwHoursD6;
+            }
+           
+        }
+        
+
+      }
+    }
+    let busyInstructorDaysHours = {}
+    if(Object.values(WorkingHoursD0).every((wH)=> wH === "")){
+      busyInstructorDaysHours["0"] = Object.entries(res.data.busy)[0][1]
+    }else{
+      busyInstructorDaysHours["0"] = instructorBusy['0'];
+    }
+    if(Object.values(WorkingHoursD1).every((wH)=> wH === "")){
+      busyInstructorDaysHours["1"] = Object.entries(res.data.busy)[1][1]
+    }else{
+      busyInstructorDaysHours["1"] = instructorBusy['1'];
+    }
+    if(Object.values(WorkingHoursD2).every((wH)=> wH === "")){
+      busyInstructorDaysHours["2"] = Object.entries(res.data.busy)[2][1]
+    }else{
+      busyInstructorDaysHours["2"] = instructorBusy['2'];
+    }
+    if(Object.values(WorkingHoursD3).every((wH)=> wH === "")){
+      busyInstructorDaysHours["3"] = Object.entries(res.data.busy)[3][1]
+    }else{
+      busyInstructorDaysHours["3"] = instructorBusy['3'];
+    }
+    if(Object.values(WorkingHoursD4).every((wH)=> wH === "")){
+      busyInstructorDaysHours["4"] = Object.entries(res.data.busy)[4][1]
+    }else{
+      busyInstructorDaysHours["4"] = instructorBusy['4'];
+    }
+    if(Object.values(WorkingHoursD5).every((wH)=> wH === "")){
+      busyInstructorDaysHours["5"] = Object.entries(res.data.busy)[5][1]
+    }else{
+      busyInstructorDaysHours["5"] = instructorBusy['5'];
+    }
+    if(Object.values(WorkingHoursD6).every((wH)=> wH === "")){
+      busyInstructorDaysHours["6"] = Object.entries(res.data.busy)[6][1]
+    }else{
+      busyInstructorDaysHours["6"] = instructorBusy['6'];
+    }
+
+ 
+
+    axios.put(`http://localhost:5000/api/instructors/${changableSubscriptionState.instructor}`,{"busy":busyInstructorDaysHours}).then(()=>{
+      stdwHoursD0 = [];
+      stdwHoursD1 = [];
+      stdwHoursD2 = [];
+      stdwHoursD3 = [];
+      stdwHoursD4 = [];
+      stdwHoursD5 = [];
+      stdwHoursD6 = [];
+    setWorkingHoursD0({
+     h0: "",
+     h1: "",
+     h2: "",
+     h3: "",
+     h4: "",
+     h5: "",
+     h6: "",
+     h7: "",
+    });
+    setWorkingHoursD1({
+     h0: "",
+     h1: "",
+     h2: "",
+     h3: "",
+     h4: "",
+     h5: "",
+     h6: "",
+     h7: "",
+    });
+    setWorkingHoursD2({
+     h0: "",
+     h1: "",
+     h2: "",
+     h3: "",
+     h4: "",
+     h5: "",
+     h6: "",
+     h7: "",
+    });
+    setWorkingHoursD3({
+     h0: "",
+     h1: "",
+     h2: "",
+     h3: "",
+     h4: "",
+     h5: "",
+     h6: "",
+     h7: "",
+    });
+    setWorkingHoursD4({
+     h0: "",
+     h1: "",
+     h2: "",
+     h3: "",
+     h4: "",
+     h5: "",
+     h6: "",
+     h7: "",
+    });
+    setWorkingHoursD5({
+     h0: "",
+     h1: "",
+     h2: "",
+     h3: "",
+     h4: "",
+     h5: "",
+     h6: "",
+     h7: "",
+    });
+    setWorkingHoursD6({
+     h0: "",
+     h1: "",
+     h2: "",
+     h3: "",
+     h4: "",
+     h5: "",
+     h6: "",
+     h7: "",
+    });
+    setCheckedHoursD0({
+     h0: false,
+     h1: false,
+     h2: false,
+     h3: false,
+     h4: false,
+     h5: false,
+     h6: false,
+     h7: false,
+    });
+    setCheckedHoursD1({
+     h0: false,
+     h1: false,
+     h2: false,
+     h3: false,
+     h4: false,
+     h5: false,
+     h6: false,
+     h7: false,
+    });
+    setCheckedHoursD2({
+     h0: false,
+     h1: false,
+     h2: false,
+     h3: false,
+     h4: false,
+     h5: false,
+     h6: false,
+     h7: false,
+    });
+    setCheckedHoursD3({
+     h0: false,
+     h1: false,
+     h2: false,
+     h3: false,
+     h4: false,
+     h5: false,
+     h6: false,
+     h7: false,
+    });
+    setCheckedHoursD4({
+     h0: false,
+     h1: false,
+     h2: false,
+     h3: false,
+     h4: false,
+     h5: false,
+     h6: false,
+     h7: false,
+    });
+    setCheckedHoursD5({
+     h0: false,
+     h1: false,
+     h2: false,
+     h3: false,
+     h4: false,
+     h5: false,
+     h6: false,
+     h7: false,
+    });
+    setCheckedHoursD6({
+     h0: false,
+     h1: false,
+     h2: false,
+     h3: false,
+     h4: false,
+     h5: false,
+     h6: false,
+     h7: false,
+    });
+    setWorkingDays({
+     d0:"",
+     d1:"",
+     d2:"",
+     d3:"",
+     d4:"",
+     d5:"",
+     d6:"",
+    })
+    setCheckedDays({
+     d0:false,
+     d1:false,
+     d2:false,
+     d3:false,
+     d4:false,
+     d5:false,
+     d6:false,
+    })
+    setCheckDaysRadio({
+     d0:false,
+     d1:false,
+     d2:false,
+     d3:false,
+     d4:false,
+     d5:false,
+     d6:false,
+    })
+    })
+
+   }).catch((error)=>{
+    console.log(error)
+   })
+    axios.put(`http://localhost:5000/api/students/${changableSubscriptionState._id}`,{"busy":{
+        "0":studentBusy['0'],
+         "1":studentBusy['1'],
+         "2":studentBusy['2'],
+         "3":studentBusy['3'],
+         "4":studentBusy['4'],
+         "5":studentBusy['5'],
+         "6":studentBusy['6']
+    }}).then((res)=>{
        distroyAlert();
        setFetchAgain(fetchAgain+1);
        setIsUserMakingUpdateOnStudentAccount(false);
        setStudentStatus((current) => !current);
        getStudentRatelMa3yJoiningRequestData(res.data,event);
-       
     }).catch((error)=>{
         console.log(error);
     })
+  
   }
   const sortStudentBySubscriptionState = (sortType)=>{
     let studentDataCopy = [...studentData];
@@ -716,7 +1863,7 @@ const StudentSubscriptionState = ({
         </div>
 
         <div className={StudentSubscriptionStyles["table-wrapper"]}>
-          {studentData.length === 0 ? (
+          {studentData.length === 0 || studentData === undefined ? (
             <img
               src={NoResultFiltaration}
               className={StudentSubscriptionStyles["no-result"]}
@@ -1038,7 +2185,7 @@ const StudentSubscriptionState = ({
                     className={`${StudentSubscriptionStyles["days-check-box-container"]}`}
                   >
                     <div>
-                      <Form.Label htmlFor="d0" style={{color:disabledDays.d0?'#dadada':'#000000'}}>{t("Saturday")}</Form.Label>
+                      <Form.Label htmlFor="d0" style={{color:disabledDays.d0?'#d9d9f3':prefsDays.d0?'#00c07f':'#000000'}}>{t("Saturday")}</Form.Label>
                       <Form.Check
                         name="d0"
                         id="d0"
@@ -1048,9 +2195,18 @@ const StudentSubscriptionState = ({
                         onChange={(event) => handleAppointmentInDays(event)}
                         checked={checkedDays["d0"]}
                       />
+                      <Form.Check
+                      type="radio"
+                      name="avaliable_hours_related_to_specific_day"
+                      id="d0"
+                      disabled={disabledDaysRadio.d0}
+                      onChange={(event)=>handleAppointmentInDaysRadio(event)}
+                      checked={checkDaysRadio["d0"]}
+                      style={{cursor:disabledDaysRadio.d0?'not-allowed':'pointer'}}
+                      />
                     </div>
                     <div>
-                      <Form.Label htmlFor="d1" style={{color:disabledDays.d1?'#dadada':'#000000'}}>{t("Sunday")}</Form.Label>
+                      <Form.Label htmlFor="d1" style={{color:disabledDays.d1?'#d9d9f3':prefsDays.d1?'#00c07f':'#000000'}}>Sunday</Form.Label>
                       <Form.Check
                         name="d1"
                         id="d1"
@@ -1060,9 +2216,18 @@ const StudentSubscriptionState = ({
                         onChange={(event) => handleAppointmentInDays(event)}
                         checked={checkedDays["d1"]}
                       />
+                               <Form.Check
+                      type="radio"
+                      name="avaliable_hours_related_to_specific_day"
+                      id="d1"
+                      disabled={disabledDaysRadio.d1}
+                      onChange={(event)=>handleAppointmentInDaysRadio(event)}
+                      checked={checkDaysRadio["d1"]}
+                      style={{cursor:disabledDaysRadio.d1?'not-allowed':'pointer'}}
+                      />
                     </div>
                     <div>
-                      <Form.Label htmlFor="d2" style={{color:disabledDays.d2?'#dadada':'#000000'}}>{t("Monday")}</Form.Label>
+                      <Form.Label htmlFor="d2" style={{color:disabledDays.d2?'#d9d9f3':prefsDays.d2?'#00c07f':'#000000'}}>{t("Monday")}</Form.Label>
                       <Form.Check
                         name="d2"
                         id="d2"
@@ -1072,9 +2237,18 @@ const StudentSubscriptionState = ({
                         onChange={(event) => handleAppointmentInDays(event)}
                         checked={checkedDays["d2"]}
                       />
+                               <Form.Check
+                      type="radio"
+                      name="avaliable_hours_related_to_specific_day"
+                      id="d2"   
+                      disabled={disabledDaysRadio.d2}        
+                      onChange={(event)=>handleAppointmentInDaysRadio(event)}
+                      checked={checkDaysRadio["d2"]}
+                      style={{cursor:disabledDaysRadio.d2?'not-allowed':'pointer'}}
+                      />
                     </div>
                     <div>
-                      <Form.Label htmlFor="d3" style={{color:disabledDays.d3?'#dadada':'#000000'}}>{t("Tuesday")}</Form.Label>
+                      <Form.Label htmlFor="d3" style={{color:disabledDays.d3?'#d9d9f3':prefsDays.d3?'#00c07f':'#000000'}}>{t("Tuesday")}</Form.Label>
                       <Form.Check
                         name="d3"
                         id="d3"
@@ -1084,9 +2258,18 @@ const StudentSubscriptionState = ({
                         onChange={(event) => handleAppointmentInDays(event)}
                         checked={checkedDays["d3"]}
                       />
+                               <Form.Check
+                      type="radio"
+                      name="avaliable_hours_related_to_specific_day"
+                      id="d3"
+                      disabled={disabledDaysRadio.d3}
+                      onChange={(event)=>handleAppointmentInDaysRadio(event)}
+                      checked={checkDaysRadio["d3"]}
+                      style={{cursor:disabledDaysRadio.d3?'not-allowed':'pointer'}}
+                      />
                     </div>
                     <div>
-                      <Form.Label htmlFor="d4" style={{color:disabledDays.d4?'#dadada':'#000000'}}>{t("Wednesday")}</Form.Label>
+                      <Form.Label htmlFor="d4" style={{color:disabledDays.d4?'#d9d9f3':prefsDays.d4?'#00c07f':'#000000'}}>{t("Wednesday")}</Form.Label>
                       <Form.Check
                         name="d4"
                         id="d4"
@@ -1096,9 +2279,18 @@ const StudentSubscriptionState = ({
                         onChange={(event) => handleAppointmentInDays(event)}
                         checked={checkedDays["d4"]}
                       />
+                               <Form.Check
+                      type="radio"
+                      name="avaliable_hours_related_to_specific_day"
+                      id="d4"
+                      disabled={disabledDaysRadio.d4}
+                      onChange={(event)=>handleAppointmentInDaysRadio(event)}
+                      checked={checkDaysRadio["d4"]}
+                      style={{cursor:disabledDaysRadio.d4?'not-allowed':'pointer'}}
+                      />
                     </div>
                     <div>
-                      <Form.Label htmlFor="d5" style={{color:disabledDays.d5?'#dadada':'#000000'}}>{t("Thursday")}</Form.Label>
+                      <Form.Label htmlFor="d5" style={{color:disabledDays.d5?'#d9d9f3':prefsDays.d5?'#00c07f':'#000000'}}>{t("Thursday")}</Form.Label>
                       <Form.Check
                         name="d5"
                         id="d5"
@@ -1108,9 +2300,18 @@ const StudentSubscriptionState = ({
                         onChange={(event) => handleAppointmentInDays(event)}
                         checked={checkedDays["d5"]}
                       />
+                               <Form.Check
+                      type="radio"
+                      name="avaliable_hours_related_to_specific_day"
+                      id="d5"
+                      disabled={disabledDaysRadio.d5}
+                      onChange={(event)=>handleAppointmentInDaysRadio(event)}
+                      checked={checkDaysRadio["d5"]}
+                      style={{cursor:disabledDaysRadio.d5?'not-allowed':'pointer'}}
+                      />
                     </div>
                     <div>
-                      <Form.Label htmlFor="d6" style={{color:disabledDays.d6?'#dadada':'#000000'}}>{t("Friday")}</Form.Label>
+                      <Form.Label htmlFor="d6" style={{color:disabledDays.d6?'#d9d9f3':prefsDays.d6?'#00c07f':'#000000'}}>{t("Friday")}</Form.Label>
                       <Form.Check
                         name="d6"
                         id="d6"
@@ -1120,29 +2321,145 @@ const StudentSubscriptionState = ({
                         onChange={(event) => handleAppointmentInDays(event)}
                         checked={checkedDays["d6"]}
                       />
+                      <Form.Check
+                      type="radio"
+                      name="avaliable_hours_related_to_specific_day"
+                      id="d6"
+                      disabled={disabledDaysRadio.d6}
+                      style={{cursor:disabledDaysRadio.d6?'not-allowed':'pointer'}}
+                      onChange={(event)=>handleAppointmentInDaysRadio(event)}
+                      checked={checkDaysRadio["d6"]}
+                      />
                     </div>
                   </div>
-                  <span>Session Hours</span>
-                  <div
-                    className={`${StudentSubscriptionStyles["hours-check-box-container"]}`}
-                  >
+                  {checkDaysRadio.d0?<>
+                  <span>Session Hours on Saturday</span>
+                  <div className={`${StudentSubscriptionStyles["hours-check-box-container"]}`}>
                     {Working_hours.map((wh, index) => (
                       <div key={wh.id}>
-                        <Form.Label htmlFor={wh.att}  style={{color:disabledHours[`h${index}`]?'#dadada':'#000000'}}>
+                        <Form.Label htmlFor={wh.att}  style={{color:disabledHoursD0[`h${index}`]?'#dadada':prefsHoursD0[`h${index}`]?'#00c07f':'#000000'}}>
                           {wh.appointment}
                         </Form.Label>
                         <Form.Check
                           id={wh.att}
                           name={wh.att}
                           value={index}
-                          disabled={disabledHours[`h${index}`]}
-                          style={{cursor:disabledHours[`h${index}`]?'not-allowed':'pointer'}}
-                          onChange={handleApoointmentInHours}
-                          checked={checkedHours[`h${index}`]}
+                          disabled={disabledHoursD0[`h${index}`]}
+                          style={{cursor:disabledHoursD0[`h${index}`]?'not-allowed':'pointer'}}
+                          onChange={handleApoointmentInHoursD0}
+                          checked={checkedHoursD0[`h${index}`]}
                         />
                       </div>
-                    ))}
-                  </div>
+                    ))}</div></>:checkDaysRadio.d1?<>
+                    <span>Session Hours on Sunday</span>
+                    <div className={`${StudentSubscriptionStyles["hours-check-box-container"]}`}>
+                    {Working_hours.map((wh, index) => (
+                      <div key={wh.id}>
+                        <Form.Label htmlFor={wh.att}  style={{color:disabledHoursD1[`h${index}`]?'#dadada':prefsHoursD1[`h${index}`]?'#00c07f':'#000000'}}>
+                          {wh.appointment}
+                        </Form.Label>
+                        <Form.Check
+                          id={wh.att}
+                          name={wh.att}
+                          value={index}
+                          disabled={disabledHoursD1[`h${index}`]}
+                          style={{cursor:disabledHoursD1[`h${index}`]?'not-allowed':'pointer'}}
+                          onChange={handleApoointmentInHoursD1}
+                          checked={checkedHoursD1[`h${index}`]}
+                        />
+                      </div>
+                    ))}</div></>:checkDaysRadio.d2?<>
+                    <span>Session Hours on Monday</span>
+                    <div className={`${StudentSubscriptionStyles["hours-check-box-container"]}`}>
+                    {Working_hours.map((wh, index) => (
+                      <div key={wh.id}>
+                        <Form.Label htmlFor={wh.att} style={{color:disabledHoursD2[`h${index}`]?'#dadada':prefsHoursD2[`h${index}`]?'#00c07f':'#000000'}}>
+                          {wh.appointment}
+                        </Form.Label>
+                        <Form.Check
+                          id={wh.att}
+                          name={wh.att}
+                          value={index}
+                          disabled={disabledHoursD2[`h${index}`]}
+                          style={{cursor:disabledHoursD2[`h${index}`]?'not-allowed':'pointer'}}
+                          onChange={handleApoointmentInHoursD2}
+                          checked={checkedHoursD2[`h${index}`]}
+                        />
+                      </div>
+                    ))}</div></>:checkDaysRadio.d3?<>
+                         <span>Session Hours on Tuesday</span>
+                    <div className={`${StudentSubscriptionStyles["hours-check-box-container"]}`}>
+                    {Working_hours.map((wh, index) => (
+                      <div key={wh.id}>
+                        <Form.Label htmlFor={wh.att}  style={{color:disabledHoursD3[`h${index}`]?'#dadada':prefsHoursD3[`h${index}`]?'#00c07f':'#000000'}}>
+                          {wh.appointment}
+                        </Form.Label>
+                        <Form.Check
+                          id={wh.att}
+                          name={wh.att}
+                          value={index}
+                          disabled={disabledHoursD3[`h${index}`]}
+                          style={{cursor:disabledHoursD3[`h${index}`]?'not-allowed':'pointer'}}
+                          onChange={handleApoointmentInHoursD3}
+                          checked={checkedHoursD3[`h${index}`]}
+                        />
+                      </div>
+                    ))}</div></>:checkDaysRadio.d4?<>
+                           <span>Session Hours on Wednesday</span>
+                    <div className={`${StudentSubscriptionStyles["hours-check-box-container"]}`}>
+                    {Working_hours.map((wh, index) => (
+                      <div key={wh.id}>
+                        <Form.Label htmlFor={wh.att}  style={{color:disabledHoursD4[`h${index}`]?'#dadada':prefsHoursD4[`h${index}`]?'#00c07f':'#000000'}}>
+                          {wh.appointment}
+                        </Form.Label>
+                        <Form.Check
+                          id={wh.att}
+                          name={wh.att}
+                          value={index}
+                          disabled={disabledHoursD4[`h${index}`]}
+                          style={{cursor:disabledHoursD4[`h${index}`]?'not-allowed':'pointer'}}
+                          onChange={handleApoointmentInHoursD4}
+                          checked={checkedHoursD4[`h${index}`]}
+                        />
+                      </div>
+                    ))}</div></>:checkDaysRadio.d5?<>
+                            <span>Session Hours on Thursday</span>
+                    <div className={`${StudentSubscriptionStyles["hours-check-box-container"]}`}>
+                    {Working_hours.map((wh, index) => (
+                      <div key={wh.id}>
+                        <Form.Label htmlFor={wh.att}  style={{color:disabledHoursD5[`h${index}`]?'#dadada':prefsHoursD5[`h${index}`]?'#00c07f':'#000000'}}>
+                          {wh.appointment}
+                        </Form.Label>
+                        <Form.Check
+                          id={wh.att}
+                          name={wh.att}
+                          value={index}
+                          disabled={disabledHoursD5[`h${index}`]}
+                          style={{cursor:disabledHoursD5[`h${index}`]?'not-allowed':'pointer'}}
+                          onChange={handleApoointmentInHoursD5}
+                          checked={checkedHoursD5[`h${index}`]}
+                        />
+                      </div>
+                    ))}</div></>:checkDaysRadio.d6?<>
+                    <span>Session Hours on Friday</span>
+                    <div className={`${StudentSubscriptionStyles["hours-check-box-container"]}`}>
+                    {Working_hours.map((wh, index) => (
+                      <div key={wh.id}>
+                        <Form.Label htmlFor={wh.att}  style={{color:disabledHoursD6[`h${index}`]?'#dadada':prefsHoursD6[`h${index}`]?'#00c07f':'#000000'}}>
+                          {wh.appointment}
+                        </Form.Label>
+                        <Form.Check
+                          id={wh.att}
+                          name={wh.att}
+                          value={index}
+                          disabled={disabledHoursD6[`h${index}`]}
+                          style={{cursor:disabledHoursD6[`h${index}`]?'not-allowed':'pointer'}}
+                          onChange={handleApoointmentInHoursD6}
+                          checked={checkedHoursD6[`h${index}`]}
+                        />
+                      </div>
+                    ))}</div></>:null
+                  }
                   <button type="button" className={StudentSubscriptionStyles['btn']} onClick={changeStudentSessionsDayHours}>
                     {isUserMakingUpdateOnStudentAccount?<>
                     <Spinner animation="grow" variant="light" style={{width:'10px',height:'10px',marginLeft:'3px'}} />

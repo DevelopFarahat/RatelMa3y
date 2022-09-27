@@ -286,7 +286,7 @@ const [sessionsDate,setSessionsDate] = useState({
                 <td>{specificStudentJoiningRequestData.name}</td>
               
                 {specificStudentJoiningRequestData.subscription_state !== 'Pending' && specificStudentJoiningRequestData.instructor !== null?
-                <th colSpan={"2"}>Instructor</th>:<th colSpan={"2"}>Additinal Info</th>}
+                <th colSpan={"2"}>Instructor</th>:<th colSpan={"2"}>Additinal Info </th>}
               </tr>
               <tr>
               <th>Age</th>
@@ -315,7 +315,7 @@ const [sessionsDate,setSessionsDate] = useState({
               <tr>
                 <th>Mobile</th>
                 <td>{specificStudentJoiningRequestData.mobile}</td>
-                 {specificStudentJoiningRequestData.subscription_state === 'Pending' && (specificStudentJoiningRequestData.instructor === null ||specificStudentJoiningRequestData.instructor === undefined)?<>
+                 {specificStudentJoiningRequestData.subscription_state === 'Pending' && (specificStudentJoiningRequestData.instructor === undefined)?<>
                  <th>Qur'an Surah Or Juiz Reached Before</th>
                  <td>{specificStudentJoiningRequestData.reached_surah}</td>
                  </>:<><th colSpan={"2"}> Additinal Info</th></>}
