@@ -17,14 +17,17 @@
   justify-content: center;
 }
 .keepin input {
-  border-radius: 8px 0px 0px 8px ;
-  margin-right: -5px;
+  border-radius: 8px 0px 0px 8px;
+  margin-inline-end: -5px;
   font-size: 20px;
   width: fit-content;
 }
 .keepin button {
   height: 44px;
-  border-radius: 0px 8px 8px 0px;
+  border-start-start-radius: 0;
+  border-start-end-radius: 8px;
+  border-end-end-radius: 8px;
+  border-end-start-radius: 0;
   font-size: 18px;
   padding: 4px 12px;
 }

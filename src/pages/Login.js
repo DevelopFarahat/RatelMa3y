@@ -1,3 +1,5 @@
+/** @format */
+
 import React, { useContext } from "react";
 import { Button, Form, InputGroup } from "react-bootstrap";
 import { useFormik } from "formik";
@@ -11,10 +13,9 @@ import { useSnackbar } from "notistack";
 import { useTranslation } from "react-i18next";
 
 export default function Login() {
-
   const navigate = useNavigate();
   const { setUser } = useContext(UserContext);
-  const { t } = useTranslation()
+  const { t } = useTranslation();
   const { enqueueSnackbar } = useSnackbar();
 
   const initialValues = {
@@ -38,23 +39,23 @@ export default function Login() {
 
           setUser(res.data);
           navigate("../home", { replace: true });
-        } else return enqueueSnackbar(t('login_error_incorrect'));
+        } else return enqueueSnackbar(t("login_error_incorrect"));
       })
-      .catch(() => enqueueSnackbar(t('login_error_incorrect')));
+      .catch(() => enqueueSnackbar(t("login_error_incorrect")));
   };
   const validate = (values) => {
     let errors = {};
     /*************************************/
     if (!values.email) {
-      errors.email = t('keepintouch_required');
+      errors.email = t("keepintouch_required");
     } else if (
       !/^[A-Z0-9._%+-]+@[A-Z0-9._]+\.[A-Z]{2,4}$/i.test(values.email)
     ) {
-      errors.email = t('keepintouch_invalid_email');
+      errors.email = t("keepintouch_invalid_email");
     }
     /*************************************/
     if (!values.password) {
-      errors.password = t('keepintouch_required');
+      errors.password = t("keepintouch_required");
     }
   };
 
@@ -67,9 +68,13 @@ export default function Login() {
   return (
     <>
       <div
-        className="container text-center"
-        style={{ height: "100%", marginTop: 64, marginBottom: 32 }}
-      >
+        className='container text-center'
+        style={{
+          height: "100%",
+          marginTop: 64,
+          marginBottom: 32,
+          direction: t("us") === "Us" ? "ltr" : "rtl",
+        }}>
         <Form
           onSubmit={formik.handleSubmit}
           style={{
@@ -83,64 +88,62 @@ export default function Login() {
             paddingRight: 32,
             boxShadow: "0 0 12px rgb(0 0 0 / 16%)",
             margin: "auto",
-          }}
-        >
-          <h3 className="mb-4">{t('login_title')}</h3>
-          <InputGroup className="mb-2">
+          }}>
+          <h3 className='mb-4'>{t("login_title")}</h3>
+          <InputGroup className='mb-2'>
             <InputGroup.Text>
               <IoMdMail />
             </InputGroup.Text>
             <Form.Control
-              placeholder={t('login_email')}
-              type="email"
-              name="email"
+              placeholder={t("login_email")}
+              type='email'
+              name='email'
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.email}
             />
 
             {formik.touched.email && formik.errors.email ? (
-              <Form.Control.Feedback type="invalid">
+              <Form.Control.Feedback type='invalid'>
                 {formik.errors.email}
               </Form.Control.Feedback>
             ) : null}
           </InputGroup>
 
-          <InputGroup hasValidation className="mb-4">
+          <InputGroup hasValidation className='mb-4'>
             <InputGroup.Text>
               <AiFillLock />
             </InputGroup.Text>
             <Form.Control
-              placeholder={t('login_password')}
-              name="password"
-              type="password"
+              placeholder={t("login_password")}
+              name='password'
+              type='password'
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.password}
             />
 
             {formik.touched.password && formik.errors.password ? (
-              <Form.Control.Feedback type="invalid">
+              <Form.Control.Feedback type='invalid'>
                 {formik.errors.password}
               </Form.Control.Feedback>
             ) : null}
           </InputGroup>
 
-          <div className="d-grid gap-2">
-            <Button type="submit" variant="success" className="mb-4" size="lg">
-            {t('login_button')}
+          <div className='d-grid gap-2'>
+            <Button type='submit' variant='success' className='mb-4' size='lg'>
+              {t("login_button")}
             </Button>
           </div>
 
           <div
-            className="w-100"
-            style={{ justifyContent: "space-between", display: "flex" }}
-          >
-            <Link to="/forgot-password" className="text-dark fw-700">
-            {t('login_forgot')}
+            className='w-100'
+            style={{ justifyContent: "space-between", display: "flex" }}>
+            <Link to='/forgot-password' className='text-dark fw-700'>
+              {t("login_forgot")}
             </Link>
-            <Link to="/register">
-              <Button variant="outline-success">{t('login_register')}</Button>
+            <Link to='/register'>
+              <Button variant='outline-success'>{t("login_register")}</Button>
             </Link>
           </div>
         </Form>

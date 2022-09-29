@@ -10,7 +10,9 @@ import StatisticsCss from "./Statistics.module.css";
 function Statistics() {
   const [t, i18n] = useTranslation();
   return (
-    <div className={StatisticsCss.statistics}>
+    <div
+      style={{ direction: t("us") === "Us" ? "ltr" : "rtl" }}
+      className={StatisticsCss.statistics}>
       <Container>
         <Row>
           <Col md={4}>
@@ -22,13 +24,17 @@ function Statistics() {
           <Col md={4}>
             <div className={StatisticsCss.stcard}>
               <p className={StatisticsCss.numb}>{t("num_75")}</p>
-              <p className={StatisticsCss.text}>{t("statistics_instructors")}</p>
+              <p className={StatisticsCss.text}>
+                {t("statistics_instructors")}
+              </p>
             </div>
           </Col>
           <Col md={4}>
             <div className={StatisticsCss.stcard}>
               <p className={StatisticsCss.numb}>{t("num_10")}</p>
-              <p className={StatisticsCss.text}>{t("statistics_instructors")}</p>
+              <p className={StatisticsCss.text}>
+                {t("statistics_instructors")}
+              </p>
             </div>
           </Col>
         </Row>

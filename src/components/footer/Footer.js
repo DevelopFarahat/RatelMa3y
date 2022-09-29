@@ -13,56 +13,72 @@ import "../../App.css";
 import FooterCss from "./Footer.module.css";
 
 function Footer(props) {
-  const {t} = useTranslation()
+  const { t } = useTranslation();
   return (
-    <div className={FooterCss.footer} style={{transitionDuration: "3s" ,transform: props.isRoomPrepared? "translateY(300px)":"translateY(0px)"}}>
+    <div
+      
+      className={FooterCss.footer}
+      style={{
+        transitionDuration: "3s",
+        transform: props.isRoomPrepared
+          ? "translateY(300px)"
+          : "translateY(0px)",
+          direction: t("us") === "Us" ? "ltr" : "rtl"
+      }}>
       <div className={FooterCss.innerfooter}>
         <Container>
           <Row>
             <Col>
               <Link className={FooterCss.link} to={"/home"}>
-                <img className={FooterCss.logo} src={logo} alt="logo" />
+                <img className={FooterCss.logo} src={logo} alt='logo' />
               </Link>
               <div className={FooterCss.social}>
                 <p className={FooterCss.Ratelfooter}>{t("Follow_us")}</p>
                 <a
-                  href="https://www.facebook.com/ratelma3y/"
-                  target="_blank"
-                  rel="noreferrer"
-                >
+                  href='https://www.facebook.com/ratelma3y/'
+                  target='_blank'
+                  rel='noreferrer'>
                   <BsFacebook className={FooterCss.socialicon} />
                 </a>
-                <a href="#">
+                <a href='#'>
                   <BsYoutube className={FooterCss.socialicon} />
                 </a>
-                <a href="#">
+                <a href='#'>
                   <RiWhatsappFill className={FooterCss.socialicon} />
                 </a>
               </div>
             </Col>
             <Col>
-              <h4>{t('footer_homepage')}</h4>
+              <h4>{t("footer_homepage")}</h4>
               <Link className={FooterCss.link} to={"/home"}>
-                <span className={FooterCss.hoverable}>{t('footer_home')}</span>
+                <span className={FooterCss.hoverable}>{t("footer_home")}</span>
               </Link>
               <Link className={FooterCss.link} to={"/events"}>
-                <span className={FooterCss.hoverable}>{t('footer_events')}</span>
+                <span className={FooterCss.hoverable}>
+                  {t("footer_events")}
+                </span>
               </Link>
               <Link className={FooterCss.link} to={"/about"}>
-                <span className={FooterCss.hoverable}>{t('footer_aboutus')}</span>
+                <span className={FooterCss.hoverable}>
+                  {t("footer_aboutus")}
+                </span>
               </Link>
               <Link className={FooterCss.link} to={"/contact"}>
-                <span className={FooterCss.hoverable}>{t('footer_contactus')}</span>
+                <span className={FooterCss.hoverable}>
+                  {t("footer_contactus")}
+                </span>
               </Link>
             </Col>
             <Col>
-              <h4>{t('footer_enrollmentsystem')}</h4>
-              <br/> 
+              <h4>{t("footer_enrollmentsystem")}</h4>
+              <br />
               <Link className={FooterCss.link} to={"/login"}>
-                <span className={FooterCss.hoverable}>{t('footer_login')}</span>
+                <span className={FooterCss.hoverable}>{t("footer_login")}</span>
               </Link>
               <Link className={FooterCss.link} to={"/register"}>
-                <span className={FooterCss.hoverable}>{t('footer_registration')}</span>
+                <span className={FooterCss.hoverable}>
+                  {t("footer_registration")}
+                </span>
               </Link>
             </Col>
           </Row>

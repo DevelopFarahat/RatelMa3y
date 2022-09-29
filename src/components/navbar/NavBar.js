@@ -1,4 +1,6 @@
-import React, { useContext, useState,useEffect } from "react";
+/** @format */
+
+import React, { useContext, useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
@@ -28,10 +30,10 @@ function NavBar({ i18n, isRoomPrepared }) {
   const [isArabic, setIsArabic] = useState(false);
 
   async function logout() {
-    let lang = localStorage.getItem('i18nextLng')
+    let lang = localStorage.getItem("i18nextLng");
     setUser(null);
     localStorage.clear();
-    localStorage.setItem('i18nextLng',lang)
+    localStorage.setItem("i18nextLng", lang);
     navigate("../../home", { replace: true });
   }
 
@@ -42,27 +44,26 @@ function NavBar({ i18n, isRoomPrepared }) {
   return (
     <Navbar
       className={NavCss.Navbar}
-      fixed="top"
-      expand="lg"
+      fixed='top'
+      expand='lg'
       style={{
         transition: "transform 3s",
         transform: isRoomPrepared ? "translateY(-120px)" : "translateY(0px)",
-      }}
-    >
+        direction: t("us") === "Us" ? "ltr" : "rtl",
+      }}>
       <Container>
         <Link to={"home"}>
           <Navbar.Brand className={NavCss.NavbarBrand}>
-            <img className={NavCss.logo} src={logo} alt="logo" />
+            <img className={NavCss.logo} src={logo} alt='logo' />
           </Navbar.Brand>
         </Link>
-        <Navbar.Toggle aria-controls="navbarScroll" />
+        <Navbar.Toggle aria-controls='navbarScroll' />
 
-        <Navbar.Collapse id="navbarScroll">
+        <Navbar.Collapse id='navbarScroll'>
           <Nav
-            className="m-auto my-2 my-lg-0"
+            className='m-auto my-2 my-lg-0'
             style={{ maxHeight: "100px" }}
-            navbarScroll
-          >
+            navbarScroll>
             <Link className={NavCss.link} to={"/home"}>
               {t("navbar_home")}
             </Link>
@@ -90,7 +91,7 @@ function NavBar({ i18n, isRoomPrepared }) {
             )}
             {user && user.privileges === "Admin" && (
               <Link to={"/adminPanel"}>
-                <Button variant="outline-success">
+                <Button variant='outline-success'>
                   {" "}
                   {t("navbar_adminpanel")}
                 </Button>
@@ -99,35 +100,32 @@ function NavBar({ i18n, isRoomPrepared }) {
           </Nav>
           {user ? (
             <NavDropdown
-              id="nav-dropdown-dark-example"
+              id='nav-dropdown-dark-example'
               title={user.name}
-              menuVariant="dark"
-              style={{ margin: 16, fontWeight: 500 }}
-            >
+              menuVariant='dark'
+              style={{ margin: 16, fontWeight: 500 }}>
               <NavDropdown.Item onClick={() => navigate("/account")}>
-               {t('navbar_account')}
+                {t("navbar_account")}
               </NavDropdown.Item>
 
               <NavDropdown.Divider />
-              <NavDropdown.Item className="text-danger" onClick={logout}>
+              <NavDropdown.Item className='text-danger' onClick={logout}>
                 {t("logout")}
               </NavDropdown.Item>
             </NavDropdown>
           ) : (
             <Link to={"/login"}>
-              <Button className={NavCss.button} variant="outline-success">
+              <Button className={NavCss.button} variant='outline-success'>
                 {t("login")}
               </Button>
             </Link>
           )}
-            <Button
-              className={NavCss.button}
-              variant="outline-success"
-              onClick={(e) => changeLang(e)}
-            >
-              {isArabic? "en": "ar"}
-            </Button>
-          
+          <Button
+            className={NavCss.button}
+            variant='outline-success'
+            onClick={(e) => changeLang(e)}>
+            {isArabic ? "en" : "ar"}
+          </Button>
         </Navbar.Collapse>
       </Container>
     </Navbar>
