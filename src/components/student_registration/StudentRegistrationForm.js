@@ -20,6 +20,7 @@ const StudentRegistrationForm = () => {
       thirdStep: false,
       fourStep: false,
       fiveStep: false,
+      sixStep:false
     });
   const [isThereNewRegistration,setIsThereNewRegistration] = useState(false);
   const [isRegistrationErrorAlertVisible,setIsRegistrationErrorAlertVisible] = useState(false);
@@ -109,6 +110,7 @@ const StudentRegistrationForm = () => {
     started_from_surah: "",
     reached_surah: "",
     whatsapp_number: "",
+    email_verification:""
   });
   const [errors, setErrors] = useState({
     emailError: "",
@@ -123,7 +125,8 @@ const StudentRegistrationForm = () => {
     started_from_surahError: "",
     reached_surahError: "",
     certificateError: "",
-    programError:""
+    programError:"",
+    email_verificationError:""
   });
   let listOfCountries = [
     { id: 0, name: "Egypt" },
@@ -150,6 +153,7 @@ const StudentRegistrationForm = () => {
           thirdStep: false,
           fourStep: false,
           fiveStep: false,
+          sixStep:false
         })
       : event.currentTarget.id === "secondStep"
       ? setStudentRegistrationFormSteps({
@@ -158,6 +162,7 @@ const StudentRegistrationForm = () => {
           thirdStep: false,
           fourStep: false,
           fiveStep: false,
+          sixStep:false
         })
       : event.currentTarget.id === "thirdStep"
       ? setStudentRegistrationFormSteps({
@@ -166,6 +171,7 @@ const StudentRegistrationForm = () => {
           thirdStep: true,
           fourStep: false,
           fiveStep: false,
+          sixStep:false
         })
       : event.currentTarget.id === "firstStepPrevious"
       ? setStudentRegistrationFormSteps({
@@ -174,6 +180,7 @@ const StudentRegistrationForm = () => {
           thirdStep: false,
           fourStep: false,
           fiveStep: false,
+          sixStep:false
         })
       : event.currentTarget.id === "secondStepPrevious"
       ? setStudentRegistrationFormSteps({
@@ -182,6 +189,7 @@ const StudentRegistrationForm = () => {
           thirdStep: false,
           fourStep: false,
           fiveStep: false,
+          sixStep:false
         })
       : event.currentTarget.id === "thirdStepPrevious"
       ? setStudentRegistrationFormSteps({
@@ -190,6 +198,7 @@ const StudentRegistrationForm = () => {
           thirdStep: true,
           fourStep: false,
           fiveStep: false,
+          sixStep:false
         })
       : event.currentTarget.id === "fourStepPrevious"
       ? setStudentRegistrationFormSteps({
@@ -198,6 +207,7 @@ const StudentRegistrationForm = () => {
           thirdStep: false,
           fourStep: true,
           fiveStep: false,
+          sixStep:false
         })
       : event.currentTarget.id === "fourStep"
       ? setStudentRegistrationFormSteps({
@@ -206,14 +216,33 @@ const StudentRegistrationForm = () => {
           thirdStep: false,
           fourStep: true,
           fiveStep: false,
+          sixStep:false
         })
-      : setStudentRegistrationFormSteps({
+      : event.currentTarget.id === "fiveStep"?
+      setStudentRegistrationFormSteps({
           firstStep: false,
           secondStep: false,
           thirdStep: false,
           fourStep: false,
           fiveStep: true,
-        });
+          sixStep:false
+        }):event.currentTarget.id === "fiveStepPrevious"?
+        setStudentRegistrationFormSteps({
+          firstStep: false,
+          secondStep: false,
+          thirdStep: false,
+          fourStep: false,
+          fiveStep: true,
+          sixStep:false
+        })
+        :setStudentRegistrationFormSteps({
+          firstStep: false,
+          secondStep: false,
+          thirdStep: false,
+          fourStep: false,
+          fiveStep: false,
+          sixStep:true
+        })
   };
   // just case if the user demande student can register in multiple programs
   /*
@@ -393,6 +422,14 @@ const StudentRegistrationForm = () => {
         programError:
           value.length === 0
             ? "Student Program  Is Required"
+            : "",
+      });
+    }else if (filed === "email_verification") {
+      setErrors({
+        ...errors,
+        email_verificationError:
+          value.length === 0
+            ? "Verification Code Is Required"
             : "",
       });
     }
@@ -610,6 +647,26 @@ const StudentRegistrationForm = () => {
           >
             5
           </span>
+          <span
+            className={`${StudentRegistrationFormStyles["line"]} ${
+                    userData.email_verification !== "" ||
+                    errors.email_verificationError
+                ? StudentRegistrationFormStyles["coloredLine"]
+                :"" 
+            }`}
+          ></span>
+                <span
+            className={`${StudentRegistrationFormStyles["circle"]} 
+                      ${
+                        userData.email_verification !== "" ||
+                        errors.email_verificationError
+                          ? StudentRegistrationFormStyles["coloredCircle"]
+                          : ""
+                      }`}
+          >
+            6
+          </span>
+
         </div>
         <div className={StudentRegistrationFormStyles["form-main-container"]}>
           <div
@@ -1178,7 +1235,7 @@ const StudentRegistrationForm = () => {
                   </button>
                 </div>
               </div>
-            ) : (
+            ) :studentRegistrationFormSteps.fiveStep ?(
               <div
                 className={StudentRegistrationFormStyles["step-5-container"]}
               >
@@ -1215,6 +1272,7 @@ const StudentRegistrationForm = () => {
                     prevoius
                   </button>
                   <button
+                    id="sixStep"
                     type="submit"
                     disabled={
                       (WorkingHours.h0 !== "" ||
@@ -1242,9 +1300,24 @@ const StudentRegistrationForm = () => {
                   ? StudentRegistrationFormStyles["btn"]
                         : StudentRegistrationFormStyles["disabled-btn"]
                     }`}
-                   
+                   onClick={handleFormSteps}
                   >
-                  
+                  Next{" "}
+                    <TbPlayerTrackNext style={{ margin: "-2px 0 0 3px" }} />
+                  </button>
+                </div>
+              </div>
+            ):(
+              <div  className={StudentRegistrationFormStyles["step-6-container"]}>
+                <p>we have sent an email to you, please check your email and type the code</p>
+                <Form.Label htmlFor="email_verification">Code</Form.Label>
+                <Form.Control type="number" name="email_verification" id="email_verification" value={userData.email_verification} onChange={handleChange}/>
+                <div  className={StudentRegistrationFormStyles["step-button-container"]}>
+                  <button type="submit" id="fiveStepPrevious" onClick={handleFormSteps} className={StudentRegistrationFormStyles["btn"]}>   {" "}
+                    <ImPrevious2 style={{ marginTop: "-3px" }} />
+                    prevoius</button>
+                  <button type="submit" className={` ${userData.email_verification === "" || errors.email_verificationError? StudentRegistrationFormStyles["disabled-btn"]:StudentRegistrationFormStyles["btn"]}`} disabled={userData.email_verification === "" || errors.certificateError?true:false }>
+
                   {isThereNewRegistration?<>
                     <Spinner animation="grow" variant="light" style={{width:'10px',height:'10px',marginLeft:'3px'}} />
                     <Spinner animation="grow" variant="light" style={{width:'10px',height:'10px',marginLeft:'3px'}} />
@@ -1254,8 +1327,6 @@ const StudentRegistrationForm = () => {
                     <Spinner animation="grow" variant="light" style={{width:'10px',height:'10px',marginLeft:'3px'}} />
                     </>:<>{"Register"}<ImUserPlus style={{marginLeft:"3px"}}/></>
                     }
-                    
-                    
                   </button>
                 </div>
               </div>

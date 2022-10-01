@@ -8,15 +8,14 @@ import { BiReset } from "react-icons/bi";
 import Form from 'react-bootstrap/Form';
 import dateTimeSessionImage from "../../assets/images/dateTimeSessions.png";
 import  DateTimeImage from "../../assets/images/date-time.png";
+import sessionsDaysHours from "../../assets/images/hangouts-meet.png";
 import { VscChromeClose } from "react-icons/vsc";
 import {AiFillFilter} from "react-icons/ai";
 import {MdKeyboardArrowDown} from "react-icons/md";
 import {MdKeyboardArrowUp} from "react-icons/md";
-import { AiFillPayCircle } from "react-icons/ai";
-import axios from "axios";
-import { isLabelWithInternallyDisabledControl } from "@testing-library/user-event/dist/utils";
 const StudentDetails = ({specificStudentJoiningRequestData,studentSessionsDetails,setStudentSessionsDetails, setSpecificStudentJoiningRequestData, initialStudentSessionsDetails, isStudentRequestDataVisible, isStudentRatelDataVisible, setIsStudentRequestDataVisible, setIsStudentRatelDataVisible }) => {
   const [isToolTipShown,setIsToolTipShown] = useState(false);
+  const [isToolTipSchedulerShown,setIsToolTipSchedulerShown] = useState(false);
   let programes = [{ id: 0, name: "programprogr1" }, { id: 1, name: "programprogr2" }, { id: 2, name: "programprogr3" },]
   let days = ['Saturday','Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
   let workingHoursArr = [
@@ -179,10 +178,14 @@ const [sessionsDate,setSessionsDate] = useState({
         </div> : <img src={EmptyDataImage} className={StudentDetailsStyles['empty-data-img']} alt="Empty" />}
         {Object.keys(specificStudentJoiningRequestData).length !== 0 && specificStudentJoiningRequestData.subscription_state !== 'Cancelled' ? isStudentRequestDataVisible && specificStudentJoiningRequestData.subscription_state !== 'Cancelled' ? <div className={StudentDetailsStyles['student-request-joinnig-info-main-container']} style={{overflow:isDateTimeVisable?'hidden':'auto'}}>
           {/* request */}
-         <div className={StudentDetailsStyles['show-daysTimes-tooltip']} style={{opacity:isToolTipShown?'1':'0',transition:isToolTipShown?'opacity .5s':''}}>
-            <span>Click to show days and hours</span>
+         <div className={`${StudentDetailsStyles['show-daysTimes-tooltip']}`} style={{opacity:isToolTipShown?'1':'0',transition:isToolTipShown?'opacity .5s':''}}>
+            <span>Click to show preferred days and hours</span>
+          </div>
+          <div className={StudentDetailsStyles['show-daysTimes-tooltip-sessions']} style={{opacity:isToolTipShown?'1':'0',transition:isToolTipShown?'opacity .5s':''}}>
+            <span>Click to show student sessions scheduler</span>
           </div>
           <div className={StudentDetailsStyles['student-table-main-header']}>
+          <img className={StudentDetailsStyles['date-time-icon']} onMouseOver={displayToolTip} onMouseOut={distroyToolTip}  src={sessionsDaysHours} onClick={showDateTimeContainer}  alt="meeting-day-time"/>
             <span>Student Data</span>
               <img className={StudentDetailsStyles['date-time-icon']} onMouseOver={displayToolTip} onMouseOut={distroyToolTip}  src={DateTimeImage} onClick={showDateTimeContainer}  alt="date-time"/>
             </div>
@@ -438,7 +441,7 @@ const [sessionsDate,setSessionsDate] = useState({
                       </>
                       )):null:<><td>{""}</td>{""}<td></td></>}
                     <td>{session.created_by.name}</td>
-                    <td>{session.created_at.split("T")[0]}{" "}{" "}{session.created_at.split("T")[1]}</td>
+                    <td>{session.created_at.split("T")[0]}{" "}</td>
                     </tr>
                 )):null}
               </tbody>
