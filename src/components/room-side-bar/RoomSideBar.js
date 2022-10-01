@@ -26,7 +26,7 @@ export default function RoomSideBar({ hideMain }) {
       user.in_session.members_with_access.forEach(async (id) => {
         if (id != user._id) {
           let r = axios.get(
-            "http://localhost:5000/api/students/" + id.toString()
+            `${process.env.REACT_APP_BACK_HOST_URL}/api/students/${id.toString()}`
           );
           promiseArr.push(r);
         }
@@ -229,7 +229,7 @@ const EvaluationSheet = (props) => {
         setIsLoading(true);
 
         axios
-          .put(`http://localhost:5000/api/sessions/${props.session._id}`, {
+          .put(`${process.env.REACT_APP_BACK_HOST_URL}/api/sessions/${props.session._id}`, {
             evaluations: {
               ...values,
               _id: values.student,

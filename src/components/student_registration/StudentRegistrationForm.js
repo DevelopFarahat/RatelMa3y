@@ -443,7 +443,7 @@ const StudentRegistrationForm = () => {
         }
         setIsThereNewRegistration(true);
         
-        axios.post(`http://localhost:5000/api/students`,finalStudentRegistrationDataObji).then((res)=>{
+        axios.post(`${process.env.REACT_APP_BACK_HOST_URL}/api/students`,finalStudentRegistrationDataObji).then((res)=>{
           res.status === 200?navigate('/login'):setIsRegistrationErrorAlertVisible(true);
           console.log(res);
           setIsThereNewRegistration(false);

@@ -1,14 +1,14 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useRef } from "react";
 import { Accordion, Button, Card, Form, InputGroup } from "react-bootstrap";
 import * as yup from "yup";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useSnackbar } from "notistack";
 import { useTranslation } from "react-i18next";
+import UserContext from "../utils/UserContext";
 
-//TODO: IMO Better practice is to make snackbar for actions not for just validations
 export default function Forgot() {
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  const { enqueueSnackbar } = useSnackbar();
 
   const schema = yup.object().shape({
     email: yup.string().email("Invalid email").required("Required"),
@@ -16,14 +16,13 @@ export default function Forgot() {
   });
 
   const navigate = useNavigate();
-
-  //TODO: validation here is not working properly
-  const [timer, setTimer] = useState(0);
+  const [timer, setTimer] = useState(15);
   const [resetData, setResetData] = useState({});
   const [sendBtnEnabled, setSendBtnEnabled] = useState(true);
   const [pinSent, setPinSent] = useState(false);
   const [verified, setVerified] = useState(false);
   const [errors, setErrors] = useState({});
+  const { setIsLoading } = useContext(UserContext);
   const { t } = useTranslation();
   // const [password, setPassword] = useState("");
 
@@ -32,37 +31,40 @@ export default function Forgot() {
   }, [verified]);
 
   function sendPIN() {
+    setIsLoading(true);
     //validate that email is in right format
     if (!/\w+@\w+.com/.test(resetData.email)) {
-      // errors.email = "Email is not in the right format";
-      // setErrors((errrs)=> {errrs.email = "Email is not in the right format"; return errrs});
+      setIsLoading(false);
       return enqueueSnackbar(t("keepintouch_invalid_email"));
-      // throw errors.email;
     }
 
     axios
-      .post("http://localhost:5000/api/auth/request_pin", {
+      .post(`${process.env.REACT_APP_BACK_HOST_URL}/api/auth/request_pin`, {
         email: resetData.email,
       })
       .then((res) => {
-        if (res.status != 200) return enqueueSnackbar(t("login_error_pin"));
+        if (res.status != 200) {
+          setIsLoading(false);
+          return enqueueSnackbar(t("login_error_pin"));
+        }
 
         //OK now count down for a minute
         setSendBtnEnabled(false);
         setPinSent(true);
+        setIsLoading(false);
 
         setTimeout(() => {
           setSendBtnEnabled(true);
-        }, 1000 * 60);
+        }, 1000 * 15);
 
-        //TODO:: NOT WORKING PROBERLY
         var interv = setInterval(function () {
-          //TODO: this causing a continous rerendering
-          if (timer >= 59) {
-            myStopFunction();
-            console.log("works");
-          }
-          setTimer((ptimer) => ++ptimer);
+          setTimer((time) => {
+            if (time <= 0) {
+              myStopFunction();
+              time = 61;
+            }
+            return (time - 1);
+          });
         }, 1000);
 
         function myStopFunction() {
@@ -70,48 +72,51 @@ export default function Forgot() {
         }
       })
       .catch((err) => {
-        // errors.email = err;
-        // setErrors(errors);
+        setIsLoading(false);
         return enqueueSnackbar(err.message);
       });
   }
 
   function verify() {
+    setIsLoading(true);
     if (!/\w+@\w+.com/.test(resetData.email)) {
-      // errors.email = "";
-      // setErrors(errors);
+      setIsLoading(false);
       return enqueueSnackbar(t("keepintouch_invalid_email"));
-      // throw errors.email;
     }
     if (resetData.pin.length != 6) {
+      setIsLoading(false);
       return enqueueSnackbar(t("login_error_pin_validation"));
-      // errors.pin = "PIN should be 6 digits";
-      // setErrors(errors);
-      // throw errors.pin;
     }
 
     axios
-      .post("https://ratel.cyclic.app/api/auth/confirm_pin", {
+      .post(`${process.env.REACT_APP_BACK_HOST_URL}/api/auth/confirm_pin`, {
         email: resetData.email,
         pin: resetData.pin,
       })
       .then((res) => {
-        if (res.status != 200)
+        if (res.status != 200) {
+          setIsLoading(false);
           return enqueueSnackbar(res.status + t("went_wrong"));
+        }
 
         setResetData({ ...resetData, ...res.data });
         setVerified(true);
+        setIsLoading(false);
       })
       .catch((err) => {
+        setIsLoading(false);
         return enqueueSnackbar(err.message);
       });
   }
 
   function putNewPassword() {
     axios
-      .put(`http://localhost:5000/api/${resetData.field}/${resetData._id}`, {
-        ...resetData,
-      })
+      .put(
+        `${process.env.REACT_APP_BACK_HOST_URL}/api/${resetData.field}/${resetData._id}`,
+        {
+          ...resetData,
+        }
+      )
       .then((res) => {
         if (res.status != 200) {
           return enqueueSnackbar(res.status + t("went_wrong"));

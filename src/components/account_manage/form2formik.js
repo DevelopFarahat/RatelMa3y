@@ -52,7 +52,7 @@ function Formikform({ user, setUser, t }) {
 
         let field = user.role === "instructor" ? "instructors" : "students";
 
-        axios.put(`http://localhost:5000/api/${field}/${user._id}`, values)
+        axios.put(`${process.env.REACT_APP_BACK_HOST_URL}/api/${field}/${user._id}`, values)
           .then(() => {
             setUser({ ...user, ...values });
             // localStorage.setItem(JSON.stringify(user))

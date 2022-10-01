@@ -810,7 +810,7 @@ const StudentSubscriptionState = ({
     let disabledDaysRadioInitialObject = {};
     let disabledHoursInitialObject = {};
     axios
-      .get(`http://localhost:5000/api/instructors/${stObj.instructor}`)
+      .get(`${process.env.REACT_APP_BACK_HOST_URL}/api/instructors/${stObj.instructor}`)
       .then((res) => {
         console.log(res.data.prefs.working_days);
         for (let i = 0; i < res.data.prefs.working_days.length; i++) {
@@ -903,7 +903,7 @@ const StudentSubscriptionState = ({
   };
   const getStudentRatelMa3yJoiningRequestData = (stdObji, event) => {
     axios
-      .get(`http://localhost:5000/api/students/${stdObji._id}`)
+      .get(`${process.env.REACT_APP_BACK_HOST_URL}/api/students/${stdObji._id}`)
       .then((res) => {
        // initialSpecificStudentJoiningRequestData.current = res.data;
         setSpecificStudentJoiningRequestData(res.data);
@@ -911,7 +911,7 @@ const StudentSubscriptionState = ({
       .catch((error) => {
         console.log(error);
       });
-    axios.get(`http://localhost:5000/api/sessions?user_id=${stdObji._id}`).then((res)=>{
+    axios.get(`${process.env.REACT_APP_BACK_HOST_URL}/api/sessions?user_id=${stdObji._id}`).then((res)=>{
       initialStudentSessionsDetails.current = res.data.data;
       setStudentSessionsDetails(res.data.data);
     }).catch((error)=>{
@@ -930,7 +930,7 @@ const StudentSubscriptionState = ({
   };
   //
   useEffect(() => {
-    axios.get(`http://localhost:5000/api/students?limit=300&page=${currentPage}`).then(
+    axios.get(`${process.env.REACT_APP_BACK_HOST_URL}/api/students?limit=300&page=${currentPage}`).then(
       (res) => {
         initialResponse.current =  res.data.data;
         setStudentData(res.data.data);
@@ -951,7 +951,7 @@ const StudentSubscriptionState = ({
       
     );
     axios
-      .get(`http://localhost:5000/api/instructors?limit=10000000000`)
+      .get(`${process.env.REACT_APP_BACK_HOST_URL}/api/instructors?limit=10000000000`)
       .then((instructorRes) => {
         setInstructorData(instructorRes.data.data);
       })
@@ -965,7 +965,7 @@ const StudentSubscriptionState = ({
       setIsUserMakingUpdateOnStudentAccount(true);
       axios
         .put(
-          `http://localhost:5000/api/students/${changableSubscriptionState._id}`,
+          `${process.env.REACT_APP_BACK_HOST_URL}/api/students/${changableSubscriptionState._id}`,
           {
             "subscription_state": studentConfiguration.studentStatus,
             "instructor": studentConfiguration.studentInstructor,
@@ -984,7 +984,7 @@ const StudentSubscriptionState = ({
           distroyAlert();
           getStudentRatelMa3yJoiningRequestData(changableSubscriptionState,event);
           /*
-          axios.put(`http://localhost:5000/api/instructors/${changableSubscriptionState.instructor}`,{students:changableSubscriptionState._id}).then((res)=>{
+          axios.put(`${process.env.REACT_APP_BACK_HOST_URL}/api/instructors/${changableSubscriptionState.instructor}`,{students:changableSubscriptionState._id}).then((res)=>{
 
           }).catch((error)=>{
             console.log(error);
@@ -1003,7 +1003,7 @@ const StudentSubscriptionState = ({
       setIsUserMakingUpdateOnStudentAccount(true);
       axios
         .put(
-          `http://localhost:5000/api/students/${changableSubscriptionState._id}`,
+          `${process.env.REACT_APP_BACK_HOST_URL}/api/students/${changableSubscriptionState._id}`,
           {
             subscription_state:studentConfiguration.studentStatus !== ''?studentConfiguration.studentStatus:changableSubscriptionState.subscription_state,
             instructor:studentConfiguration.studentInstructor !== ''?studentConfiguration.studentInstructor:changableSubscriptionState.instructor
@@ -1022,7 +1022,7 @@ const StudentSubscriptionState = ({
           getStudentRatelMa3yJoiningRequestData(changableSubscriptionState,event);
           /*
           if(studentConfiguration.studentInstructor !== ''){
-          axios.put(`http://localhost:5000/api/instructors/${changableSubscriptionState.instructor}`,{students:changableSubscriptionState._id}).then((res)=>{
+          axios.put(`${process.env.REACT_APP_BACK_HOST_URL}/api/instructors/${changableSubscriptionState.instructor}`,{students:changableSubscriptionState._id}).then((res)=>{
 
           }).catch((error)=>{
             console.log(error);
@@ -1039,7 +1039,7 @@ const StudentSubscriptionState = ({
       setIsUserMakingUpdateOnStudentAccount(true);
         axios
         .put(
-          `http://localhost:5000/api/students/${changableSubscriptionState._id}`,
+          `${process.env.REACT_APP_BACK_HOST_URL}/api/students/${changableSubscriptionState._id}`,
           {
             subscription_state: studentConfiguration.studentStatus,
             instructor:null
@@ -1058,7 +1058,7 @@ const StudentSubscriptionState = ({
           setFetchAgain(fetchAgain + 1);
           getStudentRatelMa3yJoiningRequestData(changableSubscriptionState,event);
           /*
-          axios.put(`http://localhost:5000/api/instructors/${changableSubscriptionState.instructor}`,{students:''}).then((res)=>{
+          axios.put(`${process.env.REACT_APP_BACK_HOST_URL}/api/instructors/${changableSubscriptionState.instructor}`,{students:''}).then((res)=>{
 
           }).catch((error)=>{
             console.log(error);
@@ -1330,7 +1330,7 @@ let studentBusy = {};
     */
     setIsUserMakingUpdateOnStudentAccount(true);
     let instructorBusy = {};
-   axios.get(`http://localhost:5000/api/instructors/${changableSubscriptionState.instructor}`).then((res)=>{
+   axios.get(`${process.env.REACT_APP_BACK_HOST_URL}/api/instructors/${changableSubscriptionState.instructor}`).then((res)=>{
     for(let i = 0 ; i < wD.length;i++ ){
       if(Number(Object.keys(res.data.busy)[i]) === wD[i]){
         for(let x = 0 ; x < res.data.prefs.working_hours.length;x++){
@@ -1555,7 +1555,7 @@ let studentBusy = {};
 
  
 
-    axios.put(`http://localhost:5000/api/instructors/${changableSubscriptionState.instructor}`,{"busy":busyInstructorDaysHours}).then(()=>{
+    axios.put(`${process.env.REACT_APP_BACK_HOST_URL}/api/instructors/${changableSubscriptionState.instructor}`,{"busy":busyInstructorDaysHours}).then(()=>{
       stdwHoursD0 = [];
       stdwHoursD1 = [];
       stdwHoursD2 = [];
@@ -1735,7 +1735,7 @@ let studentBusy = {};
    }).catch((error)=>{
     console.log(error)
    })
-    axios.put(`http://localhost:5000/api/students/${changableSubscriptionState._id}`,{"busy":{
+    axios.put(`${process.env.REACT_APP_BACK_HOST_URL}/api/students/${changableSubscriptionState._id}`,{"busy":{
         "0":studentBusy['0'],
          "1":studentBusy['1'],
          "2":studentBusy['2'],
@@ -1807,7 +1807,7 @@ let studentBusy = {};
 
   const deleteStudent = (event,studentAccountObji)=>{
     event.stopPropagation();
-    axios.delete(`http://localhost:5000/api/students/${studentAccountObji._id}`).then((res)=>{
+    axios.delete(`${process.env.REACT_APP_BACK_HOST_URL}/api/students/${studentAccountObji._id}`).then((res)=>{
     setFetchAgain(fetchAgain+1);
     setIsUserDeleteAnyAccount(true);
     setTimeout(()=>{

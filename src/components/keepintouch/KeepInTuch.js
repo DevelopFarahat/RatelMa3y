@@ -12,7 +12,7 @@ function KeepInTuch() {
   const [ email , setEmail] = useState('')
 
   function confirm(){
-    axios.post('http://localhost:5000/api/events/subscripe_request ',{email: email}).then(()=>
+    axios.post(`${process.env.REACT_APP_BACK_HOST_URL}/api/events/subscripe_request`,{email: email}).then(()=>
     enqueueSnackbar("Check your email inbox to confirm.",{variant: 'info'})
      ).catch((err)=> console.error(err))
   }

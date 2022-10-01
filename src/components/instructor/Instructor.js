@@ -289,7 +289,7 @@ const Instructor = () => {
     const setInstructorAvailability = (event, instructorObji) => {
         let availability = event.currentTarget.id === "available" ? false : true;
         axios
-            .put(`http://localhost:5000/api/instructors/${instructorObji._id}`, {
+            .put(`${process.env.REACT_APP_BACK_HOST_URL}/api/instructors/${instructorObji._id}`, {
                 is_available: availability,
             })
             .then((res) => {
@@ -304,7 +304,7 @@ const Instructor = () => {
     const getSpecificInstructorData = (event) => {
         event.stopPropagation();
         axios
-            .get(`http://localhost:5000/api/instructors/${event.currentTarget.id}`)
+            .get(`${process.env.REACT_APP_BACK_HOST_URL}/api/instructors/${event.currentTarget.id}`)
             .then((res) => {
                 initialResponseSpecificInstructorData.current = res.data;
                 setSelectedInstructorData(res.data);
@@ -312,7 +312,7 @@ const Instructor = () => {
             .catch((error) => {
                 console.log(error);
             });
-            axios.get(`http://localhost:5000/api/sessions?user_id=${event.currentTarget.id}`).then((res)=>{
+            axios.get(`${process.env.REACT_APP_BACK_HOST_URL}/api/sessions?user_id=${event.currentTarget.id}`).then((res)=>{
                 initialInstructorSessionsDetails.current = res.data.data;
                 setInstructorSessionsDetails(res.data.data);
 
@@ -325,7 +325,7 @@ const Instructor = () => {
 
     useEffect(() => {
         axios
-            .get(`http://localhost:5000/api/instructors?limit=300&page=${currentPage}`)
+            .get(`${process.env.REACT_APP_BACK_HOST_URL}/api/instructors?limit=300&page=${currentPage}`)
             .then((res) => {
                 initialResponse.current = res.data.data;
                 setInstructorData(res.data.data);

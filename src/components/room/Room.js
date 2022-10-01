@@ -24,11 +24,11 @@ export default function Room({
   }, []);
 
   useEffect(() => {
-    axios.get("http://localhost:5000/video-api-url").then((res) => {
+    axios.get(`${process.env.REACT_APP_BACK_HOST_URL}/video-api-url`).then((res) => {
       const domain = res.data.url;
 
       axios
-        .post(`http://localhost:5000/video-call/${id}`,{role: user.role})
+        .post(`${process.env.REACT_APP_BACK_HOST_URL}/video-call/${id}`,{role: user.role})
         .then(async (res) => {
           if (res.status !== 200) {
             enqueueSnackbar("Room has ended");
@@ -76,7 +76,7 @@ export default function Room({
               if (session.created_by === user._id) body.started_at = Date.now();
 
               axios
-                .put("http://localhost:5000/api/sessions/" + session._id, body)
+                .put(`${process.env.REACT_APP_BACK_HOST_URL}/api/sessions/${session._id}`, body)
                 .then((res) => setUser({ ...user, in_session: session }))
                 .catch((err) => enqueueSnackbar("Maybe you should reconnect"));
             })

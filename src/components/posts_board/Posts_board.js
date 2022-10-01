@@ -25,7 +25,7 @@ const PostsBoard = () => {
   function fetchPosts(page, limit) {
     setIsLoading(true);
     axios
-      .get(`http://localhost:5000/api/events?page=${page}`)
+      .get(`${process.env.REACT_APP_BACK_HOST_URL}/api/events?page=${page}`)
       .then((res) => {
         let postsArr = res.data.data;
         setPosts((prev) => [...prev, ...postsArr]);
@@ -34,7 +34,7 @@ const PostsBoard = () => {
         setIsLoading(false);
       })
       .catch((error) => {
-        console.log(error);
+        console.error(error);
         setIsLoading(false);
       });
   }
@@ -45,16 +45,12 @@ const PostsBoard = () => {
   const lastPostElementRef = useCallback((node) => {
     if (isLoading) return;
 
-    console.log('i')
-    console.log("counted", postsCount,currentCount);
-    console.log('posts',posts)
     if(posts.length >= postsCount) return
-    console.log('d')
 
     if (observer.current) observer.current.disconnect();
+    
     observer.current = new IntersectionObserver((entries) => {
       if (entries[0].isIntersecting) {
-        console.log("should run now", page);
         fetchPosts(page + 1);
         page = page + 1;
       }
@@ -72,8 +68,9 @@ const PostsBoard = () => {
               style={{
                 width: "100%",
               }}
+              key={post._id}
             >
-              <Post key={post._id} post={post} latestPost={arr[0]} />
+              <Post  post={post} latestPost={arr[0]} />
             </div>
           );
         else

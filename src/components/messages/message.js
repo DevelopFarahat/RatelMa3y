@@ -252,7 +252,7 @@ const Messages = ()=>{
         setMsgContent(msg.content);
         if(msg.status === 'Unread'){
             
-            axios.put(`http://localhost:5000/api/contacts/${msg._id}`,{status:'Read'}).then((res)=>{
+            axios.put(`${process.env.REACT_APP_BACK_HOST_URL}/api/contacts/${msg._id}`,{status:'Read'}).then((res)=>{
                 setFetchAgain(fetchAgain+1);
                 console.log(res.data)
             }).catch((error)=>{
@@ -264,7 +264,7 @@ const Messages = ()=>{
     }
     const deleteMessage = (event,msg)=>{
         event.stopPropagation();
-        axios.delete(`http://localhost:5000/api/contacts/${msg._id}`).then((res)=>{
+        axios.delete(`${process.env.REACT_APP_BACK_HOST_URL}/api/contacts/${msg._id}`).then((res)=>{
         setFetchAgain(fetchAgain+1);
         setIsUserDeleteAnymsg(true);
         setTimeout(()=>{
@@ -276,7 +276,7 @@ const Messages = ()=>{
         })
     }
     useEffect(()=>{
-        axios.get(`http://localhost:5000/api/contacts?limit=300&page=${currentPage}`).then((res)=>{
+        axios.get(`${process.env.REACT_APP_BACK_HOST_URL}/api/contacts?limit=300&page=${currentPage}`).then((res)=>{
         let messagesResponse = res.data.data;
         for(let i = 0;i< messagesResponse.length;i++){
             if(messagesResponse[i].status === "Read"){
