@@ -47,7 +47,7 @@ function ContactUs() {
 
   const onSubmit = (values, { resetForm }) => {
     axios
-      .post("http://localhost:5000/api/contacts", {
+      .post(`${process.env.REACT_APP_BACK_HOST_URL}/api/contacts`, {
         name: values.userName,
         content: values.message,
         email: values.email,

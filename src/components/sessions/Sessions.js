@@ -48,7 +48,7 @@ function Sessions({ setIsRoomPrepared }) {
     //Updating students list
     if (user.role == "instructor") {
       axios
-        .get("http://localhost:5000/api/instructors/" + user._id)
+        .get(`${process.env.REACT_APP_BACK_HOST_URL}/api/instructors/${user._id}`)
         .then((res) => {
           user.students = res.data.students;
           localStorage.setItem("user", JSON.stringify(user));
@@ -64,7 +64,7 @@ function Sessions({ setIsRoomPrepared }) {
   function fetchSessions(page) {
     setIsLoading(true);
     let sessions_url =
-      `http://localhost:5000/api/sessions?page=${page}` +
+      `${process.env.REACT_APP_BACK_HOST_URL}/api/sessions?page=${page}` +
       (["Admin", "Supervisor"].includes(user?.privileges)
         ? ""
         : "&&userId=" + user._id);
@@ -122,7 +122,7 @@ function Sessions({ setIsRoomPrepared }) {
 
   function endSession(session) {
     axios
-      .put("http://localhost:5000/api/sessions/" + session?._id, {
+      .put(`${process.env.REACT_APP_BACK_HOST_URL}/api/sessions/${session?._id}`, {
         is_live: false,
         room_id: session.room_id,
         ended_at: Date.now(),

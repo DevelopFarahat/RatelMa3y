@@ -1285,7 +1285,7 @@ const StudentSubscriptionState = ({
       h7: false
     };
     axios
-      .get(`http://localhost:5000/api/instructors/${stObj.instructor}`)
+      .get(`${process.env.REACT_APP_BACK_HOST_URL}/api/instructors/${stObj.instructor}`)
       .then((res) => {
         for (let i = 0; i < res.data.prefs.working_days.length; i++) {
           if (res.data.prefs.working_days[i] === -1) {
@@ -1681,7 +1681,7 @@ const StudentSubscriptionState = ({
   };
   const getStudentRatelMa3yJoiningRequestData = (stdObji, event) => {
     axios
-      .get(`http://localhost:5000/api/students/${stdObji._id}`)
+      .get(`${process.env.REACT_APP_BACK_HOST_URL}/api/students/${stdObji._id}`)
       .then((res) => {
         // initialSpecificStudentJoiningRequestData.current = res.data;
         setSpecificStudentJoiningRequestData(res.data);
@@ -1708,7 +1708,7 @@ const StudentSubscriptionState = ({
   };
   //
   useEffect(() => {
-    axios.get(`http://localhost:5000/api/students?limit=300&page=${currentPage}`).then(
+    axios.get(`${process.env.REACT_APP_BACK_HOST_URL}/api/students?limit=300&page=${currentPage}`).then(
       (res) => {
         initialResponse.current = res.data.data;
         setStudentData(res.data.data);
@@ -1729,7 +1729,7 @@ const StudentSubscriptionState = ({
 
     );
     axios
-      .get(`http://localhost:5000/api/instructors?limit=10000000000`)
+      .get(`${process.env.REACT_APP_BACK_HOST_URL}/api/instructors?limit=10000000000`)
       .then((instructorRes) => {
         setInstructorData(instructorRes.data.data);
       })
@@ -1742,7 +1742,7 @@ const StudentSubscriptionState = ({
       setIsUserMakingUpdateOnStudentAccount(true);
       axios
         .put(
-          `http://localhost:5000/api/students/${changableSubscriptionState._id}`,
+          `${process.env.REACT_APP_BACK_HOST_URL}/api/students/${changableSubscriptionState._id}`,
           {
             "subscription_state": studentConfiguration.studentStatus,
             "instructor": studentConfiguration.studentInstructor,
@@ -1769,7 +1769,7 @@ const StudentSubscriptionState = ({
       setIsUserMakingUpdateOnStudentAccount(true);
       axios
         .put(
-          `http://localhost:5000/api/students/${changableSubscriptionState._id}`,
+          `${process.env.REACT_APP_BACK_HOST_URL}/api/students/${changableSubscriptionState._id}`,
           {
             subscription_state: studentConfiguration.studentStatus !== '' ? studentConfiguration.studentStatus : changableSubscriptionState.subscription_state,
             instructor: studentConfiguration.studentInstructor !== '' ? studentConfiguration.studentInstructor : changableSubscriptionState.instructor
@@ -1795,7 +1795,7 @@ const StudentSubscriptionState = ({
       setIsUserMakingUpdateOnStudentAccount(true);
       axios
         .put(
-          `http://localhost:5000/api/students/${changableSubscriptionState._id}`,
+          `${process.env.REACT_APP_BACK_HOST_URL}/api/students/${changableSubscriptionState._id}`,
           {
             subscription_state: studentConfiguration.studentStatus,
             instructor: null

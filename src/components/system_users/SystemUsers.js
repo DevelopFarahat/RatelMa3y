@@ -526,7 +526,7 @@ const SystemUsers = () => {
     };
     if (userData._id === "") {
       axios
-        .post(`http://localhost:5000/api/instructors`, finalUser)
+        .post(`${process.env.REACT_APP_BACK_HOST_URL}/api/instructors`, finalUser)
         .then((res) => {
           setFetchAgain(fetchAgain + 1);
           setUserData({
@@ -602,7 +602,7 @@ const SystemUsers = () => {
     } else {
       axios
         .put(
-          `http://localhost:5000/api/instructors/${userData._id}`,
+          `${process.env.REACT_APP_BACK_HOST_URL}/api/instructors/${userData._id}`,
           {
             email: userData.email,
             name: userData.name,
@@ -892,7 +892,7 @@ const SystemUsers = () => {
   useEffect(() => {
     axios
       .get(
-        `http://localhost:5000/api/instructors?limit=300&page=${currentPage}`
+        `${process.env.REACT_APP_BACK_HOST_URL}/api/instructors?limit=300&page=${currentPage}`
       )
       .then((res) => {
         initialResponse.current = res.data.data;

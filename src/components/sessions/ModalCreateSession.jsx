@@ -24,13 +24,14 @@ export default function ModalCreateSession(props) {
     async function fetchData() {
       //Add students as options to select
       let opts = [];
-
       if (["Supervisor", "Admin"].includes(user?.privileges)) {
-        let arr = await axios.get("http://localhost:5000/api/students");
-        opts = arr.data.data.map((stu) => ({
-          value: stu._id,
-          label: stu.name,
-        }));
+        let arr = await axios.get(
+          `${process.env.REACT_APP_BACK_HOST_URL}/api/students`
+        );
+
+        let filter = arr.data.data.filter((stu) => stu.subscription_state === "Active")
+        opts = filter.map((stu)=> ({ value: stu._id, label: stu.name, instructor: stu.instructor}))
+
       } else {
         opts = user?.students?.map((stu) => ({
           value: stu._id,
@@ -50,6 +51,13 @@ export default function ModalCreateSession(props) {
   }, []);
 
   const dropdownColorStyles = {
+    option: (styles, i)=>{
+      console.log(user._id, i.data.instructor)
+      return {
+        ...styles,
+        color: i.data.instructor == user._id? 'green': 'grey'
+      }
+    },
     multiValue: (styles) => {
       return {
         ...styles,
@@ -88,7 +96,7 @@ export default function ModalCreateSession(props) {
     let date = Date.now();
     let rid = localStorage.getItem("user_id") + "-" + date;
     let resSession = await axios.post(
-      "http://localhost:5000/api/sessions",
+      `${process.env.REACT_APP_BACK_HOST_URL}/api/sessions`,
       {
         room_id: rid.slice(0, -3),
         members_with_access: participants,
@@ -116,7 +124,7 @@ export default function ModalCreateSession(props) {
 
   // function fetchSessions() {
   //   let sessions_url =
-  //     "http://localhost:5000/api/sessions" +
+  //     "${process.env.REACT_APP_BACK_HOST_URL}/api/sessions" +
   //     (["Admin", "Supervisor"].includes(user.privileges)
   //       ? ""
   //       : "?userId=" + user._id);

@@ -36,7 +36,7 @@ function Changepassword({ user ,t }) {
         let field = user.role === "instructor" ? "instructors" : "students";
 
         axios
-          .put(`http://localhost:5000/api/${field}/${user._id}`, {
+          .put(`${process.env.REACT_APP_BACK_HOST_URL}/api/${field}/${user._id}`, {
             email: user.email,
             password: values.newpassword,
             old_password: values.password,

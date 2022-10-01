@@ -26,6 +26,23 @@ export default function ModalTable({ user, show, onHide }) {
     );
   }, []);
 
+  // function fetchSessions() {
+  //   let sessions_url =
+  //     "${process.env.REACT_APP_BACK_HOST_URL}/api/sessions" +
+  //     (["Admin", "Supervisor"].includes(user.privileges)
+  //       ? ""
+  //       : "?userId=" + user._id);
+
+  //   axios
+  //     .get(sessions_url)
+  //     .then((res) => {
+  //       props.setSessions(res.data.data);
+  //       console.log("fetched", res.data.data);
+  //     })
+  //     .catch((err) => console.error(err));
+  // }
+  // CustomTable({ user });
+
   return (
     <Modal
       show={show}
@@ -178,6 +195,7 @@ const CustomTable = ({ user, t }) => {
         let students = user.students.filter((s) =>
           value2.stdIds.includes(s._id)
         );
+        
         let names = "";
         for (let student of students) {
           console.log(student.name);
@@ -219,7 +237,11 @@ const CustomTable = ({ user, t }) => {
         pDay.style.backgroundColor = "#ffc107";
     }
   }, []);
-   
+
+  //==========================================
+
+  //TODO: show instructors names as well if admin or supervisor is watching table
+
   return <div id="host" style={styles.gridStyle}></div>;
 };
 
@@ -235,3 +257,8 @@ function getTimeNowFormatted(date) {
   if (n % 2 === 1) n = n + 1;
   return `${n}:00 ${t}`;
 }
+
+//day grid with var span down
+//hours with var span down
+//names with fraction
+//Admin can't start the session

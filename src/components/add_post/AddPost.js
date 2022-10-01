@@ -86,7 +86,7 @@ const AddPost = () => {
         postData.title !== ""
       ) {
         axios
-          .post("http://localhost:5000/api/events", cc)
+          .post(`${process.env.REACT_APP_BACK_HOST_URL}/api/events`, cc)
           .then((res) => {
             setIsThereAnyPostIsUploading(false);
             setIsUserMadeAPost(true);
