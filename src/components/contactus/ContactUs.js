@@ -1,3 +1,5 @@
+/** @format */
+
 import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
@@ -19,7 +21,6 @@ const initialValues = {
 };
 
 function ContactUs() {
-
   const validate = (values) => {
     let errors = {};
     if (!values.userName) {
@@ -64,7 +65,7 @@ function ContactUs() {
   const [isArabic, setIsArabic] = useState(false);
   const [t, i18n] = useTranslation();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-  
+
   useEffect(() => {
     setIsArabic(localStorage.getItem("i18nextLng") === "ar");
   }, [localStorage.getItem("i18nextLng")]);
@@ -75,68 +76,69 @@ function ContactUs() {
     validate,
   });
   return (
-    <div className={ContctUsCss.contact}>
+    <div
+      style={{ direction: t("us") === "Us" ? "ltr" : "rtl" }}
+      className={ContctUsCss.contact}>
       <div className={ContctUsCss.innercontact}>
-        <Container style={{direction: isArabic? 'rtl':'ltr'}}>
+        <Container style={{ direction: isArabic ? "rtl" : "ltr" }}>
           <FaHeadphones className={ContctUsCss.contacticon} />
           <h2>{t("contactus_title")}</h2>
-          <p className="lead">{t("contactus_text")}</p>
+          <p className='lead'>{t("contactus_text")}</p>
           <Form>
             <Row>
               <Col md={6}>
-                <Form.Group className="mb-3" controlId="formBasicUserName">
+                <Form.Group className='mb-3' controlId='formBasicUserName'>
                   <Form.Control
-                    type="text"
-                    name="userName"
+                    type='text'
+                    name='userName'
                     placeholder={t("keepintouch_hint_username")}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     value={formik.values.userName}
                   />
                   {formik.touched.userName && formik.errors.userName ? (
-                    <div className="error">{formik.errors.userName}</div>
+                    <div className='error'>{formik.errors.userName}</div>
                   ) : null}
                 </Form.Group>
-                <Form.Group className="mb-3" controlId="formBasicEmail">
+                <Form.Group className='mb-3' controlId='formBasicEmail'>
                   <Form.Control
-                    type="email"
-                    name="email"
+                    type='email'
+                    name='email'
                     placeholder={t("keepintouch_hint_email")}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     value={formik.values.email}
                   />
                   {formik.touched.email && formik.errors.email ? (
-                    <div className="error">{formik.errors.email}</div>
+                    <div className='error'>{formik.errors.email}</div>
                   ) : null}
                 </Form.Group>
-                <Form.Group className="mb-3" controlId="formBasicPhone">
+                <Form.Group className='mb-3' controlId='formBasicPhone'>
                   <Form.Control
-                    type="number"
-                    name="phone"
+                    type='number'
+                    name='phone'
                     placeholder={t("keepintouch_hint_number")}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     value={formik.values.phone}
                   />
                   {formik.touched.phone && formik.errors.phone ? (
-                    <div className="error">{formik.errors.phone}</div>
+                    <div className='error'>{formik.errors.phone}</div>
                   ) : null}
                 </Form.Group>
               </Col>
               <Col md={6}>
                 <Form.Group
-                  className="mb-3"
-                  controlId="exampleForm.ControlTextarea1"
-                >
+                  className='mb-3'
+                  controlId='exampleForm.ControlTextarea1'>
                   <Form.Control
-                    as="textarea"
-                    name="content"
+                    as='textarea'
+                    name='content'
                     placeholder={t("keepintouch_hint_msg")}
                     rows={4}
                   />
                 </Form.Group>
-                <Button variant="danger">{t("contactus_btn")}</Button>{" "}
+                <Button variant='danger'>{t("contactus_btn")}</Button>{" "}
               </Col>
             </Row>
           </Form>

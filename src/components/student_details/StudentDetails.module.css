@@ -104,7 +104,7 @@
 .student-table-main-header{
   width:100%;
   padding:5px;
-  background-color: #038674;
+  background-color: #c2a054;
   color:#ffffff;
   display: flex;
   flex-direction: row;
@@ -133,7 +133,7 @@
   top:19px;
   left:0;
   height:100%;
-  background-color: rgba(4,0,0,.8);
+  background-color: rgba(4,0,0,.3)
 }
 .close-date-time-container{
   color: #ffffff;
@@ -142,13 +142,9 @@
     left: 3px;
     cursor: pointer;
 }
-.close-date-time-container:hover{
-  color: #038674;
-}
 .days-hours-sessions-whol-container{
   width:99%;
-  height:319px;
-  background-color: #FFFFFF;
+  height:365px;
   border-radius: 5px;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
@@ -163,24 +159,25 @@
 
 }
 .student-sessions-days,.student-sessions-hours{
-  width:95%;
+  width: 100%;
   border-radius: 5px;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   -ms-border-radius: 5px;
   -o-border-radius: 5px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%);
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  padding: 10px;
-  /*margin: 44px auto 0 auto;*/
   background-color: #FFFFFF;
-  overflow:auto;
-  height:44%;
-  margin-top: 10px ;
+  overflow: auto;
+  height: 42%;
+  margin-top: 10px;
+}
+.student-sessions-hours{
+  height:51%;
 }
 .student-sessions-days >  span,.student-sessions-hours > span{
     font-size: 1rem;
@@ -454,7 +451,7 @@
   -ms-border-radius: 70px;
   -o-border-radius: 70px;
 }
-.show-daysTimes-tooltip{
+.show-daysTimes-tooltip-prefs,.show-daysTimes-tooltip-sessions{
   position: absolute;
   top: 18%;
   left: 52%;
@@ -468,7 +465,10 @@
   background-color: rgba(4,0,0,1);
   padding: 8px 37px;
 }
-.show-daysTimes-tooltip > span{
+.show-daysTimes-tooltip-sessions{
+  left:0%;
+}
+.show-daysTimes-tooltip > span , .show-daysTimes-tooltip-sessions > span{
   color: #FFFFFF;
   line-height: 1.5;
   text-align: center;
@@ -486,6 +486,9 @@
   border-style: solid;
   border-color: transparent transparent rgba(4,0,0,1) transparent;
  
+}
+.show-daysTimes-tooltip-sessions::after{
+  left:7%
 }
 
 

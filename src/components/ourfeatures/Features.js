@@ -14,37 +14,31 @@ import FeaturesCss from "./Features.module.css";
 function Features() {
   const [t, i18n] = useTranslation();
   return (
-    <div className={FeaturesCss.features}>
+    <div
+      style={{ direction: t("us") === "Us" ? "ltr" : "rtl" }}
+      className={FeaturesCss.features}>
       <Container>
-        <h2>{t("features_title")}</h2>   
+        <h2>{t("features_title")}</h2>
         <Row>
           <Col md={3}>
             <AiFillLike className={FeaturesCss.featureIcon} />
             <h4>{t("features_professional")}</h4>
-            <p>
-            {t("features_text1")}
-            </p>
+            <p>{t("features_text1")}</p>
           </Col>
           <Col md={3}>
             <FaRegHandshake className={FeaturesCss.featureIcon} />
             <h4>{t("features_cooperation")}</h4>
-            <p>
-            {t("features_text2")}
-            </p>
+            <p>{t("features_text2")}</p>
           </Col>
           <Col md={3}>
             <MdWork className={FeaturesCss.featureIcon} />
             <h4>{t("features_experience")}</h4>
-            <p>
-            {t("features_text3")}
-            </p>
+            <p>{t("features_text3")}</p>
           </Col>
           <Col md={3}>
             <TbCertificate className={FeaturesCss.featureIcon} />
             <h4>{t("features_certificate")}</h4>
-            <p>
-            {t("features_text4")}
-            </p>
+            <p>{t("features_text4")}</p>
           </Col>
         </Row>
       </Container>

@@ -12,10 +12,12 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
 function Programs() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [t, i18n] = useTranslation();
   return (
-    <div className={ProgramsCss.programs}>
+    <div
+      style={{ direction: t("us") === "Us" ? "ltr" : "rtl" }}
+      className={ProgramsCss.programs}>
       <Container>
         <h2>{t("programs_title")}</h2>
         <Row>
@@ -25,7 +27,9 @@ function Programs() {
                 <img src={program1} alt='program1' />
               </div>
               <h4>{t("programs_h4")}</h4>
-              <button onClick={()=> navigate('/register')}>{t("prorams_joinnow")}</button>
+              <button onClick={() => navigate("/register")}>
+                {t("prorams_joinnow")}
+              </button>
             </div>
           </Col>
           <Col md={4}>
@@ -34,7 +38,9 @@ function Programs() {
                 <img src={program2} alt='program2' />
               </div>
               <h4>{t("programs_nourelbayan")}</h4>
-              <button onClick={()=> navigate('/register')}>{t("prorams_joinnow")}</button>
+              <button onClick={() => navigate("/register")}>
+                {t("prorams_joinnow")}
+              </button>
             </div>
           </Col>
           <Col md={4}>
@@ -43,7 +49,9 @@ function Programs() {
                 <img src={program3} alt='program3' />
               </div>
               <h4>{t("prorams_memorizing")}</h4>
-              <button onClick={()=> navigate('/register')}>{t("prorams_joinnow")}</button>
+              <button onClick={() => navigate("/register")}>
+                {t("prorams_joinnow")}
+              </button>
             </div>
           </Col>
         </Row>
