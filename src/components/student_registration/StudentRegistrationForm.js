@@ -655,11 +655,11 @@ const StudentRegistrationForm = () => {
           <div
             className={
               StudentRegistrationFormStyles["registration-form-img-container"]
-            }>
+            } style={{order:t("us")==="Us"?1:2}}>
             <LazyLoadImage src={ReadQuranImg} alt='some pepole read quran' />
           </div>
           <form
-            className={StudentRegistrationFormStyles["student-form"]}
+            className={StudentRegistrationFormStyles["student-form"]} style={{order:t("us")==="Us"?2:1}}
             onSubmit={handleSubmit}>
             <div
               className={`${
@@ -1095,8 +1095,8 @@ const StudentRegistrationForm = () => {
                 </div>
                 <span>{t("working_Days")}</span>
                 <div
-                  className={`${StudentRegistrationFormStyles["days-check-box-container"]}`}>
-                  <div>
+                  className={`${StudentRegistrationFormStyles["days-check-box-container"]}`} style={{minHeight:t("us") === t("Us")?'auto':'160px'}}>
+                  <div style={{padding:t("us") === t("Us")?'15px':'16px'}}>
                     <Form.Label htmlFor='d0'>{t("Saturday")}</Form.Label>
                     <Form.Check
                       name='d0'
@@ -1106,7 +1106,7 @@ const StudentRegistrationForm = () => {
                       checked={checkedDays["d0"]}
                     />
                   </div>
-                  <div>
+                  <div style={{padding:t("us") === t("Us")?'15px':'16px'}}>
                     <Form.Label htmlFor='d1'>{t("Sunday")}</Form.Label>
                     <Form.Check
                       name='d1'
@@ -1116,7 +1116,7 @@ const StudentRegistrationForm = () => {
                       checked={checkedDays["d1"]}
                     />
                   </div>
-                  <div>
+                  <div style={{padding:t("us") === t("Us")?'15px':'16px'}}>
                     <Form.Label htmlFor='d2'>{t("Monday")}</Form.Label>
                     <Form.Check
                       name='d2'
@@ -1126,7 +1126,7 @@ const StudentRegistrationForm = () => {
                       checked={checkedDays["d2"]}
                     />
                   </div>
-                  <div>
+                  <div style={{padding:t("us") === t("Us")?'15px':'16px'}}>
                     <Form.Label htmlFor='d3'>{t("Tuesday")}</Form.Label>
                     <Form.Check
                       name='d3'
@@ -1136,7 +1136,7 @@ const StudentRegistrationForm = () => {
                       checked={checkedDays["d3"]}
                     />
                   </div>
-                  <div>
+                  <div style={{padding:t("us") === t("Us")?'15px':'16px'}}>
                     <Form.Label htmlFor='d4'>{t("Wednesday")}</Form.Label>
                     <Form.Check
                       name='d4'
@@ -1146,7 +1146,7 @@ const StudentRegistrationForm = () => {
                       checked={checkedDays["d4"]}
                     />
                   </div>
-                  <div>
+                  <div style={{padding:t("us") === t("Us")?'15px':'16px'}}>
                     <Form.Label htmlFor='d5'>{t("Thursday")}</Form.Label>
                     <Form.Check
                       name='d5'
@@ -1156,7 +1156,7 @@ const StudentRegistrationForm = () => {
                       checked={checkedDays["d5"]}
                     />
                   </div>
-                  <div>
+                  <div style={{padding:t("us") === t("Us")?'15px':'16px'}} >
                     <Form.Label htmlFor='d6'>{t("Friday")}</Form.Label>
                     <Form.Check
                       name='d6'
@@ -1248,12 +1248,8 @@ const StudentRegistrationForm = () => {
                     {t("prevoius")}
                   </button>
                   <button
-<<<<<<< HEAD
                     id="sixStep"
                     type="submit"
-=======
-                    type='submit'
->>>>>>> 8c246ade54bbcadd06002cc70f584757665e3b46
                     disabled={
                       WorkingHours.h0 !== "" ||
                       WorkingHours.h1 !== "" ||
@@ -1277,7 +1273,6 @@ const StudentRegistrationForm = () => {
                       WorkingHours.h7 !== ""
                         ? StudentRegistrationFormStyles["btn"]
                         : StudentRegistrationFormStyles["disabled-btn"]
-<<<<<<< HEAD
                     }`}
                    onClick={handleFormSteps}
                   >
@@ -1306,72 +1301,7 @@ const StudentRegistrationForm = () => {
                     <Spinner animation="grow" variant="light" style={{width:'10px',height:'10px',marginLeft:'3px'}} />
                     </>:<>{"Register"}<ImUserPlus style={{marginLeft:"3px"}}/></>
                     }
-=======
-                    }`}>
-                    {isThereNewRegistration ? (
-                      <>
-                        <Spinner
-                          animation='grow'
-                          variant='light'
-                          style={{
-                            width: "10px",
-                            height: "10px",
-                            marginLeft: "3px",
-                          }}
-                        />
-                        <Spinner
-                          animation='grow'
-                          variant='light'
-                          style={{
-                            width: "10px",
-                            height: "10px",
-                            marginLeft: "3px",
-                          }}
-                        />
-                        <Spinner
-                          animation='grow'
-                          variant='light'
-                          style={{
-                            width: "10px",
-                            height: "10px",
-                            marginLeft: "3px",
-                          }}
-                        />
-                        <Spinner
-                          animation='grow'
-                          variant='light'
-                          style={{
-                            width: "10px",
-                            height: "10px",
-                            marginLeft: "3px",
-                          }}
-                        />
-                        <Spinner
-                          animation='grow'
-                          variant='light'
-                          style={{
-                            width: "10px",
-                            height: "10px",
-                            marginLeft: "3px",
-                          }}
-                        />
-                        <Spinner
-                          animation='grow'
-                          variant='light'
-                          style={{
-                            width: "10px",
-                            height: "10px",
-                            marginLeft: "3px",
-                          }}
-                        />
-                      </>
-                    ) : (
-                      <>
-                        {"Register"}
-                        <ImUserPlus style={{ marginLeft: "3px" }} />
-                      </>
-                    )}
->>>>>>> 8c246ade54bbcadd06002cc70f584757665e3b46
+
                   </button>
                 </div>
               </div>
