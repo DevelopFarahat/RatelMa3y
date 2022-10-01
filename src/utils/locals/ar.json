@@ -249,6 +249,10 @@
   "student_fullname_error": "ينبغى أن يكون الاسم ثنائى على الاقل وباللغة الانجليزية",
   "student_password_error": "على الاقل 8 أحرف انجليزية أو 8 أرقام",
   "student_mobile_error": "رقم الهاتف مطلوب",
-  "registration":"سجِّل",
-  "as_student": "كطالب لدى رتل معى"
+  "registration": "سجِّل",
+  "as_student": "كطالب لدى رتل معى",
+  "student_email_error_message": "ينبغى ان يحتوى الايميل على @ وينتهى ب com.",
+  "registration-code-message": "لقد أرسلنا إليك بريدًا إلكترونيًا ، يرجى التحقق من بريدك الإلكتروني وكتابة الرمز",
+  "registration_code": "الرمز",
+  "Register" : "قدم الطلب"
 }

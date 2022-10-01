@@ -259,5 +259,9 @@
   "student_password_error": "password must be at least 8 english characters or digits",
   "student_mobile_error": "Mobile Is Required",
   "registration": "SignUp as",
-  "as_student": "Ratel May Student"
+  "as_student": "Ratel May Student",
+  "student_email_error_message": "The email must contain an @ and end with .com",
+  "registration-code-message": "we have sent an email to you, please check your email and type the code",
+  "registration_code": "Code",
+  "Register": "Register"
 }
