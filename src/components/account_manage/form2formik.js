@@ -8,7 +8,7 @@ const validatename = RegExp(/^[a-z A-Z]+ [a-z A-Z]+$/);
 const validateEmail = RegExp(/^\w+@\w+.(com|net|org)$/i);
 const validateAge = RegExp(/^([5-9]|[1-5]\d|60)$/);
 
-const validatemobile = RegExp(/^[+](2011|2012|2015|2010)[\d]{7,}$/);
+const validatemobile = RegExp(/^[+]?(2011|2012|2015|2010)[\d]{7,}$/);
 function Formikform({ user, setUser, t }) {
   const { enqueueSnackbar } = useSnackbar();
   let isArabic = t('us') !=='Us'

@@ -16,34 +16,35 @@ function Footer(props) {
   const { t } = useTranslation();
   return (
     <div
-      
       className={FooterCss.footer}
       style={{
         transitionDuration: "3s",
         transform: props.isRoomPrepared
           ? "translateY(300px)"
           : "translateY(0px)",
-          direction: t("us") === "Us" ? "ltr" : "rtl"
-      }}>
+        // direction: t("us") === "Us" ? "ltr" : "rtl",
+      }}
+    >
       <div className={FooterCss.innerfooter}>
         <Container>
           <Row>
             <Col>
               <Link className={FooterCss.link} to={"/home"}>
-                <img className={FooterCss.logo} src={logo} alt='logo' />
+                <img className={FooterCss.logo} src={logo} alt="logo" />
               </Link>
               <div className={FooterCss.social}>
                 <p className={FooterCss.Ratelfooter}>{t("Follow_us")}</p>
                 <a
-                  href='https://www.facebook.com/ratelma3y/'
-                  target='_blank'
-                  rel='noreferrer'>
+                  href="https://www.facebook.com/ratelma3y/"
+                  target="_blank"
+                  rel="noreferrer"
+                >
                   <BsFacebook className={FooterCss.socialicon} />
                 </a>
-                <a href='#'>
+                <a href="#">
                   <BsYoutube className={FooterCss.socialicon} />
                 </a>
-                <a href='#'>
+                <a href="#">
                   <RiWhatsappFill className={FooterCss.socialicon} />
                 </a>
               </div>

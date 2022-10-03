@@ -1,47 +1,22 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Modal, Button, Table } from "react-bootstrap";
+import { Modal, Button } from "react-bootstrap";
 import { useTranslation } from "react-i18next";
 import { IoCloseSharp } from "react-icons/io5";
 import { SiGooglesheets } from "react-icons/si";
-import { VscDebugStart } from "react-icons/vsc";
-import ReactDOM from "react-dom";
 
 export default function ModalTable({ user, show, onHide }) {
   const { t } = useTranslation();
   const [sessionsData, setSessionsData] = useState([]);
 
   useEffect(() => {
-    //Check if he is an inspector or admin {Add a row for instructor name if it's an admin or supervisor}
-
-    if (["Supervisor", "Admin"].includes(user?.privileges))
-      console.log("admin");
-
     setSessionsData(
-      user.students.map((u) => ({
+      user?.students?.map((u) => ({
         prefs: u.program_prefs,
         name: u.name,
         instructor: u.instructor,
       }))
     );
   }, []);
-
-  // function fetchSessions() {
-  //   let sessions_url =
-  //     "${process.env.REACT_APP_BACK_HOST_URL}/api/sessions" +
-  //     (["Admin", "Supervisor"].includes(user.privileges)
-  //       ? ""
-  //       : "?userId=" + user._id);
-
-  //   axios
-  //     .get(sessions_url)
-  //     .then((res) => {
-  //       props.setSessions(res.data.data);
-  //       console.log("fetched", res.data.data);
-  //     })
-  //     .catch((err) => console.error(err));
-  // }
-  // CustomTable({ user });
 
   return (
     <Modal
@@ -80,7 +55,7 @@ export default function ModalTable({ user, show, onHide }) {
         style={{
           direction: "rtl",
           maxHeight: "70%",
-          overflow: "scroll",
+          overflow: "auto",
         }}
       >
         <CustomTable user={user} t={t} />
@@ -142,6 +117,7 @@ const CustomTable = ({ user, t }) => {
     t("Thursday"),
     t("Friday"),
   ];
+
   const times = [
     `8:00 ${t("AM")}`,
     `10:00 ${t("AM")}`,
@@ -183,7 +159,8 @@ const CustomTable = ({ user, t }) => {
 
       for (const [key2, value2] of Object.entries(value)) {
         //Hour
-        if (value2.max == undefined) continue;
+        if (!value2 || value2.max == undefined) continue;
+
         let alreadyAddedHour = false;
 
         let pHour = document.createElement("p");
@@ -193,12 +170,11 @@ const CustomTable = ({ user, t }) => {
 
         //Get the name of students from recorded data
         let students = user.students.filter((s) =>
-          value2.stdIds.includes(s._id)
+          value2?.stdIds.includes(s._id)
         );
         
         let names = "";
         for (let student of students) {
-          console.log(student.name);
           names += `${names !== "" ? "\n" : ""}${student.name}`;
           j++;
         }
@@ -211,7 +187,7 @@ const CustomTable = ({ user, t }) => {
           alreadyAddedDay = true;
         }
 
-        pHour.style.gridRow = `span ${j}`;
+        // pHour.style.gridRow = `span ${j}`;
         pHour.innerHTML = times[Number.parseInt(key2)];
         if (t("us") === "Us") pHour.style.direction = "ltr";
 
@@ -228,19 +204,16 @@ const CustomTable = ({ user, t }) => {
           pHour.style.backgroundColor = "#f9c324";
 
         Object.assign(pStudent.style, styles.cellStyle);
+
         divGrid.appendChild(pStudent);
       }
 
-      pDay.style.gridRow = `span ${i * j}`;
+      pDay.style.gridRow = `span ${i}`;
 
       if (Number.parseInt(key) == date.getDay() + 1)
         pDay.style.backgroundColor = "#ffc107";
     }
   }, []);
-
-  //==========================================
-
-  //TODO: show instructors names as well if admin or supervisor is watching table
 
   return <div id="host" style={styles.gridStyle}></div>;
 };
@@ -257,8 +230,3 @@ function getTimeNowFormatted(date) {
   if (n % 2 === 1) n = n + 1;
   return `${n}:00 ${t}`;
 }
-
-//day grid with var span down
-//hours with var span down
-//names with fraction
-//Admin can't start the session

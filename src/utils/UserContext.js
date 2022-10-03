@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { createContext, useState, useEffect } from "react";
 
 const UserContext = createContext();
@@ -5,7 +6,6 @@ const UserContext = createContext();
 export function UserProvider({ children }) {
   const [user, setUser] = useState();
   const [isLoading, setIsLoading] = useState(false);
-  //أنا كنت باشوف هو ليه الكونتكست مبياخدش التحديثات مع التغيير في المستخدم
 
   useEffect(() => {
     const accToken = localStorage.getItem("accessToken");
@@ -14,7 +14,12 @@ export function UserProvider({ children }) {
     const userInLocal = JSON.parse(localStorage.getItem('user'))?? {}
     
     let decoded = accToken.split(".")[1];
-    setUser({...userInLocal,...JSON.parse(atob(decoded))});
+    let ObjDecoded = JSON.parse(atob(decoded))
+    setUser({...userInLocal,...ObjDecoded});
+    
+    //Update user data when opening the site
+    axios.get(`${process.env.REACT_APP_BACK_HOST_URL}/api/${ObjDecoded.role}s/${ObjDecoded._id}`).then((res)=> setUser({...res.data,...ObjDecoded})).catch((e)=> console.error(e))
+    
   }, [localStorage.getItem("accessToken")]);
 
   return (

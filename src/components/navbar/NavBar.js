@@ -90,7 +90,7 @@ function NavBar({ i18n, isRoomPrepared }) {
               </Link>
             )}
             {user && user.privileges === "Admin" && (
-              <Link to={"/adminPanel"}>
+              <Link to={"/adminPanel"} style={{marginInlineStart: 16}}>
                 <Button variant='outline-success'>
                   {" "}
                   {t("navbar_adminpanel")}
@@ -103,7 +103,8 @@ function NavBar({ i18n, isRoomPrepared }) {
               id='nav-dropdown-dark-example'
               title={user.name}
               menuVariant='dark'
-              style={{ margin: 16, fontWeight: 500 }}>
+            
+              style={{ margin: 16, fontWeight: 500,direction: 'ltr'}}>
               <NavDropdown.Item onClick={() => navigate("/account")}>
                 {t("navbar_account")}
               </NavDropdown.Item>
@@ -122,6 +123,7 @@ function NavBar({ i18n, isRoomPrepared }) {
           )}
           <Button
             className={NavCss.button}
+            style={{marginInlineStart: 24}}
             variant='outline-success'
             onClick={(e) => changeLang(e)}>
             {isArabic ? "en" : "ar"}

@@ -20,7 +20,7 @@ function KeepInTuch() {
   }
   return (
     <div
-      style={{ direction: t("us") === "Us" ? "ltr" : "rtl" }}
+      // style={{ direction: t("us") === "Us" ? "ltr" : "rtl" }}
       className={KeepCss.keepin}>
       <h2>{t("keepintouch_title")}</h2>
       <h4>{t("keepintouch_texttitle")}</h4>

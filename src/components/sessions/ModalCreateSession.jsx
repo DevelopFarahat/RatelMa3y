@@ -1,62 +1,111 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
-import { InputGroup } from "react-bootstrap";
-import Select from "react-select";
+import Select, { components, GroupProps } from "react-select";
 import axios from "axios";
 import { useContext } from "react";
 import UserContext from "../../utils/UserContext";
 import { useSnackbar } from "notistack";
 import { useTranslation } from "react-i18next";
+import { BsTable } from "react-icons/bs";
 
 export default function ModalCreateSession(props) {
-  //TODO: make participants accessable from above to have the ability to remove any student later
-
   const { t } = useTranslation();
   const [options, setOptions] = useState([]); //For the dropdown
   const [participants, setParticipants] = useState([]);
   const [isExam, setIsExam] = useState(false);
-  const { user } = useContext(UserContext);
+  const { user, isLoading, setIsLoading } = useContext(UserContext);
   const { enqueueSnackbar } = useSnackbar();
 
+  let page = 1;
+  // let postsCount = undefined,
+  //   currentCount = undefined;
+
   useEffect(() => {
-    async function fetchData() {
-      //Add students as options to select
-      let opts = [];
-      if (["Supervisor", "Admin"].includes(user?.privileges)) {
-        let arr = await axios.get(
-          `${process.env.REACT_APP_BACK_HOST_URL}/api/students`
-        );
-
-        let filter = arr.data.data.filter((stu) => stu.subscription_state === "Active")
-        opts = filter.map((stu)=> ({ value: stu._id, label: stu.name, instructor: stu.instructor}))
-
-      } else {
-        opts = user?.students?.map((stu) => ({
-          value: stu._id,
-          label: stu.name,
-        }));
-      }
-
-      //Sort students for easy access
-      opts.sort(function (a, b) {
-        let textA = a.label.toUpperCase();
-        let textB = b.label.toUpperCase();
-        return textA < textB ? -1 : textA > textB ? 1 : 0;
-      });
-      setOptions(opts);
-    }
-    fetchData();
+    fetchData(page,10000);
   }, []);
 
+  //To observe last item
+  // const observer = useRef();
+  // const lastPostElementRef = useCallback((node) => {
+  //   if (isLoading) return;
+
+  //   if (options.length-user.students.length >= postsCount) return;
+
+  //   if (observer.current) observer.current.disconnect();
+
+  //   observer.current = new IntersectionObserver((entries) => {
+  //     if (entries[0].isIntersecting) {
+  //       //To prevent excess page loading
+  //       if (currentCount !== undefined && currentCount >= postsCount)
+  //         return setIsLoading(false);
+
+  //       let resObj = fetchData(page + 1);
+  //       currentCount = resObj[0];
+  //       postsCount = resObj[1];
+  //       page = page + 1;
+  //     }
+  //   });
+  //   if (node) observer.current.observe(node);
+  // }, []);
+
+  async function fetchData(page,limit=10) {
+    //Add students as options to select
+    let opts = [];
+    let mine = [];
+    let indicators = [];
+    if (["Supervisor", "Admin"].includes(user?.privileges)) {
+      let arr = await axios.get(
+        `${process.env.REACT_APP_BACK_HOST_URL}/api/students?page=${page}&&limit=${limit}`
+      );
+
+      //FIRST ADD YOUR STUDENTS
+      mine = user.students.map((stu) => {
+        indicators.push(stu._id);
+        return {
+          value: stu._id,
+          label: stu.name,
+          instructor: user._id,
+        };
+      });
+
+      //THEN GET ALL STUDENTS DATA FROM BACKEND
+      let filter = arr.data.data.filter(
+        (stu) => stu.subscription_state === "Active"
+      );
+      opts = filter.map((stu) => ({
+        value: stu._id,
+        label: stu.name,
+        instructor: stu.instructor,
+      }));
+    } else {
+      opts = user?.students?.map((stu) => ({
+        value: stu._id,
+        label: stu.name,
+      }));
+    }
+
+    //Sort students for easy access
+    opts?.sort(function (a, b) {
+      let textA = a.label.toUpperCase();
+      let textB = b.label.toUpperCase();
+      return textA < textB ? -1 : textA > textB ? 1 : 0;
+    });
+
+    if (mine.length !== 0 && opts.length !== 0)
+      opts = opts?.filter((i) => !indicators.includes(i.value));
+
+    //Make his students in the top
+    setOptions([...mine, ...opts]);
+  }
+
   const dropdownColorStyles = {
-    option: (styles, i)=>{
-      console.log(user._id, i.data.instructor)
+    option: (styles, i) => {
       return {
         ...styles,
-        color: i.data.instructor == user._id? 'green': 'grey'
-      }
+        color: i.data.instructor == user._id ? "green" : "grey",
+      };
     },
     multiValue: (styles) => {
       return {
@@ -79,6 +128,23 @@ export default function ModalCreateSession(props) {
     },
   };
 
+  const checkStyles = {
+    "&:hover": { color: "white", backgroundColor: "#00875a" },
+    "&:checked": { backgroundColor: "red" },
+  };
+
+  const groupStyles = {
+    border: `2px dotted ${"grey"}`,
+    borderRadius: "5px",
+    background: "#f2fcff",
+  };
+
+  const Group = (props) => (
+    <div style={groupStyles}>
+      <components.Group {...props} />
+    </div>
+  );
+
   function handleChange(selectedOption) {
     let chosen = selectedOption?.map((sel) => sel.value);
     setParticipants(chosen);
@@ -94,7 +160,7 @@ export default function ModalCreateSession(props) {
     //Create a session and send it to the backend
 
     let date = Date.now();
-    let rid = localStorage.getItem("user_id") + "-" + date;
+    let rid = date + "-" + localStorage.getItem("user_id");
     let resSession = await axios.post(
       `${process.env.REACT_APP_BACK_HOST_URL}/api/sessions`,
       {
@@ -106,6 +172,7 @@ export default function ModalCreateSession(props) {
         is_live: true,
         attendants: [],
         created_at: date,
+        is_exam: isExam
       },
       {
         headers: {
@@ -116,27 +183,10 @@ export default function ModalCreateSession(props) {
 
     //Show the added session
     let newSes = [resSession.data, ...props.sessions];
-    console.log("newSes", newSes);
 
     props.setSessions(newSes);
     props.onHide();
   }
-
-  // function fetchSessions() {
-  //   let sessions_url =
-  //     "${process.env.REACT_APP_BACK_HOST_URL}/api/sessions" +
-  //     (["Admin", "Supervisor"].includes(user.privileges)
-  //       ? ""
-  //       : "?userId=" + user._id);
-
-  //   axios
-  //     .get(sessions_url)
-  //     .then((res) => {
-  //       props.setSessions(res.data.data);
-  //       console.log("fetched", res.data.data);
-  //     })
-  //     .catch((err) => console.error(err));
-  // }
 
   return (
     <Modal
@@ -147,39 +197,51 @@ export default function ModalCreateSession(props) {
       centered
     >
       <Modal.Header>
-        <Modal.Title id="contained-modal-title-vcenter">
+        <Modal.Title
+          id="contained-modal-title-vcenter"
+          className={"d-flex justify-content-between"}
+          style={{ width: "100%" }}
+        >
           {t("sessions_select_title")}
+
+          <Button
+            variant={"outline-success"}
+            style={{ marginLeft: 8 }}
+            onClick={() => props.setTableShow(true)}
+          >
+            <BsTable size={24} />
+          </Button>
         </Modal.Title>
       </Modal.Header>
       <Modal.Body style={{ direction: props.isArabic ? "rtl" : "ltr" }}>
-        <h4></h4>
         <p>{t("sessions_select_info")}</p>
 
         <Select
           options={options}
           onChange={handleChange}
           isMulti
+          // components={{ Group }}
+          closeMenuOnSelect={false}
           placeholder={t("sessions_select")}
           styles={dropdownColorStyles}
         />
 
-        {false && (
-          <div>
-            <input
-              className="form-check-input m-2"
-              type="checkbox"
-              id="isExamCheckbox"
-              value={isExam}
-            />
-            <label
-              className="form-check-label"
-              htmlFor="isExamCheckbox"
-              style={{ fontWeight: 500, transform: "translateY(3px)" }}
-            >
-              Is an exam
-            </label>
-          </div>
-        )}
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <input
+            className="form-check-input m-2"
+            type="checkbox"
+            id="isExamCheckbox"
+            value={isExam}
+            onClick={() => setIsExam(!isExam)}
+          />
+          <label
+            className="form-check-label"
+            htmlFor="isExamCheckbox"
+            style={{ fontWeight: 500 }}
+          >
+            {t("is_an_exam")}
+          </label>
+        </div>
       </Modal.Body>
 
       <Modal.Footer>

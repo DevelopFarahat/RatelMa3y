@@ -16,17 +16,21 @@ export default function RoomSideBar({ hideMain }) {
   const [evalIsShown, showEval] = useState(false);
   const target = useRef(null);
   const target2 = useRef(null);
+  const { t } = useTranslation();
   const { user } = useContext(UserContext);
   const [students, setStudents] = useState([]);
 
   useEffect(() => {
     if (user && user?.in_session && user?.in_session?.members_with_access) {
       let promiseArr = [];
+      console.log("isExam should be ", user.in_session);
 
       user.in_session.members_with_access.forEach(async (id) => {
         if (id != user._id) {
           let r = axios.get(
-            `${process.env.REACT_APP_BACK_HOST_URL}/api/students/${id.toString()}`
+            `${
+              process.env.REACT_APP_BACK_HOST_URL
+            }/api/students/${id.toString()}`
           );
           promiseArr.push(r);
         }
@@ -100,6 +104,7 @@ export default function RoomSideBar({ hideMain }) {
           >
             <EvaluationSheet
               students={students}
+              t={t}
               session={user.in_session}
               instructorId={user._id}
             />
@@ -129,7 +134,7 @@ export default function RoomSideBar({ hideMain }) {
                 color={"#121a24"}
                 style={{ marginRight: 8 }}
               />
-              Book
+              {t("book")}
             </Button>
             <Button
               variant="light"
@@ -142,7 +147,7 @@ export default function RoomSideBar({ hideMain }) {
                 color={"#121a24"}
                 style={{ marginRight: 8 }}
               />
-              Evaluation
+              {t("evaluations")}
             </Button>
           </Card>
         </div>
@@ -151,15 +156,9 @@ export default function RoomSideBar({ hideMain }) {
   );
 }
 
-//*_*_*_*_*__*_*__*_*__*__*_*___*_*_*__*_*_*_*_*__*_*_*_*__*_*___*_**__*//
-//*_*_*_*_*__*_*__*_*__*__*_*___*_*_*__*_*_*_*_*__*_*_*_*__*_*___*_**__*//
-//*_*_*_*_*__*_*__*_*__*__*_*___*_*_*__*_*_*_*_*__*_*_*_*__*_*___*_**__*//
-//*_*_*_*_*__*_*__*_*__*__*_*___*_*_*__*_*_*_*_*__*_*_*_*__*_*___*_**__*//
-//*_*_*_*_*__*_*__*_*__*__*_*___*_*_*__*_*_*_*_*__*_*_*_*__*_*___*_**__*//
-
 const EvaluationSheet = (props) => {
   const { user } = useContext(UserContext);
-  const { t } = useTranslation();
+  const t = props.t;
   const { enqueueSnackbar } = useSnackbar();
   const [isLoading, setIsLoading] = useState(false);
   const [alreadyTested, setAlreadyTested] = useState([]);
@@ -171,38 +170,26 @@ const EvaluationSheet = (props) => {
     setAlreadyTested(arr);
   }, []);
 
-  //TODO: use this to get the evaluation
-  //TODO: also reset when changing student from the dropdown
-  function getEvaluation(values, id) {
-    let evalu = props.session.evaluations.find((ev) => ev.student == id);
-    if (evalu) {
-      values.current_eval = evalu.current_eval;
-      values.prev_eval = evalu.prev_eval;
-    }
-  }
-
   function getEvaluationOrResetIfNew(val, fprops) {
     let evaluation = -1;
 
     if (alreadyTested.includes(val))
-      evaluation = evaluationsList.find(
-        (eva) => eva.student === val
-      )
+      evaluation = evaluationsList.find((eva) => eva.student === val);
 
-    if (evaluation === -1) {
-      evaluation= {
+    if (evaluation === -1)
+      evaluation = {
         previously_eval: 10,
         current_eval: 10,
         total_eval: 10,
-        notes: ""
-      }
-    }
+        notes: "",
+        is_exam: props.session.is_exam,
+      };
 
-    fprops.values.previously_eval = evaluation.previously_eval
-    fprops.values.current_eval = evaluation.current_eval
-    fprops.values.total_eval = evaluation.total_eval
-    fprops.values.notes = evaluation.notes
-    fprops.values.is_exam = evaluation.is_exam
+    fprops.previously_eval = evaluation.previously_eval;
+    fprops.current_eval = evaluation.current_eval;
+    fprops.total_eval = evaluation.total_eval;
+    fprops.notes = evaluation.notes;
+    fprops.is_exam = evaluation.is_exam;
   }
 
   return (
@@ -214,11 +201,9 @@ const EvaluationSheet = (props) => {
         total_eval: 10,
         notes: "",
         student: props?.students[0]?.id,
-        is_exam: false,
+        is_exam: props?.session.is_exam,
       }}
-      
       onSubmit={(values) => {
-
         if (values.is_exam) {
           delete values.current_eval;
           delete values.previously_eval;
@@ -229,16 +214,18 @@ const EvaluationSheet = (props) => {
         setIsLoading(true);
 
         axios
-          .put(`${process.env.REACT_APP_BACK_HOST_URL}/api/sessions/${props.session._id}`, {
-            evaluations: {
-              ...values,
-              _id: values.student,
-            },
-            is_exam: values.is_exam,
-          })
+          .put(
+            `${process.env.REACT_APP_BACK_HOST_URL}/api/sessions/${props.session._id}`,
+            {
+              evaluations: {
+                ...values,
+                _id: values.student,
+              },
+              is_exam: values.is_exam,
+            }
+          )
           .then((res) => {
-            setIsLoading(false);
-            console.log("done", res.data);
+            setIsLoading(false)
           })
           .catch((err) => {
             setIsLoading(false);
@@ -303,7 +290,7 @@ const EvaluationSheet = (props) => {
                   placeholder="select student"
                   onChange={(e) => {
                     fprops.setFieldValue("student", e.target.value);
-                    getEvaluationOrResetIfNew(e.target.value, fprops);
+                    getEvaluationOrResetIfNew(e.target.value, fprops.values);
                   }}
                   disabled={!props.students || props.students.length == 1}
                 >

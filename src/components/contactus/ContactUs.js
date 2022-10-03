@@ -63,8 +63,8 @@ function ContactUs() {
   };
 
   const [isArabic, setIsArabic] = useState(false);
-  const [t, i18n] = useTranslation();
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  const [t] = useTranslation();
+  const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
     setIsArabic(localStorage.getItem("i18nextLng") === "ar");

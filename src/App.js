@@ -27,22 +27,12 @@ import Messages from "./components/messages/message";
 
 function App() {
   const [t, i18n] = useTranslation();
-
-  //For changing direction with language change
-  const [isArabic, setIsArabic] = useState(false);
   const [hideMain, setHideMain] = useState(false);
   const [showSidebar, setShowSidebar] = useState(false);
   const [isRoomPrepared, setIsRoomPrepared] = useState(false);
   const { isLoading } = useContext(UserContext);
 
-  useEffect(() => {
-    setIsArabic(localStorage.getItem("i18nextLng") === "ar");
-  }, [localStorage.getItem("i18nextLng")]);
-
   const styles = {
-    // body: {
-    //   // direction: isArabic ? "rtl" : "ltr",
-    // },
     hideableDiv: {
       display: hideMain ? "none" : "block",
     },
@@ -63,7 +53,6 @@ function App() {
               <Route path="home" element={<Home />} />
               <Route path="about" element={<Aboutus />} />
               <Route path="contact" element={<Contact />} />
-
 
               <Route element={<PrivateRoutes />}>
                 <Route
@@ -147,7 +136,6 @@ function App() {
   );
 }
 
-//TODO: test it on student, instructor and admin
 const PrivateRoutes = (props) => {
   let auth = localStorage.getItem("accessToken");
   if (!auth) return <Navigate to="/login" />;
