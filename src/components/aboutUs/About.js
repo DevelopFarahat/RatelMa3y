@@ -18,7 +18,6 @@ function About() {
   const [t, i18n] = useTranslation();
   return (
     <div
-      style={{ direction: t("us") === "Us" ? "ltr" : "rtl" }}
       className={AboutCss.about}>
       <div className={AboutCss.about1}>
         <h1> {t("aboutus_title")}</h1>

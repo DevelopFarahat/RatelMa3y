@@ -35,8 +35,6 @@ function Sessions({ setIsRoomPrepared }) {
 
   let page = 1;
 
-  //TODO: Responsive Design
-
   useEffect(() => {
     setIsArabic(localStorage.getItem("i18nextLng") === "ar");
   }, [localStorage.getItem("i18nextLng")]);
@@ -48,7 +46,9 @@ function Sessions({ setIsRoomPrepared }) {
     //Updating students list
     if (user.role == "instructor") {
       axios
-        .get(`${process.env.REACT_APP_BACK_HOST_URL}/api/instructors/${user._id}`)
+        .get(
+          `${process.env.REACT_APP_BACK_HOST_URL}/api/instructors/${user._id}`
+        )
         .then((res) => {
           user.students = res.data.students;
           localStorage.setItem("user", JSON.stringify(user));
@@ -85,8 +85,6 @@ function Sessions({ setIsRoomPrepared }) {
   const lastSessionElementRef = useCallback((node) => {
     if (isLoading) return;
 
-    //TODO: assign it with total sessions count
-
     if (observer.current) observer.current.disconnect();
     observer.current = new IntersectionObserver((entries) => {
       if (entries[0].isIntersecting) {
@@ -122,11 +120,14 @@ function Sessions({ setIsRoomPrepared }) {
 
   function endSession(session) {
     axios
-      .put(`${process.env.REACT_APP_BACK_HOST_URL}/api/sessions/${session?._id}`, {
-        is_live: false,
-        room_id: session.room_id,
-        ended_at: Date.now(),
-      })
+      .put(
+        `${process.env.REACT_APP_BACK_HOST_URL}/api/sessions/${session?._id}`,
+        {
+          is_live: false,
+          room_id: session.room_id,
+          ended_at: Date.now(),
+        }
+      )
       .then(() => {
         setSessions([]);
         fetchSessions();
@@ -242,25 +243,6 @@ function Sessions({ setIsRoomPrepared }) {
                   {timeEnded}
                 </span>
               </h6>
-              {/* 
-        {user.role === "student" && (
-          <>
-            <h6>
-              Memorizing Previous:
-              <span style={{ fontWeight: 300 }}>{p_eval}</span>
-            </h6>
-            <h6>
-              Performance in session:
-              <span style={{ fontWeight: 300 }}>{c_eval}</span>
-            </h6>
-            {notes && (
-              <h6>
-                Notes:
-                <span style={{ fontWeight: 300 }}>{notes}</span>
-              </h6>
-            )}
-          </>
-        )} */}
             </div>
           )}
 
@@ -369,22 +351,25 @@ function Sessions({ setIsRoomPrepared }) {
         console.log("resetted");
       }}
     >
+      {user && user?.role == "instructor" && (
+        <>
+          <ModalCreateSession
+            setTableShow={setTableShow}
+            show={modalShow}
+            isArabic={isArabic}
+            user={user}
+            onHide={() => setModalShow(false)}
+            setSessions={setSessions}
+            sessions={sessions}
+          />
 
-      <ModalCreateSession
-        show={modalShow}
-        isArabic={isArabic}
-        user={user}
-        onHide={() => setModalShow(false)}
-        setSessions={setSessions}
-        sessions={sessions}
-      />
-
-      <ModalTable
-        show={tableShow}
-        user={user}
-        onHide={() => setTableShow(false)}
-      />
-
+          <ModalTable
+            show={tableShow}
+            user={user}
+            onHide={() => setTableShow(false)}
+          />
+        </>
+      )}
       <div className="container">
         <div className={RoomCSS.card}>
           {user && user.role === "instructor" && (

@@ -20,10 +20,11 @@
   font-weight: 500;
   text-decoration: none;
   margin: 0 16px;
-  transition-duration: .1s;
+  transition-duration: 0.1s;
 }
 .link:hover {
   color: #01332c;
+  transform: translateY(-2px);
   border-bottom: 3px solid #f2c667;
 }
 .button {
@@ -47,4 +48,16 @@
 .button:first-of-type {
   margin-right: 6px;
   text-transform: capitalize;
+}
+@media screen and (max-width: 991px) {
+  .link{
+    padding-inline-start: 9px;
+  }
+  .link:hover {
+    color: #01332c;
+    transform: none;
+    border-inline-start: 3px solid #f2c667;
+    margin-inline-end: 16px;
+    border-bottom: none;
+  }
 }

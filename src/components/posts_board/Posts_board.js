@@ -13,30 +13,36 @@ import UserContext from "../../utils/UserContext";
 const PostsBoard = () => {
   const { isLoading, setIsLoading } = useContext(UserContext);
   const [posts, setPosts] = useState([]);
-  
-  let page = 1;
-  let postsCount = 0;
-  let currentCount = 0;
+
+  let page = 1,
+    postsCount = undefined,
+    currentCount = undefined;
 
   useEffect(() => {
     fetchPosts(page);
   }, []);
 
-  function fetchPosts(page, limit) {
+  async function fetchPosts(page) {
     setIsLoading(true);
-    axios
-      .get(`${process.env.REACT_APP_BACK_HOST_URL}/api/events?page=${page}`)
-      .then((res) => {
-        let postsArr = res.data.data;
-        setPosts((prev) => [...prev, ...postsArr]);
-        currentCount = posts.length
-        postsCount = res.data.count;
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        console.error(error);
-        setIsLoading(false);
+
+    try {
+      let res = await axios.get(
+        `${process.env.REACT_APP_BACK_HOST_URL}/api/events?page=${page}`
+      );
+
+      let postsArr = res.data.data;
+      setPosts((prev) => {
+        let parr = [...prev, ...postsArr];
+        currentCount = parr.length;
+        return parr;
       });
+      postsCount = res.data.count;
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+      return [currentCount, postsCount];
+    }
   }
 
   //To observe last item
@@ -45,13 +51,19 @@ const PostsBoard = () => {
   const lastPostElementRef = useCallback((node) => {
     if (isLoading) return;
 
-    if(posts.length >= postsCount) return
+    if (posts.length >= postsCount) return;
 
     if (observer.current) observer.current.disconnect();
-    
+
     observer.current = new IntersectionObserver((entries) => {
       if (entries[0].isIntersecting) {
-        fetchPosts(page + 1);
+        //To prevent excess page loading
+        if (currentCount !== undefined && currentCount >= postsCount)
+          return setIsLoading(false);
+
+        let resObj = fetchPosts(page + 1);
+        currentCount = resObj[0];
+        postsCount = resObj[1];
         page = page + 1;
       }
     });
@@ -70,7 +82,7 @@ const PostsBoard = () => {
               }}
               key={post._id}
             >
-              <Post  post={post} latestPost={arr[0]} />
+              <Post post={post} latestPost={arr[0]} />
             </div>
           );
         else
@@ -79,10 +91,11 @@ const PostsBoard = () => {
               style={{
                 width: "100%",
               }}
+              key={post._id}
             >
-              <Post key={post._id} post={post} latestPost={arr[0]} />;
+              <Post post={post} latestPost={arr[0]} />
             </div>
-          );
+          )
       })}
     </div>
   );

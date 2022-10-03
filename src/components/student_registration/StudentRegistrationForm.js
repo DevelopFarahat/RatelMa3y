@@ -13,6 +13,7 @@ import { ImUserPlus } from "react-icons/im";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { MdError } from "react-icons/md";
 import axios from "axios";
+import { useEffect } from "react";
 const StudentRegistrationForm = () => {
   const { t } = useTranslation();
   const [studentRegistrationFormSteps, setStudentRegistrationFormSteps] =
@@ -141,6 +142,7 @@ const StudentRegistrationForm = () => {
     { id: 6, name: t("state7") },
     { id: 7, name: t("state8") },
     { id: 8, name: t("state9") },
+    { id: 9, name: t("stateOther") },
   ];
   let programs = [
     { id: "p0", programName: t("program1") },
@@ -248,6 +250,16 @@ const StudentRegistrationForm = () => {
           sixStep: true,
         });
   };
+
+  //TO SEND PIN WHEN REACHING 6th STEP
+  useEffect(() => {
+    if (!!studentRegistrationFormSteps.sixStep)
+      axios.post(
+        `${process.env.REACT_APP_BACK_HOST_URL}/api/auth/request_pin`,
+        { email: userData.email, rpin: true }
+      );
+  }, [studentRegistrationFormSteps.sixStep]);
+
   // just case if the user demande student can register in multiple programs
   /*
   const handleStudentPrograms = (event) => {
@@ -318,7 +330,6 @@ const StudentRegistrationForm = () => {
     errorHandle(event.target.id, event.target.value);
     localStorage.setItem("newAccountUserFullname", userData.name);
   };
-  console.log(userData.age);
   const errorHandle = (filed, value) => {
     if (filed === "email") {
       const emailRegx = /^[A-Z a-z]+[0-9]*@[A-Z a-z]+.com$/;
@@ -350,7 +361,8 @@ const StudentRegistrationForm = () => {
             : whatsapp_numberRegx.test(value),
       });
     } else if (filed === "name") {
-      const nameRegx = /[a-z A-Z]{3,}\s{1}[a-z A-Z]{3,}$/;
+      const nameRegx =
+        /^[a-z A-Z]{1,}\s{1}[a-z A-Z]{1,}$/;
       setErrors({
         ...errors,
         nameError:
@@ -426,8 +438,18 @@ const StudentRegistrationForm = () => {
       });
     }
   };
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
+
+    //CHECK IF VERIFICATION GOES WRONG
+    //TODO: maybe would be handled with alert
+    let result = await axios.post(
+      `${process.env.REACT_APP_BACK_HOST_URL}/api/auth/confirm_pin`,
+      { email: userData.email, rpin: true, pin: userData.email_verification }
+    );
+
+    if (result.status !== 200) return console.error("pin is incorrect");
+
     let wD = [];
     for (let i = 0; i < Object.values(workingDays).length; i++) {
       if (Object.values(workingDays)[i] === "") {
@@ -473,14 +495,13 @@ const StudentRegistrationForm = () => {
 
     axios
       .post(
-        `http://localhost:5000/api/students`,
+        `${process.env.REACT_APP_BACK_HOST_URL}/api/students`,
         finalStudentRegistrationDataObji
       )
       .then((res) => {
         res.status === 200
           ? navigate("/login")
           : setIsRegistrationErrorAlertVisible(true);
-        console.log(res);
         setIsThereNewRegistration(false);
       })
       .catch((error) => {
@@ -489,7 +510,6 @@ const StudentRegistrationForm = () => {
           setIsRegistrationErrorAlertVisible(false);
         }, 1000);
         setIsThereNewRegistration(false);
-        console.log(error);
       });
   };
 
@@ -499,7 +519,8 @@ const StudentRegistrationForm = () => {
         style={{ direction: t("us") === "Us" ? "ltr" : "rtl" }}
         className={
           StudentRegistrationFormStyles["registration-form-main-container"]
-        }>
+        }
+      >
         <div className={StudentRegistrationFormStyles["form-steps-container"]}>
           <span
             className={`${StudentRegistrationFormStyles["circle"]} ${
@@ -513,7 +534,8 @@ const StudentRegistrationForm = () => {
               errors.passwordError
                 ? ""
                 : StudentRegistrationFormStyles["coloredCircle"]
-            }`}>
+            }`}
+          >
             1
           </span>
           <span
@@ -528,7 +550,8 @@ const StudentRegistrationForm = () => {
               errors.passwordError
                 ? ""
                 : StudentRegistrationFormStyles["coloredLine"]
-            }`}></span>
+            }`}
+          ></span>
           <span
             className={`${StudentRegistrationFormStyles["circle"]} ${
               userData.mobile === "" ||
@@ -541,7 +564,8 @@ const StudentRegistrationForm = () => {
               errors.genderError
                 ? ""
                 : StudentRegistrationFormStyles["coloredCircle"]
-            }`}>
+            }`}
+          >
             2
           </span>
           <span
@@ -556,7 +580,8 @@ const StudentRegistrationForm = () => {
               errors.genderError
                 ? ""
                 : StudentRegistrationFormStyles["coloredLine"]
-            }`}></span>
+            }`}
+          ></span>
           <span
             className={` ${StudentRegistrationFormStyles["circle"]} ${
               userData.program === "" ||
@@ -569,7 +594,8 @@ const StudentRegistrationForm = () => {
               errors.started_from_surahError
                 ? ""
                 : StudentRegistrationFormStyles["coloredCircle"]
-            }`}>
+            }`}
+          >
             3
           </span>
           <span
@@ -584,7 +610,8 @@ const StudentRegistrationForm = () => {
               errors.started_from_surahError
                 ? ""
                 : StudentRegistrationFormStyles["coloredLine"]
-            }`}></span>
+            }`}
+          ></span>
           <span
             className={`${StudentRegistrationFormStyles["circle"]} ${
               (workingDays.d0 !== "" ||
@@ -597,7 +624,8 @@ const StudentRegistrationForm = () => {
               (userData.reached_surah !== "" || errors.reached_surahError)
                 ? StudentRegistrationFormStyles["coloredCircle"]
                 : ""
-            }`}>
+            }`}
+          >
             4
           </span>
           <span
@@ -612,7 +640,8 @@ const StudentRegistrationForm = () => {
               (userData.reached_surah !== "" || errors.reached_surahError)
                 ? StudentRegistrationFormStyles["coloredLine"]
                 : ""
-            }`}></span>
+            }`}
+          ></span>
           <span
             className={`${StudentRegistrationFormStyles["circle"]} 
                       ${
@@ -626,7 +655,8 @@ const StudentRegistrationForm = () => {
                         WorkingHours.h7 !== ""
                           ? StudentRegistrationFormStyles["coloredCircle"]
                           : ""
-                      }`}>
+                      }`}
+          >
             5
           </span>
           <span
@@ -635,7 +665,8 @@ const StudentRegistrationForm = () => {
               errors.email_verificationError
                 ? StudentRegistrationFormStyles["coloredLine"]
                 : ""
-            }`}></span>
+            }`}
+          ></span>
           <span
             className={`${StudentRegistrationFormStyles["circle"]} 
                       ${
@@ -643,7 +674,8 @@ const StudentRegistrationForm = () => {
                         errors.email_verificationError
                           ? StudentRegistrationFormStyles["coloredCircle"]
                           : ""
-                      }`}>
+                      }`}
+          >
             6
           </span>
         </div>
@@ -652,13 +684,15 @@ const StudentRegistrationForm = () => {
             className={
               StudentRegistrationFormStyles["registration-form-img-container"]
             }
-            style={{ order: t("us") === "Us" ? 1 : 2 }}>
-            <LazyLoadImage src={ReadQuranImg} alt='some pepole read quran' />
+            style={{ order: t("us") === "Us" ? 1 : 2 }}
+          >
+            <LazyLoadImage src={ReadQuranImg} alt="some pepole read quran" />
           </div>
           <form
             className={StudentRegistrationFormStyles["student-form"]}
             style={{ order: t("us") === "Us" ? 2 : 1 }}
-            onSubmit={handleSubmit}>
+            onSubmit={handleSubmit}
+          >
             <div
               className={`${
                 StudentRegistrationFormStyles["registration-form-hint"]
@@ -671,7 +705,8 @@ const StudentRegistrationForm = () => {
                       "registration-form-hint-on-step-1-2-3-4"
                     ]
                   : ""
-              }`}>
+              }`}
+            >
               {t("registration")}{" "}
               <span>
                 <mark
@@ -679,7 +714,8 @@ const StudentRegistrationForm = () => {
                     display: "bloxk",
                     backgroundColor: "#c2a054",
                     color: "#FFFFFF",
-                  }}>
+                  }}
+                >
                   {t("as_student")}
                 </mark>
               </span>
@@ -689,9 +725,9 @@ const StudentRegistrationForm = () => {
                 <div>
                   <Form.Label htmlFor={"name"}>{t("name")}</Form.Label>
                   <Form.Control
-                    type='text'
-                    id='name'
-                    name='name'
+                    type="text"
+                    id="name"
+                    name="name"
                     value={userData.name}
                     className={`${
                       StudentRegistrationFormStyles["system-user-form-controls"]
@@ -702,15 +738,15 @@ const StudentRegistrationForm = () => {
                     }`}
                     onChange={handleChange}
                   />
-                  <small className='text-danger'>{errors.nameError}</small>
+                  <small className="text-danger">{errors.nameError}</small>
                 </div>
                 <div>
                   <div>
                     <Form.Label htmlFor={"email"}>{t("email")}</Form.Label>
                     <Form.Control
-                      type='text'
-                      id='email'
-                      name='email'
+                      type="text"
+                      id="email"
+                      name="email"
                       value={userData.email}
                       className={`${
                         StudentRegistrationFormStyles[
@@ -723,13 +759,13 @@ const StudentRegistrationForm = () => {
                       }`}
                       onChange={handleChange}
                     />
-                    <small className='text-danger'>{errors.emailError}</small>
+                    <small className="text-danger">{errors.emailError}</small>
                   </div>
                   <Form.Label htmlFor={"age"}>{t("age")}</Form.Label>
                   <Form.Control
-                    type='number'
-                    id='age'
-                    name='age'
+                    type="number"
+                    id="age"
+                    name="age"
                     value={userData.age}
                     min={0}
                     className={`${
@@ -741,14 +777,14 @@ const StudentRegistrationForm = () => {
                     }`}
                     onChange={handleChange}
                   />
-                  <small className='text-danger'>{errors.ageError}</small>
+                  <small className="text-danger">{errors.ageError}</small>
                 </div>
                 <div>
                   <Form.Label htmlFor={"password"}>{t("password")}</Form.Label>
                   <Form.Control
-                    type='password'
-                    id='password'
-                    name='password'
+                    type="password"
+                    id="password"
+                    name="password"
                     value={userData.password}
                     className={`${
                       StudentRegistrationFormStyles["system-user-form-controls"]
@@ -759,7 +795,7 @@ const StudentRegistrationForm = () => {
                     }`}
                     onChange={handleChange}
                   />
-                  <small className='text-danger'>{errors.passwordError}</small>
+                  <small className="text-danger">{errors.passwordError}</small>
                 </div>
                 <div
                   className={
@@ -769,10 +805,11 @@ const StudentRegistrationForm = () => {
                     justifyContent: studentRegistrationFormSteps.firstStep
                       ? "flex-end"
                       : "space-between",
-                  }}>
+                  }}
+                >
                   <button
-                    type='submit'
-                    id='secondStep'
+                    type="submit"
+                    id="secondStep"
                     onClick={handleFormSteps}
                     disabled={
                       userData.name === "" ||
@@ -797,7 +834,8 @@ const StudentRegistrationForm = () => {
                       errors.passwordError
                         ? StudentRegistrationFormStyles["disabled-btn"]
                         : StudentRegistrationFormStyles["btn"]
-                    }`}>
+                    }`}
+                  >
                     {t("next")}{" "}
                     <TbPlayerTrackNext
                       style={{
@@ -814,11 +852,11 @@ const StudentRegistrationForm = () => {
             ) : studentRegistrationFormSteps.secondStep ? (
               <div>
                 <div>
-                  <Form.Label htmlFor='mobile'>{t("mobile")}</Form.Label>
+                  <Form.Label htmlFor="mobile">{t("mobile")}</Form.Label>
                   <Form.Control
-                    type='number'
-                    id='mobile'
-                    name='mobile'
+                    type="number"
+                    id="mobile"
+                    name="mobile"
                     value={userData.mobile}
                     onChange={handleChange}
                     className={`${
@@ -829,16 +867,16 @@ const StudentRegistrationForm = () => {
                         : ""
                     }`}
                   />
-                  <small className='text-danger'>{errors.mobileError}</small>
+                  <small className="text-danger">{errors.mobileError}</small>
                 </div>
                 <div>
-                  <Form.Label htmlFor='whatsapp_number'>
+                  <Form.Label htmlFor="whatsapp_number">
                     {t("mobile number")}
                   </Form.Label>
                   <Form.Control
-                    type='number'
-                    id='whatsapp_number'
-                    name='whatsapp_number'
+                    type="number"
+                    id="whatsapp_number"
+                    name="whatsapp_number"
                     value={userData.whatsapp_number}
                     onChange={handleChange}
                     className={`${
@@ -849,15 +887,15 @@ const StudentRegistrationForm = () => {
                         : ""
                     }`}
                   />
-                  <small className='text-danger'>
+                  <small className="text-danger">
                     {errors.whatsapp_numberError}
                   </small>
                 </div>
                 <div>
-                  <Form.Label htmlFor='state'>{t("state")}</Form.Label>
+                  <Form.Label htmlFor="state">{t("state")}</Form.Label>
                   <Form.Select
-                    name='state'
-                    id='state'
+                    name="state"
+                    id="state"
                     value={userData.state}
                     onChange={handleChange}
                     className={`${
@@ -866,21 +904,22 @@ const StudentRegistrationForm = () => {
                       errors.stateError
                         ? StudentRegistrationFormStyles["errors"]
                         : ""
-                    }`}>
-                    <option value=''>{t("select")}</option>
+                    }`}
+                  >
+                    <option value="">{t("select")}</option>
                     {listOfCountries.map((country) => (
                       <option key={country.id} value={country.name}>
                         {country.name}
                       </option>
                     ))}
                   </Form.Select>
-                  <small className='text-danger'>{errors.stateError}</small>
+                  <small className="text-danger">{errors.stateError}</small>
                 </div>
                 <div>
-                  <Form.Label htmlFor='gender'>{t("gender")}</Form.Label>
+                  <Form.Label htmlFor="gender">{t("gender")}</Form.Label>
                   <Form.Select
-                    name='gender'
-                    id='gender'
+                    name="gender"
+                    id="gender"
                     value={userData.gender}
                     onChange={handleChange}
                     className={`${
@@ -889,22 +928,25 @@ const StudentRegistrationForm = () => {
                       errors.genderError
                         ? StudentRegistrationFormStyles["errors"]
                         : ""
-                    }`}>
-                    <option value=''>{t("select")}</option>
-                    <option value='Male'>{t("male")}</option>
-                    <option value='Female'>{t("female")}</option>
+                    }`}
+                  >
+                    <option value="">{t("select")}</option>
+                    <option value="Male">{t("male")}</option>
+                    <option value="Female">{t("female")}</option>
                   </Form.Select>
-                  <small className='text-danger'>{errors.genderError}</small>
+                  <small className="text-danger">{errors.genderError}</small>
                 </div>
                 <div
                   className={
                     StudentRegistrationFormStyles["step-button-container"]
-                  }>
+                  }
+                >
                   <button
-                    type='submit'
-                    id='firstStepPrevious'
+                    type="submit"
+                    id="firstStepPrevious"
                     onClick={handleFormSteps}
-                    className={StudentRegistrationFormStyles["btn"]}>
+                    className={StudentRegistrationFormStyles["btn"]}
+                  >
                     {" "}
                     <ImPrevious2
                       style={{
@@ -917,8 +959,8 @@ const StudentRegistrationForm = () => {
                     {t("prevoius")}
                   </button>
                   <button
-                    type='submit'
-                    id='thirdStep'
+                    type="submit"
+                    id="thirdStep"
                     onClick={handleFormSteps}
                     disabled={
                       userData.mobile === "" ||
@@ -943,7 +985,8 @@ const StudentRegistrationForm = () => {
                       errors.genderError
                         ? StudentRegistrationFormStyles["disabled-btn"]
                         : StudentRegistrationFormStyles["btn"]
-                    }`}>
+                    }`}
+                  >
                     {t("next")}{" "}
                     <TbPlayerTrackNext
                       style={{
@@ -964,56 +1007,58 @@ const StudentRegistrationForm = () => {
                     {t("programs_title")}
                   </Form.Label>
                   <Form.Select
-                    id='program'
-                    name='program'
+                    id="program"
+                    name="program"
                     value={userData.program}
                     onChange={handleChange}
                     className={
                       errors.programError
                         ? StudentRegistrationFormStyles["errors"]
                         : ""
-                    }>
-                    <option value=''>{t("select")}</option>
+                    }
+                  >
+                    <option value="">{t("select")}</option>
                     {programs.map((pr) => (
                       <option key={pr.id} value={pr.programName}>
                         {pr.programName}
                       </option>
                     ))}
                   </Form.Select>
-                  <small className='text-danger'>{errors.programError}</small>
+                  <small className="text-danger">{errors.programError}</small>
                 </div>
                 <div>
-                  <Form.Label htmlFor='sessions_in_week'>
+                  <Form.Label htmlFor="sessions_in_week">
                     {t("weeks_sessions")}
                   </Form.Label>
                   <Form.Select
-                    id='sessions_in_week'
-                    name='sessions_in_week'
+                    id="sessions_in_week"
+                    name="sessions_in_week"
                     value={userData.sessions_in_week}
                     onChange={handleChange}
                     className={`${
                       errors.sessions_in_weekError
                         ? StudentRegistrationFormStyles["errors"]
                         : ""
-                    }`}>
-                    <option value=''>{t("select")}</option>
-                    <option value='1'>1</option>
-                    <option value='2'>2</option>
-                    <option value='3'>3</option>
-                    <option value='4'>4</option>
+                    }`}
+                  >
+                    <option value="">{t("select")}</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
                   </Form.Select>
-                  <small className='text-danger'>
+                  <small className="text-danger">
                     {errors.sessions_in_weekError}
                   </small>
                 </div>
                 <div>
-                  <Form.Label htmlFor='certificate'>
+                  <Form.Label htmlFor="certificate">
                     {t("qualified")}
                   </Form.Label>
                   <Form.Control
-                    type='text'
-                    id='certificate'
-                    name='certificate'
+                    type="text"
+                    id="certificate"
+                    name="certificate"
                     value={userData.certificate}
                     onChange={handleChange}
                     className={`${
@@ -1022,18 +1067,18 @@ const StudentRegistrationForm = () => {
                         : ""
                     }`}
                   />
-                  <small className='text-danger'>
+                  <small className="text-danger">
                     {errors.certificateError}
                   </small>
                 </div>
                 <div>
-                  <Form.Label htmlFor='started_from_surah'>
+                  <Form.Label htmlFor="started_from_surah">
                     {t("started_preffered_sura")}{" "}
                   </Form.Label>
                   <Form.Control
-                    type='text'
-                    id='started_from_surah'
-                    name='started_from_surah'
+                    type="text"
+                    id="started_from_surah"
+                    name="started_from_surah"
                     value={userData.started_from_surah}
                     onChange={handleChange}
                     className={`${
@@ -1042,19 +1087,21 @@ const StudentRegistrationForm = () => {
                         : ""
                     }`}
                   />
-                  <small className='text-danger'>
+                  <small className="text-danger">
                     {errors.started_from_surahError}
                   </small>
                 </div>
                 <div
                   className={
                     StudentRegistrationFormStyles["step-button-container"]
-                  }>
+                  }
+                >
                   <button
-                    type='submit'
-                    id='secondStepPrevious'
+                    type="submit"
+                    id="secondStepPrevious"
                     onClick={handleFormSteps}
-                    className={StudentRegistrationFormStyles["btn"]}>
+                    className={StudentRegistrationFormStyles["btn"]}
+                  >
                     {" "}
                     <ImPrevious2
                       style={{
@@ -1067,8 +1114,8 @@ const StudentRegistrationForm = () => {
                     {t("prevoius")}
                   </button>
                   <button
-                    type='submit'
-                    id='fourStep'
+                    type="submit"
+                    id="fourStep"
                     onClick={handleFormSteps}
                     disabled={
                       userData.program === "" ||
@@ -1093,7 +1140,8 @@ const StudentRegistrationForm = () => {
                       errors.started_from_surahError
                         ? StudentRegistrationFormStyles["disabled-btn"]
                         : StudentRegistrationFormStyles["btn"]
-                    }`}>
+                    }`}
+                  >
                     {t("next")}{" "}
                     <TbPlayerTrackNext
                       style={{
@@ -1110,13 +1158,13 @@ const StudentRegistrationForm = () => {
             ) : studentRegistrationFormSteps.fourStep ? (
               <div>
                 <div>
-                  <Form.Label htmlFor='reached_surah'>
+                  <Form.Label htmlFor="reached_surah">
                     {t("reached_sura_or_juz")}
                   </Form.Label>
                   <Form.Control
-                    type='text'
-                    id='reached_surah'
-                    name='reached_surah'
+                    type="text"
+                    id="reached_surah"
+                    name="reached_surah"
                     value={userData.reached_surah}
                     onChange={handleChange}
                     className={`${
@@ -1125,86 +1173,94 @@ const StudentRegistrationForm = () => {
                         : ""
                     }`}
                   />
-                  <small className='text-danger'>
+                  <small className="text-danger">
                     {errors.reached_surahError}
                   </small>
                 </div>
                 <span>{t("working_Days")}</span>
                 <div
                   className={`${StudentRegistrationFormStyles["days-check-box-container"]}`}
-                  style={{ minHeight: t("us") === t("Us") ? "auto" : "160px" }}>
+                  style={{ minHeight: t("us") === t("Us") ? "auto" : "160px" }}
+                >
                   <div
-                    style={{ padding: t("us") === t("Us") ? "15px" : "16px" }}>
-                    <Form.Label htmlFor='d0'>{t("Saturday")}</Form.Label>
+                    style={{ padding: t("us") === t("Us") ? "15px" : "16px" }}
+                  >
+                    <Form.Label htmlFor="d0">{t("Saturday")}</Form.Label>
                     <Form.Check
-                      name='d0'
-                      id='d0'
+                      name="d0"
+                      id="d0"
                       value={0}
                       onChange={(event) => handleAppointmentInDays(event)}
                       checked={checkedDays["d0"]}
                     />
                   </div>
                   <div
-                    style={{ padding: t("us") === t("Us") ? "15px" : "16px" }}>
-                    <Form.Label htmlFor='d1'>{t("Sunday")}</Form.Label>
+                    style={{ padding: t("us") === t("Us") ? "15px" : "16px" }}
+                  >
+                    <Form.Label htmlFor="d1">{t("Sunday")}</Form.Label>
                     <Form.Check
-                      name='d1'
-                      id='d1'
+                      name="d1"
+                      id="d1"
                       value={1}
                       onChange={(event) => handleAppointmentInDays(event)}
                       checked={checkedDays["d1"]}
                     />
                   </div>
                   <div
-                    style={{ padding: t("us") === t("Us") ? "15px" : "16px" }}>
-                    <Form.Label htmlFor='d2'>{t("Monday")}</Form.Label>
+                    style={{ padding: t("us") === t("Us") ? "15px" : "16px" }}
+                  >
+                    <Form.Label htmlFor="d2">{t("Monday")}</Form.Label>
                     <Form.Check
-                      name='d2'
-                      id='d2'
+                      name="d2"
+                      id="d2"
                       value={2}
                       onChange={(event) => handleAppointmentInDays(event)}
                       checked={checkedDays["d2"]}
                     />
                   </div>
                   <div
-                    style={{ padding: t("us") === t("Us") ? "15px" : "16px" }}>
-                    <Form.Label htmlFor='d3'>{t("Tuesday")}</Form.Label>
+                    style={{ padding: t("us") === t("Us") ? "15px" : "16px" }}
+                  >
+                    <Form.Label htmlFor="d3">{t("Tuesday")}</Form.Label>
                     <Form.Check
-                      name='d3'
-                      id='d3'
+                      name="d3"
+                      id="d3"
                       value={3}
                       onChange={(event) => handleAppointmentInDays(event)}
                       checked={checkedDays["d3"]}
                     />
                   </div>
                   <div
-                    style={{ padding: t("us") === t("Us") ? "15px" : "16px" }}>
-                    <Form.Label htmlFor='d4'>{t("Wednesday")}</Form.Label>
+                    style={{ padding: t("us") === t("Us") ? "15px" : "16px" }}
+                  >
+                    <Form.Label htmlFor="d4">{t("Wednesday")}</Form.Label>
                     <Form.Check
-                      name='d4'
-                      id='d4'
+                      name="d4"
+                      id="d4"
                       value={4}
                       onChange={(event) => handleAppointmentInDays(event)}
                       checked={checkedDays["d4"]}
                     />
                   </div>
                   <div
-                    style={{ padding: t("us") === t("Us") ? "15px" : "16px" }}>
-                    <Form.Label htmlFor='d5'>{t("Thursday")}</Form.Label>
+                    style={{ padding: t("us") === t("Us") ? "15px" : "16px" }}
+                  >
+                    <Form.Label htmlFor="d5">{t("Thursday")}</Form.Label>
                     <Form.Check
-                      name='d5'
-                      id='d5'
+                      name="d5"
+                      id="d5"
                       value={5}
                       onChange={(event) => handleAppointmentInDays(event)}
                       checked={checkedDays["d5"]}
                     />
                   </div>
                   <div
-                    style={{ padding: t("us") === t("Us") ? "15px" : "16px" }}>
-                    <Form.Label htmlFor='d6'>{t("Friday")}</Form.Label>
+                    style={{ padding: t("us") === t("Us") ? "15px" : "16px" }}
+                  >
+                    <Form.Label htmlFor="d6">{t("Friday")}</Form.Label>
                     <Form.Check
-                      name='d6'
-                      id='d6'
+                      name="d6"
+                      id="d6"
                       value={6}
                       onChange={(event) => handleAppointmentInDays(event)}
                       checked={checkedDays["d6"]}
@@ -1214,12 +1270,14 @@ const StudentRegistrationForm = () => {
                 <div
                   className={
                     StudentRegistrationFormStyles["step-button-container"]
-                  }>
+                  }
+                >
                   <button
-                    type='submit'
-                    id='thirdStepPrevious'
+                    type="submit"
+                    id="thirdStepPrevious"
                     onClick={handleFormSteps}
-                    className={StudentRegistrationFormStyles["btn"]}>
+                    className={StudentRegistrationFormStyles["btn"]}
+                  >
                     {" "}
                     <ImPrevious2
                       style={{
@@ -1232,8 +1290,8 @@ const StudentRegistrationForm = () => {
                     {t("prevoius")}
                   </button>
                   <button
-                    type='submit'
-                    id='fiveStep'
+                    type="submit"
+                    id="fiveStep"
                     onClick={handleFormSteps}
                     disabled={
                       (workingDays.d0 !== "" ||
@@ -1260,7 +1318,8 @@ const StudentRegistrationForm = () => {
                         errors.reached_surahError)
                         ? StudentRegistrationFormStyles["btn"]
                         : StudentRegistrationFormStyles["disabled-btn"]
-                    }`}>
+                    }`}
+                  >
                     {t("next")}{" "}
                     <TbPlayerTrackNext
                       style={{
@@ -1276,10 +1335,12 @@ const StudentRegistrationForm = () => {
               </div>
             ) : studentRegistrationFormSteps.fiveStep ? (
               <div
-                className={StudentRegistrationFormStyles["step-5-container"]}>
+                className={StudentRegistrationFormStyles["step-5-container"]}
+              >
                 <span>{t("Working_Hours")}</span>
                 <div
-                  className={`${StudentRegistrationFormStyles["hours-check-box-container"]}`}>
+                  className={`${StudentRegistrationFormStyles["hours-check-box-container"]}`}
+                >
                   {Working_hours.map((wh, index) => (
                     <div key={wh.id}>
                       <Form.Label htmlFor={wh.att}>{wh.appointment}</Form.Label>
@@ -1296,12 +1357,14 @@ const StudentRegistrationForm = () => {
                 <div
                   className={
                     StudentRegistrationFormStyles["step-button-container"]
-                  }>
+                  }
+                >
                   <button
-                    type='submit'
-                    id='fourStepPrevious'
+                    type="submit"
+                    id="fourStepPrevious"
                     onClick={handleFormSteps}
-                    className={StudentRegistrationFormStyles["btn"]}>
+                    className={StudentRegistrationFormStyles["btn"]}
+                  >
                     {" "}
                     <ImPrevious2
                       style={{
@@ -1314,8 +1377,8 @@ const StudentRegistrationForm = () => {
                     {t("prevoius")}
                   </button>
                   <button
-                    id='sixStep'
-                    type='submit'
+                    id="sixStep"
+                    type="submit"
                     disabled={
                       WorkingHours.h0 !== "" ||
                       WorkingHours.h1 !== "" ||
@@ -1340,7 +1403,8 @@ const StudentRegistrationForm = () => {
                         ? StudentRegistrationFormStyles["btn"]
                         : StudentRegistrationFormStyles["disabled-btn"]
                     }`}
-                    onClick={handleFormSteps}>
+                    onClick={handleFormSteps}
+                  >
                     {t("next")}{" "}
                     <TbPlayerTrackNext
                       style={{
@@ -1356,27 +1420,30 @@ const StudentRegistrationForm = () => {
               </div>
             ) : (
               <div
-                className={StudentRegistrationFormStyles["step-6-container"]}>
+                className={StudentRegistrationFormStyles["step-6-container"]}
+              >
                 <p>{t("registration-code-message")}</p>
-                <Form.Label htmlFor='email_verification'>
+                <Form.Label htmlFor="email_verification">
                   {t("registration_code")}
                 </Form.Label>
                 <Form.Control
-                  type='number'
-                  name='email_verification'
-                  id='email_verification'
+                  type="number"
+                  name="email_verification"
+                  id="email_verification"
                   value={userData.email_verification}
                   onChange={handleChange}
                 />
                 <div
                   className={
                     StudentRegistrationFormStyles["step-button-container"]
-                  }>
+                  }
+                >
                   <button
-                    type='submit'
-                    id='fiveStepPrevious'
+                    type="submit"
+                    id="fiveStepPrevious"
                     onClick={handleFormSteps}
-                    className={StudentRegistrationFormStyles["btn"]}>
+                    className={StudentRegistrationFormStyles["btn"]}
+                  >
                     {" "}
                     <ImPrevious2
                       style={{
@@ -1389,7 +1456,7 @@ const StudentRegistrationForm = () => {
                     {t("prevoius")}
                   </button>
                   <button
-                    type='submit'
+                    type="submit"
                     className={` ${
                       userData.email_verification === "" ||
                       errors.email_verificationError
@@ -1401,12 +1468,13 @@ const StudentRegistrationForm = () => {
                       errors.certificateError
                         ? true
                         : false
-                    }>
+                    }
+                  >
                     {isThereNewRegistration ? (
                       <>
                         <Spinner
-                          animation='grow'
-                          variant='light'
+                          animation="grow"
+                          variant="light"
                           style={{
                             width: "10px",
                             height: "10px",
@@ -1414,8 +1482,8 @@ const StudentRegistrationForm = () => {
                           }}
                         />
                         <Spinner
-                          animation='grow'
-                          variant='light'
+                          animation="grow"
+                          variant="light"
                           style={{
                             width: "10px",
                             height: "10px",
@@ -1423,8 +1491,8 @@ const StudentRegistrationForm = () => {
                           }}
                         />
                         <Spinner
-                          animation='grow'
-                          variant='light'
+                          animation="grow"
+                          variant="light"
                           style={{
                             width: "10px",
                             height: "10px",
@@ -1432,8 +1500,8 @@ const StudentRegistrationForm = () => {
                           }}
                         />
                         <Spinner
-                          animation='grow'
-                          variant='light'
+                          animation="grow"
+                          variant="light"
                           style={{
                             width: "10px",
                             height: "10px",
@@ -1441,8 +1509,8 @@ const StudentRegistrationForm = () => {
                           }}
                         />
                         <Spinner
-                          animation='grow'
-                          variant='light'
+                          animation="grow"
+                          variant="light"
                           style={{
                             width: "10px",
                             height: "10px",
@@ -1450,8 +1518,8 @@ const StudentRegistrationForm = () => {
                           }}
                         />
                         <Spinner
-                          animation='grow'
-                          variant='light'
+                          animation="grow"
+                          variant="light"
                           style={{
                             width: "10px",
                             height: "10px",
@@ -1475,8 +1543,9 @@ const StudentRegistrationForm = () => {
           <div
             className={
               StudentRegistrationFormStyles["registration-error-alert"]
-            }>
-            <MdError size={45} color='#FFFFFF' />
+            }
+          >
+            <MdError size={45} color="#FFFFFF" />
             <span>Something Went Wrong Please Try Again!</span>
           </div>
         ) : null}

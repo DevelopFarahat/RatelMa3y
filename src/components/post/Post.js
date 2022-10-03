@@ -77,6 +77,6 @@ const Post = (props) => {
         ) : null}
       </div>
     </Link>
-  );
+  )
 };
 export default Post;

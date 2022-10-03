@@ -241,8 +241,9 @@
   "state8": "Syria",
   "state9": "The United Arab Emirates",
   "program1": "Memorizing",
-  "program2": "Noor Bayan Program",
-  "program3": "Recitation program",
+  "program2": "Noor Bayan",
+  "program3": "Recitation",
+  "stateOther": "Other",
   "weeks_sessions": "Number Of Sessions Per Week",
   "university_certificate": "education degree",
   "started_preffered_sura": "Surah Preferred To Start From",
@@ -255,7 +256,7 @@
   "session_appointment6": "6:00 pm to 8:00 pm",
   "session_appointment7": "8:00 pm to 10:00 pm",
   "session_appointment8": "10:00 pm to 12:00 am",
-  "student_fullname_error": "Fullname must contain a white space and min length of 3 characters in english",
+  "student_fullname_error": "Must be your fullname and must be in English ex: Ahmed Ali",
   "student_password_error": "password must be at least 8 english characters or digits",
   "student_mobile_error": "Mobile Is Required",
   "registration": "SignUp as",
@@ -263,5 +264,8 @@
   "student_email_error_message": "The email must contain an @ and end with .com",
   "registration-code-message": "we have sent an email to you, please check your email and type the code",
   "registration_code": "Code",
-  "Register": "Register"
+  "Register": "Register",
+  "is_an_exam": "General Exam",
+  "evaluations":"Evaluation",
+  "book":"Quran"
 }

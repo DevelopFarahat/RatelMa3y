@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import AddPostStyles from "./AddPost.module.css";
-import Spinner from 'react-bootstrap/Spinner';
+import Spinner from "react-bootstrap/Spinner";
 import Form from "react-bootstrap/Form";
 import { RiFolder5Fill } from "react-icons/ri";
 import { MdOutlineClear } from "react-icons/md";
@@ -10,17 +10,18 @@ import formEmptyFieldSadEmoji from "../../assets/images/emotions.png";
 import axios from "axios";
 
 const AddPost = () => {
-
   const [postData, setPostData] = useState({
     title: "",
     content: "",
     lang: "ar",
-  })
+  });
   const [img, setImg] = useState();
   const [postImage, setPostImage] = useState("");
   const [isUserMadeAPost, setIsUserMadeAPost] = useState(false);
-  const [isThereAnyFormFieldEmpty, setIsThereAnyFormFieldEmpty] = useState(false);
-  const [isThereAnyPostIsUploading,setIsThereAnyPostIsUploading] = useState(false);
+  const [isThereAnyFormFieldEmpty, setIsThereAnyFormFieldEmpty] =
+    useState(false);
+  const [isThereAnyPostIsUploading, setIsThereAnyPostIsUploading] =
+    useState(false);
   const [error, setError] = useState({
     imgError: "",
     titleError: "",
@@ -48,12 +49,11 @@ const AddPost = () => {
     setPostImage("");
   };
 
-
   //Submit the form
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    setIsThereAnyPostIsUploading(true)
+    setIsThereAnyPostIsUploading(true);
 
     if (!img) return console.error("No image selected");
 
@@ -67,13 +67,13 @@ const AddPost = () => {
     };
 
     function uploadImage(img) {
-     // console.log(img);
+      // console.log(img);
       let cc = {
         article_img: img,
         content: postData.content,
         title: postData.title,
-        lang:postData.lang,
-         //date:new Date().toLocaleString('en-US', { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })
+        lang: postData.lang,
+        //date:new Date().toLocaleString('en-US', { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })
       };
       console.log(cc);
 
@@ -90,9 +90,9 @@ const AddPost = () => {
           .then((res) => {
             setIsThereAnyPostIsUploading(false);
             setIsUserMadeAPost(true);
-            setTimeout(()=>{
+            setTimeout(() => {
               setIsUserMadeAPost(false);
-            },1000);
+            }, 1000);
             setPostData({
               title: "",
               content: "",
@@ -244,15 +244,45 @@ const AddPost = () => {
         </div>
         <div className={AddPostStyles["posting-button-container"]}>
           <button type="submit" className={AddPostStyles["btn"]}>
-                    {isThereAnyPostIsUploading?<>
-                    <Spinner animation="grow" variant="light" style={{width:'10px',height:'10px',marginLeft:'3px'}} />
-                    <Spinner animation="grow" variant="light" style={{width:'10px',height:'10px',marginLeft:'3px'}} />
-                    <Spinner animation="grow" variant="light" style={{width:'10px',height:'10px',marginLeft:'3px'}} />
-                    <Spinner animation="grow" variant="light" style={{width:'10px',height:'10px',marginLeft:'3px'}} />
-                    <Spinner animation="grow" variant="light" style={{width:'10px',height:'10px',marginLeft:'3px'}} />
-                    <Spinner animation="grow" variant="light" style={{width:'10px',height:'10px',marginLeft:'3px'}} />
-                    </>:<>Post<BsFillFileEarmarkPostFill size={15} /></>
-                    }
+            {isThereAnyPostIsUploading ? (
+              <>
+                <Spinner
+                  animation="grow"
+                  variant="light"
+                  style={{ width: "10px", height: "10px", marginLeft: "3px" }}
+                />
+                <Spinner
+                  animation="grow"
+                  variant="light"
+                  style={{ width: "10px", height: "10px", marginLeft: "3px" }}
+                />
+                <Spinner
+                  animation="grow"
+                  variant="light"
+                  style={{ width: "10px", height: "10px", marginLeft: "3px" }}
+                />
+                <Spinner
+                  animation="grow"
+                  variant="light"
+                  style={{ width: "10px", height: "10px", marginLeft: "3px" }}
+                />
+                <Spinner
+                  animation="grow"
+                  variant="light"
+                  style={{ width: "10px", height: "10px", marginLeft: "3px" }}
+                />
+                <Spinner
+                  animation="grow"
+                  variant="light"
+                  style={{ width: "10px", height: "10px", marginLeft: "3px" }}
+                />
+              </>
+            ) : (
+              <>
+                Post
+                <BsFillFileEarmarkPostFill size={15} />
+              </>
+            )}
           </button>
         </div>
       </form>
