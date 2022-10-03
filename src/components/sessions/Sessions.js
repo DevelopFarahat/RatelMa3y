@@ -214,7 +214,7 @@ function Sessions({ setIsRoomPrepared }) {
               {session.created_by?.name ?? user?.name}
             </span>
           </h6>
-          {user && user.role === "student" && (
+          {user && user.role === "student" && (!(p_eval === 0 && session.is_live)) && (
             <>
               <h6>
                 {t("sessions_mem_eval")}{" "}

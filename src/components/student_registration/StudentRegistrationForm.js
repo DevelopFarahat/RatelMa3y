@@ -14,8 +14,11 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import { MdError } from "react-icons/md";
 import axios from "axios";
 import { useEffect } from "react";
+import { useSnackbar } from "notistack";
+
 const StudentRegistrationForm = () => {
   const { t } = useTranslation();
+  const { enqueueSnackbar } = useSnackbar();
   const [studentRegistrationFormSteps, setStudentRegistrationFormSteps] =
     useState({
       firstStep: true,
@@ -442,13 +445,12 @@ const StudentRegistrationForm = () => {
     event.preventDefault();
 
     //CHECK IF VERIFICATION GOES WRONG
-    //TODO: maybe would be handled with alert
     let result = await axios.post(
       `${process.env.REACT_APP_BACK_HOST_URL}/api/auth/confirm_pin`,
       { email: userData.email, rpin: true, pin: userData.email_verification }
     );
 
-    if (result.status !== 200) return console.error("pin is incorrect");
+    if (result.status !== 200) return enqueueSnackbar(t('login_error_pin'));
 
     let wD = [];
     for (let i = 0; i < Object.values(workingDays).length; i++) {

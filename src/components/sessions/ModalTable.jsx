@@ -67,6 +67,7 @@ export default function ModalTable({ user, show, onHide }) {
 
 const styles = {
   gridStyle: {
+    height: "min(calc(100vh - 100px),fit-content)",
     display: "grid",
     gridTemplateColumns: "auto auto 1fr",
     gap: 2,
