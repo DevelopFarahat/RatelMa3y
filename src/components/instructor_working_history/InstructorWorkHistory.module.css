@@ -24,7 +24,9 @@
 }
 .students-data-tap,
 .sessions-data-tap,
-.evaluations-data-tap {
+.evaluations-data-tap,
+.workingDateAndOursTap,
+.sessions-schedule-data-tap {
   font-size: 1rem;
   text-align: center;
   text-transform: capitalize;

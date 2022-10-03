@@ -1,0 +1,70 @@
+.sessions-schedule-main{
+    width:100%;
+    padding: 10px;
+    height: 388px;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    
+  }
+ .sessions-schedule-main::-webkit-scrollbar {
+    width: 15px;
+  }
+ .sessions-schedule-main::-webkit-scrollbar-track {
+    background-color: #e4e4e4;
+    border-radius: 7px;
+    -webkit-border-radius: 7px;
+    -moz-border-radius: 7px;
+    -ms-border-radius: 7px;
+    -o-border-radius: 7px;
+  }
+  
+ .sessions-schedule-main::-webkit-scrollbar-thumb {
+    border-radius: 70px;
+    border: 6px solid rgba(0, 0, 0, 0.18);
+    border-left: 0;
+    border-right: 0;
+    background-color: #038674;
+    -webkit-border-radius: 70px;
+    -moz-border-radius: 70px;
+    -ms-border-radius: 70px;
+    -o-border-radius: 70px;
+  }
+  .sessions-schedule-main > section{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    min-width: 100%;
+  }
+  .sessions-schedule-main > section > span{
+    flex: 0 0 26%;
+    font-size: 1rem;
+    font-family: 'Times New Roman', Times, serif;
+    text-transform: capitalize;
+    line-height: 1.5;
+    text-align: center;
+    padding:10px;
+    margin: 1px;
+    color:#000000;
+  }
+  .sessions-schedule-main >section > span:nth-child(1){
+    background-color: rgb(25, 135, 84);
+    color:#FFFFFF;
+    align-self: center;
+  }
+  .sessions-schedule-main > section > .session-time{
+    background-color:rgb(32, 170, 105);
+    align-self: center;
+  }
+  .sessions-schedule-main > section > .session-student-members{
+    background-color:#dadada;
+  }
+  .empty-data-img {
+    margin: auto;
+    padding: 88px;
+    display: block;
+    background-position: 50% 50%;
+  }
