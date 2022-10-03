@@ -2077,236 +2077,357 @@ const StudentSubscriptionState = ({
           if (i === 0) {
             if (Object.entries(res.data.busy)[i][1].find((obji) => typeof obji === 'object' && !Array.isArray(obji)) !== undefined ) {
               for (let c = 0; c < Object.entries(res.data.busy)[i][1].length; c++) {
-                if (typeof Object.entries(res.data.busy)[i][1][c] === 'object' && !Array.isArray(Object.entries(res.data.busy)[i][1][c]) && (typeof stdwHoursD0[c] === 'object' && !Array.isArray(stdwHoursD0[c]))) {
-                  if ((Object.entries(res.data.busy)[i][1][c]['stdIds'].find((sId) => sId === changableSubscriptionState._id)) === undefined ) {
+                if (typeof Object.entries(res.data.busy)[i][1][c] === 'object' && !Array.isArray(Object.entries(res.data.busy)[i][1][c])) {
+                  if ((Object.entries(res.data.busy)[i][1][c]['stdIds'].find((sId) => sId === changableSubscriptionState._id)) === undefined && (typeof stdwHoursD0[c] === 'object' && !Array.isArray(stdwHoursD0[c]))) {
                     let previouslyStdIds = [...Object.entries(res.data.busy)[i][1][c]['stdIds']];
                     previouslyStdIds.push(changableSubscriptionState._id);
                     let max = Object.entries(res.data.busy)[i][1][c].max;
                     max += 1;
                     stdwHoursD0[c] = { "stdIds": previouslyStdIds, "max": max }
-                  } else {
-                    for (let stdIdsIndex = 0; stdIdsIndex < Object.entries(res.data.busy)[i][1][c]['stdIds'].length; stdIdsIndex++) {
-                      if (Object.entries(res.data.busy)[i][1][c]['stdIds'] === changableSubscriptionState._id) {
-                        let previouslyStdIds = [...Object.entries(res.data.busy)[i][1][c]['stdIds']]
-                        previouslyStdIds.splice(stdIdsIndex, 1);
-                        let max = Object.entries(res.data.busy)[i][1][c].max;
-                        max -= 1;
-                        stdwHoursD0[c] = { "stdIds": previouslyStdIds, "max": max }
+                  }else{
+                    for(let stdwHoursD0Index = 0 ;stdwHoursD0Index < stdwHoursD0.length;stdwHoursD0Index++ ){
+                      if(typeof stdwHoursD0[stdwHoursD0Index] === 'object' && !Array.isArray(stdwHoursD0[stdwHoursD0Index])){
+                        if(stdwHoursD0Index === c){
+                          if ((Object.entries(res.data.busy)[i][1][c]['stdIds'].find((sId) => sId === changableSubscriptionState._id)) !== undefined) {
+                            let previouslyStdIds = [...Object.entries(res.data.busy)[i][1][c]['stdIds']];
+                            let max = Object.entries(res.data.busy)[i][1][c].max;
+                            stdwHoursD0[c] = { "stdIds": previouslyStdIds, "max": max }
+                          }
+                        }else{
+                          if ((Object.entries(res.data.busy)[i][1][c]['stdIds'].find((sId) => sId === changableSubscriptionState._id)) !== undefined) {
+                        //  if (Object.entries(res.data.busy)[i][1][c]['stdIds'] === changableSubscriptionState._id) {
+                            let previouslyStdIds = [...Object.entries(res.data.busy)[i][1][c]['stdIds']]
+                            previouslyStdIds.splice(c, 1);
+                            let max = Object.entries(res.data.busy)[i][1][c].max;
+                            max -= 1;
+                            stdwHoursD0[c] = { "stdIds": previouslyStdIds, "max": max }
+                          }
+                       // }
+                        }
+  
                       }
                     }
                   }
-                }
-                if (stdwHoursD0[c][1] === 0)
+
+                }else{
+                  if (stdwHoursD0[c][1] === 0)
                   stdwHoursD0[c] = Object.entries(res.data.busy)[i][1][c];
+                }
               }
               instructorBusy[`${i}`] = stdwHoursD0;
 
             } else {
               instructorBusy[`${i}`] = stdwHoursD0;
             }
+                // delete reserved session days and hours if the admin change the days of the session
 
+            for(let busyIndex = 0 ; busyIndex < Object.entries(res.data.busy).length;busyIndex++){
+              for(let busyDayIndex = 0 ; busyDayIndex < Object.entries(res.data.busy)[busyIndex][1].length;busyDayIndex++){
+                if(busyDayIndex === 1){
+                  if(typeof Object.entries(res.data.busy)[busyIndex][1][busyDayIndex] === 'object' && !Array.isArray(Object.entries(res.data.busy)[busyIndex][1][busyDayIndex])){
+                    for(let hIndex = 0 ; hIndex < Object.entries(res.data.busy)[busyIndex][1][busyDayIndex]['stdIds'].length;hIndex++){
+                      if(Object.entries(res.data.busy)[busyIndex][1][busyDayIndex]['stdIds'][hIndex] === changableSubscriptionState._id){
+
+                        let previouslyStdIds = [...Object.entries(res.data.busy)[busyIndex][1][busyDayIndex]['stdIds']]
+                        previouslyStdIds.splice(hIndex, 1);
+                        let max = Object.entries(res.data.busy)[busyIndex][1][busyDayIndex].max;
+                        max -= 1;
+                        stdBusyHoursD1[hIndex] = {"stdIds": previouslyStdIds, "max": max }
+                      }
+                    }
+                  }
+              }
+
+            }
+          }
           }
 
           if (i === 1) {
-            if (Object.entries(res.data.busy)[i][1].find((obji) => typeof obji === 'object' && !Array.isArray(obji)) !== undefined) {
+            if (Object.entries(res.data.busy)[i][1].find((obji) => typeof obji === 'object' && !Array.isArray(obji)) !== undefined ) {
               for (let c = 0; c < Object.entries(res.data.busy)[i][1].length; c++) {
-                if (typeof Object.entries(res.data.busy)[i][1][c] === 'object' && !Array.isArray(Object.entries(res.data.busy)[i][1][c]) && (typeof stdwHoursD1[c] === 'object' && !Array.isArray(stdwHoursD1[c]))) {
-                  if ((Object.entries(res.data.busy)[i][1][c]['stdIds'].find((sId) => sId === changableSubscriptionState._id)) === undefined ) {
+                if (typeof Object.entries(res.data.busy)[i][1][c] === 'object' && !Array.isArray(Object.entries(res.data.busy)[i][1][c])) {
+                  if ((Object.entries(res.data.busy)[i][1][c]['stdIds'].find((sId) => sId === changableSubscriptionState._id)) === undefined && (typeof stdwHoursD1[c] === 'object' && !Array.isArray(stdwHoursD1[c]))) {
                     let previouslyStdIds = [...Object.entries(res.data.busy)[i][1][c]['stdIds']];
                     previouslyStdIds.push(changableSubscriptionState._id);
                     let max = Object.entries(res.data.busy)[i][1][c].max;
                     max += 1;
                     stdwHoursD1[c] = { "stdIds": previouslyStdIds, "max": max }
-                  } else {
-                    for (let stdIdsIndex = 0; stdIdsIndex < Object.entries(res.data.busy)[i][1][c]['stdIds'].length; stdIdsIndex++) {
-                      if (Object.entries(res.data.busy)[i][1][c]['stdIds'] === changableSubscriptionState._id) {
-                        let previouslyStdIds = [...Object.entries(res.data.busy)[i][1][c]['stdIds']]
-                        previouslyStdIds.splice(stdIdsIndex, 1);
-                        let max = Object.entries(res.data.busy)[i][1][c].max;
-                        max -= 1;
-                        stdwHoursD1[c] = { "stdIds": previouslyStdIds, "max": max }
+                  }else{
+                    for(let stdwHoursD1Index = 0 ;stdwHoursD1Index < stdwHoursD1.length;stdwHoursD1Index++ ){
+                      if(typeof stdwHoursD1[stdwHoursD1Index] === 'object' && !Array.isArray(stdwHoursD1[stdwHoursD1Index])){
+                        if(stdwHoursD1Index === c){
+                          if ((Object.entries(res.data.busy)[i][1][c]['stdIds'].find((sId) => sId === changableSubscriptionState._id)) !== undefined) {
+                            let previouslyStdIds = [...Object.entries(res.data.busy)[i][1][c]['stdIds']];
+                            let max = Object.entries(res.data.busy)[i][1][c].max;
+                            stdwHoursD1[c] = { "stdIds": previouslyStdIds, "max": max }
+                          }
+                        }else{
+                          if ((Object.entries(res.data.busy)[i][1][c]['stdIds'].find((sId) => sId === changableSubscriptionState._id)) !== undefined) {
+                         // if (Object.entries(res.data.busy)[i][1][c]['stdIds'] === changableSubscriptionState._id) {
+                            let previouslyStdIds = [...Object.entries(res.data.busy)[i][1][c]['stdIds']]
+                            previouslyStdIds.splice(c, 1);
+                            let max = Object.entries(res.data.busy)[i][1][c].max;
+                            max -= 1;
+                            stdwHoursD1[c] = { "stdIds": previouslyStdIds, "max": max }
+                          }
+                       // }
+                        }
+  
                       }
                     }
                   }
-                }
-                if (stdwHoursD1[c][1] === 0) {
+
+                }else{
+                  if (stdwHoursD1[c][1] === 0)
                   stdwHoursD1[c] = Object.entries(res.data.busy)[i][1][c];
                 }
+
               }
               instructorBusy[`${i}`] = stdwHoursD1;
 
             } else {
               instructorBusy[`${i}`] = stdwHoursD1;
             }
-
           }
 
           if (i === 2) {
-            if (Object.entries(res.data.busy)[i][1].find((obji) => typeof obji === 'object' && !Array.isArray(obji)) !== undefined) {
+            if (Object.entries(res.data.busy)[i][1].find((obji) => typeof obji === 'object' && !Array.isArray(obji)) !== undefined ) {
               for (let c = 0; c < Object.entries(res.data.busy)[i][1].length; c++) {
-                if (typeof Object.entries(res.data.busy)[i][1][c] === 'object' && !Array.isArray(Object.entries(res.data.busy)[i][1][c]) && (typeof stdwHoursD2[c] === 'object' && !Array.isArray(stdwHoursD2[c]))) {
-                  if ((Object.entries(res.data.busy)[i][1][c]['stdIds'].find((sId) => sId === changableSubscriptionState._id)) === undefined ) {
+                if (typeof Object.entries(res.data.busy)[i][1][c] === 'object' && !Array.isArray(Object.entries(res.data.busy)[i][1][c])) {
+                  if ((Object.entries(res.data.busy)[i][1][c]['stdIds'].find((sId) => sId === changableSubscriptionState._id)) === undefined && (typeof stdwHoursD2[c] === 'object' && !Array.isArray(stdwHoursD2[c]))) {
                     let previouslyStdIds = [...Object.entries(res.data.busy)[i][1][c]['stdIds']];
                     previouslyStdIds.push(changableSubscriptionState._id);
                     let max = Object.entries(res.data.busy)[i][1][c].max;
                     max += 1;
                     stdwHoursD2[c] = { "stdIds": previouslyStdIds, "max": max }
-                  } else {
-                    for (let stdIdsIndex = 0; stdIdsIndex < Object.entries(res.data.busy)[i][1][c]['stdIds'].length; stdIdsIndex++) {
-                      if (Object.entries(res.data.busy)[i][1][c]['stdIds'] === changableSubscriptionState._id) {
-                        let previouslyStdIds = [...Object.entries(res.data.busy)[i][1][c]['stdIds']]
-                        previouslyStdIds.splice(stdIdsIndex, 1);
-                        let max = Object.entries(res.data.busy)[i][1][c].max;
-                        max -= 1;
-                        stdwHoursD2[c] = { "stdIds": previouslyStdIds, "max": max }
+                  }else{
+                    for(let stdwHoursD2Index = 0 ;stdwHoursD2Index < stdwHoursD2.length;stdwHoursD2Index++ ){
+                      if(typeof stdwHoursD2[stdwHoursD2Index] === 'object' && !Array.isArray(stdwHoursD2[stdwHoursD2Index])){
+                        if(stdwHoursD2Index === c){
+                          if ((Object.entries(res.data.busy)[i][1][c]['stdIds'].find((sId) => sId === changableSubscriptionState._id)) !== undefined) {
+                            let previouslyStdIds = [...Object.entries(res.data.busy)[i][1][c]['stdIds']];
+                            let max = Object.entries(res.data.busy)[i][1][c].max;
+                            stdwHoursD2[c] = { "stdIds": previouslyStdIds, "max": max }
+                          }
+                        }else{
+                          if ((Object.entries(res.data.busy)[i][1][c]['stdIds'].find((sId) => sId === changableSubscriptionState._id)) !== undefined) {
+                       //   if (Object.entries(res.data.busy)[i][1][c]['stdIds'] === changableSubscriptionState._id) {
+                            let previouslyStdIds = [...Object.entries(res.data.busy)[i][1][c]['stdIds']]
+                            previouslyStdIds.splice(c, 1);
+                            let max = Object.entries(res.data.busy)[i][1][c].max;
+                            max -= 1;
+                            stdwHoursD2[c] = { "stdIds": previouslyStdIds, "max": max }
+                          }
+                      //  }
+                        }
+  
                       }
                     }
                   }
-                }
-                if (stdwHoursD2[c][1] === 0)
-                  stdwHoursD2[c] = Object.entries(res.data.busy)[i][1][c];
 
+                }else{
+                  if (stdwHoursD2[c][1] === 0)
+                  stdwHoursD2[c] = Object.entries(res.data.busy)[i][1][c];
+                }
+       
               }
               instructorBusy[`${i}`] = stdwHoursD2;
 
             } else {
               instructorBusy[`${i}`] = stdwHoursD2;
             }
-
-
           }
 
           if (i === 3) {
-            if (Object.entries(res.data.busy)[i][1].find((obji) => typeof obji === 'object' && !Array.isArray(obji)) !== undefined) {
+            if (Object.entries(res.data.busy)[i][1].find((obji) => typeof obji === 'object' && !Array.isArray(obji)) !== undefined ) {
               for (let c = 0; c < Object.entries(res.data.busy)[i][1].length; c++) {
-                if (typeof Object.entries(res.data.busy)[i][1][c] === 'object' && !Array.isArray(Object.entries(res.data.busy)[i][1][c]) && (typeof stdwHoursD3[c] === 'object' && !Array.isArray(stdwHoursD3[c]))) {
-                  if ((Object.entries(res.data.busy)[i][1][c]['stdIds'].find((sId) => sId === changableSubscriptionState._id)) === undefined ) {
+                if (typeof Object.entries(res.data.busy)[i][1][c] === 'object' && !Array.isArray(Object.entries(res.data.busy)[i][1][c])) {
+                  if ((Object.entries(res.data.busy)[i][1][c]['stdIds'].find((sId) => sId === changableSubscriptionState._id)) === undefined && (typeof stdwHoursD3[c] === 'object' && !Array.isArray(stdwHoursD3[c]))) {
                     let previouslyStdIds = [...Object.entries(res.data.busy)[i][1][c]['stdIds']];
                     previouslyStdIds.push(changableSubscriptionState._id);
                     let max = Object.entries(res.data.busy)[i][1][c].max;
                     max += 1;
                     stdwHoursD3[c] = { "stdIds": previouslyStdIds, "max": max }
-                  } else {
-                    for (let stdIdsIndex = 0; stdIdsIndex < Object.entries(res.data.busy)[i][1][c]['stdIds'].length; stdIdsIndex++) {
-                      if (Object.entries(res.data.busy)[i][1][c]['stdIds'] === changableSubscriptionState._id) {
-                        let previouslyStdIds = [...Object.entries(res.data.busy)[i][1][c]['stdIds']]
-                        previouslyStdIds.splice(stdIdsIndex, 1);
-                        let max = Object.entries(res.data.busy)[i][1][c].max;
-                        max -= 1;
-                        stdwHoursD3[c] = { "stdIds": previouslyStdIds, "max": max }
+                  }else{
+                    for(let stdwHoursD3Index = 0 ;stdwHoursD3Index < stdwHoursD3.length;stdwHoursD3Index++ ){
+                      if(typeof stdwHoursD3[stdwHoursD3Index] === 'object' && !Array.isArray(stdwHoursD3[stdwHoursD3Index])){
+                        if(stdwHoursD3Index === c){
+                          if ((Object.entries(res.data.busy)[i][1][c]['stdIds'].find((sId) => sId === changableSubscriptionState._id)) !== undefined) {
+                            let previouslyStdIds = [...Object.entries(res.data.busy)[i][1][c]['stdIds']];
+                            let max = Object.entries(res.data.busy)[i][1][c].max;
+                            stdwHoursD3[c] = { "stdIds": previouslyStdIds, "max": max }
+                          }
+                        }else{
+                          if ((Object.entries(res.data.busy)[i][1][c]['stdIds'].find((sId) => sId === changableSubscriptionState._id)) !== undefined) {
+                        //  if (Object.entries(res.data.busy)[i][1][c]['stdIds'] === changableSubscriptionState._id) {
+                            let previouslyStdIds = [...Object.entries(res.data.busy)[i][1][c]['stdIds']]
+                            previouslyStdIds.splice(c, 1);
+                            let max = Object.entries(res.data.busy)[i][1][c].max;
+                            max -= 1;
+                            stdwHoursD3[c] = { "stdIds": previouslyStdIds, "max": max }
+                          }
+                       // }
+                        }
+  
                       }
                     }
                   }
-                }
-                if (stdwHoursD3[c][1] === 0)
-                  stdwHoursD3[c] = Object.entries(res.data.busy)[i][1][c];
 
+                }else{
+                  if (stdwHoursD3[c][1] === 0)
+                  stdwHoursD3[c] = Object.entries(res.data.busy)[i][1][c];
+                }
+             
               }
               instructorBusy[`${i}`] = stdwHoursD3;
 
             } else {
               instructorBusy[`${i}`] = stdwHoursD3;
             }
-
           }
 
           if (i === 4) {
-            if (Object.entries(res.data.busy)[i][1].find((obji) => typeof obji === 'object' && !Array.isArray(obji)) !== undefined) {
+            if (Object.entries(res.data.busy)[i][1].find((obji) => typeof obji === 'object' && !Array.isArray(obji)) !== undefined ) {
               for (let c = 0; c < Object.entries(res.data.busy)[i][1].length; c++) {
-                if (typeof Object.entries(res.data.busy)[i][1][c] === 'object' && !Array.isArray(Object.entries(res.data.busy)[i][1][c]) && (typeof stdwHoursD4[c] === 'object' && !Array.isArray(stdwHoursD4[c]))) {
-                  if ((Object.entries(res.data.busy)[i][1][c]['stdIds'].find((sId) => sId === changableSubscriptionState._id)) === undefined ) {
+                if (typeof Object.entries(res.data.busy)[i][1][c] === 'object' && !Array.isArray(Object.entries(res.data.busy)[i][1][c])) {
+                  if ((Object.entries(res.data.busy)[i][1][c]['stdIds'].find((sId) => sId === changableSubscriptionState._id)) === undefined && (typeof stdwHoursD4[c] === 'object' && !Array.isArray(stdwHoursD4[c]))) {
                     let previouslyStdIds = [...Object.entries(res.data.busy)[i][1][c]['stdIds']];
                     previouslyStdIds.push(changableSubscriptionState._id);
                     let max = Object.entries(res.data.busy)[i][1][c].max;
                     max += 1;
                     stdwHoursD4[c] = { "stdIds": previouslyStdIds, "max": max }
-                  } else {
-                    for (let stdIdsIndex = 0; stdIdsIndex < Object.entries(res.data.busy)[i][1][c]['stdIds'].length; stdIdsIndex++) {
-                      if (Object.entries(res.data.busy)[i][1][c]['stdIds'] === changableSubscriptionState._id) {
-                        let previouslyStdIds = [...Object.entries(res.data.busy)[i][1][c]['stdIds']]
-                        previouslyStdIds.splice(stdIdsIndex, 1);
-                        let max = Object.entries(res.data.busy)[i][1][c].max;
-                        max -= 1;
-                        stdwHoursD4[c] = { "stdIds": previouslyStdIds, "max": max }
+                  }else{
+                    for(let stdwHoursD4Index = 0 ;stdwHoursD4Index < stdwHoursD4.length;stdwHoursD4Index++ ){
+                      if(typeof stdwHoursD4[stdwHoursD4Index] === 'object' && !Array.isArray(stdwHoursD4[stdwHoursD4Index])){
+                        if(stdwHoursD4Index === c){
+                          if ((Object.entries(res.data.busy)[i][1][c]['stdIds'].find((sId) => sId === changableSubscriptionState._id)) !== undefined) {
+                            let previouslyStdIds = [...Object.entries(res.data.busy)[i][1][c]['stdIds']];
+                            let max = Object.entries(res.data.busy)[i][1][c].max;
+                            stdwHoursD4[c] = { "stdIds": previouslyStdIds, "max": max }
+                          }
+                        }else{
+                          if ((Object.entries(res.data.busy)[i][1][c]['stdIds'].find((sId) => sId === changableSubscriptionState._id)) !== undefined) {
+                  //        if (Object.entries(res.data.busy)[i][1][c]['stdIds'] === changableSubscriptionState._id) {
+                            let previouslyStdIds = [...Object.entries(res.data.busy)[i][1][c]['stdIds']]
+                            previouslyStdIds.splice(c, 1);
+                            let max = Object.entries(res.data.busy)[i][1][c].max;
+                            max -= 1;
+                            stdwHoursD4[c] = { "stdIds": previouslyStdIds, "max": max }
+                          }
+                     //   }
+                        }
+  
                       }
                     }
                   }
-                }
-                if (stdwHoursD4[c][1] === 0)
+
+                }else{
+                  if (stdwHoursD4[c][1] === 0)
                   stdwHoursD4[c] = Object.entries(res.data.busy)[i][1][c];
+                }
+       
               }
               instructorBusy[`${i}`] = stdwHoursD4;
 
             } else {
               instructorBusy[`${i}`] = stdwHoursD4;
             }
-
           }
 
           if (i === 5) {
-            if (Object.entries(res.data.busy)[i][1].find((obji) => typeof obji === 'object' && !Array.isArray(obji)) !== undefined) {
+            if (Object.entries(res.data.busy)[i][1].find((obji) => typeof obji === 'object' && !Array.isArray(obji)) !== undefined ) {
               for (let c = 0; c < Object.entries(res.data.busy)[i][1].length; c++) {
-                if (typeof Object.entries(res.data.busy)[i][1][c] === 'object' && !Array.isArray(Object.entries(res.data.busy)[i][1][c]) && (typeof stdwHoursD5[c] === 'object' && !Array.isArray(stdwHoursD5[c]))) {
-                  if ((Object.entries(res.data.busy)[i][1][c]['stdIds'].find((sId) => sId === changableSubscriptionState._id)) === undefined ) {
+                if (typeof Object.entries(res.data.busy)[i][1][c] === 'object' && !Array.isArray(Object.entries(res.data.busy)[i][1][c])) {
+                  if ((Object.entries(res.data.busy)[i][1][c]['stdIds'].find((sId) => sId === changableSubscriptionState._id)) === undefined && (typeof stdwHoursD5[c] === 'object' && !Array.isArray(stdwHoursD5[c]))) {
                     let previouslyStdIds = [...Object.entries(res.data.busy)[i][1][c]['stdIds']];
                     previouslyStdIds.push(changableSubscriptionState._id);
                     let max = Object.entries(res.data.busy)[i][1][c].max;
                     max += 1;
                     stdwHoursD5[c] = { "stdIds": previouslyStdIds, "max": max }
-                  } else {
-                    for (let stdIdsIndex = 0; stdIdsIndex < Object.entries(res.data.busy)[i][1][c]['stdIds'].length; stdIdsIndex++) {
-                      if (Object.entries(res.data.busy)[i][1][c]['stdIds'] === changableSubscriptionState._id) {
-                        let previouslyStdIds = [...Object.entries(res.data.busy)[i][1][c]['stdIds']]
-                        previouslyStdIds.splice(stdIdsIndex, 1);
-                        let max = Object.entries(res.data.busy)[i][1][c].max;
-                        max -= 1;
-                        stdwHoursD5[c] = { "stdIds": previouslyStdIds, "max": max }
+                  }else{
+                    for(let stdwHoursD5Index = 0 ;stdwHoursD5Index < stdwHoursD5.length;stdwHoursD5Index++ ){
+                      if(typeof stdwHoursD5[stdwHoursD5Index] === 'object' && !Array.isArray(stdwHoursD5[stdwHoursD5Index])){
+                        if(stdwHoursD5Index === c){
+                          if ((Object.entries(res.data.busy)[i][1][c]['stdIds'].find((sId) => sId === changableSubscriptionState._id)) !== undefined) {
+                            let previouslyStdIds = [...Object.entries(res.data.busy)[i][1][c]['stdIds']];
+                            let max = Object.entries(res.data.busy)[i][1][c].max;
+                            stdwHoursD5[c] = { "stdIds": previouslyStdIds, "max": max }
+                          }
+                        }else{
+                          if ((Object.entries(res.data.busy)[i][1][c]['stdIds'].find((sId) => sId === changableSubscriptionState._id)) !== undefined) {
+                        //  if (Object.entries(res.data.busy)[i][1][c]['stdIds'] === changableSubscriptionState._id) {
+                            let previouslyStdIds = [...Object.entries(res.data.busy)[i][1][c]['stdIds']]
+                            previouslyStdIds.splice(c, 1);
+                            let max = Object.entries(res.data.busy)[i][1][c].max;
+                            max -= 1;
+                            stdwHoursD5[c] = { "stdIds": previouslyStdIds, "max": max }
+                          }
+                       // }
+                        }
+  
                       }
                     }
                   }
-                }
-                if (stdwHoursD5[c][1] === 0)
+
+                }else{
+                  if (stdwHoursD5[c][1] === 0)
                   stdwHoursD5[c] = Object.entries(res.data.busy)[i][1][c];
+                }
+              
               }
               instructorBusy[`${i}`] = stdwHoursD5;
 
             } else {
               instructorBusy[`${i}`] = stdwHoursD5;
             }
-
           }
 
           if (i === 6) {
             if (Object.entries(res.data.busy)[i][1].find((obji) => typeof obji === 'object' && !Array.isArray(obji)) !== undefined ) {
               for (let c = 0; c < Object.entries(res.data.busy)[i][1].length; c++) {
-                if (typeof Object.entries(res.data.busy)[i][1][c] === 'object' && !Array.isArray(Object.entries(res.data.busy)[i][1][c]) && (typeof stdwHoursD6[c] === 'object' && !Array.isArray(stdwHoursD6[c]))) {
-                  if ((Object.entries(res.data.busy)[i][1][c]['stdIds'].find((sId) => sId === changableSubscriptionState._id)) === undefined ) {
+                if (typeof Object.entries(res.data.busy)[i][1][c] === 'object' && !Array.isArray(Object.entries(res.data.busy)[i][1][c])) {
+                  if ((Object.entries(res.data.busy)[i][1][c]['stdIds'].find((sId) => sId === changableSubscriptionState._id)) === undefined && (typeof stdwHoursD6[c] === 'object' && !Array.isArray(stdwHoursD6[c]))) {
                     let previouslyStdIds = [...Object.entries(res.data.busy)[i][1][c]['stdIds']];
                     previouslyStdIds.push(changableSubscriptionState._id);
                     let max = Object.entries(res.data.busy)[i][1][c].max;
                     max += 1;
                     stdwHoursD6[c] = { "stdIds": previouslyStdIds, "max": max }
-                  } else {
-                    for (let stdIdsIndex = 0; stdIdsIndex < Object.entries(res.data.busy)[i][1][c]['stdIds'].length; stdIdsIndex++) {
-                      if (Object.entries(res.data.busy)[i][1][c]['stdIds'] === changableSubscriptionState._id) {
-                        let previouslyStdIds = [...Object.entries(res.data.busy)[i][1][c]['stdIds']]
-                        previouslyStdIds.splice(stdIdsIndex, 1);
-                        let max = Object.entries(res.data.busy)[i][1][c].max;
-                        max -= 1;
-                        stdwHoursD6[c] = { "stdIds": previouslyStdIds, "max": max }
+                  }else{
+                    for(let stdwHoursD6Index = 0 ;stdwHoursD6Index < stdwHoursD6.length;stdwHoursD6Index++ ){
+                      if(typeof stdwHoursD6[stdwHoursD6Index] === 'object' && !Array.isArray(stdwHoursD6[stdwHoursD6Index])){
+                        if(stdwHoursD6Index === c){
+                          if ((Object.entries(res.data.busy)[i][1][c]['stdIds'].find((sId) => sId === changableSubscriptionState._id)) !== undefined) {
+                            let previouslyStdIds = [...Object.entries(res.data.busy)[i][1][c]['stdIds']];
+                            let max = Object.entries(res.data.busy)[i][1][c].max;
+                            stdwHoursD6[c] = { "stdIds": previouslyStdIds, "max": max }
+                          }
+                        }else{
+                          if ((Object.entries(res.data.busy)[i][1][c]['stdIds'].find((sId) => sId === changableSubscriptionState._id)) !== undefined) {
+                        //  if (Object.entries(res.data.busy)[i][1][c]['stdIds'] === changableSubscriptionState._id) {
+                            let previouslyStdIds = [...Object.entries(res.data.busy)[i][1][c]['stdIds']]
+                            previouslyStdIds.splice(c, 1);
+                            let max = Object.entries(res.data.busy)[i][1][c].max;
+                            max -= 1;
+                            stdwHoursD6[c] = { "stdIds": previouslyStdIds, "max": max }
+                          }
+                       // }
+                        }
+  
                       }
                     }
                   }
-                }
-                if (stdwHoursD6[c][1] === 0)
+
+                }else{
+                  if (stdwHoursD6[c][1] === 0)
                   stdwHoursD6[c] = Object.entries(res.data.busy)[i][1][c];
+                }
+               
               }
               instructorBusy[`${i}`] = stdwHoursD6;
 
             } else {
               instructorBusy[`${i}`] = stdwHoursD6;
             }
-
           }
 
 
