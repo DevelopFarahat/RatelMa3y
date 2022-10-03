@@ -5,13 +5,15 @@ import InstructorHistory from "../instructor_history/instructorHistory";
 import {BiReset} from "react-icons/bi";
 import {AiFillFilter} from "react-icons/ai";
 import Form from "react-bootstrap/Form";
+import InstructorSessionsSchedule from "../Instructor_sessions_schedule/InstructorSessionsSchedule";
 import InstructorWorkingDatesHours from "../instructor_working_dates_times/instructorWorkingDateTimes";
 const InstructorWorkHistory = ({instructorSessionsDetails, setInstructorSessionsDetails,initialInstructorSessionsDetails,selectedInstructorData, initialResponseSpecificInstructorData, setSelectedInstructorData }) => {
     const [tapVisible, setTapVisible] = useState({
         studentsTap: true,
         sessionsTap: false,
         evaluationsTap: false,
-        workingDateAndOursTap:false
+        workingDateAndOursTap:false,
+        sessionsScheduleTap:false
     });
     const [totalSession,setTotalSession] = useState(0);
     const [numberOfStudent,setNumberOfStudent] = useState(0);
@@ -20,10 +22,11 @@ const InstructorWorkHistory = ({instructorSessionsDetails, setInstructorSessions
         toDate:''
       })
     const toogleViewInstructorTaps = (event) => {
-        event.target.id === 'studentsTap' ? setTapVisible({ studentsTap: true, sessionsTap: false, evaluations: false,workingDateAndOursTap:false }) :
-            event.target.id === 'sessionsTap' ? setTapVisible({ studentsTap: false, sessionsTap: true, evaluations: false,workingDateAndOursTap:false }) :
-           event.target.id === 'evaluationsTap'?setTapVisible({ studentsTap: false, sessionsTap: false, evaluationsTap: true,workingDateAndOursTap:false }):
-           setTapVisible({studentsTap: false, sessionsTap: false, evaluationsTap: false,workingDateAndOursTap:true});
+        event.target.id === 'studentsTap' ? setTapVisible({ studentsTap: true, sessionsTap: false, evaluations: false,workingDateAndOursTap:false,sessionsScheduleTap:false }) :
+            event.target.id === 'sessionsTap' ? setTapVisible({ studentsTap: false, sessionsTap: true, evaluations: false,workingDateAndOursTap:false,sessionsScheduleTap:false }) :
+           event.target.id === 'evaluationsTap'?setTapVisible({ studentsTap: false, sessionsTap: false, evaluationsTap: true,workingDateAndOursTap:false,sessionsScheduleTap:false }):
+        event.target.id === 'workingDateAndOursTap'?setTapVisible({studentsTap: false, sessionsTap: false, evaluationsTap: false,workingDateAndOursTap:true,sessionsScheduleTap:false}):
+        setTapVisible({studentsTap: false, sessionsTap: false, evaluationsTap: false,workingDateAndOursTap:false,sessionsScheduleTap:true})
     }
     const handleSessionsDate=(event)=>{
         setSessionsDate(
@@ -79,7 +82,8 @@ const InstructorWorkHistory = ({instructorSessionsDetails, setInstructorSessions
                     <span id="studentsTap" className={`${tapVisible.studentsTap ? InstructorWorkHistoryStyles['taps-shadow'] : ''} ${InstructorWorkHistoryStyles['students-data-tap']}`} onClick={toogleViewInstructorTaps}>Students</span>
                     <span  id="sessionsTap" className={`${tapVisible.sessionsTap ? InstructorWorkHistoryStyles['taps-shadow'] : ''} ${InstructorWorkHistoryStyles['sessions-data-tap']}`} onClick={toogleViewInstructorTaps}>Sessions</span>
                     <span  id="evaluationsTap" style={{display:"none"}} className={`${tapVisible.evaluationsTap ? InstructorWorkHistoryStyles['taps-shadow'] : ''} ${InstructorWorkHistoryStyles['evaluations-data-tap']}`} onClick={toogleViewInstructorTaps}>Evaluations</span>
-                    <span id="workingDateAndOursTap" className={`${tapVisible.workingDateAndOursTap ? InstructorWorkHistoryStyles['taps-shadow'] : ''} ${InstructorWorkHistoryStyles['evaluations-data-tap']}`} onClick={toogleViewInstructorTaps}>Working dateTime</span>
+                    <span id="workingDateAndOursTap" className={`${tapVisible.workingDateAndOursTap ? InstructorWorkHistoryStyles['taps-shadow'] : ''} ${InstructorWorkHistoryStyles['workingDateAndOursTap']}`} onClick={toogleViewInstructorTaps}>Working dateTime</span>
+                    <span id="sessionsScheduleTap" className={`${tapVisible.sessionsScheduleTap ? InstructorWorkHistoryStyles['taps-shadow'] : ''} ${InstructorWorkHistoryStyles['sessions-schedule-data-tap']}`} onClick={toogleViewInstructorTaps}>Sessions Schedule</span>
                 </div>}
 
 
@@ -123,9 +127,12 @@ const InstructorWorkHistory = ({instructorSessionsDetails, setInstructorSessions
                         :tapVisible.evaluationsTap? <div style={{display:"none"}}  className={InstructorWorkHistoryStyles['evaluations-content-tap']}>
                             {/* evaluations */}
                             <h1>Evaluations</h1>
-                        </div>:<div className={InstructorWorkHistoryStyles['instructor-working-date-time-tap']}>
+                        </div>:tapVisible.workingDateAndOursTap?<div className={InstructorWorkHistoryStyles['instructor-working-date-time-tap']}>
                             {/* Working dateTime */}
                             <InstructorWorkingDatesHours selectedInstructorData={selectedInstructorData}/>
+                        </div>:<div>
+                     {/*sessions schedule */}
+                  <InstructorSessionsSchedule selectedInstructorData={selectedInstructorData}/>
                         </div>:null}
                   
 

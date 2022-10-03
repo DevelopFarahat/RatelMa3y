@@ -1284,6 +1284,7 @@ const StudentSubscriptionState = ({
       h6: false,
       h7: false
     };
+
     axios
       .get(`${process.env.REACT_APP_BACK_HOST_URL}/api/instructors/${stObj.instructor}`)
       .then((res) => {
@@ -1862,8 +1863,6 @@ const StudentSubscriptionState = ({
         } else {
           avaliableDayaHours[j] = [];
         }
-
-        //  }
       }
 
       for (let x = 0; x < Object.entries(avaliableDayaHours).length; x++) {
@@ -1887,40 +1886,6 @@ const StudentSubscriptionState = ({
           matchedDays.push(false);
         }
       }
-
-      /*
-        for(let stdIndex = 0 ; stdIndex <studentObject.program_prefs.pref_days.length;stdIndex++ ){
-          if(studentObject.program_prefs.pref_days[stdIndex] !== -1){
-         //   for(let u = 0 ; u <Object.keys(avaliableDayaHours).length;u++ ){
-          console.log("88888888888888888888888888888888888888888888888888")
-          console.log(Number(Object.keys(avaliableDayaHours)[stdIndex]) )
-          console.log(studentObject.program_prefs.pref_days[stdIndex])
-          console.log("88888888888888888888888888888888888888888888888888")
-              if(Number(Object.keys(avaliableDayaHours)[stdIndex]) === studentObject.program_prefs.pref_days[stdIndex]){
-    
-                matchedDays.push(true);
-               //   for(let s = 0 ; s < Object.entries(avaliableDayaHours)[stdIndex][1].length;s++){
-                for(let prefHoursIndex = 0 ;prefHoursIndex< studentObject.program_prefs.pref_times_of_day.length;prefHoursIndex++){
-                  if(studentObject.program_prefs.pref_times_of_day[prefHoursIndex][1] !== 0){
-                    if(studentObject.program_prefs.pref_times_of_day[prefHoursIndex][1]  === 1 && Object.entries(avaliableDayaHours)[stdIndex][1][prefHoursIndex][1] === 0){
-                      if(matchedHours[prefHoursIndex] === undefined)
-                      matchedHours[prefHoursIndex] = true;
-                    }else{
-                      if(matchedHours[prefHoursIndex] === undefined)
-                      matchedHours[prefHoursIndex] = false;
-                    }
-                  }
-                }
-                 
-                 // }
-              }else{
-                matchedDays.push(false);
-              }
-           // }
-          }
-        }
-    */
-
       if ((matchedDays.filter((mD) => mD === true).length >= Number(studentObject.program_prefs.sessions_in_week)) && matchedHours.filter((mH) => mH === true).length >= Number(studentObject.program_prefs.sessions_in_week)) {
         recommendedInstructors.push(instructorData[i]);
         matchedDays = [];
@@ -1945,8 +1910,16 @@ const StudentSubscriptionState = ({
     let stdwHoursD4 = [];
     let stdwHoursD5 = [];
     let stdwHoursD6 = [];
+    let previousReservedHoursD0 = [];
+    let previousReservedHoursD1 = [];
+    let previousReservedHoursD2 = [];
+    let previousReservedHoursD3 = [];
+    let previousReservedHoursD4 = [];
+    let previousReservedHoursD5 = [];
+    let previousReservedHoursD6 = [];
     let NumberOfSelectedDays = 0;
     let selectedDaysArr = [];
+    let isStudentIdExistInAnotherDay = false
 
     for (let i = 0; i < Object.values(workingDays).length; i++) {
 
@@ -2060,7 +2033,87 @@ const StudentSubscriptionState = ({
       }
     }
     let instructorBusy = {};
+
     axios.get(`http://localhost:5000/api/instructors/${changableSubscriptionState.instructor}`).then((res) => {
+      let getThePreviuosReservedSessionsDaysHours = (arr0,arr1,arr2,arr3,arr4,arr5,arr6,SelectedDayIndex)=>{
+        for(let busyIndex = 0 ; busyIndex < Object.entries(res.data.busy).length;busyIndex++){
+          for(let busyDayIndex = 0 ; busyDayIndex < Object.entries(res.data.busy)[busyIndex][1].length;busyDayIndex++){
+            if(busyIndex !== SelectedDayIndex){
+              if(typeof Object.entries(res.data.busy)[busyIndex][1][busyDayIndex] === 'object' && !Array.isArray(Object.entries(res.data.busy)[busyIndex][1][busyDayIndex])){
+                for(let hIndex = 0 ; hIndex < Object.entries(res.data.busy)[busyIndex][1][busyDayIndex]['stdIds'].length;hIndex++){
+                  if(Object.entries(res.data.busy)[busyIndex][1][busyDayIndex]['stdIds'][hIndex] === changableSubscriptionState._id){
+                  if(Object.entries(res.data.busy)[busyIndex][1][busyDayIndex].max > 1){
+                    let previouslyStdIds = [...Object.entries(res.data.busy)[busyIndex][1][busyDayIndex]['stdIds']]
+                    previouslyStdIds.splice(hIndex, 1);
+                    let max = Object.entries(res.data.busy)[busyIndex][1][busyDayIndex].max;
+                    max -= 1;
+                    if(busyIndex === 0)
+                    arr0[busyDayIndex] = {"stdIds": previouslyStdIds, "max": max }
+                    if(busyIndex === 1)
+                    arr1[busyDayIndex] = {"stdIds": previouslyStdIds, "max": max }
+                    if(busyIndex === 2)
+                    arr2[busyDayIndex] = {"stdIds": previouslyStdIds, "max": max }
+                    if(busyIndex === 3)
+                    arr3[busyDayIndex] = {"stdIds": previouslyStdIds, "max": max }
+                    if(busyIndex === 4)
+                    arr4[busyDayIndex] = {"stdIds": previouslyStdIds, "max": max }
+                    if(busyIndex === 5)
+                    arr5[busyDayIndex] = {"stdIds": previouslyStdIds, "max": max }
+                    if(busyIndex === 6)
+                    arr6[busyDayIndex] = {"stdIds": previouslyStdIds, "max": max }
+                  }else{
+                    if(busyIndex === 0)
+                    arr0[busyDayIndex] = [0,0]
+                    if(busyIndex === 1)
+                    arr1[busyDayIndex] = [0,0]
+                    if(busyIndex === 2)
+                    arr2[busyDayIndex] = [0,0]
+                    if(busyIndex === 3)
+                    arr3[busyDayIndex] = [0,0]
+                    if(busyIndex === 4)
+                    arr4[busyDayIndex] = [0,0]
+                    if(busyIndex === 5)
+                    arr5[busyDayIndex] = [0,0]
+                    if(busyIndex === 6)
+                    arr6[busyDayIndex] = [0,0]
+                  }
+                  }else{
+                    if(busyIndex === 0)
+                    arr0[busyDayIndex] = Object.entries(res.data.busy)[busyIndex][1][busyDayIndex]
+                    if(busyIndex === 1)
+                    arr1[busyDayIndex] = Object.entries(res.data.busy)[busyIndex][1][busyDayIndex]
+                    if(busyIndex === 2)
+                    arr2[busyDayIndex] = Object.entries(res.data.busy)[busyIndex][1][busyDayIndex]
+                    if(busyIndex === 3)
+                    arr3[busyDayIndex] = Object.entries(res.data.busy)[busyIndex][1][busyDayIndex]
+                    if(busyIndex === 4)
+                    arr4[busyDayIndex] = Object.entries(res.data.busy)[busyIndex][1][busyDayIndex]
+                    if(busyIndex === 5)
+                    arr5[busyDayIndex] = Object.entries(res.data.busy)[busyIndex][1][busyDayIndex]
+                    if(busyIndex === 6)
+                    arr6[busyDayIndex] = Object.entries(res.data.busy)[busyIndex][1][busyDayIndex]
+                  }
+                }
+              }else{
+                if(busyIndex === 0)
+                arr0[busyDayIndex] = Object.entries(res.data.busy)[busyIndex][1][busyDayIndex]
+                if(busyIndex === 1)
+                arr1[busyDayIndex] = Object.entries(res.data.busy)[busyIndex][1][busyDayIndex]
+                if(busyIndex === 2)
+                arr2[busyDayIndex] = Object.entries(res.data.busy)[busyIndex][1][busyDayIndex]
+                if(busyIndex === 3)
+                arr3[busyDayIndex] = Object.entries(res.data.busy)[busyIndex][1][busyDayIndex]
+                if(busyIndex === 4)
+                arr4[busyDayIndex] = Object.entries(res.data.busy)[busyIndex][1][busyDayIndex]
+                if(busyIndex === 5)
+                arr5[busyDayIndex] = Object.entries(res.data.busy)[busyIndex][1][busyDayIndex]
+                if(busyIndex === 6)
+                arr6[busyDayIndex] = Object.entries(res.data.busy)[busyIndex][1][busyDayIndex]
+              }
+          }
+        }
+      }
+    }
       for (let i = 0; i < wD.length; i++) {
         if (Number(Object.keys(res.data.busy)[i]) === wD[i]) {
           for (let x = 0; x < res.data.prefs.working_hours.length; x++) {
@@ -2094,17 +2147,23 @@ const StudentSubscriptionState = ({
                             stdwHoursD0[c] = { "stdIds": previouslyStdIds, "max": max }
                           }
                         }else{
-                          if ((Object.entries(res.data.busy)[i][1][c]['stdIds'].find((sId) => sId === changableSubscriptionState._id)) !== undefined) {
-                        //  if (Object.entries(res.data.busy)[i][1][c]['stdIds'] === changableSubscriptionState._id) {
-                            let previouslyStdIds = [...Object.entries(res.data.busy)[i][1][c]['stdIds']]
-                            previouslyStdIds.splice(c, 1);
-                            let max = Object.entries(res.data.busy)[i][1][c].max;
-                            max -= 1;
-                            stdwHoursD0[c] = { "stdIds": previouslyStdIds, "max": max }
+                          for(let sId = 0 ; sId < Object.entries(res.data.busy)[i][1][c]['stdIds'].length;sId++){
+                            if(Object.entries(res.data.busy)[i][1][c]['stdIds'][sId] === changableSubscriptionState._id){
+                              if(Object.entries(res.data.busy)[i][1][c].max > 1){
+                                let previouslyStdIds = [...Object.entries(res.data.busy)[i][1][c]['stdIds']]
+                                previouslyStdIds.splice(sId, 1);
+                                let max = Object.entries(res.data.busy)[i][1][c].max;
+                                max -= 1;
+                                stdwHoursD0[c] = { "stdIds": previouslyStdIds, "max": max }
+                              }else{
+                                stdwHoursD0[c] = [0,0];
+                              }
+                            
+                            }else{
+                              stdwHoursD0[c] = Object.entries(res.data.busy)[i][1][c];
+                            }
                           }
-                       // }
                         }
-  
                       }
                     }
                   }
@@ -2120,26 +2179,7 @@ const StudentSubscriptionState = ({
               instructorBusy[`${i}`] = stdwHoursD0;
             }
                 // delete reserved session days and hours if the admin change the days of the session
-
-            for(let busyIndex = 0 ; busyIndex < Object.entries(res.data.busy).length;busyIndex++){
-              for(let busyDayIndex = 0 ; busyDayIndex < Object.entries(res.data.busy)[busyIndex][1].length;busyDayIndex++){
-                if(busyDayIndex === 1){
-                  if(typeof Object.entries(res.data.busy)[busyIndex][1][busyDayIndex] === 'object' && !Array.isArray(Object.entries(res.data.busy)[busyIndex][1][busyDayIndex])){
-                    for(let hIndex = 0 ; hIndex < Object.entries(res.data.busy)[busyIndex][1][busyDayIndex]['stdIds'].length;hIndex++){
-                      if(Object.entries(res.data.busy)[busyIndex][1][busyDayIndex]['stdIds'][hIndex] === changableSubscriptionState._id){
-
-                        let previouslyStdIds = [...Object.entries(res.data.busy)[busyIndex][1][busyDayIndex]['stdIds']]
-                        previouslyStdIds.splice(hIndex, 1);
-                        let max = Object.entries(res.data.busy)[busyIndex][1][busyDayIndex].max;
-                        max -= 1;
-                        stdBusyHoursD1[hIndex] = {"stdIds": previouslyStdIds, "max": max }
-                      }
-                    }
-                  }
-              }
-
-            }
-          }
+                getThePreviuosReservedSessionsDaysHours(previousReservedHoursD0,previousReservedHoursD1,previousReservedHoursD2,previousReservedHoursD3,previousReservedHoursD4,previousReservedHoursD5,previousReservedHoursD6,0);
           }
 
           if (i === 1) {
@@ -2162,15 +2202,21 @@ const StudentSubscriptionState = ({
                             stdwHoursD1[c] = { "stdIds": previouslyStdIds, "max": max }
                           }
                         }else{
-                          if ((Object.entries(res.data.busy)[i][1][c]['stdIds'].find((sId) => sId === changableSubscriptionState._id)) !== undefined) {
-                         // if (Object.entries(res.data.busy)[i][1][c]['stdIds'] === changableSubscriptionState._id) {
-                            let previouslyStdIds = [...Object.entries(res.data.busy)[i][1][c]['stdIds']]
-                            previouslyStdIds.splice(c, 1);
-                            let max = Object.entries(res.data.busy)[i][1][c].max;
-                            max -= 1;
-                            stdwHoursD1[c] = { "stdIds": previouslyStdIds, "max": max }
+                          for(let sId = 0 ; sId < Object.entries(res.data.busy)[i][1][c]['stdIds'].length;sId++){
+                            if(Object.entries(res.data.busy)[i][1][c]['stdIds'][sId] === changableSubscriptionState._id){
+                              if(Object.entries(res.data.busy)[i][1][c].max > 1){
+                                let previouslyStdIds = [...Object.entries(res.data.busy)[i][1][c]['stdIds']]
+                                previouslyStdIds.splice(sId, 1);
+                                let max = Object.entries(res.data.busy)[i][1][c].max;
+                                max -= 1;
+                                stdwHoursD1[c] = { "stdIds": previouslyStdIds, "max": max }
+                              }else{
+                                stdwHoursD1[c] = [0,0]
+                              }
+                            }else{
+                              stdwHoursD1[c] = Object.entries(res.data.busy)[i][1][c];
+                            }
                           }
-                       // }
                         }
   
                       }
@@ -2188,6 +2234,8 @@ const StudentSubscriptionState = ({
             } else {
               instructorBusy[`${i}`] = stdwHoursD1;
             }
+                            // delete reserved session days and hours if the admin change the days of the session
+                            getThePreviuosReservedSessionsDaysHours(previousReservedHoursD0,previousReservedHoursD1,previousReservedHoursD2,previousReservedHoursD3,previousReservedHoursD4,previousReservedHoursD5,previousReservedHoursD6,1);
           }
 
           if (i === 2) {
@@ -2210,15 +2258,22 @@ const StudentSubscriptionState = ({
                             stdwHoursD2[c] = { "stdIds": previouslyStdIds, "max": max }
                           }
                         }else{
-                          if ((Object.entries(res.data.busy)[i][1][c]['stdIds'].find((sId) => sId === changableSubscriptionState._id)) !== undefined) {
-                       //   if (Object.entries(res.data.busy)[i][1][c]['stdIds'] === changableSubscriptionState._id) {
-                            let previouslyStdIds = [...Object.entries(res.data.busy)[i][1][c]['stdIds']]
-                            previouslyStdIds.splice(c, 1);
-                            let max = Object.entries(res.data.busy)[i][1][c].max;
-                            max -= 1;
-                            stdwHoursD2[c] = { "stdIds": previouslyStdIds, "max": max }
+                          for(let sId = 0 ; sId < Object.entries(res.data.busy)[i][1][c]['stdIds'].length;sId++){
+                            if(Object.entries(res.data.busy)[i][1][c]['stdIds'][sId] === changableSubscriptionState._id){
+                              if(Object.entries(res.data.busy)[i][1][c].max > 1){
+                                let previouslyStdIds = [...Object.entries(res.data.busy)[i][1][c]['stdIds']]
+                                previouslyStdIds.splice(sId, 1);
+                                let max = Object.entries(res.data.busy)[i][1][c].max;
+                                max -= 1;
+                                stdwHoursD2[c] = { "stdIds": previouslyStdIds, "max": max }
+                              }else{
+                                stdwHoursD2[c] = [0,0]
+                              }
+                           
+                            }else{
+                              stdwHoursD2[c] = Object.entries(res.data.busy)[i][1][c];
+                            }
                           }
-                      //  }
                         }
   
                       }
@@ -2236,6 +2291,8 @@ const StudentSubscriptionState = ({
             } else {
               instructorBusy[`${i}`] = stdwHoursD2;
             }
+                            // delete reserved session days and hours if the admin change the days of the session
+                            getThePreviuosReservedSessionsDaysHours(previousReservedHoursD0,previousReservedHoursD1,previousReservedHoursD2,previousReservedHoursD3,previousReservedHoursD4,previousReservedHoursD5,previousReservedHoursD6,2);
           }
 
           if (i === 3) {
@@ -2258,15 +2315,22 @@ const StudentSubscriptionState = ({
                             stdwHoursD3[c] = { "stdIds": previouslyStdIds, "max": max }
                           }
                         }else{
-                          if ((Object.entries(res.data.busy)[i][1][c]['stdIds'].find((sId) => sId === changableSubscriptionState._id)) !== undefined) {
-                        //  if (Object.entries(res.data.busy)[i][1][c]['stdIds'] === changableSubscriptionState._id) {
-                            let previouslyStdIds = [...Object.entries(res.data.busy)[i][1][c]['stdIds']]
-                            previouslyStdIds.splice(c, 1);
-                            let max = Object.entries(res.data.busy)[i][1][c].max;
-                            max -= 1;
-                            stdwHoursD3[c] = { "stdIds": previouslyStdIds, "max": max }
+                          for(let sId = 0 ; sId < Object.entries(res.data.busy)[i][1][c]['stdIds'].length;sId++){
+                            if(Object.entries(res.data.busy)[i][1][c]['stdIds'][sId] === changableSubscriptionState._id){
+                              if(Object.entries(res.data.busy)[i][1][c].max > 1){
+                                let previouslyStdIds = [...Object.entries(res.data.busy)[i][1][c]['stdIds']]
+                                previouslyStdIds.splice(sId, 1);
+                                let max = Object.entries(res.data.busy)[i][1][c].max;
+                                max -= 1;
+                                stdwHoursD3[c] = { "stdIds": previouslyStdIds, "max": max }
+                              }else{
+                                stdwHoursD3[c] = [0,0]
+                              }
+                  
+                            }else{
+                              stdwHoursD3[c] = Object.entries(res.data.busy)[i][1][c];
+                            }
                           }
-                       // }
                         }
   
                       }
@@ -2284,6 +2348,8 @@ const StudentSubscriptionState = ({
             } else {
               instructorBusy[`${i}`] = stdwHoursD3;
             }
+                            // delete reserved session days and hours if the admin change the days of the session
+                            getThePreviuosReservedSessionsDaysHours(previousReservedHoursD0,previousReservedHoursD1,previousReservedHoursD2,previousReservedHoursD3,previousReservedHoursD4,previousReservedHoursD5,previousReservedHoursD6,3);
           }
 
           if (i === 4) {
@@ -2306,15 +2372,22 @@ const StudentSubscriptionState = ({
                             stdwHoursD4[c] = { "stdIds": previouslyStdIds, "max": max }
                           }
                         }else{
-                          if ((Object.entries(res.data.busy)[i][1][c]['stdIds'].find((sId) => sId === changableSubscriptionState._id)) !== undefined) {
-                  //        if (Object.entries(res.data.busy)[i][1][c]['stdIds'] === changableSubscriptionState._id) {
-                            let previouslyStdIds = [...Object.entries(res.data.busy)[i][1][c]['stdIds']]
-                            previouslyStdIds.splice(c, 1);
-                            let max = Object.entries(res.data.busy)[i][1][c].max;
-                            max -= 1;
-                            stdwHoursD4[c] = { "stdIds": previouslyStdIds, "max": max }
+                          for(let sId = 0 ; sId < Object.entries(res.data.busy)[i][1][c]['stdIds'].length;sId++){
+                            if(Object.entries(res.data.busy)[i][1][c]['stdIds'][sId] === changableSubscriptionState._id){
+                              if(Object.entries(res.data.busy)[i][1][c].max > 1){
+                                let previouslyStdIds = [...Object.entries(res.data.busy)[i][1][c]['stdIds']]
+                                previouslyStdIds.splice(sId, 1);
+                                let max = Object.entries(res.data.busy)[i][1][c].max;
+                                max -= 1;
+                                stdwHoursD4[c] = { "stdIds": previouslyStdIds, "max": max }
+                              }else{
+                                stdwHoursD4[c] = [0,0];
+                              }
+                           
+                            }else{
+                              stdwHoursD4[c] = Object.entries(res.data.busy)[i][1][c];
+                            }
                           }
-                     //   }
                         }
   
                       }
@@ -2325,13 +2398,16 @@ const StudentSubscriptionState = ({
                   if (stdwHoursD4[c][1] === 0)
                   stdwHoursD4[c] = Object.entries(res.data.busy)[i][1][c];
                 }
-       
+              
               }
               instructorBusy[`${i}`] = stdwHoursD4;
 
             } else {
               instructorBusy[`${i}`] = stdwHoursD4;
             }
+         
+                            // delete reserved session days and hours if the admin change the days of the session
+                            getThePreviuosReservedSessionsDaysHours(previousReservedHoursD0,previousReservedHoursD1,previousReservedHoursD2,previousReservedHoursD3,previousReservedHoursD4,previousReservedHoursD5,previousReservedHoursD6,4);
           }
 
           if (i === 5) {
@@ -2354,15 +2430,22 @@ const StudentSubscriptionState = ({
                             stdwHoursD5[c] = { "stdIds": previouslyStdIds, "max": max }
                           }
                         }else{
-                          if ((Object.entries(res.data.busy)[i][1][c]['stdIds'].find((sId) => sId === changableSubscriptionState._id)) !== undefined) {
-                        //  if (Object.entries(res.data.busy)[i][1][c]['stdIds'] === changableSubscriptionState._id) {
-                            let previouslyStdIds = [...Object.entries(res.data.busy)[i][1][c]['stdIds']]
-                            previouslyStdIds.splice(c, 1);
-                            let max = Object.entries(res.data.busy)[i][1][c].max;
-                            max -= 1;
-                            stdwHoursD5[c] = { "stdIds": previouslyStdIds, "max": max }
+                          for(let sId = 0 ; sId < Object.entries(res.data.busy)[i][1][c]['stdIds'].length;sId++){
+                            if(Object.entries(res.data.busy)[i][1][c]['stdIds'][sId] === changableSubscriptionState._id){
+                              if(Object.entries(res.data.busy)[i][1][c].max > 1){
+                                let previouslyStdIds = [...Object.entries(res.data.busy)[i][1][c]['stdIds']]
+                                previouslyStdIds.splice(sId, 1);
+                                let max = Object.entries(res.data.busy)[i][1][c].max;
+                                max -= 1;
+                                stdwHoursD5[c] = { "stdIds": previouslyStdIds, "max": max }
+                              }else{
+                                stdwHoursD5[c] = [0,0];
+                              }
+                           
+                            }else{
+                              stdwHoursD5[c] = Object.entries(res.data.busy)[i][1][c];
+                            }
                           }
-                       // }
                         }
   
                       }
@@ -2380,6 +2463,8 @@ const StudentSubscriptionState = ({
             } else {
               instructorBusy[`${i}`] = stdwHoursD5;
             }
+                            // delete reserved session days and hours if the admin change the days of the session
+                            getThePreviuosReservedSessionsDaysHours(previousReservedHoursD0,previousReservedHoursD1,previousReservedHoursD2,previousReservedHoursD3,previousReservedHoursD4,previousReservedHoursD5,previousReservedHoursD6,5);
           }
 
           if (i === 6) {
@@ -2402,15 +2487,22 @@ const StudentSubscriptionState = ({
                             stdwHoursD6[c] = { "stdIds": previouslyStdIds, "max": max }
                           }
                         }else{
-                          if ((Object.entries(res.data.busy)[i][1][c]['stdIds'].find((sId) => sId === changableSubscriptionState._id)) !== undefined) {
-                        //  if (Object.entries(res.data.busy)[i][1][c]['stdIds'] === changableSubscriptionState._id) {
-                            let previouslyStdIds = [...Object.entries(res.data.busy)[i][1][c]['stdIds']]
-                            previouslyStdIds.splice(c, 1);
-                            let max = Object.entries(res.data.busy)[i][1][c].max;
-                            max -= 1;
-                            stdwHoursD6[c] = { "stdIds": previouslyStdIds, "max": max }
+                          for(let sId = 0 ; sId < Object.entries(res.data.busy)[i][1][c]['stdIds'].length;sId++){
+                            if(Object.entries(res.data.busy)[i][1][c]['stdIds'][sId] === changableSubscriptionState._id){
+                              if(Object.entries(res.data.busy)[i][1][c].max > 1){
+                                let previouslyStdIds = [...Object.entries(res.data.busy)[i][1][c]['stdIds']]
+                                previouslyStdIds.splice(sId, 1);
+                                let max = Object.entries(res.data.busy)[i][1][c].max;
+                                max -= 1;
+                                stdwHoursD6[c] = { "stdIds": previouslyStdIds, "max": max }
+                              }else{
+                                stdwHoursD6[c] = [0,0];
+                              }
+                              //new added
+                            }else{
+                              stdwHoursD6[c] = Object.entries(res.data.busy)[i][1][c];
+                            }
                           }
-                       // }
                         }
   
                       }
@@ -2428,6 +2520,8 @@ const StudentSubscriptionState = ({
             } else {
               instructorBusy[`${i}`] = stdwHoursD6;
             }
+            // delete reserved session days and hours if the admin change the days of the session
+          getThePreviuosReservedSessionsDaysHours(previousReservedHoursD0,previousReservedHoursD1,previousReservedHoursD2,previousReservedHoursD3,previousReservedHoursD4,previousReservedHoursD5,previousReservedHoursD6,6);
           }
 
 
@@ -2435,37 +2529,38 @@ const StudentSubscriptionState = ({
       }
       let busyInstructorDaysHours = {}
       if (Object.values(WorkingHoursD0).every((wH) => wH === "")) {
-        busyInstructorDaysHours["0"] = Object.entries(res.data.busy)[0][1]
+        
+        busyInstructorDaysHours["0"] = previousReservedHoursD0  //Object.entries(res.data.busy)[0][1]
       } else {
         busyInstructorDaysHours["0"] = instructorBusy['0'];
       }
       if (Object.values(WorkingHoursD1).every((wH) => wH === "")) {
-        busyInstructorDaysHours["1"] = Object.entries(res.data.busy)[1][1]
+        busyInstructorDaysHours["1"] = previousReservedHoursD1 //Object.entries(res.data.busy)[1][1]
       } else {
         busyInstructorDaysHours["1"] = instructorBusy['1'];
       }
       if (Object.values(WorkingHoursD2).every((wH) => wH === "")) {
-        busyInstructorDaysHours["2"] = Object.entries(res.data.busy)[2][1]
+        busyInstructorDaysHours["2"] = previousReservedHoursD2 //Object.entries(res.data.busy)[2][1]
       } else {
         busyInstructorDaysHours["2"] = instructorBusy['2'];
       }
       if (Object.values(WorkingHoursD3).every((wH) => wH === "")) {
-        busyInstructorDaysHours["3"] = Object.entries(res.data.busy)[3][1]
+        busyInstructorDaysHours["3"] =  previousReservedHoursD3 //Object.entries(res.data.busy)[3][1]
       } else {
         busyInstructorDaysHours["3"] = instructorBusy['3'];
       }
       if (Object.values(WorkingHoursD4).every((wH) => wH === "")) {
-        busyInstructorDaysHours["4"] = Object.entries(res.data.busy)[4][1]
+        busyInstructorDaysHours["4"] = previousReservedHoursD4 //Object.entries(res.data.busy)[4][1]
       } else {
         busyInstructorDaysHours["4"] = instructorBusy['4'];
       }
       if (Object.values(WorkingHoursD5).every((wH) => wH === "")) {
-        busyInstructorDaysHours["5"] = Object.entries(res.data.busy)[5][1]
+        busyInstructorDaysHours["5"] = previousReservedHoursD5 //Object.entries(res.data.busy)[5][1]
       } else {
         busyInstructorDaysHours["5"] = instructorBusy['5'];
       }
       if (Object.values(WorkingHoursD6).every((wH) => wH === "")) {
-        busyInstructorDaysHours["6"] = Object.entries(res.data.busy)[6][1]
+        busyInstructorDaysHours["6"] = previousReservedHoursD6 //Object.entries(res.data.busy)[6][1]
       } else {
         busyInstructorDaysHours["6"] = instructorBusy['6'];
       }
@@ -2738,6 +2833,7 @@ const StudentSubscriptionState = ({
         setBusyDaysHoursWarningAlert(true);
         setContentOfBusyDaysHoursWarningAlert(`You Have To  Select ${changableSubscriptionState.program_prefs.sessions_in_week} Days According To Number Of Session`)
       }
+    
     }).catch((error) => {
       console.log(error);
     })

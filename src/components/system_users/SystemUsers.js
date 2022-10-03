@@ -878,7 +878,7 @@ const SystemUsers = () => {
   }
   const deleteStuffAccount = (event,stuffAccount)=>{
     event.stopPropagation();
-    axios.delete(`http://localhost:5000/api/instructors/${stuffAccount._id}`,{"studentsIDs":stuffAccount.students}).then((res)=>{
+    axios.delete(`${process.env.REACT_APP_BACK_HOST_URL}/api/instructors/${stuffAccount._id}`,{headers:{},data:{studentsIDs:stuffAccount.students}}).then((res)=>{
     setFetchAgain(fetchAgain+1);
     setIsUserDeleteAnyAccount(true);
     setTimeout(()=>{
@@ -888,6 +888,8 @@ const SystemUsers = () => {
     }).catch((error)=>{
 
     })
+    
+    console.log(stuffAccount)
   }
   useEffect(() => {
     axios
