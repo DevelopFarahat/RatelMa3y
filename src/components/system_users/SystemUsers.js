@@ -176,6 +176,7 @@ const SystemUsers = () => {
     { id: 6, name: "Saudi Arabia" },
     { id: 7, name: "Syria" },
     { id: 8, name: "United Arab Emirates" },
+    { id: 9, name: "Other" },
   ];
   let workingHoursCheckedValuesArr = [
     [0, 1],

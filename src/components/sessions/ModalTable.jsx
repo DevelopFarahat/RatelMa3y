@@ -67,7 +67,7 @@ export default function ModalTable({ user, show, onHide }) {
 
 const styles = {
   gridStyle: {
-    height: "min(calc(100vh - 100px),fit-content)",
+    height: "calc(100vh - 200px)",
     display: "grid",
     gridTemplateColumns: "auto auto 1fr",
     gap: 2,
@@ -146,7 +146,6 @@ const CustomTable = ({ user, t }) => {
     let date = new Date();
     let c = getTimeNowFormatted(date);
     let divGrid = document.getElementById("host");
-    Object.assign(divGrid.style, styles.gridStyle);
 
     for (const [key, value] of Object.entries(user?.busy)) {
       //Day

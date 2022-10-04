@@ -255,13 +255,20 @@ const StudentRegistrationForm = () => {
   };
 
   //TO SEND PIN WHEN REACHING 6th STEP
+  
+  //TODO: Unhash this when you finish testing
+  
+  /*
   useEffect(() => {
+    
     if (!!studentRegistrationFormSteps.sixStep)
       axios.post(
         `${process.env.REACT_APP_BACK_HOST_URL}/api/auth/request_pin`,
         { email: userData.email, rpin: true }
       );
-  }, [studentRegistrationFormSteps.sixStep]);
+    }, [studentRegistrationFormSteps.sixStep]);
+
+  */
 
   // just case if the user demande student can register in multiple programs
   /*
@@ -364,8 +371,7 @@ const StudentRegistrationForm = () => {
             : whatsapp_numberRegx.test(value),
       });
     } else if (filed === "name") {
-      const nameRegx =
-        /^[a-z A-Z]{1,}\s{1}[a-z A-Z]{1,}$/;
+      const nameRegx = /^[a-z A-Z]{1,}\s{1}[a-z A-Z]{1,}$/;
       setErrors({
         ...errors,
         nameError:
@@ -445,12 +451,16 @@ const StudentRegistrationForm = () => {
     event.preventDefault();
 
     //CHECK IF VERIFICATION GOES WRONG
+    //TODO: Unhash this when you finish testing
+
+    /*
     let result = await axios.post(
       `${process.env.REACT_APP_BACK_HOST_URL}/api/auth/confirm_pin`,
       { email: userData.email, rpin: true, pin: userData.email_verification }
     );
 
     if (result.status !== 200) return enqueueSnackbar(t('login_error_pin'));
+    */
 
     let wD = [];
     for (let i = 0; i < Object.values(workingDays).length; i++) {

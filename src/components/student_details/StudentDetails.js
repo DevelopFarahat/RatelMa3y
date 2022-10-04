@@ -319,7 +319,7 @@ const [sessionsDate,setSessionsDate] = useState({
                 <th>Mobile</th>
                 <td>{specificStudentJoiningRequestData.mobile}</td>
                  {specificStudentJoiningRequestData.subscription_state === 'Pending' && (specificStudentJoiningRequestData.instructor === undefined)?<>
-                 <th>Qur'an Surah Or Juiz Reached Before</th>
+                 <th>Quran Surah Or Juiz Reached Before</th>
                  <td>{specificStudentJoiningRequestData.reached_surah}</td>
                  </>:<><th colSpan={"2"}> Additinal Info</th></>}
               </tr>
