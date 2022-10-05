@@ -15,18 +15,31 @@ const PostDetails = () => {
     setPostDetails(location.state);
   }, []);
 
+  //Find link and separate it in new item
+  const urlRegex =
+    /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gi;
+
+  let link = "";
+
+  function linkify(text) {
+    return text?.replace(urlRegex, function (url) {
+      link = <a href={url} target="_blank">{url}</a>
+      return ""
+    });
+  }
+
   return (
     <>
-      <div
-        className={PostDetailsStyles["post-details-main-container"]}
-      >
+      <div className={PostDetailsStyles["post-details-main-container"]}>
         <img
           src={postDetails.article_img}
           className={PostDetailsStyles["post-image-details"]}
           alt="Post Image"
         />
-        <div className={PostDetailsStyles["post-details-title"]} 
-        style={{direction: postDetails?.lang === "ar" ? "rtl" : "ltr" }}>
+        <div
+          className={PostDetailsStyles["post-details-title"]}
+          style={{ direction: postDetails?.lang === "ar" ? "rtl" : "ltr" }}
+        >
           {postDetails.title}
           {postDetails.latest ? (
             <span className={PostDetailsStyles["latest-post-badge"]}>
@@ -35,10 +48,14 @@ const PostDetails = () => {
             </span>
           ) : null}
         </div>
-        <div className={PostDetailsStyles["post-details"]} style={{direction: postDetails?.lang === "ar" ? "rtl" : "ltr" }}>
+        <div
+          className={PostDetailsStyles["post-details"]}
+          style={{ direction: postDetails?.lang === "ar" ? "rtl" : "ltr" }}
+        >
           <span className={PostDetailsStyles["post-paragarph"]}>
-            {postDetails.content}
+            {linkify(postDetails.content)}
           </span>
+          {link !== "" && <span>{link}</span>}
         </div>
         <button
           type="button"
