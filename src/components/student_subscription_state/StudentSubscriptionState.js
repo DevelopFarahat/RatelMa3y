@@ -811,6 +811,161 @@ const StudentSubscriptionState = ({
         ...workingDays,
         [`d${event.target.value}`]: "",
       });
+
+      if(event.target.id === "d0"){
+        setWorkingHoursD0({
+          h0: "",
+          h1: "",
+          h2: "",
+          h3: "",
+          h4: "",
+          h5: "",
+          h6: "",
+          h7: "",
+        })
+        setCheckedHoursD0({
+          h0: false,
+          h1: false,
+          h2: false,
+          h3: false,
+          h4: false,
+          h5: false,
+          h6: false,
+          h7: false,
+        })
+      }
+      if(event.target.id === "d1"){
+        setWorkingHoursD1({
+          h0: "",
+          h1: "",
+          h2: "",
+          h3: "",
+          h4: "",
+          h5: "",
+          h6: "",
+          h7: "",
+        })
+        setCheckedHoursD1({
+          h0: false,
+          h1: false,
+          h2: false,
+          h3: false,
+          h4: false,
+          h5: false,
+          h6: false,
+          h7: false,
+        })
+      }
+      if(event.target.id === "d2"){
+        setWorkingHoursD2({
+          h0: "",
+          h1: "",
+          h2: "",
+          h3: "",
+          h4: "",
+          h5: "",
+          h6: "",
+          h7: "",
+        })
+        setCheckedHoursD2({
+          h0: false,
+          h1: false,
+          h2: false,
+          h3: false,
+          h4: false,
+          h5: false,
+          h6: false,
+          h7: false,
+        })
+      }
+      if(event.target.id === "d3"){
+        setWorkingHoursD3({
+          h0: "",
+          h1: "",
+          h2: "",
+          h3: "",
+          h4: "",
+          h5: "",
+          h6: "",
+          h7: "",
+        })
+        setCheckedHoursD3({
+          h0: false,
+          h1: false,
+          h2: false,
+          h3: false,
+          h4: false,
+          h5: false,
+          h6: false,
+          h7: false,
+        })
+      }
+      if(event.target.id === "d4"){
+        setWorkingHoursD4({
+          h0: "",
+          h1: "",
+          h2: "",
+          h3: "",
+          h4: "",
+          h5: "",
+          h6: "",
+          h7: "",
+        })
+        setCheckedHoursD4({
+          h0: false,
+          h1: false,
+          h2: false,
+          h3: false,
+          h4: false,
+          h5: false,
+          h6: false,
+          h7: false,
+        })
+      }
+      if(event.target.id === "d5"){
+        setWorkingHoursD5({
+          h0: "",
+          h1: "",
+          h2: "",
+          h3: "",
+          h4: "",
+          h5: "",
+          h6: "",
+          h7: "",
+        })
+        setCheckedHoursD5({
+          h0: false,
+          h1: false,
+          h2: false,
+          h3: false,
+          h4: false,
+          h5: false,
+          h6: false,
+          h7: false,
+        })
+      }
+      if(event.target.id === "d6"){
+        setWorkingHoursD6({
+          h0: "",
+          h1: "",
+          h2: "",
+          h3: "",
+          h4: "",
+          h5: "",
+          h6: "",
+          h7: "",
+        })
+        setCheckedHoursD6({
+          h0: false,
+          h1: false,
+          h2: false,
+          h3: false,
+          h4: false,
+          h5: false,
+          h6: false,
+          h7: false,
+        })
+      }
     }
   };
 
@@ -1482,6 +1637,7 @@ const StudentSubscriptionState = ({
       studentInstructor: "",
       started_in: ""
     });
+    setBusyDaysHoursWarningAlert(false);
     setWorkingHoursD0({
       h0: "",
       h1: "",
@@ -1690,7 +1846,7 @@ const StudentSubscriptionState = ({
       .catch((error) => {
         console.log(error);
       });
-    axios.get(`http://localhost:5000/api/sessions?user_id=${stdObji._id}`).then((res) => {
+    axios.get(`http://localhost:5000/api/sessions?user_id=${stdObji._id}&limit=10000000000000000`).then((res) => {
       initialStudentSessionsDetails.current = res.data.data;
       setStudentSessionsDetails(res.data.data);
     }).catch((error) => {
@@ -1739,7 +1895,7 @@ const StudentSubscriptionState = ({
       });
   }, [fetchAgain, currentPage]);
   const changeSubscriptionState = (event) => {
-    if (studentConfiguration.studentStatus !== "Cancelled" && changableSubscriptionState.instructor === undefined) {
+    if (studentConfiguration.studentStatus !== "Cancelled" && changableSubscriptionState.instructor === undefined && changableSubscriptionState.started_in === null) {
       setIsUserMakingUpdateOnStudentAccount(true);
       axios
         .put(
@@ -1766,58 +1922,91 @@ const StudentSubscriptionState = ({
 
           console.log(error);
         });
-    } else if (studentConfiguration.studentStatus !== "Cancelled" && changableSubscriptionState.instructor !== undefined) {
+    } else if (studentConfiguration.studentStatus !== "Cancelled" && changableSubscriptionState.instructor !== undefined && changableSubscriptionState.started_in !== null) {
       setIsUserMakingUpdateOnStudentAccount(true);
-      axios
-        .put(
-          `${process.env.REACT_APP_BACK_HOST_URL}/api/students/${changableSubscriptionState._id}`,
-          {
-            subscription_state: studentConfiguration.studentStatus !== '' ? studentConfiguration.studentStatus : changableSubscriptionState.subscription_state,
-            instructor: studentConfiguration.studentInstructor !== '' ? studentConfiguration.studentInstructor : changableSubscriptionState.instructor
-          }
-        )
-        .then((res) => {
-          setStudentStatus((current) => !current);
-          setStudentConfiguration({
-            studentStatus: "",
-            studentInstructor: "",
-            started_in: ""
-          });
-          setIsUserMakingUpdateOnStudentAccount(false);
-          distroyAlert();
-          setFetchAgain(fetchAgain + 1);
-          getStudentRatelMa3yJoiningRequestData(changableSubscriptionState, event);
-        })
-
-        .catch((error) => {
-          console.log(error);
+      if(studentConfiguration.studentInstructor !== ''){
+      let resStatus =    handleStudentBusyOnInstructor(changableSubscriptionState);
+      console.log("////////////////////farahat/////////////////////////////")
+      console.log()
+        console.log(resStatus);
+      console.log("////////////////////farahat/////////////////////////////")
+      if(resStatus === "OK"){
+        axios.put(`${process.env.REACT_APP_BACK_HOST_URL}/api/students/${changableSubscriptionState._id}`,
+        {
+          subscription_state: studentConfiguration.studentStatus !== '' ? studentConfiguration.studentStatus : changableSubscriptionState.subscription_state,
+          instructor: studentConfiguration.studentInstructor !== '' ? studentConfiguration.studentInstructor : changableSubscriptionState.instructor
+        }
+      )
+      .then((res) => {
+        setStudentStatus((current) => !current);
+        setStudentConfiguration({
+          studentStatus: "",
+          studentInstructor: "",
+          started_in: ""
         });
+        setIsUserMakingUpdateOnStudentAccount(false);
+        distroyAlert();
+        setFetchAgain(fetchAgain + 1);
+        getStudentRatelMa3yJoiningRequestData(changableSubscriptionState, event);
+      })
+
+      .catch((error) => {
+        console.log(error);
+      });
+      }
+      }else{
+        axios.put(`${process.env.REACT_APP_BACK_HOST_URL}/api/students/${changableSubscriptionState._id}`,
+        {
+          subscription_state: studentConfiguration.studentStatus !== '' ? studentConfiguration.studentStatus : changableSubscriptionState.subscription_state,
+          instructor: studentConfiguration.studentInstructor !== '' ? studentConfiguration.studentInstructor : changableSubscriptionState.instructor
+        }
+      )
+      .then((res) => {
+        setStudentStatus((current) => !current);
+        setStudentConfiguration({
+          studentStatus: "",
+          studentInstructor: "",
+          started_in: ""
+        });
+        setIsUserMakingUpdateOnStudentAccount(false);
+        distroyAlert();
+        setFetchAgain(fetchAgain + 1);
+        getStudentRatelMa3yJoiningRequestData(changableSubscriptionState, event);
+      })
+
+      .catch((error) => {
+        console.log(error);
+      });
+      }
+  
     } else {
       setIsUserMakingUpdateOnStudentAccount(true);
-      axios
-        .put(
-          `${process.env.REACT_APP_BACK_HOST_URL}/api/students/${changableSubscriptionState._id}`,
-          {
-            subscription_state: studentConfiguration.studentStatus,
-            instructor: null
+      let resStatus =    handleStudentBusyOnInstructor(changableSubscriptionState);
+      if(resStatus === "OK"){
+        axios.put(`${process.env.REACT_APP_BACK_HOST_URL}/api/students/${changableSubscriptionState._id}`,
+        {
+          subscription_state: studentConfiguration.studentStatus,
+          instructor: null
 
-          }
-        )
-        .then((res) => {
-          setStudentStatus((current) => !current);
-          setStudentConfiguration({
-            studentStatus: "",
-            studentInstructor: "",
-            started_in: ""
-          });
-          setIsUserMakingUpdateOnStudentAccount(false);
-          distroyAlert();
-          setFetchAgain(fetchAgain + 1);
-          getStudentRatelMa3yJoiningRequestData(changableSubscriptionState, event);
-        })
-        .catch((error) => {
-          console.log(error);
+        }
+      )
+      .then((res) => {
+        setStudentStatus((current) => !current);
+        setStudentConfiguration({
+          studentStatus: "",
+          studentInstructor: "",
+          started_in: ""
         });
+        setIsUserMakingUpdateOnStudentAccount(false);
+        distroyAlert();
+        setFetchAgain(fetchAgain + 1);
+        getStudentRatelMa3yJoiningRequestData(changableSubscriptionState, event);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+      }
+
     }
   };
 
@@ -1910,6 +2099,13 @@ const StudentSubscriptionState = ({
     let stdwHoursD4 = [];
     let stdwHoursD5 = [];
     let stdwHoursD6 = [];
+    let stdwHoursD0_std_busy = [];
+    let stdwHoursD1_std_busy = [];
+    let stdwHoursD2_std_busy = [];
+    let stdwHoursD3_std_busy = [];
+    let stdwHoursD4_std_busy = [];
+    let stdwHoursD5_std_busy = [];
+    let stdwHoursD6_std_busy = [];
     let previousReservedHoursD0 = [];
     let previousReservedHoursD1 = [];
     let previousReservedHoursD2 = [];
@@ -1940,9 +2136,11 @@ const StudentSubscriptionState = ({
           0, 0,
         ]);
         stdwHoursD0.push(emptyWorkingHourInitialValue);
+        stdwHoursD0_std_busy.push(emptyWorkingHourInitialValue);
       } else {
         //stdwHoursD0.push(Object.values(WorkingHoursD0)[i]);
         stdwHoursD0.push({ "stdIds": [changableSubscriptionState._id], "max": 1 })
+        stdwHoursD0_std_busy.push({ "stdIds": [changableSubscriptionState._id], "max": 1 })
       }
     }
     for (let i = 0; i < Object.values(WorkingHoursD1).length; i++) {
@@ -1951,9 +2149,11 @@ const StudentSubscriptionState = ({
           0, 0,
         ]);
         stdwHoursD1.push(emptyWorkingHourInitialValue);
+        stdwHoursD1_std_busy.push(emptyWorkingHourInitialValue);
       } else {
         // stdwHoursD1.push(Object.values(WorkingHoursD1)[i]);
         stdwHoursD1.push({ "stdIds": [changableSubscriptionState._id], "max": 1 })
+        stdwHoursD1_std_busy.push({ "stdIds": [changableSubscriptionState._id], "max": 1 })
       }
     }
     for (let i = 0; i < Object.values(WorkingHoursD2).length; i++) {
@@ -1962,9 +2162,11 @@ const StudentSubscriptionState = ({
           0, 0,
         ]);
         stdwHoursD2.push(emptyWorkingHourInitialValue);
+        stdwHoursD2_std_busy.push(emptyWorkingHourInitialValue);
       } else {
         // stdwHoursD2.push(Object.values(WorkingHoursD2)[i]);
         stdwHoursD2.push({ "stdIds": [changableSubscriptionState._id], "max": 1 })
+        stdwHoursD2_std_busy.push({ "stdIds": [changableSubscriptionState._id], "max": 1 })
       }
     }
     for (let i = 0; i < Object.values(WorkingHoursD3).length; i++) {
@@ -1973,9 +2175,11 @@ const StudentSubscriptionState = ({
           0, 0,
         ]);
         stdwHoursD3.push(emptyWorkingHourInitialValue);
+        stdwHoursD3_std_busy.push(emptyWorkingHourInitialValue);
       } else {
         //stdwHoursD3.push(Object.values(WorkingHoursD3)[i]);
         stdwHoursD3.push({ "stdIds": [changableSubscriptionState._id], "max": 1 })
+        stdwHoursD3_std_busy.push({ "stdIds": [changableSubscriptionState._id], "max": 1 })
       }
     }
     for (let i = 0; i < Object.values(WorkingHoursD4).length; i++) {
@@ -1984,9 +2188,11 @@ const StudentSubscriptionState = ({
           0, 0,
         ]);
         stdwHoursD4.push(emptyWorkingHourInitialValue);
+        stdwHoursD4_std_busy.push(emptyWorkingHourInitialValue);
       } else {
         //stdwHoursD4.push(Object.values(WorkingHoursD4)[i]);
         stdwHoursD4.push({ "stdIds": [changableSubscriptionState._id], "max": 1 })
+        stdwHoursD4_std_busy.push({ "stdIds": [changableSubscriptionState._id], "max": 1 })
       }
     }
     for (let i = 0; i < Object.values(WorkingHoursD5).length; i++) {
@@ -1995,9 +2201,11 @@ const StudentSubscriptionState = ({
           0, 0,
         ]);
         stdwHoursD5.push(emptyWorkingHourInitialValue);
+        stdwHoursD5_std_busy.push(emptyWorkingHourInitialValue);
       } else {
         // stdwHoursD5.push(Object.values(WorkingHoursD5)[i]);
         stdwHoursD5.push({ "stdIds": [changableSubscriptionState._id], "max": 1 })
+        stdwHoursD5_std_busy.push({ "stdIds": [changableSubscriptionState._id], "max": 1 })
       }
     }
     for (let i = 0; i < Object.values(WorkingHoursD6).length; i++) {
@@ -2006,28 +2214,30 @@ const StudentSubscriptionState = ({
           0, 0,
         ]);
         stdwHoursD6.push(emptyWorkingHourInitialValue);
+        stdwHoursD6_std_busy.push(emptyWorkingHourInitialValue);
       } else {
         // stdwHoursD6.push(Object.values(WorkingHoursD6)[i]);
         stdwHoursD6.push({ "stdIds": [changableSubscriptionState._id], "max": 1 })
+        stdwHoursD6_std_busy.push({ "stdIds": [changableSubscriptionState._id], "max": 1 })
       }
     }
     let studentBusy = {};
     for (let i = 0; i < wD.length; i++) {
       if (Number(Object.keys(changableSubscriptionState.busy)[i]) === wD[i]) {
         if (i === 0)
-          studentBusy[`${i}`] = stdwHoursD0;
+          studentBusy[`${i}`] = stdwHoursD0_std_busy;
         if (i === 1)
-          studentBusy[`${i}`] = stdwHoursD1;
+          studentBusy[`${i}`] = stdwHoursD1_std_busy;
         if (i === 2)
-          studentBusy[`${i}`] = stdwHoursD2;
+          studentBusy[`${i}`] = stdwHoursD2_std_busy;
         if (i === 3)
-          studentBusy[`${i}`] = stdwHoursD3;
+          studentBusy[`${i}`] = stdwHoursD3_std_busy;
         if (i === 4)
-          studentBusy[`${i}`] = stdwHoursD4;
+          studentBusy[`${i}`] = stdwHoursD4_std_busy;
         if (i === 5)
-          studentBusy[`${i}`] = stdwHoursD5;
+          studentBusy[`${i}`] = stdwHoursD5_std_busy;
         if (i === 6)
-          studentBusy[`${i}`] = stdwHoursD6;
+          studentBusy[`${i}`] = stdwHoursD6_std_busy;
       } else {
         studentBusy[`${i}`] = [];
       }
@@ -2888,8 +3098,7 @@ const StudentSubscriptionState = ({
     }
     setStudentData(studentDataCopy);
   }
-  const deleteStudent = async (event, studentAccountObji) => {
-    event.stopPropagation();
+  const handleStudentBusyOnInstructor = (studentAccountObji)=>{
     let stdHoursD0 = [];
     let stdHoursD1 = [];
     let stdHoursD2 = [];
@@ -3070,7 +3279,6 @@ const StudentSubscriptionState = ({
 
         )
       })
-
     }
     let updateStudentInstructorBusyData = () => {
       return new Promise((resolve, reject) => {
@@ -3093,11 +3301,27 @@ const StudentSubscriptionState = ({
         )
       })
     }
+    let updateStudentInstructorBusyDataResponseStatus;
+    let response =   getStudentInstructorBusyData();
+    response.then((res) => {
+      if (res.statusText === "OK") {
+        updateStudentInstructorBusyDataResponseStatus =    updateStudentInstructorBusyData();
+        updateStudentInstructorBusyDataResponseStatus.then((res)=>{
+          if(res.statusText === "OK")return res.statusText;
+          
+        })
+
+      }
+    })
+  }
+  const deleteStudent = async (event, studentAccountObji) => {
+    event.stopPropagation();
+
 
     let deleteReservedStudentDaysAndHours = () => {
       return new Promise((resolve, reject) => {
         resolve(
-          axios.delete(`http://localhost:5000/api/students/${studentAccountObji._id}`).then((res) => {
+          axios.delete(`http://localhost:5000/api/students/${studentAccountObji._id}`,{headers:{},data:{instructorID:studentAccountObji.instructor}}).then((res) => {
             setFetchAgain(fetchAgain + 1);
             setIsUserDeleteAnyAccount(true);
             setTimeout(() => {
@@ -3113,13 +3337,8 @@ const StudentSubscriptionState = ({
     }
     let result = deleteReservedStudentDaysAndHours();
     result.then((res) => {
-      if (res.statusText === "OK") {
-        let response = getStudentInstructorBusyData();
-        response.then((res) => {
-          if (res.statusText === "OK") {
-            updateStudentInstructorBusyData();
-          }
-        })
+      if (res.statusText === "OK" && studentAccountObji.subscription_state !== "Pending") {
+        handleStudentBusyOnInstructor(studentAccountObji);
       }
     })
   }
@@ -3657,8 +3876,10 @@ const StudentSubscriptionState = ({
                             {wh.appointment}
                           </Form.Label>
                           <Form.Check
+                            type="radio"
                             id={wh.att}
-                            name={wh.att}
+                            //name={wh.att}
+                            name="sessionsHoursOnD0"
                             value={index}
                             disabled={disabledHoursD0[`h${index}`]}
                             style={{ cursor: disabledHoursD0[`h${index}`] ? 'not-allowed' : 'pointer' }}
@@ -3677,8 +3898,10 @@ const StudentSubscriptionState = ({
                                 {wh.appointment}
                               </Form.Label>
                               <Form.Check
+                                type="radio"
                                 id={wh.att}
-                                name={wh.att}
+                                //name={wh.att}
+                                name="sessionsHoursOnD1"
                                 value={index}
                                 disabled={disabledHoursD1[`h${index}`]}
                                 style={{ cursor: disabledHoursD1[`h${index}`] ? 'not-allowed' : 'pointer' }}
@@ -3696,8 +3919,10 @@ const StudentSubscriptionState = ({
                                     {wh.appointment}
                                   </Form.Label>
                                   <Form.Check
+                                  type="radio"
                                     id={wh.att}
-                                    name={wh.att}
+                                    //name={wh.att}
+                                    name="sessionsHoursOnD2"
                                     value={index}
                                     disabled={disabledHoursD2[`h${index}`]}
                                     style={{ cursor: disabledHoursD2[`h${index}`] ? 'not-allowed' : 'pointer' }}
@@ -3716,8 +3941,10 @@ const StudentSubscriptionState = ({
                                         {wh.appointment}
                                       </Form.Label>
                                       <Form.Check
+                                        type="radio"
                                         id={wh.att}
-                                        name={wh.att}
+                                        //name={wh.att}
+                                        name="sessionsHoursOnD3"
                                         value={index}
                                         disabled={disabledHoursD3[`h${index}`]}
                                         style={{ cursor: disabledHoursD3[`h${index}`] ? 'not-allowed' : 'pointer' }}
@@ -3735,8 +3962,10 @@ const StudentSubscriptionState = ({
                                             {wh.appointment}
                                           </Form.Label>
                                           <Form.Check
+                                            type="radio"
                                             id={wh.att}
-                                            name={wh.att}
+                                            //name={wh.att}
+                                            name="sessionsHoursOnD4"
                                             value={index}
                                             disabled={disabledHoursD4[`h${index}`]}
                                             style={{ cursor: disabledHoursD4[`h${index}`] ? 'not-allowed' : 'pointer' }}
@@ -3754,8 +3983,10 @@ const StudentSubscriptionState = ({
                                                 {wh.appointment}
                                               </Form.Label>
                                               <Form.Check
+                                                type="radio"
                                                 id={wh.att}
-                                                name={wh.att}
+                                                //name={wh.att}
+                                                name="sessionsHoursOnD5"
                                                 value={index}
                                                 disabled={disabledHoursD5[`h${index}`]}
                                                 style={{ cursor: disabledHoursD5[`h${index}`] ? 'not-allowed' : 'pointer' }}
@@ -3773,8 +4004,10 @@ const StudentSubscriptionState = ({
                                                     {wh.appointment}
                                                   </Form.Label>
                                                   <Form.Check
+                                                    type="radio"
                                                     id={wh.att}
-                                                    name={wh.att}
+                                                   // name={wh.att}
+                                                   name="sessionsHoursOnD6"
                                                     value={index}
                                                     disabled={disabledHoursD6[`h${index}`]}
                                                     style={{ cursor: disabledHoursD6[`h${index}`] ? 'not-allowed' : 'pointer' }}

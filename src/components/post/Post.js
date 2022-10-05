@@ -10,13 +10,10 @@ const Post = (props) => {
 
   const {t} = useTranslation()
   let date = new Date(props.post.date);
-  let dateClearified = date.toLocaleString("default", {
-    day: "numeric",
-    month: "short",
-    year: "numeric",
-  });
+  let dateClearified =  date.toLocaleString(`${t("us") === t("Us")?'en':'ar'}`, { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })
+let extractLinkFromThePostContent = /https?:\/\/[^\s"<>]+/;
 
-  //  Privacy and Security
+console.log(props.post.content.match(extractLinkFromThePostContent));
   return (
     <Link
       to={`/events/${props.post._id}`}
@@ -27,6 +24,7 @@ const Post = (props) => {
         textDecoration: "none",
         width: "100%",
         backgroundImage: "linear-gradient(to left,#f9f9f9, #ffffff)",
+        
       }}
     >
       {props.post._id === props.latestPost._id
@@ -61,7 +59,7 @@ const Post = (props) => {
               {props.post.content.substring(0, 374)}
             </span>
           ) : (
-            <p className={PostStyles["post-details"]}>{props.post.content}</p>
+            <p className={PostStyles["post-details"]}>{props.post.content}{props.post.content.match(extractLinkFromThePostContent) !== null?<a  href={props.post.content.match(extractLinkFromThePostContent)[0]} target="_blank">{props.post.content.match(extractLinkFromThePostContent)[0]}</a>:null}</p>
           )}
 
           <span className={PostStyles["post-date"]}>

@@ -312,7 +312,7 @@ const Instructor = () => {
             .catch((error) => {
                 console.log(error);
             });
-            axios.get(`${process.env.REACT_APP_BACK_HOST_URL}/api/sessions?user_id=${event.currentTarget.id}`).then((res)=>{
+            axios.get(`${process.env.REACT_APP_BACK_HOST_URL}/api/sessions?user_id=${event.currentTarget.id}&limit=10000000000000000`).then((res)=>{
                 initialInstructorSessionsDetails.current = res.data.data;
                 setInstructorSessionsDetails(res.data.data);
 

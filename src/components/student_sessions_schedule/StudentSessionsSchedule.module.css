@@ -1,12 +1,19 @@
 .sessions-schedule-main{
-    width:100%;
+    width: 87%;
     padding: 10px;
-    height: 388px;
+    height: 215px;
     overflow: auto;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content:center;
     align-items: center;
+    background: #FFFFFF;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 5px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     
   }
  .sessions-schedule-main::-webkit-scrollbar {
@@ -35,7 +42,7 @@
   .sessions-schedule-main > section{
     display: flex;
     flex-direction: row;
-    justify-content: flex-start;
+    justify-content:center;
     align-items: flex-start;
     min-width: 100%;
   }
@@ -59,19 +66,4 @@
     background-color:rgb(32, 170, 105);
     align-self: center;
     color:#FFFFFF;
-  }
-  .sessions-schedule-main > section > .session-student-members{
-    background-color:#dadada;
-    align-self: center;
-  }
-  .sessions-schedule-main > section > .session-student-members > span{
-    display: block;
-    width: 100%;
-    text-align: center;
-  }
-  .empty-data-img {
-    margin: auto;
-    padding: 88px;
-    display: block;
-    background-position: 50% 50%;
   }
