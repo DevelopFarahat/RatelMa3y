@@ -14,7 +14,7 @@ import { useTranslation } from "react-i18next";
 
 export default function Login() {
   const navigate = useNavigate();
-  const { setUser } = useContext(UserContext);
+  const { setUser, setIsLoading } = useContext(UserContext);
   const { t } = useTranslation();
   const { enqueueSnackbar } = useSnackbar();
 
@@ -23,12 +23,14 @@ export default function Login() {
     password: "",
   };
   const onSubmit = async (values) => {
+    setIsLoading(true);
     axios
       .post(`${process.env.REACT_APP_BACK_HOST_URL}/api/auth/login`, {
         email: values.email,
         password: values.password,
       })
       .then((res) => {
+        setIsLoading(false);
         if (res.status === 200) {
           //Login Successfully
           localStorage.setItem("accessToken", res.data.accessToken);
@@ -41,7 +43,10 @@ export default function Login() {
           navigate("../home", { replace: true });
         } else return enqueueSnackbar(t("login_error_incorrect"));
       })
-      .catch(() => enqueueSnackbar(t("login_error_incorrect")));
+      .catch(() => {
+        setIsLoading(false);
+        enqueueSnackbar(t("login_error_incorrect"));
+      });
   };
   const validate = (values) => {
     let errors = {};
@@ -68,13 +73,14 @@ export default function Login() {
   return (
     <>
       <div
-        className='container text-center'
+        className="container text-center"
         style={{
           height: "100%",
           marginTop: 64,
           marginBottom: 32,
           direction: t("us") === "Us" ? "ltr" : "rtl",
-        }}>
+        }}
+      >
         <Form
           onSubmit={formik.handleSubmit}
           style={{
@@ -88,62 +94,64 @@ export default function Login() {
             paddingRight: 32,
             boxShadow: "0 0 12px rgb(0 0 0 / 16%)",
             margin: "auto",
-          }}>
-          <h3 className='mb-4'>{t("login_title")}</h3>
-          <InputGroup className='mb-2'>
+          }}
+        >
+          <h3 className="mb-4">{t("login_title")}</h3>
+          <InputGroup className="mb-2">
             <InputGroup.Text>
               <IoMdMail />
             </InputGroup.Text>
             <Form.Control
               placeholder={t("login_email")}
-              type='email'
-              name='email'
+              type="email"
+              name="email"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.email}
             />
 
             {formik.touched.email && formik.errors.email ? (
-              <Form.Control.Feedback type='invalid'>
+              <Form.Control.Feedback type="invalid">
                 {formik.errors.email}
               </Form.Control.Feedback>
             ) : null}
           </InputGroup>
 
-          <InputGroup hasValidation className='mb-4'>
+          <InputGroup hasValidation className="mb-4">
             <InputGroup.Text>
               <AiFillLock />
             </InputGroup.Text>
             <Form.Control
               placeholder={t("login_password")}
-              name='password'
-              type='password'
+              name="password"
+              type="password"
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               value={formik.values.password}
             />
 
             {formik.touched.password && formik.errors.password ? (
-              <Form.Control.Feedback type='invalid'>
+              <Form.Control.Feedback type="invalid">
                 {formik.errors.password}
               </Form.Control.Feedback>
             ) : null}
           </InputGroup>
 
-          <div className='d-grid gap-2'>
-            <Button type='submit' variant='success' className='mb-4' size='lg'>
+          <div className="d-grid gap-2">
+            <Button type="submit" variant="success" className="mb-4" size="lg">
               {t("login_button")}
             </Button>
           </div>
 
           <div
-            className='w-100'
-            style={{ justifyContent: "space-between", display: "flex" }}>
-            <Link to='/forgot-password' className='text-dark fw-700'>
+            className="w-100"
+            style={{ justifyContent: "space-between", display: "flex" }}
+          >
+            <Link to="/forgot-password" className="text-dark fw-700">
               {t("login_forgot")}
             </Link>
-            <Link to='/register'>
-              <Button variant='outline-success'>{t("login_register")}</Button>
+            <Link to="/register">
+              <Button variant="outline-success">{t("login_register")}</Button>
             </Link>
           </div>
         </Form>

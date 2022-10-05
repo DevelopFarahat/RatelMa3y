@@ -19,14 +19,14 @@ const PostDetails = () => {
     <>
       <div
         className={PostDetailsStyles["post-details-main-container"]}
-        style={{ direction: postDetails?.lang === "ar" ? "rtl" : "ltr" }}
       >
         <img
           src={postDetails.article_img}
           className={PostDetailsStyles["post-image-details"]}
           alt="Post Image"
         />
-        <div className={PostDetailsStyles["post-details-title"]}>
+        <div className={PostDetailsStyles["post-details-title"]} 
+        style={{direction: postDetails?.lang === "ar" ? "rtl" : "ltr" }}>
           {postDetails.title}
           {postDetails.latest ? (
             <span className={PostDetailsStyles["latest-post-badge"]}>
@@ -35,7 +35,7 @@ const PostDetails = () => {
             </span>
           ) : null}
         </div>
-        <div className={PostDetailsStyles["post-details"]}>
+        <div className={PostDetailsStyles["post-details"]} style={{direction: postDetails?.lang === "ar" ? "rtl" : "ltr" }}>
           <span className={PostDetailsStyles["post-paragarph"]}>
             {postDetails.content}
           </span>
