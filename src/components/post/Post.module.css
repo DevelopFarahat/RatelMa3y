@@ -77,6 +77,11 @@
     color:black;
     transition-duration: .3s;
 }
+.three-dot-more{
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 1.5rem;
+    color: #f9c324;
+}
 .read-more:hover{
     opacity: .85;
     color:black;

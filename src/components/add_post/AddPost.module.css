@@ -48,11 +48,12 @@
   position: relative;
   border-radius: 5px;
   cursor: pointer;
-  width: 71%;
+  width: 109px;
+  height: 40px;
   text-align: center;
   text-transform: capitalize;
   background-color: #038674;
-  padding: 4px;
+  padding: 8px;
   margin: 21px 0 0 0;
 }
 .button-container > button {
@@ -70,14 +71,9 @@ input[type="file"] {
   cursor: pointer;
   top: 0;
   right: 0;
+  left: 0;
+  bottom: 0;
   opacity: 0;
-}
-.button-group {
-  width: 35%;
-  height: 50px;
-  margin: auto;
-  display: inline-block;
-  text-align: center;
 }
 .button-group > button {
   width: 100px !important;
@@ -105,9 +101,9 @@ input[type="file"] {
   float: right;
 }
 .clear-btn {
-  margin-left: 38.4%;
-  padding:5px;
-  width:26%;
+  padding:8px;
+  width: 109px;
+  height: 40px;
 }
 .post-title-content-container{
   flex:0 0 70%;
@@ -117,8 +113,14 @@ input[type="file"] {
   width:100%;
   padding:20px;
 }
+.btn-post-image-settings{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
 .post-alert-container,.post-alert-faild-container{
-  width:25%;
+  width:300px;
   padding: 10px;
   border-radius: 5px;
   -webkit-border-radius: 5px;
@@ -127,21 +129,22 @@ input[type="file"] {
   -o-border-radius: 5px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   background-color:#FFFFFF;
-  position: absolute;
-  top: 27%;
-  left: 86%;
-  transform: translate(-50%,-50%);
-  -webkit-transform: translate(-50%,-50%);
-  -moz-transform: translate(-50%,-50%);
-  -ms-transform: translate(-50%,-50%);
-  -o-transform: translate(-50%,-50%);
+  position: fixed;
+  top: 14%;
+  right:15px;
   color: #FFFFFF;
   z-index:1500;
 }
 .post-alert-faild-container{
+  width: 289px;
   top:55%;
   left:50%;
+  transform: translate(-50%,-50%);
   background-color: #FFFFFF;
+  -webkit-transform: translate(-50%,-50%);
+  -moz-transform: translate(-50%,-50%);
+  -ms-transform: translate(-50%,-50%);
+  -o-transform: translate(-50%,-50%);
 }
 .post-alert-container >  img , .post-alert-faild-container > img{
   display: block;
@@ -173,4 +176,36 @@ input[type="file"] {
   border: none;
   margin-top: 55px;
   margin-right: 7px;
+}
+@media screen and  (max-width:700px){
+  .add-post-main-container{
+    flex-direction: column;
+    padding:5px;
+  }
+  .add-post-main-container > .image-posting-settings-container{
+    width:100%
+  }
+  .post-title-content-container{
+    width:100%;
+    padding: 3px;
+  }
+  .btn{
+    width:104px;
+  }
+}
+@media screen and (max-width:859px){
+  .post-image-area{
+    height:217px;
+  }
+  .clear-btn{
+    padding: 0px;
+    width: 97px;
+    height: 37px;
+  }
+  .button-container{
+    padding: 6px;
+    width: 97px;
+    height: 37px;
+
+  }
 }

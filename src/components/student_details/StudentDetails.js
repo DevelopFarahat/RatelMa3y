@@ -6,16 +6,17 @@ import Present from "../../assets/images/attendance.png";
 import absence from "../../assets/images/absence.png";
 import { BiReset } from "react-icons/bi";
 import Form from 'react-bootstrap/Form';
+import {SiGooglemeet} from "react-icons/si";
+import {AiFillLike} from "react-icons/ai";
 import dateTimeSessionImage from "../../assets/images/dateTimeSessions.png";
 import  DateTimeImage from "../../assets/images/date-time.png";
 import sessionsDaysHours from "../../assets/images/hangouts-meet.png";
+import StudentSessionsSchedule from "../student_sessions_schedule/StudentSessionsSchedule"
 import { VscChromeClose } from "react-icons/vsc";
 import {AiFillFilter} from "react-icons/ai";
 import {MdKeyboardArrowDown} from "react-icons/md";
 import {MdKeyboardArrowUp} from "react-icons/md";
 const StudentDetails = ({specificStudentJoiningRequestData,studentSessionsDetails,setStudentSessionsDetails, setSpecificStudentJoiningRequestData, initialStudentSessionsDetails, isStudentRequestDataVisible, isStudentRatelDataVisible, setIsStudentRequestDataVisible, setIsStudentRatelDataVisible }) => {
-  const [isToolTipShown,setIsToolTipShown] = useState(false);
-  const [isToolTipSchedulerShown,setIsToolTipSchedulerShown] = useState(false);
   let programes = [{ id: 0, name: "programprogr1" }, { id: 1, name: "programprogr2" }, { id: 2, name: "programprogr3" },]
   let days = ['Saturday','Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
   let workingHoursArr = [
@@ -28,7 +29,10 @@ const StudentDetails = ({specificStudentJoiningRequestData,studentSessionsDetail
     ["8:00 pm", " 10:00 pm"],
     ["10:00 pm", "12:00 am"],
 ];
-const [isDateTimeVisable,setIsDateTimeVisable] = useState(false);
+const [isDateTimeVisable,setIsDateTimeVisable] = useState({
+  visible:false,
+  timeType:''
+});
 const [selectedRow, setSelectedRow] = useState(-1);
 const [totalPresent,setTotalPresent] = useState(0);
 const [totalAbsence,setTotalAbsence] = useState(0);
@@ -107,22 +111,22 @@ const [sessionsDate,setSessionsDate] = useState({
     setStudentSessionsDetails(initialStudentSessionsDetails.current);
  
   }
-  const showDateTimeContainer = ()=>{
-    setIsDateTimeVisable(true);
+  const showDateTimeContainer = (tType)=>{
+    setIsDateTimeVisable({
+      visible:true,
+      timeType:tType
+    });
   }
   const hideDateTimeContainer = ()=>{
-    setIsDateTimeVisable(false);
+    setIsDateTimeVisable({
+      visible:false,
+      timeType:''
+    });
   }
   const handlerRowClicked = useCallback((event) => {
     const id = event.currentTarget.id;
     setSelectedRow(id);
 }, []);
- const displayToolTip = ()=>{
-  setIsToolTipShown(true);
- }
- const distroyToolTip = ()=>{
-  setIsToolTipShown(false);
- }
  const handleSessionsDate=(event)=>{
   setSessionsDate(
     {
@@ -176,22 +180,16 @@ const [sessionsDate,setSessionsDate] = useState({
         {Object.keys(specificStudentJoiningRequestData).length === 0 ? <img src={EmptyDataImage} className={StudentDetailsStyles['empty-data-img']} alt="Empty" /> : specificStudentJoiningRequestData.subscription_state !== 'Cancelled' ? <div className={StudentDetailsStyles['settings-header']}>
           <span className={`${isStudentRequestDataVisible ? StudentDetailsStyles['taps-shadow'] : ''} ${StudentDetailsStyles['joinnig-request-data-tap']}`} onClick={toogleViewOfStudentRatelData}>Student Data</span>   {specificStudentJoiningRequestData.subscription_state !== 'Pending' ? <span className={`${isStudentRatelDataVisible ? StudentDetailsStyles['taps-shadow'] : ''} ${StudentDetailsStyles['ratel-student-data-tap']}`} onClick={toogleViewOfStudentRequestData}>Sessions Details</span> : null}
         </div> : <img src={EmptyDataImage} className={StudentDetailsStyles['empty-data-img']} alt="Empty" />}
-        {Object.keys(specificStudentJoiningRequestData).length !== 0 && specificStudentJoiningRequestData.subscription_state !== 'Cancelled' ? isStudentRequestDataVisible && specificStudentJoiningRequestData.subscription_state !== 'Cancelled' ? <div className={StudentDetailsStyles['student-request-joinnig-info-main-container']} style={{overflow:isDateTimeVisable?'hidden':'auto'}}>
+        {Object.keys(specificStudentJoiningRequestData).length !== 0 && specificStudentJoiningRequestData.subscription_state !== 'Cancelled' ? isStudentRequestDataVisible && specificStudentJoiningRequestData.subscription_state !== 'Cancelled' ? <div className={StudentDetailsStyles['student-request-joinnig-info-main-container']} style={{overflow:isDateTimeVisable.visible?'hidden':'auto'}}>
           {/* request */}
-         <div className={`${StudentDetailsStyles['show-daysTimes-tooltip']}`} style={{opacity:isToolTipShown?'1':'0',transition:isToolTipShown?'opacity .5s':''}}>
-            <span>Click to show preferred days and hours</span>
-          </div>
-          <div className={StudentDetailsStyles['show-daysTimes-tooltip-sessions']} style={{opacity:isToolTipShown?'1':'0',transition:isToolTipShown?'opacity .5s':''}}>
-            <span>Click to show student sessions scheduler</span>
-          </div>
           <div className={StudentDetailsStyles['student-table-main-header']}>
-          <img className={StudentDetailsStyles['date-time-icon']} onMouseOver={displayToolTip} onMouseOut={distroyToolTip}  src={sessionsDaysHours} onClick={showDateTimeContainer}  alt="meeting-day-time"/>
+            <button className={StudentDetailsStyles['btn']} onClick={()=>showDateTimeContainer('workingTime')}><SiGooglemeet size={20} style={{color:"#FFFFFF",margin: "0 0 4px 1px"}}/>Session Days Times</button>
             <span>Student Data</span>
-              <img className={StudentDetailsStyles['date-time-icon']} onMouseOver={displayToolTip} onMouseOut={distroyToolTip}  src={DateTimeImage} onClick={showDateTimeContainer}  alt="date-time"/>
+            <button className={StudentDetailsStyles['btn']} onClick={()=>showDateTimeContainer('prefsTime')} ><AiFillLike size={20} style={{color:"#FFFFFF",margin: "0 0 4px 1px"}}/>Prefers Days Times</button>
             </div>
-            {isDateTimeVisable?<div className={StudentDetailsStyles['date-time-container-main']}>
+            {isDateTimeVisable.visible?<div className={StudentDetailsStyles['date-time-container-main']}>
             <VscChromeClose size={30} onClick={hideDateTimeContainer} className={StudentDetailsStyles['close-date-time-container']}/>
-            <div className={StudentDetailsStyles['days-hours-sessions-whol-container']}>
+            {isDateTimeVisable.timeType === 'prefsTime'?<div className={StudentDetailsStyles['days-hours-sessions-whol-container']}>
             <div className={StudentDetailsStyles['student-sessions-days']}>
   
             <div className={StudentDetailsStyles["table-wrapper"]}>
@@ -280,7 +278,10 @@ const [sessionsDate,setSessionsDate] = useState({
           </table>
         </div>
             </div>
-            </div>
+            </div>:<div>
+              {/* student session */}
+              <StudentSessionsSchedule specificStudentJoiningRequestData={specificStudentJoiningRequestData}/>
+              </div>}
             </div>:null}
           <table className={StudentDetailsStyles['requested-joinnig-student-table']}>
             <thead>

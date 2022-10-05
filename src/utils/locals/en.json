@@ -267,5 +267,18 @@
   "Register": "Register",
   "is_an_exam": "General Exam",
   "evaluations":"Evaluation",
-  "book":"Quran"
+  "book":"Quran",
+  "postImage":"Post Image",
+  "content":"Content",
+  "postTitle":"Title",
+  "Language":"Language",
+  "post":"Post",
+  "imagePostClear":"Clear",
+  "upload":"Upload",
+  "ok":"OK",
+  "imageError":"Please Set Post Image",
+  "titleError":"Please Set Post Title",
+  "contentError":"Please Set Post Content",
+  "postedSuccessully":"Posted Successfully"
+
 }

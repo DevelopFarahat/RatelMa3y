@@ -73,7 +73,7 @@ const PostsBoard = () => {
   return (
     <div className={PostBoardStyles["post-board"]}>
       {posts?.map((post, index, arr) => {
-        if (index == posts.length - 1)
+        if (index === posts.length - 1)
           return (
             <div
               ref={lastPostElementRef}

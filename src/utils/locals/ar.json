@@ -258,5 +258,17 @@
   "Register" : "قدم الطلب",
   "is_an_exam":"اختبار عام",
   "evaluations":"تقييم",
-  "book":"قرآن"
+  "book":"قرآن",
+  "postImage":"غلاف المنشور",
+  "content":"محتوى المنشور",
+  "postTitle":"عنوان المنشور",
+  "Language":"لغة المنشور",
+  "post":"نشر",
+  "imagePostClear":"حذف",
+  "upload":"تحميل",
+  "ok":"اخفاء",
+  "imageError":"يرجى اختيار صورة",
+  "titleError":"يرجى كتابة  عنوان المنشور",
+  "contentError":"يرجى كتابة محتوى المنشور",
+  "postedSuccessully":"تم النشر بنجاح"
 }

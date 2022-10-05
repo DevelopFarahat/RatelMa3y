@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import AddPostStyles from "./AddPost.module.css";
+import { useTranslation } from "react-i18next";
 import Spinner from "react-bootstrap/Spinner";
 import Form from "react-bootstrap/Form";
 import { RiFolder5Fill } from "react-icons/ri";
@@ -10,12 +11,12 @@ import formEmptyFieldSadEmoji from "../../assets/images/emotions.png";
 import axios from "axios";
 
 const AddPost = () => {
+  const [t, i18n] = useTranslation();
   const [postData, setPostData] = useState({
     title: "",
     content: "",
     lang: "ar",
   });
-  const [img, setImg] = useState();
   const [postImage, setPostImage] = useState("");
   const [isUserMadeAPost, setIsUserMadeAPost] = useState(false);
   const [isThereAnyFormFieldEmpty, setIsThereAnyFormFieldEmpty] =
@@ -45,49 +46,19 @@ const AddPost = () => {
   };
 
   const clearImagePath = () => {
-    setImg(null);
     setPostImage("");
   };
-
-  //Submit the form
-
   const handleSubmit = (event) => {
     event.preventDefault();
-    setIsThereAnyPostIsUploading(true);
-
-    if (!img) return console.error("No image selected");
-
-    const reader = new FileReader();
-    reader.readAsDataURL(img);
-    reader.onloadend = () => {
-      uploadImage(reader.result);
-    };
-    reader.onerror = () => {
-      return console.error("AHHHHHHHH!!");
-    };
-
-    function uploadImage(img) {
-      // console.log(img);
-      let cc = {
-        article_img: img,
+        let post = {
+        article_img: postImage,
         content: postData.content,
-        title: postData.title,
+        title: postData,
         lang: postData.lang,
-        //date:new Date().toLocaleString('en-US', { weekday: 'long', year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })
       };
-      console.log(cc);
-
-      //Upload on the server
-
-      if (
-        img !== undefined &&
-        img !== null &&
-        postData.content !== "" &&
-        postData.title !== ""
-      ) {
-        axios
-          .post(`${process.env.REACT_APP_BACK_HOST_URL}/api/events`, cc)
-          .then((res) => {
+      if (postImage !== undefined && postImage !== null && postImage !== '' && postData.content !== "" && postData.title !== ""){
+        setIsThereAnyPostIsUploading(true);
+        axios.post(`${process.env.REACT_APP_BACK_HOST_URL}/api/events`,post).then((res) => {
             setIsThereAnyPostIsUploading(false);
             setIsUserMadeAPost(true);
             setTimeout(() => {
@@ -98,29 +69,28 @@ const AddPost = () => {
               content: "",
               lang: "ar",
             });
-            setImg(null);
             setPostImage("");
           })
           .catch((err) => console.error(err));
       } else {
-        if (img === undefined || img === null) {
+        if (postImage === undefined || postImage === null || postImage === '') {
           setIsThereAnyFormFieldEmpty(true);
           setError({
             ...error,
-            imgError: "Please Set Post Image",
+            imgError:t("imageError")
           });
         }
         if (postData.title.length === 0) {
           setError({
             ...error,
-            titleError: "Please Set Post Title",
+            titleError: t("titleError"),
           });
           setIsThereAnyFormFieldEmpty(true);
         }
         if (postData.content.length === 0) {
           setError({
             ...error,
-            contentError: "Please Set Post Content",
+            contentError:t("contentError"),
           });
           setIsThereAnyFormFieldEmpty(true);
         }
@@ -128,8 +98,8 @@ const AddPost = () => {
       setTimeout(() => {
         setIsUserMadeAPost(false);
       }, 1000);
-    }
-  };
+    
+  }
   const distroyPostingFaildAlert = () => {
     setIsThereAnyFormFieldEmpty(false);
   };
@@ -139,7 +109,7 @@ const AddPost = () => {
       {isUserMadeAPost ? (
         <div className={AddPostStyles["post-alert-container"]}>
           <img src={CircleGif} alt="successfull" />
-          <span>Posted Successfully</span>
+          <span>{t("postedSuccessully")}</span>
         </div>
       ) : isThereAnyFormFieldEmpty ? (
         <div className={AddPostStyles["post-alert-faild-container"]}>
@@ -156,7 +126,7 @@ const AddPost = () => {
             className="btn btn-warning"
             onClick={distroyPostingFaildAlert}
           >
-            OK
+            {t("ok")}
           </button>
         </div>
       ) : null}
@@ -165,9 +135,10 @@ const AddPost = () => {
         onSubmit={handleSubmit}
         encType="multipart/form-data"
         method="post"
+        style={{direction: t("us") === t("Us")?'ltr':'rtl'}}
       >
         <div className={AddPostStyles["image-posting-settings-container"]}>
-          <Form.Label htmlFor="postImage">Post Image</Form.Label>
+          <Form.Label htmlFor="postImage">{t("postImage")}</Form.Label>
           <div id="postImage" className={AddPostStyles["post-image-area"]}>
             {postImage ? (
               <img
@@ -179,22 +150,19 @@ const AddPost = () => {
               ""
             )}
           </div>
-          <div>
-            <div className={AddPostStyles["button-group"]}>
+          <div className={AddPostStyles['btn-post-image-settings']}>
+            <div>
               <div className={` ${AddPostStyles["button-container"]}`}>
                 <button type="button">
-                  Upload{" "}
-                  <RiFolder5Fill size={15} style={{ marginTop: "-3px" }} />
+                {t("upload")}{" "}
+                  <RiFolder5Fill size={15} style={{margin:" -4px 0px 0 -3px"}} />
                 </button>
                 <Form.Control
                   type="file"
                   id="file"
                   name="post_img"
-                  onChange={(event) => {
-                    setImg(event.target.files[0]);
-                    openFile(event);
-                  }}
-                />
+                  accept="image/*"
+                  onChange={(event) => {openFile(event)}}/>
               </div>
             </div>
             <button
@@ -203,13 +171,13 @@ const AddPost = () => {
               onClick={clearImagePath}
               style={{ marginTop: "21px" }}
             >
-              Clear <MdOutlineClear size={15} style={{ marginTop: "-3px" }} />
+              {t("imagePostClear")} <MdOutlineClear size={20} style={{margin:" -1px 0px 0 -3px"}} />
             </button>
           </div>
         </div>
         <div className={AddPostStyles["post-title-content-container"]}>
           <div>
-            <Form.Label htmlFor="postTitle">Title</Form.Label>
+            <Form.Label htmlFor="postTitle">{t("postTitle")}</Form.Label>
             <Form.Control
               type="text"
               id="postTitle"
@@ -218,7 +186,7 @@ const AddPost = () => {
               onChange={handleChange}
             />
 
-            <Form.Label htmlFor="postTitle">Language</Form.Label>
+            <Form.Label htmlFor="postTitle">{t("Language")}</Form.Label>
             <Form.Select
               id="postLang"
               name="lang"
@@ -231,7 +199,7 @@ const AddPost = () => {
             </Form.Select>
           </div>
           <div>
-            <Form.Label htmlFor="postPargraph">Content</Form.Label>
+            <Form.Label htmlFor="postPargraph">{t("content")}</Form.Label>
             <Form.Control
               as="textarea"
               id="postPargraph"
@@ -243,7 +211,7 @@ const AddPost = () => {
           </div>
         </div>
         <div className={AddPostStyles["posting-button-container"]}>
-          <button type="submit" className={AddPostStyles["btn"]}>
+          <button type="submit" className={AddPostStyles["btn"]} style={{float:t("us") === t("Us")?'right':'left'}}>
             {isThereAnyPostIsUploading ? (
               <>
                 <Spinner
@@ -279,8 +247,8 @@ const AddPost = () => {
               </>
             ) : (
               <>
-                Post
-                <BsFillFileEarmarkPostFill size={15} />
+                {t("post")}
+                <BsFillFileEarmarkPostFill size={15} style={{margin:" -1px 0 0 3px"}}/>
               </>
             )}
           </button>

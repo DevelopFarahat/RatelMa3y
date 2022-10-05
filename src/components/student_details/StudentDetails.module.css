@@ -41,10 +41,10 @@
   background-position: 50% 50%;
 }
 .student-request-joinnig-info-main-container {
-  padding: 20px 0 0 0;
   width: 100%;
-  height: 85%;
+  height: 83%;
   position: relative;
+  margin-top: 20px;
 }
 .requested-joinnig-student-table {
   width: 100%;
@@ -119,7 +119,7 @@
   text-align: center;
   line-height: 1.5;
   text-transform: capitalize;
-  flex: 0 0 80%;
+  flex: 0 0 30%;
 }
 .student-table-main-header > img {
   width:30px;
@@ -130,13 +130,18 @@
 .date-time-container-main{
   width:100%;
   position: absolute;
-  top:19px;
+  top:0;
   left:0;
   height:100%;
-  background-color: rgba(4,0,0,.3)
+  background-color: rgba(4,0,0,.6);
+  border-radius:5px ;
+  -webkit-border-radius:5px ;
+  -moz-border-radius:5px ;
+  -ms-border-radius:5px ;
+  -o-border-radius:5px ;
 }
 .close-date-time-container{
-  color: #ffffff;
+  color: #FFFFFF;
     position: absolute;
     top: 5px;
     left: 3px;
@@ -150,7 +155,6 @@
   -moz-border-radius: 5px;
   -ms-border-radius: 5px;
   -o-border-radius: 5px;
- box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   display: flex;
   flex-direction: column;
   justify-content:flex-start;
