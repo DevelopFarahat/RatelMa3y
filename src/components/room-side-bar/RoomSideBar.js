@@ -10,6 +10,7 @@ import { FiCheckCircle } from "react-icons/fi";
 import { MdFactCheck } from "react-icons/md";
 import { useTranslation } from "react-i18next";
 import Spinner from "react-bootstrap/Spinner";
+import styles from "./RoomSide.module.css";
 
 export default function RoomSideBar({ hideMain }) {
   const [bookIsShown, showBook] = useState(false);
@@ -62,12 +63,16 @@ export default function RoomSideBar({ hideMain }) {
         target={target.current}
         show={bookIsShown}
         placement="right"
-        style={{ zIndex: 10 }}
+        style={{ zIndex: 10}}
       >
         {({ placement, arrowProps, show: _show, popper, ...props }) => (
           <div
             {...props}
+            className={[styles['no-scrollbar'],styles['wider-board']]}
             style={{
+              
+              height: '85%',
+              overflow: 'scroll',
               position: "absolute",
               backgroundColor: "white",
               boxShadow: "0 0 8px rgb(0 0 0 / 16%)",
@@ -75,7 +80,7 @@ export default function RoomSideBar({ hideMain }) {
               margin: 20,
               paddingBottom: 16,
               borderRadius: 3,
-              width: "70%",
+              
               ...props.style,
             }}
           >
@@ -93,7 +98,9 @@ export default function RoomSideBar({ hideMain }) {
         {({ placement, arrowProps, show: _show, popper, ...props }) => (
           <div
             {...props}
+            className={styles['no-scrollbar']}
             style={{
+            height: '92%',
               position: "absolute",
               borderRadius: 24,
               margin: 20,
@@ -112,43 +119,29 @@ export default function RoomSideBar({ hideMain }) {
         )}
       </Overlay>
 
-      {user != null && user.role === "instructor" && (
+      {user && (
         <div>
-          <Card
-            className=""
-            style={{
-              outline: "1px solid #eff3f5",
-              alignItems: "start",
-              paddingLeft: 8,
-              pointerEvents: "auto",
-            }}
-          >
+          <Card className={styles["card"]}>
             <Button
               variant="light"
               ref={target}
               onClick={() => showBook(!bookIsShown)}
-              style={{ width: "100%", textAlign: "start" }}
+              className={styles["sideBtn"]}
             >
-              <GiBookmarklet
-                size={24}
-                color={"#121a24"}
-                style={{ marginRight: 8 }}
-              />
-              {t("book")}
+              <GiBookmarklet className={styles["icons"]} />
+              <span className={styles["labels"]}>{t("book")}</span>
             </Button>
-            <Button
-              variant="light"
-              onClick={() => showEval(!evalIsShown)}
-              ref={target2}
-              style={{ width: "100%", textAlign: "start" }}
-            >
-              <MdFactCheck
-                size={24}
-                color={"#121a24"}
-                style={{ marginRight: 8 }}
-              />
-              {t("evaluations")}
-            </Button>
+            {user.role === "instructor" && (
+              <Button
+                variant="light"
+                onClick={() => showEval(!evalIsShown)}
+                ref={target2}
+                className={styles["sideBtn"]}
+              >
+                <MdFactCheck className={styles["icons"]} />
+                <span className={styles["labels"]}>{t("evaluations")}</span>
+              </Button>
+            )}
           </Card>
         </div>
       )}
@@ -225,7 +218,7 @@ const EvaluationSheet = (props) => {
             }
           )
           .then((res) => {
-            setIsLoading(false)
+            setIsLoading(false);
           })
           .catch((err) => {
             setIsLoading(false);
@@ -240,6 +233,8 @@ const EvaluationSheet = (props) => {
       {(fprops) => (
         <Card
           style={{
+            height: '100%',
+            overflow: 'scroll',
             flex: 1,
             paddingTop: 16,
             width: 240,

@@ -222,7 +222,7 @@ const BookBoard = () => {
             onClick={(e) => {
               setPageNumber((prev) => {
                 {
-                  e.target.style.transform = "translateX(8px)";
+                  e.target.style.transform = "translateX(4px)";
                   setTimeout(
                     () => (e.target.style.transform = "translateX(0px)"),
                     200
@@ -274,7 +274,7 @@ const BookBoard = () => {
             }}
             onClick={(e) =>
               setPageNumber((prev) => {
-                e.target.style.transform = "translateX(-8px)";
+                e.target.style.transform = "translateX(-4px)";
                 setTimeout(
                   () => (e.target.style.transform = "translateX(0px)"),
                   200
