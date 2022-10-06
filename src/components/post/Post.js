@@ -21,6 +21,34 @@ const Post = (props) => {
     }
   );
 
+  const urlRegex =
+    /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gi;
+
+  let link = "";
+
+  function linkify(text) {
+    return text?.replace(urlRegex, function (url) {
+      link = (
+        <a
+          href={url}
+          target="_blank"
+          style={{
+            backgroundColor: "#198754",
+            padding: 8,
+            paddingInline: 16,
+            textDecoration: "none",
+            fontWeight: 500,
+            borderRadius: 4,
+            color: "white",
+          }}
+        >
+          {props.post.lang == "ar" ? "الرابط" : "Link"}
+        </a>
+      );
+      return "";
+    });
+  }
+
   return (
     <Link
       to={`/events/${props.post._id}`}
@@ -66,7 +94,7 @@ const Post = (props) => {
             </span>
           ) : (
             <p className={PostStyles["post-details"]}>
-              {props.post.content}
+              {linkify(props.post.content)}
             </p>
           )}
 

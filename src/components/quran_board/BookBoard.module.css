@@ -16,6 +16,7 @@
     border-radius: 5px;
     background-color: #038674;
     color: white;
+    user-select: none;
 }
 .quran-surah-settings > div{
     flex: 0 0 33.33%;
@@ -27,11 +28,13 @@
     
 }
 
-.quran-surah-settings > div >select{
-    width: 70%;
+.quran-surah-settings > div > select{
+    width: max(60%,fit-content);
+    min-width: fit-content;
+    max-width: 260px;
+    outline-color: black;
     font-size: 1.2rem;
-    text-align: right;
-    padding: 5px;
+    text-align: start;
     appearance: button;
     background-image: none;
     font-family: 'Courier New', Courier, monospace;
@@ -41,4 +44,7 @@
     line-height: 2.5;
     font-size: 1.2rem;
 }
-
+.quran_board_main{
+    max-width: 1300px;
+    margin-inline: auto;
+}

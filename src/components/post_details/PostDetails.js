@@ -23,7 +23,7 @@ const PostDetails = () => {
 
   function linkify(text) {
     return text?.replace(urlRegex, function (url) {
-      link = <a href={url} target="_blank">{url}</a>
+      link = <a href={url} target="_blank" style={{backgroundColor: '#198754',padding: 8,paddingInline: 16,textDecoration: 'none',fontWeight:500, borderRadius: 4,color:'white'}}>{postDetails.lang == 'ar'? 'الرابط':'Link'}</a>
       return ""
     });
   }
