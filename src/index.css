@@ -1,3 +1,5 @@
+/** @format */
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
@@ -22,26 +24,26 @@ code {
 .form-check-input:focus {
   box-shadow: #1c9c60a9 !important;
 }
-.accordion-button{
+.accordion-button {
   color: grey !important;
 }
-:root{
+:root {
   --bs-blue: #198754 !important;
   --bs-primary: #198754 !important;
 }
-*::selection{
+*::selection {
   background-color: #1c9c60 !important;
   color: white !important;
 }
-.dropdown-item:active{
+.dropdown-item:active {
   background-color: #03867468 !important;
   color: white !important;
 }
 
-@media screen and (max-width: 991px) {  
-.navbar-nav {
-  min-height: 180px !important;
-}
+@media screen and (max-width: 991px) {
+  .navbar-nav {
+    min-height: 180px !important;
+  }
   #navbarScroll {
     padding-bottom: 16px;
   }
