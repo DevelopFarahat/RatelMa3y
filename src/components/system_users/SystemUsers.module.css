@@ -45,6 +45,11 @@
   border-radius: 0.375rem;
   margin:0 0 29px 0 !important;
 }
+.days-check-box-container-arabic-version{
+  border: 1px solid #ced4da;
+    border-radius: 0.375rem;
+    margin: 0 0 89px 0 !important;
+}
 .hours-check-box-container{
   margin: 28px 0 28px 0 !important;
 }
@@ -61,6 +66,12 @@
   text-align: center;
 
 }
+.days-check-box-container-arabic-version > div{
+  display: inline-block;
+  vertical-align: top;
+  padding: 20px;
+  text-align: center;
+}
 .hours-check-box-container >  div{
   padding: 12px;
 }
@@ -75,7 +86,7 @@
   margin: auto;
 }
 .btn {
-  width: 25%;
+  width: 135px;
   outline: none;
   border: none;
   border-radius: 5px;
@@ -92,9 +103,20 @@
   margin-top: 20px;
   color: #ffffff;
 }
+.step-button-container{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+/*
+.step-button-container > button {
+  width:25% !important;
+}
+*/
 .system-user-data-container {
   width: 56%;
-  height: 516px;
+ min-height: 527px;
   padding: 10px;
   box-shadow:  0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   border-radius: 5px;
@@ -130,13 +152,14 @@
   flex: 0 0 20%;
   padding: 8px 8px;
   height: 40px;
+  text-align: center;
 }
 .table-settings-container > button {
-  flex: 0 0 17%;
+  flex: 0 0 21%;
 }
 .table-wrapper {
-  width: 99%;
-  height: 83%;
+  width: 100%;
+  height: 424px;
   overflow: auto;
   position: relative;
 }
@@ -282,7 +305,7 @@ input[type="number"]{
   color: #FFFFFF;
 }
 .alert-container{
-  width:25%;
+  width:350px;
   padding: 10px;
   border-radius: 5px;
   -webkit-border-radius: 5px;
@@ -291,14 +314,9 @@ input[type="number"]{
   -o-border-radius: 5px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   background-color:#FFFFFF;
-  position: absolute;
-  top: 63%;
-  left: 50%;
-  transform: translate(-50%,-50%);
-  -webkit-transform: translate(-50%,-50%);
-  -moz-transform: translate(-50%,-50%);
-  -ms-transform: translate(-50%,-50%);
-  -o-transform: translate(-50%,-50%);
+  position: fixed;
+  top: 100px;
+  right:11px;
   color: #FFFFFF;
   z-index:1500;
 }
@@ -440,4 +458,30 @@ input[type="number"]{
   margin: auto;
   width:20px;
   object-fit: contain;
+}
+@media screen and (max-width:1060px) {
+  .system-user-form-table-container{
+    flex-direction: column;
+  }
+  .system-user-form{
+   width:100%;
+  }
+  .system-user-data-container{
+    width:100%;
+    margin-top: 10px;
+  }
+  .table-settings-container{
+    flex-direction: column;
+  }
+  .table-settings-container > *{
+    margin:5px 0 5px 0;
+  }
+  .btn{
+    width:100%;
+  }
+  
+  .step-button-container > button{
+    width:135px !important;
+  }
+  
 }

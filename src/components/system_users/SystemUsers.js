@@ -17,6 +17,7 @@ import GreaterThanGrayImage from "../../assets/images/greater-than-gray.png";
 import LessThanWhiteImage from "../../assets/images/less-than-white.png";
 import LessThanGrayImage from "../../assets/images/less-than-gray.png";
 const SystemUsers = () => {
+  const [t, i18n] = useTranslation();
   const [pageNo, setPageNo] = useState([]);
   const [pageNoCopy, setPageNoCopy] = useState([]);
   const [pageNoArrLength, setPageNoArrLength] = useState(-1);
@@ -167,16 +168,16 @@ const SystemUsers = () => {
   };
   // pagination functionality ended
   let listOfCountries = [
-    { id: 0, name: "Egypt" },
-    { id: 1, name: "Kuwait" },
-    { id: 2, name: "Lebanon" },
-    { id: 3, name: "Libya" },
-    { id: 4, name: "Oman" },
-    { id: 5, name: "Qatar" },
-    { id: 6, name: "Saudi Arabia" },
-    { id: 7, name: "Syria" },
-    { id: 8, name: "United Arab Emirates" },
-    { id: 9, name: "Other" },
+    { id: 0, name: t("state1") },
+    { id: 1, name: t("state2") },
+    { id: 2, name: t("state3") },
+    { id: 3, name: t("state4") },
+    { id: 4, name: t("state5") },
+    { id: 5, name: t("state6") },
+    { id: 6, name: t("state7") },
+    { id: 7, name: t("state8") },
+    { id: 8, name: t("state9") },
+    { id: 9, name: t("stateOther") },
   ];
   let workingHoursCheckedValuesArr = [
     [0, 1],
@@ -190,32 +191,17 @@ const SystemUsers = () => {
   ];
 
   let Working_hours = [
-    { id: 0, appointment: " 8:00 am to 10:00 pm", att: "h0" },
-    { id: 1, appointment: " 10:00 am to 12:00 pm", att: "h1" },
-    { id: 2, appointment: " 12:00 pm to 2:00 pm", att: "h2" },
-    { id: 3, appointment: " 2:00 pm to 4:00 pm", att: "h3" },
-    { id: 4, appointment: " 4:00 pm to 6:00 pm", att: "h4" },
-    { id: 5, appointment: " 6:00 pm to 8:00 pm", att: "h5" },
-    { id: 6, appointment: " 8:00 pm to 10:00 pm", att: "h6" },
-    { id: 7, appointment: " 10:00 pm to 12:00 am", att: "h7" },
+    { id: 0, appointment:  `8:00 ${t("AM")}`, att: "h0" },
+    { id: 1, appointment:  `10:00 ${t("AM")}`, att: "h1" },
+    { id: 2, appointment:  `12:00 ${t("PM")}`, att: "h2" },
+    { id: 3, appointment: `2:00 ${t("PM")}`, att: "h3" },
+    { id: 4, appointment: `4:00 ${t("PM")}`, att: "h4" },
+    { id: 5, appointment: `6:00 ${t("PM")}`, att: "h5" },
+    { id: 6, appointment: `8:00 ${t("PM")}`, att: "h6" },
+    { id: 7, appointment: `10:00 ${t("PM")}`, att: "h7" },
   ];
 
-  let programs = [
-    { id: 0, programName: "Recitation" },
-    { id: 1, programName: "Noor Bayan" },
-    { id: 2, programName: "Memorizing" },
-  ];
-  const [t, i18n] = useTranslation();
-  const [isArabic, setIsArabic] = useState(false);
-  useEffect(() => {
-    setIsArabic(localStorage.getItem("i18nextLng") === "ar");
-  }, [localStorage.getItem("i18nextLng")]);
 
-  const styles = {
-    body: {
-      direction: isArabic ? "rtl" : "ltr",
-    },
-  };
   const [accountsData, setAccountsData] = useState([]);
   const [selectedRow, setSelectedRow] = useState(-1);
   const [filterValue, setFilterValue] = useState("");
@@ -371,10 +357,10 @@ const SystemUsers = () => {
         ...errors,
         emailError:
           value.length === 0
-            ? "Email Is Required"
+            ? t("keepintouch_required")
             : emailRegx.test(value)
             ? null
-            : "Email Must Contain @ and end with .com",
+            : t("student_email_error_message")
       });
     } else if (filed === "mobile") {
       const mobileRegx = /^[+][0-9]+(01)(0|1|2|5)[0-9]{8}$/;
@@ -382,10 +368,9 @@ const SystemUsers = () => {
         ...errors,
         mobileError:
           value.length === 0
-            ? "Mobile Is Required"
+            ? t("keepintouch_required") 
             : mobileRegx.test(value)
-            ? null
-            : "Mobile Must Start With Country Code with 01 and consists of 11 digit",
+           
       });
     } else if (filed === "name") {
       const nameRegx = /[a-z A-Z]{3,}\s{1}[a-z A-Z]{3,}$/;
@@ -393,25 +378,24 @@ const SystemUsers = () => {
         ...errors,
         nameError:
           value.length === 0
-            ? "Fullname Is Required"
-            : nameRegx.test(value)
-            ? null
-            : "Fullname  must contain a white space and min length of 3 characters",
+            ? t("keepintouch_required") 
+            : nameRegx.test(value)?null:t("student_fullname_error")
+            
       });
     } else if (filed === "age") {
       setErrors({
         ...errors,
-        ageError: value.length === 0 ? "Age Is Required" : "",
+        ageError: value.length === 0 ? t("keepintouch_required") : "",
       });
     } else if (filed === "gender") {
       setErrors({
         ...errors,
-        genderError: value.length === 0 ? "Gender Is Required" : "",
+        genderError: value.length === 0 ? t("keepintouch_required")  : "",
       });
     } else if (filed === "programs") {
       setErrors({
         ...errors,
-        programsError: value.length === 0 ? "Programs Is Required" : "",
+        programsError: value.length === 0 ? t("keepintouch_required")  : "",
       });
     } else if (filed === "password") {
       const passwordRegx = /([0-9]|[a-zA-Z])+([0-9]|[a-zA-Z]){7}/;
@@ -419,25 +403,25 @@ const SystemUsers = () => {
         ...errors,
         passwordError:
           value.length === 0
-            ? "password Is Required"
+            ? t("keepintouch_required") 
             : passwordRegx.test(value)
             ? null
-            : "password must be  characters or digits and  length of 8",
+            : t("student_password_error")
       });
     } else if (filed === "privileges") {
       setErrors({
         ...errors,
-        privilegesError: value.length === 0 ? "Privileges Is Required" : null,
+        privilegesError: value.length === 0 ? t("keepintouch_required") : null,
       });
     } else if (filed === "state") {
       setErrors({
         ...errors,
-        stateError: value.length === 0 ? "State Is Required" : "",
+        stateError: value.length === 0 ? t("keepintouch_required")  : "",
       });
     } else if (filed === "started_at") {
       setErrors({
         ...errors,
-        started_atError: value.length === 0 ? "Started At  Is Required" : "",
+        started_atError: value.length === 0 ? t("keepintouch_required") : "",
       });
     }
   };
@@ -925,9 +909,9 @@ console.error(error)
             <span style={{ fontWeight: "bold", color: "#038674" }}>
               {localStorage.getItem("user_name")}
             </span>{" "}
-            Has Added New Ratel Ma3y Stuff Account:
+            :
             <span style={{ fontWeight: "bold", color: "#038674" }}>
-              {localStorage.getItem("newAccountUserFullname")}
+              {localStorage.getItem("newAccountUserFullname")}{t("Has Added New Ratel Ma3y Stuff Account")}
             </span>
           </span>
         </div>
@@ -938,7 +922,7 @@ console.error(error)
             <span style={{ fontWeight: "bold", color: "#038674" }}>
               {localStorage.getItem("user_name")}
             </span>{" "}
-            Has Updated Stuff Account Successfully
+           {t("Has Updated Stuff Account Successfully")}
           </span>
         </div>
       ) : isUserDeleteAnyAccount? (
@@ -948,7 +932,7 @@ console.error(error)
             <span style={{ fontWeight: "bold", color: "#038674" }}>
               {localStorage.getItem("user_name")}
             </span>{" "}
-            Has Deleted  Stuff Account Successfully
+            {t("Has Deleted  Stuff Account Successfully")}
           </span>
         </div>
       ):null}
@@ -1041,7 +1025,7 @@ console.error(error)
         <div className={SystemUsersStyles["system-user-form-table-container"]}>
           <form
             className={SystemUsersStyles["system-user-form"]}
-            style={styles.body}
+            style={{direction:t("us")=== t("Us")?'ltr':'rtl'}}
             method="post"
             encType="multipart/form-data"
             onSubmit={handleSubmit}
@@ -1214,27 +1198,6 @@ console.error(error)
                   />
                   <small className="text-danger">{errors.ageError}</small>
                 </div>
-                {/*
-                        <div>
-                            <Form.Label htmlFor="programs">{t("programs_title")}</Form.Label>
-                            <Form.Select
-                                id="programs"
-                                name="programs"
-                                value={userData.programs}
-                                onChange={handleChange}
-                                className={`${SystemUsersStyles["system-user-form-controls"]} ${errors.programsError ? SystemUsersStyles["errors"] : ""
-                                    }`}
-                            >
-                                <option value="">{t("select")}</option>
-                                {programs.map((pr) => (
-                                    <option key={pr.id} value={pr.programName}>
-                                        {pr.programName}
-                                    </option>
-                                ))}
-                            </Form.Select>
-                            <small className="text-danger">{errors.programsError}</small>
-                        </div>
-                         */}
                 <div>
                   <Form.Label htmlFor="password">
                     {t("systemusers_password")}
@@ -1255,6 +1218,7 @@ console.error(error)
                   />
                   <small className="text-danger">{errors.passwordError}</small>
                 </div>
+                <div className={SystemUsersStyles["step-button-container"]} style={{direction:t("us")=== t("Us")?'ltr':'ltr'}}>
                 <button
                   type="button"
                   className={`${
@@ -1281,13 +1245,13 @@ console.error(error)
                       ? true
                       : false
                   }
-                  style={{ float: "right" }}
                   id="secondStep"
                   onClick={(event) => systemUsersNextStep(event)}
                 >
                   {t("next")}
                   <TbPlayerTrackNext style={{ margin: "-2px 0 0 3px" }} />
                 </button>
+                </div>
               </>
             ) : systemUsersFormSteps.secondStep ? (
               <>
@@ -1367,6 +1331,7 @@ console.error(error)
                     {errors.privilegesError}
                   </small>
                 </div>
+                <div className={SystemUsersStyles["step-button-container"]} style={{direction:t("us")=== t("Us")?'ltr':'ltr'}}>
                 <button
                   type="button"
                   className={SystemUsersStyles["btn"]}
@@ -1404,10 +1369,10 @@ console.error(error)
                   }
                   id="thirdStep"
                   onClick={(event) => systemUsersNextStep(event)}
-                  style={{ float: "right" }}
                 >   {t("next")}
                 <TbPlayerTrackNext style={{ margin: "-2px 0 0 3px" }} />
                 </button>
+                </div>
               </>
             ) : systemUsersFormSteps.thirdStep ? (
               <>
@@ -1433,8 +1398,8 @@ console.error(error)
                 </div>
                 <span style={{display:'block',marginBottom:'12px'}}>{t("working_Days")}</span>
                 <div
-                  className={`${
-                    SystemUsersStyles["days-check-box-container"]
+                  className={`${t("us")===t("Us")?
+                    SystemUsersStyles["days-check-box-container"]:SystemUsersStyles["days-check-box-container-arabic-version"]
                   } ${
                     errors.working_daysError ? SystemUsersStyles["errors"] : ""
                   }`}
@@ -1513,7 +1478,7 @@ console.error(error)
                 <small className="text-danger">
                   {errors.working_daysError}
                 </small>
-
+                <div className={SystemUsersStyles["step-button-container"]} style={{direction:t("us")=== t("Us")?'ltr':'ltr'}}>
                 <button
                   type="button"
                   className={SystemUsersStyles["btn"]}
@@ -1525,7 +1490,6 @@ console.error(error)
                 </button>
                 <button
                   type="button"
-                  style={{float:'right'}}
                   className={`${
                     (workingDays.d0 !== "" ||
                       workingDays.d1 !== "" ||
@@ -1555,6 +1519,7 @@ console.error(error)
                   {t("next")}
                   <TbPlayerTrackNext style={{ margin: "-2px 0 0 3px" }} />
                 </button>
+                </div>
               </>
             ) : (
               <>
@@ -1583,7 +1548,7 @@ console.error(error)
                 <small className="text-danger">
                   {errors.working_hoursError}
                 </small>
-
+                <div className={SystemUsersStyles["step-button-container"]} style={{direction:t("us")=== t("Us")?'ltr':'ltr'}}>
                 <button
                   type="button"
                   className={SystemUsersStyles["btn"]}
@@ -1619,7 +1584,6 @@ console.error(error)
                       ? false
                       : true
                   }
-                  style={{ float: "right" }}
                 >
                          {isThereAnyUpdateOrCreatingNewAccount?<>
                     <Spinner animation="grow" variant="light" style={{width:'10px',height:'10px',marginLeft:'3px'}} />
@@ -1628,26 +1592,28 @@ console.error(error)
                     <Spinner animation="grow" variant="light" style={{width:'10px',height:'10px',marginLeft:'3px'}} />
                     <Spinner animation="grow" variant="light" style={{width:'10px',height:'10px',marginLeft:'3px'}} />
                     <Spinner animation="grow" variant="light" style={{width:'10px',height:'10px',marginLeft:'3px'}} />
-                    </>:isThereAnyUpdateOnAccount?<>{"Update User"}<IoIosPersonAdd style={{ margin: '0 0 3px 3px' }}/></>:<>{"Add User"}<IoIosPersonAdd style={{ margin: '0 0 3px 3px' }}/></>
+                    </>:isThereAnyUpdateOnAccount?<>{t("updateUser")}<IoIosPersonAdd style={{ margin: '0 0 3px 3px' }}/></>:<>{t("addUser")}<IoIosPersonAdd style={{ margin: '0 0 3px 3px' }}/></>
                     }
                   
                 </button>
+                </div>
               </>
             )}
           </form>
           <div
             className={SystemUsersStyles["system-user-data-container"]}
-            style={styles.body}
+            style={{direction:t("us")=== t("Us")?'ltr':'rtl'}}
           >
             <div
               className={SystemUsersStyles["table-settings-container"]}
-              style={styles.body}
+           
             >
               <Form.Label
+              style={{textAlign:t("us")=== t("Us")?'left':'right'}}
                 htmlFor="userAccountFilterTxt"
                 className={SystemUsersStyles["filter-label"]}
               >
-                {t("filter_label")}
+                {t("filter")}
               </Form.Label>
               <Form.Control
                 id="userAccountFilterTxt"
@@ -1655,12 +1621,12 @@ console.error(error)
                 value={filterValue}
                 onChange={handleFiltaration}
               />
-              <Form.Label htmlFor="sortUserRole">Sort</Form.Label>
+              <Form.Label htmlFor="sortUserRole" style={{textAlign:t("us")=== t("Us")?'left':'right'}}>{t("sort")}</Form.Label>
               <Form.Select id="sortUserRole" name="sortUserRole" onChange={sortSystemUsersTableByRoleOfTheUser}>
-                <option value="">Select</option>
-                <option value="ADMIN">Admin</option>
-                <option value="SUPERVISOR">Supervisor</option>
-                <option value="INSTRUCTOR">instructor</option>
+                <option value="">{t("select")}</option>
+                <option value="ADMIN">{t("admin")}</option>
+                <option value="SUPERVISOR">{t("supervisor")}</option>
+                <option value="INSTRUCTOR">{t("instructor")}</option>
               </Form.Select>
               <button
                 type="button"
@@ -1668,7 +1634,7 @@ console.error(error)
                 style={{ marginTop: "auto" }}
                 onClick={(event) => filterAccounts(event.target.value)}
               >
-                {t("filter_btn")} <AiFillFilter />
+                {t("filter")} <AiFillFilter />
               </button>
               <button
                 type="button"
@@ -1676,13 +1642,12 @@ console.error(error)
                 style={{ marginTop: "auto" }}
                 onClick={resetTableFiltaration}
               >
-                {t("reset_btn")}
+                {t("reset")}
                 <BiReset />
               </button>
             </div>
             <div
               className={SystemUsersStyles["table-wrapper"]}
-              style={styles.body}
             >
               {accountsData.length === 0 ? (
                 <img
@@ -1693,7 +1658,6 @@ console.error(error)
               ) : (
                 <table
                   className={SystemUsersStyles["system-accounts-table"]}
-                  style={styles.body}
                 >
                   <thead>
                     <tr>

@@ -38,7 +38,7 @@
 }
 .all-messages-main-container,.messages-content-main-container{
     flex: 0 0 65%;
-    height:471px;
+    min-height:471px;
     background: #FFFFFF;
     padding: 10px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -52,7 +52,7 @@
 .messages-content-main-container{
     flex: 0 0 33%;
     align-self: center;
-    height:300px;
+    min-height:471px;
     padding: 20px;
     display: flex;
     flex-direction: row;
@@ -97,16 +97,16 @@
     cursor: pointer;
   }
   .table-settings-container > button {
-    flex: 0 0 15%;
+    flex: 0 0 21%;
   }
   .table-wrapper {
     width: 99%;
-    height: 83%;
+    height: 352px;
     overflow: auto;
     position: relative;
   }
   .messages-table {
-    width: 99%;
+    width: 100%;
     margin: auto;
   }
   .messages-table,
@@ -348,4 +348,26 @@
     text-align: center;
     color: #000000;
     clear: both;
+  }
+  @media screen and (max-width:1130px) {
+    .messages-main > div+div{
+      flex-direction: column;
+    }
+    .all-messages-main-container{
+      width:100%;
+    }
+    .messages-content-main-container{
+      width:100%;
+      order: 2;
+      margin-top: 85px;
+    }
+    .table-settings-container{
+      flex-direction: column;
+    }
+    .table-settings-container > *{
+      margin:5px 0 5px 0;
+    }
+    .btn{
+      width: 100%;
+    }
   }

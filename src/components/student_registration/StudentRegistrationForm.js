@@ -1279,11 +1279,7 @@ const StudentRegistrationForm = () => {
                     />
                   </div>
                 </div>
-                <div
-                  className={
-                    StudentRegistrationFormStyles["step-button-container"]
-                  }
-                >
+                <div className={StudentRegistrationFormStyles["step-button-container"]}>
                   <button
                     type="submit"
                     id="thirdStepPrevious"

@@ -38,40 +38,80 @@
     justify-content: flex-start;
     align-items: flex-start;
     min-width: 100%;
+    margin:5px 0 5px 0;
   }
-  .sessions-schedule-main > section > span{
-    flex: 0 0 26%;
-    font-size: 1rem;
-    font-family: 'Times New Roman', Times, serif;
-    text-transform: capitalize;
-    line-height: 1.5;
-    text-align: center;
+  .sessions-schedule-main > section > .days-times{
+    flex: 0 0 100%;
+    display: flex;
+    margin-bottom: 5px;
+  }
+  .sessions-schedule-main > section > .days-times > span:first-of-type{
+    min-height: 100px;
+    color: #FFFFFF;
     padding:10px;
-    margin: 1px;
-    color:#000000;
-  }
-  .sessions-schedule-main >section > span:nth-child(1){
     background-color: rgb(25, 135, 84);
     color:#FFFFFF;
-    align-self: center;
+    writing-mode: vertical-rl;
+    -webkit-writing-mode: vertical-rl;
+    -ms-writing-mode: vertical-rl;
+    text-align: center;
   }
-  .sessions-schedule-main > section > .session-time{
+  .sessions-schedule-main > section > .days-times > div{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-left: 5px;
+    flex: 0 0 100%;
+  }
+  .sessions-schedule-main > section > .days-times > div > div{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width:100%;
+    margin-bottom: 2px;
+  }
+  .sessions-schedule-main > section > .days-times > div > div> span{
+    width:100%;
+    padding:10px;
+    margin: 0px 5px 1px 5px;
     background-color:rgb(32, 170, 105);
-    align-self: center;
-    color:#FFFFFF;
+    min-height: 100%;
+    text-align: center;
+    color: #FFFFFF;
   }
-  .sessions-schedule-main > section > .session-student-members{
-    background-color:#dadada;
+
+ .sessions-members {
     align-self: center;
+    flex: 0 0 72%;
+    min-height: 100%;
   }
-  .sessions-schedule-main > section > .session-student-members > span{
+  .sessions-members > div{
+    background-color: #dadada;
+    margin: 0px 5px 1px 5px;
+  }
+.sessions-members > div >  .session-student-members > span{
     display: block;
     width: 100%;
     text-align: center;
+    padding:5px;
   }
   .empty-data-img {
     margin: auto;
     padding: 88px;
     display: block;
     background-position: 50% 50%;
+  }
+  
+  @media screen  and (max-width:500px){
+    .sessions-schedule-main{
+      padding:0;
+    }
+    .sessions-schedule-main > section > span {
+      min-width:41%;
+    }
+    .sessions-schedule-main > section > .session-student-members{
+      min-width: 10%;
+    }
   }

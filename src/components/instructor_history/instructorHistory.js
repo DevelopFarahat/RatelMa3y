@@ -4,8 +4,10 @@ import EmptyDataImage from "../../assets/images/empty.png";
 import NoResultFiltaration from "../../assets/images/no-result.png";
 import { AiFillFilter } from "react-icons/ai";
 import { BiReset } from "react-icons/bi";
+import { useTranslation } from "react-i18next";
 import Form from "react-bootstrap/Form";
 const InstructorHistory = ({col1Name,col2Name,col3Name,arrName,selectedInstructorData,initialResponseSpecificInstructorData, setSelectedInstructorData }) => {
+    const [t, i18n] = useTranslation();
     const [filterValue, setFilterValue] = useState('');
     const [selectedRow, setSelectedRow] = useState(-1);
     const filterAccounts = () => {
@@ -51,20 +53,20 @@ const InstructorHistory = ({col1Name,col2Name,col3Name,arrName,selectedInstructo
     return (
         <>
             {selectedInstructorData[arrName] === undefined || selectedInstructorData[arrName].length === 0 ? <img src={EmptyDataImage} className={InstructorHistoryStyles['no-result']} alt="no-result" /> : <>
-                <div className={InstructorHistoryStyles['table-settings-container']}>
-                    <Form.Label htmlFor="userAccountFilterTxt" className={InstructorHistoryStyles['filter-label']}>Filter</Form.Label>
+                <div className={InstructorHistoryStyles['table-settings-container']} style={{direction:t("us")=== t("Us")?'ltr':'rtl'}}>
+                    <Form.Label htmlFor="userAccountFilterTxt" className={InstructorHistoryStyles['filter-label']} style={{textAlign:t("us")=== t("Us")?'left':'right'}}>{t("filter")}</Form.Label>
                     <Form.Control id="userAccountFilterTxt" className={InstructorHistoryStyles['filter-txt']} value={filterValue} onChange={handleFiltaration} />
 
-                    <button type="button" className={InstructorHistoryStyles['btn']} style={{ marginTop: 'auto' }} onClick={(event) => filterAccounts(event.target.value)}>Filter <AiFillFilter /></button>
-                    <button type="button" className={InstructorHistoryStyles['btn']} style={{ marginTop: 'auto' }} onClick={resetTableFiltaration}>Reset<BiReset /></button>
+                    <button type="button" className={InstructorHistoryStyles['btn']} style={{ marginTop: 'auto' }} onClick={(event) => filterAccounts(event.target.value)}>{t("filter")} <AiFillFilter /></button>
+                    <button type="button" className={InstructorHistoryStyles['btn']} style={{ marginTop: 'auto' }} onClick={resetTableFiltaration}>{t("reset")}<BiReset /></button>
                 </div>
-                <div className={InstructorHistoryStyles['table-wrapper']}>
+                <div className={InstructorHistoryStyles['table-wrapper']} style={{direction:t("us")=== t("Us")?'ltr':'rtl'}}>
                     {selectedInstructorData[arrName] === undefined || selectedInstructorData[arrName].length === 0 ? <img src={NoResultFiltaration} className={InstructorHistoryStyles['no-result']} alt="no-result" /> : <table className={InstructorHistoryStyles['system-accounts-table']}>
                         <thead>
                             <tr>
-                                <th>{col1Name}</th>
-                                <th>{col2Name}</th>
-                                <th>{col3Name}</th>
+                                <th>{t("name")}</th>
+                                <th>{t("email")}</th>
+                                <th>{t("mobile")}</th>
                             </tr>
                         </thead>
                         <tbody>

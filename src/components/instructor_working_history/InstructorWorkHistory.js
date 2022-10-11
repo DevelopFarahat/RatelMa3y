@@ -2,12 +2,14 @@ import React, { useState,useEffect } from "react";
 import InstructorWorkHistoryStyles from "./InstructorWorkHistory.module.css";
 import EmptyDataImage from "../../assets/images/empty.png";
 import InstructorHistory from "../instructor_history/instructorHistory";
+import { useTranslation } from "react-i18next";    
 import {BiReset} from "react-icons/bi";
 import {AiFillFilter} from "react-icons/ai";
 import Form from "react-bootstrap/Form";
 import InstructorSessionsSchedule from "../Instructor_sessions_schedule/InstructorSessionsSchedule";
 import InstructorWorkingDatesHours from "../instructor_working_dates_times/instructorWorkingDateTimes";
 const InstructorWorkHistory = ({instructorSessionsDetails, setInstructorSessionsDetails,initialInstructorSessionsDetails,selectedInstructorData, initialResponseSpecificInstructorData, setSelectedInstructorData }) => {
+  const [t, i18n] = useTranslation();
     const [tapVisible, setTapVisible] = useState({
         studentsTap: true,
         sessionsTap: false,
@@ -78,12 +80,12 @@ const InstructorWorkHistory = ({instructorSessionsDetails, setInstructorSessions
 
 
 
-                {Object.keys(selectedInstructorData).length === 0 ? <img src={EmptyDataImage} className={InstructorWorkHistoryStyles['empty-data-img']} alt="Empty" /> : <div className={InstructorWorkHistoryStyles['settings-header']}>
-                    <span id="studentsTap" className={`${tapVisible.studentsTap ? InstructorWorkHistoryStyles['taps-shadow'] : ''} ${InstructorWorkHistoryStyles['students-data-tap']}`} onClick={toogleViewInstructorTaps}>Students</span>
-                    <span  id="sessionsTap" className={`${tapVisible.sessionsTap ? InstructorWorkHistoryStyles['taps-shadow'] : ''} ${InstructorWorkHistoryStyles['sessions-data-tap']}`} onClick={toogleViewInstructorTaps}>Sessions</span>
+                {Object.keys(selectedInstructorData).length === 0 ? <img src={EmptyDataImage} className={InstructorWorkHistoryStyles['empty-data-img']} alt="Empty" /> : <div className={InstructorWorkHistoryStyles['settings-header']} style={{direction:t("us")===t("Us")?'ltr':'rtl'}}>
+                    <span id="studentsTap" className={`${tapVisible.studentsTap ? InstructorWorkHistoryStyles['taps-shadow'] : ''} ${InstructorWorkHistoryStyles['students-data-tap']}`} onClick={toogleViewInstructorTaps}>{t("adminpanel_students")}</span>
+                    <span  id="sessionsTap" className={`${tapVisible.sessionsTap ? InstructorWorkHistoryStyles['taps-shadow'] : ''} ${InstructorWorkHistoryStyles['sessions-data-tap']}`} onClick={toogleViewInstructorTaps}>{t("session")}</span>
                     <span  id="evaluationsTap" style={{display:"none"}} className={`${tapVisible.evaluationsTap ? InstructorWorkHistoryStyles['taps-shadow'] : ''} ${InstructorWorkHistoryStyles['evaluations-data-tap']}`} onClick={toogleViewInstructorTaps}>Evaluations</span>
-                    <span id="workingDateAndOursTap" className={`${tapVisible.workingDateAndOursTap ? InstructorWorkHistoryStyles['taps-shadow'] : ''} ${InstructorWorkHistoryStyles['workingDateAndOursTap']}`} onClick={toogleViewInstructorTaps}>Working dateTime</span>
-                    <span id="sessionsScheduleTap" className={`${tapVisible.sessionsScheduleTap ? InstructorWorkHistoryStyles['taps-shadow'] : ''} ${InstructorWorkHistoryStyles['sessions-schedule-data-tap']}`} onClick={toogleViewInstructorTaps}>Sessions Schedule</span>
+                    <span id="workingDateAndOursTap" className={`${tapVisible.workingDateAndOursTap ? InstructorWorkHistoryStyles['taps-shadow'] : ''} ${InstructorWorkHistoryStyles['workingDateAndOursTap']}`} onClick={toogleViewInstructorTaps}>{t("workingDaysHours")}</span>
+                    <span id="sessionsScheduleTap" className={`${tapVisible.sessionsScheduleTap ? InstructorWorkHistoryStyles['taps-shadow'] : ''} ${InstructorWorkHistoryStyles['sessions-schedule-data-tap']}`} onClick={toogleViewInstructorTaps}>{t("schedule")}</span>
                 </div>}
 
 
@@ -94,32 +96,32 @@ const InstructorWorkHistory = ({instructorSessionsDetails, setInstructorSessions
                 {Object.keys(selectedInstructorData).length !== 0 ? tapVisible.studentsTap ?
                     <div className={InstructorWorkHistoryStyles['students-content-tap']}>
                         {/* student */}
-                        <InstructorHistory key={"unique1"} arrName={'students'} col1Name={'Name'} col2Name={"Email"} col3Name={"Mobile"} selectedInstructorData={selectedInstructorData} initialResponseSpecificInstructorData={initialResponseSpecificInstructorData} setSelectedInstructorData={setSelectedInstructorData} />
+                        <InstructorHistory key={"unique1"} arrName={'students'}  selectedInstructorData={selectedInstructorData} initialResponseSpecificInstructorData={initialResponseSpecificInstructorData} setSelectedInstructorData={setSelectedInstructorData} />
 
-                    </div> : tapVisible.sessionsTap ? <div  className={InstructorWorkHistoryStyles['sessions-content-tap']}>
+                    </div> : tapVisible.sessionsTap ? <div  className={InstructorWorkHistoryStyles['sessions-content-tap']} style={{direction:t("us")=== t("Us")?'ltr':'rtl'}}>
                         {/* sessions  */}
             {instructorSessionsDetails.length !== 0?<>
             <div className={InstructorWorkHistoryStyles['sessions-more-info-settings']}>
             <section>
-            <Form.Label htmlFor="fromDate">From Date</Form.Label>
+            <Form.Label htmlFor="fromDate">{t("fromDate")}</Form.Label>
             <Form.Control type="date" name="date-from" id="fromDate"  value={sessionsDate.fromDate} onChange={handleSessionsDate}/>
             </section>
             <section>
-            <Form.Label htmlFor="toDate">To Date</Form.Label>
+            <Form.Label htmlFor="toDate">{t("toDate")}</Form.Label>
             <Form.Control type="date" name="date-to" id="toDate"  value={sessionsDate.toDate} onChange={handleSessionsDate}/>
             </section>
             <section>
-            <button type="button" className={InstructorWorkHistoryStyles['btn']} onClick={getAttendaceOnSpecificPeroidOfDate}>Filter <AiFillFilter /></button>
-            <button type="button" className={InstructorWorkHistoryStyles['btn']} onClick={resetSortSessions}>Reset<BiReset /></button>
+            <button type="button" className={InstructorWorkHistoryStyles['btn']} onClick={getAttendaceOnSpecificPeroidOfDate}>{t("filter")} <AiFillFilter /></button>
+            <button type="button" className={InstructorWorkHistoryStyles['btn']} onClick={resetSortSessions}>{t("reset")}<BiReset /></button>
             </section>
           </div>
           <div className={InstructorWorkHistoryStyles['sessions-main-info-container']}>
             <div>
-                <span>Total Number Of Sessions</span>
+                <span>{t("totalNumberOfSession")}</span>
                 <span>{totalSession}</span>
             </div>
             <div>
-                <span>Number Of Students</span>
+                <span>{t("totalNumberOfStudents")}</span>
                 <span>{numberOfStudent}</span>
             </div>
           </div></>:<img src={EmptyDataImage} className={InstructorWorkHistoryStyles['empty-data-img']} alt="Empty" />}

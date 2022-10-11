@@ -21,12 +21,12 @@ const AdminPanel = () => {
 
     return (
         <>
-            <div className={AdminPanelStyles['admin-panel-navigation']}>
+            <div className={AdminPanelStyles['admin-panel-navigation']} style={{direction:t("us")=== t("Us")?'ltr':'rtl'}}>
                 <Link className={`${activeLinks.SystemUsersActive? AdminPanelStyles['active-tap']:AdminPanelStyles['navigation-links']}`} to={"/adminPanel/systemUsers"} id="SystemUsersActive" onClick={(event)=>activateLink(event)}>{t("systemUsers")}</Link>
                 <Link className={`${activeLinks.addPostActive? AdminPanelStyles['active-tap']:AdminPanelStyles['navigation-links']}`} to={"/adminPanel/addPost"}  id="addPostActive" onClick={(event)=>activateLink(event)}>{t("adminpanel_addpost")}</Link>
                 <Link className={`${activeLinks.studentActive? AdminPanelStyles['active-tap']:AdminPanelStyles['navigation-links']}`}  to={"/adminPanel/students"}   id="studentActive" onClick={(event)=>activateLink(event)}>{t("adminpanel_students")}</Link>
                 <Link className={`${activeLinks.instructorActive? AdminPanelStyles['active-tap']:AdminPanelStyles['navigation-links']}`} to={"/adminPanel/instructors"}   id="instructorActive" onClick={(event)=>activateLink(event)}>{t("instructor")}</Link> 
-                <Link className={`${activeLinks.messagesActive? AdminPanelStyles['active-tap']:AdminPanelStyles['navigation-links']}`} to={"/adminPanel/messages"}   id="messagesActive" onClick={(event)=>activateLink(event)}>Messages</Link>
+                <Link className={`${activeLinks.messagesActive? AdminPanelStyles['active-tap']:AdminPanelStyles['navigation-links']}`} to={"/adminPanel/messages"}   id="messagesActive" onClick={(event)=>activateLink(event)}>{t("Admin_messages")}</Link>
             </div>
             <div className={AdminPanelStyles['main-container']}>
                 <Outlet />

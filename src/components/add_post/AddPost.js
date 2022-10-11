@@ -53,7 +53,7 @@ const AddPost = () => {
         let post = {
         article_img: postImage,
         content: postData.content,
-        title: postData,
+        title: postData.title,
         lang: postData.lang,
       };
       if (postImage !== undefined && postImage !== null && postImage !== '' && postData.content !== "" && postData.title !== ""){

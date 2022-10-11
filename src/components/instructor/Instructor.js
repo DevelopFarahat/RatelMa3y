@@ -5,6 +5,7 @@ import Form from "react-bootstrap/Form";
 import NoResultFiltaration from "../../assets/images/no-result.png";
 import { AiFillSetting } from "react-icons/ai";
 import { AiFillFilter } from "react-icons/ai";
+import { useTranslation } from "react-i18next";
 import { BiReset } from "react-icons/bi";
 import availableIcon from "../../assets/images/checkmark.png";
 import absenceIcon from "../../assets/images/do-not-enter.png";
@@ -169,6 +170,7 @@ const Instructor = () => {
        
     }
     // pagination functionality ended
+    const [t, i18n] = useTranslation();
     const [instructorData, setInstructorData] = useState([]);
     const [instructorSessionsDetails,setInstructorSessionsDetails] = useState([]);
     const initialInstructorSessionsDetails = useRef();
@@ -383,13 +385,13 @@ const Instructor = () => {
                 }
                 setSelectedInstructorData={setSelectedInstructorData}
             />
-            <div className={InstructorStyles["instructor-data-container"]}>
+            <div className={InstructorStyles["instructor-data-container"]} style={{direction:t("us") === t("Us")?'ltr':'rtl'}}>
                 <div className={InstructorStyles["table-settings-container"]}>
                     <Form.Label
                         htmlFor="instructorFilterTxt"
                         className={InstructorStyles["filter-label"]}
                     >
-                        Filter
+                        {t("filter")}
                     </Form.Label>
                     <Form.Control
                         id="instructorFilterTxt"
@@ -398,22 +400,22 @@ const Instructor = () => {
                         onChange={handleFiltaration}
                     />
                     <Form.Select id="instructor-sort-select" onChange={sortInstructorTable}>
-                        <option value="">Select</option>
-                        <optgroup label="By Instructor Status">
-                            <option value="inACall">In a Call</option>
-                            <option value="offline">Offline</option>
+                        <option value="">{t("select")}</option>
+                        <optgroup label={t("instructorAccountStatus")}>
+                            <option value="inACall">{t("inCall")}</option>
+                            <option value="offline">{t("offline")}</option>
                         </optgroup>
-                        <optgroup label=" By Availability">
-                            <option value="avaliable">Avaliable</option>
-                            <option value="notAvailable">Not Available</option>
+                        <optgroup label={t("Availability")}>
+                            <option value="avaliable">{t("avaliable")}</option>
+                            <option value="notAvailable">{t("notAvaliable")}</option>
                         </optgroup>
-                        <optgroup label="By Age">
-                            <option value="ageDsc">DSC</option>
-                            <option value="ageAsc">ASC</option>
+                        <optgroup label={t("age")}>
+                            <option value="ageDsc">{t("dsc")}</option>
+                            <option value="ageAsc">{t("asc")}</option>
                         </optgroup>
-                        <optgroup label="Started At">
-                            <option value="startedAtDSC">DSC</option>
-                            <option value="startedAtASC">ASC</option>
+                        <optgroup label={t("started_at")}>
+                            <option value="startedAtDSC">{t("dsc")}</option>
+                            <option value="startedAtASC">{t("asc")}</option>
                         </optgroup>
                     </Form.Select>
                     <button
@@ -422,7 +424,7 @@ const Instructor = () => {
                         style={{ marginTop: "auto" }}
                         onClick={(event) => filterStudents(event.target.value)}
                     >
-                        Filter <AiFillFilter />
+                        {t("filter")} <AiFillFilter />
                     </button>
                     <button
                         type="button"
@@ -430,7 +432,7 @@ const Instructor = () => {
                         style={{ marginTop: "auto" }}
                         onClick={resetTableFiltaration}
                     >
-                        Reset
+                        {t("reset")}
                         <BiReset />
                     </button>
                 </div>
@@ -446,17 +448,17 @@ const Instructor = () => {
                         <table className={InstructorStyles["instructor-table"]}>
                             <thead>
                                 <tr>
-                                    <th>Name</th>
-                                    <th>Students N</th>
-                                    <th>Sessions N</th>
-                                    <th>Age</th>
-                                    <th>Gender</th>
-                                    <th>State</th>
-                                    <th>Email</th>
-                                    <th>Mobile</th>
-                                    <th>Started At</th>
-                                    <th>Is Available</th>
-                                    <th>In Session</th>
+                                    <th>{t("name")}</th>
+                                    <th>{t("studentN")}</th>
+                                    <th>{t("sessionN")}</th>
+                                    <th>{t("age")}</th>
+                                    <th>{t("gender")}</th>
+                                    <th>{t("state")}</th>
+                                    <th>{t("email")}</th>
+                                    <th>{t("mobile")}</th>
+                                    <th>{t("started_at")}</th>
+                                    <th>{t("isAvailable")}</th>
+                                    <th>{t("inSession")}</th>
                                 </tr>
                             </thead>
                             <tbody>
