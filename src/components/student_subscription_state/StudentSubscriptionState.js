@@ -1846,7 +1846,7 @@ const StudentSubscriptionState = ({
       .catch((error) => {
         console.log(error);
       });
-    axios.get(`http://localhost:5000/api/sessions?user_id=${stdObji._id}&limit=10000000000000000`).then((res) => {
+    axios.get(`${process.env.REACT_APP_BACK_HOST_URL}/api/sessions?user_id=${stdObji._id}&limit=10000000000000000`).then((res) => {
       initialStudentSessionsDetails.current = res.data.data;
       setStudentSessionsDetails(res.data.data);
     }).catch((error) => {
@@ -2244,7 +2244,7 @@ const StudentSubscriptionState = ({
     }
     let instructorBusy = {};
 
-    axios.get(`http://localhost:5000/api/instructors/${changableSubscriptionState.instructor}`).then((res) => {
+    axios.get(`${process.env.REACT_APP_BACK_HOST_URL}/api/instructors/${changableSubscriptionState.instructor}`).then((res) => {
       let getThePreviuosReservedSessionsDaysHours = (arr0,arr1,arr2,arr3,arr4,arr5,arr6,SelectedDayIndex)=>{
         for(let busyIndex = 0 ; busyIndex < Object.entries(res.data.busy).length;busyIndex++){
           for(let busyDayIndex = 0 ; busyDayIndex < Object.entries(res.data.busy)[busyIndex][1].length;busyDayIndex++){
@@ -2836,7 +2836,7 @@ const StudentSubscriptionState = ({
         if (numberOfDaysSelectedTestCasesArr.every((evDay) => evDay[`testCaseDay`] === false) === true) {
           setIsUserMakingUpdateOnStudentAccount(true);
           setBusyDaysHoursWarningAlert(false);
-          axios.put(`http://localhost:5000/api/instructors/${changableSubscriptionState.instructor}`, { "busy": busyInstructorDaysHours }).then((res) => {
+          axios.put(`${process.env.REACT_APP_BACK_HOST_URL}/api/instructors/${changableSubscriptionState.instructor}`, { "busy": busyInstructorDaysHours }).then((res) => {
             stdwHoursD0 = [];
             stdwHoursD1 = [];
             stdwHoursD2 = [];
@@ -3015,7 +3015,7 @@ const StudentSubscriptionState = ({
             console.log(error);
           })
 
-          axios.put(`http://localhost:5000/api/students/${changableSubscriptionState._id}`, {
+          axios.put(`${process.env.REACT_APP_BACK_HOST_URL}/api/students/${changableSubscriptionState._id}`, {
             "busy": {
               "0": studentBusy['0'],
               "1": studentBusy['1'],
@@ -3110,7 +3110,7 @@ const StudentSubscriptionState = ({
     let getStudentInstructorBusyData = () => {
       return new Promise((resolve, reject) => {
         resolve(
-          axios.get(`http://localhost:5000/api/instructors/${studentAccountObji.instructor}`).then((res) => {
+          axios.get(`${process.env.REACT_APP_BACK_HOST_URL}/api/instructors/${studentAccountObji.instructor}`).then((res) => {
             for (let i = 0; i < Object.entries(res.data.busy).length; i++) {
               if (i === 0) {
                 for (let j = 0; j < Object.entries(res.data.busy)[i][1].length; j++) {
@@ -3283,7 +3283,7 @@ const StudentSubscriptionState = ({
     let updateStudentInstructorBusyData = () => {
       return new Promise((resolve, reject) => {
         resolve(
-          axios.put(`http://localhost:5000/api/instructors/${studentAccountObji.instructor}`, {
+          axios.put(`${process.env.REACT_APP_BACK_HOST_URL}/api/instructors/${studentAccountObji.instructor}`, {
             "busy": {
               "0": busyInstructorInitialObject[`0`],
               "1": busyInstructorInitialObject[`1`],
@@ -3321,7 +3321,7 @@ const StudentSubscriptionState = ({
     let deleteReservedStudentDaysAndHours = () => {
       return new Promise((resolve, reject) => {
         resolve(
-          axios.delete(`http://localhost:5000/api/students/${studentAccountObji._id}`,{headers:{},data:{instructorID:studentAccountObji.instructor}}).then((res) => {
+          axios.delete(`${process.env.REACT_APP_BACK_HOST_URL}/api/students/${studentAccountObji._id}`,{headers:{},data:{instructorID:studentAccountObji.instructor}}).then((res) => {
             setFetchAgain(fetchAgain + 1);
             setIsUserDeleteAnyAccount(true);
             setTimeout(() => {
