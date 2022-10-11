@@ -405,11 +405,14 @@ const [sessionsDate,setSessionsDate] = useState({
            {isSessionsMoreInfoOpend?<MdKeyboardArrowUp onClick={openCloseMoreSessionInfo} className={StudentDetailsStyles['open-close-arrow-icon']} style={{transform:isSessionsMoreInfoOpend?'rotate(360deg)':'rotate(0deg)',bottom:isSessionsMoreInfoOpend?'67%':'-54%'}}/>:<MdKeyboardArrowDown onClick={openCloseMoreSessionInfo} className={StudentDetailsStyles['open-close-arrow-icon']} style={{transform:isSessionsMoreInfoOpend?'rotate(360deg)':'rotate(0deg)',bottom:isSessionsMoreInfoOpend?'67%':'-54%'}}/>}
           </div>
           <div className={StudentDetailsStyles['table-wrapper']}>
-            {studentSessionsDetails.length === 0 ? <img src={NoResultFiltaration} className={StudentDetailsStyles['no-result']} alt="no-result" /> : <table className={StudentDetailsStyles['student-session-info-table']}>
+            {studentSessionsDetails.length === 0 || studentSessionsDetails === undefined ? <img src={NoResultFiltaration} className={StudentDetailsStyles['no-result']} alt="no-result" /> : <table className={StudentDetailsStyles['student-session-info-table']}>
               <thead>
                 <tr>
                   <th>Attendance</th>
+                  <th>Previously Evaluation</th>
                   <th>Current Evaluation</th>
+                  <th>Exam</th>
+                  <th>Total Evaluation</th>
                   <th>Notes</th>
                   <th>Instructor</th>
                   <th>Created At</th>
@@ -431,18 +434,28 @@ const [sessionsDate,setSessionsDate] = useState({
                             ? `rgba(0, 0, 0, 0.2) 0 6px 20px 0 rgba(0, 0, 0, 0.19)`
                             : "",
                 }}>
-                    {session.attendants.length !== 0 && session.attendants !== null && session.attendants !== undefined?<td>
-                    {session.attendants.find((studentId)=> specificStudentJoiningRequestData._id === studentId) !== undefined?<img src={Present} alt="attendance" style={{display:'block',margin:'auto',width:'40px'}}/>:<img src={absence}  alt="absence" style={{display:'block',margin:'auto',width:'30px'}} />}
-                    </td>:session.attendants.length === 0?<td><img src={absence}  alt="absence" style={{display:'block',margin:'auto',width:'30px'}}/></td>:<td>{"ff "}</td>}
-                     {session.attendants.find((studentId)=> specificStudentJoiningRequestData._id === studentId) !== undefined?
-                     session.evaluations !== undefined?session.evaluations.map((ev)=>(
+                  {session.attendants.length !== 0 && session.attendants !== null && session.attendants !== undefined?<td>
+                    {session.attendants.find((studentId)=> specificStudentJoiningRequestData._id === studentId) !== undefined?<img src={Present} alt="attendance" style={{display:'block',margin:'auto',width:'40px'}}/>
+                    :<img src={absence}  alt="absence" style={{display:'block',margin:'auto',width:'30px'}} />}
+                  </td>:session.attendants.length === 0?<td><img src={absence}  alt="absence" style={{display:'block',margin:'auto',width:'30px'}}/></td>:<td>{""}</td>}
+                  {session.attendants.length !== 0 && session.attendants !== null && session.attendants !== undefined?
+                  session.evaluations !== undefined?session.evaluations.map((ev)=>(
+                      ev.student === specificStudentJoiningRequestData._id?
+                      !session.is_exam?
                       <>
+                      <td>{ev.previously_eval}</td>
                       <td>{ev.current_eval}</td>
+                      <td>{"No"}</td>
+                      </>:<>
+                      <td>{""}</td>
+                      <td>{""}</td>
+                      <td>{"Yes"}</td>
+                      <td>{ev.total_eval}</td>
                       <td>{ev.notes}</td>
-                      </>
-                      )):null:<><td>{""}</td>{""}<td></td></>}
-                    <td>{session.created_by.name}</td>
-                    <td>{session.created_at.split("T")[0]}{" "}</td>
+                      <td>{session.created_by.name}</td>
+                      <td>{session.created_at.split("T")[0]}</td>
+                      </>:null
+                      )):<><td>{""}</td><td>{""}</td><td>{""}</td><td>{""}</td><td>{""}</td></>:null}
                     </tr>
                 )):null}
               </tbody>

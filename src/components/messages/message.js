@@ -170,10 +170,6 @@ const Messages = ()=>{
     }
     // pagination functionality ended
     const [t, i18n] = useTranslation();
-    const [isArabic, setIsArabic] = useState(false);
-    useEffect(() => {
-        setIsArabic(localStorage.getItem("i18nextLng") === "ar");
-    }, [localStorage.getItem("i18nextLng")]);
     const [messages,setMessages] = useState([]);
     const [msgContent,setMsgContent] = useState("");
     const [selectedRow, setSelectedRow] = useState(-1);
@@ -368,7 +364,7 @@ const Messages = ()=>{
                         <option value="">{t("select")}</option>
                         <optgroup label={t("status")}>
                         <option value="Read">{t("read")}</option>
-                        <option value="Unread">{t("unRead")}</option>
+                        <option value="Unread">{t("unread")}</option>
                         </optgroup>
                         <optgroup label={t("messageDate")}>
                             <option value="ASC">{t("asc")}</option>
