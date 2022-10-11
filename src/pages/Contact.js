@@ -25,7 +25,7 @@ function Contact() {
     if (!values.userName) {
       errors.userName = t("keepintouch_required");
     } else if (!/^(?:[A-Z]{2,15} ?\b){2,4}$/i.test(values.userName)) {
-      errors.userName = t("keepintouch_invalid_username");
+      errors.userName = t("student_fullname_error");
     }
     /*************************************/
     if (!values.email) {
@@ -33,7 +33,7 @@ function Contact() {
     } else if (
       !/^[A-Z0-9._%+-]+@[A-Z0-9._]+\.[A-Z]{2,4}$/i.test(values.email)
     ) {
-      errors.email = t("keepintouch_invalid_email");
+      errors.email = t("student_email_error_message");
     }
     /*************************************/
     if (!values.phone) {

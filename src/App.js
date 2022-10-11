@@ -24,6 +24,7 @@ import RoomSideBar from "./components/room-side-bar/RoomSideBar";
 import Forgot from "./pages/Forgot";
 import ManageAcc from "./pages/ManageAcc";
 import Messages from "./components/messages/message";
+import BookBoard from "./components/quran_board/BookBoard";
 
 function App() {
   const [t, i18n] = useTranslation();
@@ -53,6 +54,7 @@ function App() {
               <Route path="home" element={<Home />} />
               <Route path="about" element={<Aboutus />} />
               <Route path="contact" element={<Contact />} />
+              <Route path="book" element={<BookBoard />} />
 
               <Route element={<PrivateRoutes />}>
                 <Route

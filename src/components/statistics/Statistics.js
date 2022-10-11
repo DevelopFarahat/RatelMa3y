@@ -24,9 +24,7 @@ function Statistics() {
           <Col md={4}>
             <div className={StatisticsCss.stcard}>
               <p className={StatisticsCss.numb}>{t("num_75")}</p>
-              <p className={StatisticsCss.text}>
-                {t("statistics_instructors")}
-              </p>
+              <p className={StatisticsCss.text}>{t("statistics_students")}</p>
             </div>
           </Col>
           <Col md={4}>
