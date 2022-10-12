@@ -38,6 +38,17 @@ function App() {
       display: hideMain ? "none" : "block",
     },
   };
+  const closeMiniNavBar = () => {
+    document
+      .getElementsByClassName("navbar-toggler")[0]
+      .classList.add("collapsed");
+    document
+      .getElementsByClassName("navbar-collapse")[0]
+      .classList.remove("show");
+    document
+      .getElementsByClassName("navbar-collapse")[0]
+      .classList.add("collapse");
+  };
 
   return (
     <>
@@ -45,75 +56,77 @@ function App() {
         {isLoading && <LoadingScreen />}
         <ScrollToTop />
         <div style={styles.hideableDiv}>
-          <NavBar i18n={i18n} isRoomPrepared={isRoomPrepared} />
+          <NavBar i18n={i18n} isRoomPrepared={isRoomPrepared} closeMiniNavBar={closeMiniNavBar}/>
 
           <div style={{ height: 86 }}></div>
           <div style={{ minHeight: "100vh" }}>
-            <Routes>
-              <Route path="/" element={<Navigate to="home" replace />} />
-              <Route path="home" element={<Home />} />
-              <Route path="about" element={<Aboutus />} />
-              <Route path="contact" element={<Contact />} />
-              <Route path="book" element={<BookBoard />} />
+            <div onClick={closeMiniNavBar}>
+              <Routes>
+                <Route path="/" element={<Navigate to="home" replace />} />
+                <Route path="home" element={<Home />} />
+                <Route path="about" element={<Aboutus />} />
+                <Route path="contact" element={<Contact />} />
+                <Route path="book" element={<BookBoard />} />
 
-              <Route element={<PrivateRoutes />}>
-                <Route
-                  path="sessions"
-                  element={
-                    <Sessions
-                      textt={"test test"}
-                      setIsRoomPrepared={setIsRoomPrepared}
-                    />
-                  }
-                />
-                <Route
-                  path="sessions/room"
-                  element={
-                    <Room
-                      setHideMain={setHideMain}
-                      setShowSidebar={setShowSidebar}
-                      setIsRoomPrepared={setIsRoomPrepared}
-                    />
-                  }
-                />
-              </Route>
-
-              <Route element={<NotLoggedInRoutes />}>
-                <Route path="login" element={<Login />} />
-                <Route path="forgot-password" element={<Forgot />} />
-                <Route
-                  path="register"
-                  element={<StudentRegistrationForm i18n={i18n} t={t} />}
-                />
-              </Route>
-
-              <Route element={<PrivateRoutes />}>
-                <Route path="account" element={<ManageAcc />} />
-              </Route>
-
-              <Route path="events" element={<PostsBoard />} />
-              <Route path="events/:id" element={<PostDetails />} />
-
-              <Route
-                element={
-                  <PrivateRoutes
-                    roleRequired="instructor"
-                    privilegesRequired="Admin"
+                <Route element={<PrivateRoutes />}>
+                  <Route
+                    path="sessions"
+                    element={
+                      <Sessions
+                        textt={"test test"}
+                        setIsRoomPrepared={setIsRoomPrepared}
+                      />
+                    }
                   />
-                }
-              >
-                <Route path="adminPanel" element={<AdminPanel />}>
-                  <Route index element={<SystemUsers />} />
-                  <Route path="systemUsers" index element={<SystemUsers />} />
-                  <Route path="addPost" element={<AddPost />} />
-                  <Route path="students" element={<Student />} />
-                  <Route path="instructors" element={<Instructor />} />
-                  <Route path="messages" element={<Messages />} />
+                  <Route
+                    path="sessions/room"
+                    element={
+                      <Room
+                        setHideMain={setHideMain}
+                        setShowSidebar={setShowSidebar}
+                        setIsRoomPrepared={setIsRoomPrepared}
+                      />
+                    }
+                  />
                 </Route>
-              </Route>
 
-              <Route path="*" element={<Navigate to="home" replace />} />
-            </Routes>
+                <Route element={<NotLoggedInRoutes />}>
+                  <Route path="login" element={<Login />} />
+                  <Route path="forgot-password" element={<Forgot />} />
+                  <Route
+                    path="register"
+                    element={<StudentRegistrationForm i18n={i18n} t={t} />}
+                  />
+                </Route>
+
+                <Route element={<PrivateRoutes />}>
+                  <Route path="account" element={<ManageAcc />} />
+                </Route>
+
+                <Route path="events" element={<PostsBoard />} />
+                <Route path="events/:id" element={<PostDetails />} />
+
+                <Route
+                  element={
+                    <PrivateRoutes
+                      roleRequired="instructor"
+                      privilegesRequired="Admin"
+                    />
+                  }
+                >
+                  <Route path="adminPanel" element={<AdminPanel />}>
+                    <Route index element={<SystemUsers />} />
+                    <Route path="systemUsers" index element={<SystemUsers />} />
+                    <Route path="addPost" element={<AddPost />} />
+                    <Route path="students" element={<Student />} />
+                    <Route path="instructors" element={<Instructor />} />
+                    <Route path="messages" element={<Messages />} />
+                  </Route>
+                </Route>
+
+                <Route path="*" element={<Navigate to="home" replace />} />
+              </Routes>
+            </div>
           </div>
           <Footer isRoomPrepared={isRoomPrepared} />
         </div>

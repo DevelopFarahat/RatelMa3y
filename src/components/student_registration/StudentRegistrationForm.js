@@ -258,7 +258,6 @@ const StudentRegistrationForm = () => {
   
   //TODO: Unhash this when you finish testing
   
-  /*
   useEffect(() => {
     
     if (!!studentRegistrationFormSteps.sixStep)
@@ -267,8 +266,6 @@ const StudentRegistrationForm = () => {
         { email: userData.email, rpin: true }
       );
     }, [studentRegistrationFormSteps.sixStep]);
-
-  */
 
   // just case if the user demande student can register in multiple programs
   /*
@@ -453,14 +450,13 @@ const StudentRegistrationForm = () => {
     //CHECK IF VERIFICATION GOES WRONG
     //TODO: Unhash this when you finish testing
 
-    /*
     let result = await axios.post(
       `${process.env.REACT_APP_BACK_HOST_URL}/api/auth/confirm_pin`,
       { email: userData.email, rpin: true, pin: userData.email_verification }
     );
 
     if (result.status !== 200) return enqueueSnackbar(t('login_error_pin'));
-    */
+
 
     let wD = [];
     for (let i = 0; i < Object.values(workingDays).length; i++) {

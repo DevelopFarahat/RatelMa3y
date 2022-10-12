@@ -12,7 +12,7 @@ import { Link, useNavigate } from "react-router-dom";
 import UserContext from "../../utils/UserContext";
 import { useTranslation } from "react-i18next";
 
-function NavBar({ i18n, isRoomPrepared }) {
+function NavBar({ i18n, isRoomPrepared,closeMiniNavBar }) {
   const { t } = useTranslation();
 
   function changeLang(e) {
@@ -52,7 +52,7 @@ function NavBar({ i18n, isRoomPrepared }) {
         direction: t("us") === "Us" ? "ltr" : "rtl",
       }}>
       <Container>
-        <Link to={"home"}>
+        <Link to={"home"} onClick={closeMiniNavBar}>
           <Navbar.Brand className={NavCss.NavbarBrand}>
             <img className={NavCss.logo} src={logo} alt='logo' />
           </Navbar.Brand>
@@ -64,33 +64,27 @@ function NavBar({ i18n, isRoomPrepared }) {
             className='m-auto my-2 my-lg-0'
             style={{ maxHeight: "100px" }}
             navbarScroll>
-            <Link className={NavCss.link} to={"/home"}>
+            <Link className={NavCss.link} to={"/home"} onClick={closeMiniNavBar}>
               {t("navbar_home")}
             </Link>
-            <Link className={NavCss.link} to={"/events"}>
+            <Link className={NavCss.link} to={"/events"} onClick={closeMiniNavBar}>
               {t("navbar_events")}
             </Link>
             {user != null && (
-              <Link className={NavCss.link} to={"/sessions"}>
+              <Link className={NavCss.link} to={"/sessions"} onClick={closeMiniNavBar}>
                 {t("navbar_rooms")}
               </Link>
             )}
-            {/* {user != null && user.role === "student" && false && (
-              <Link className={NavCss.link} to={"/sessions"}>
-                 {t("navbar_evaluations")}
-              </Link>
-            )} */}
-
-            <Link className={NavCss.link} to={"/about"}>
+            <Link className={NavCss.link} to={"/about"} onClick={closeMiniNavBar}>
               {t("navbar_aboutus")}
             </Link>
             {(!user || user.role === "student") && (
-              <Link className={NavCss.link} to={"/contact"}>
+              <Link className={NavCss.link} to={"/contact"} onClick={closeMiniNavBar}>
                 {t("navbar_contactus")}
               </Link>
             )}
             {user && user.privileges === "Admin" && (
-              <Link to={"/adminPanel"} style={{marginInlineStart: 16}}>
+              <Link to={"/adminPanel"} style={{marginInlineStart: 16}}  onClick={closeMiniNavBar}>
                 <Button variant='outline-success'>
                   {" "}
                   {t("navbar_adminpanel")}
@@ -105,17 +99,17 @@ function NavBar({ i18n, isRoomPrepared }) {
               menuVariant='dark'
             
               style={{ margin: 16, fontWeight: 500,direction: 'ltr'}}>
-              <NavDropdown.Item onClick={() => navigate("/account")}>
+              <NavDropdown.Item onClick={() => (navigate("/account"),closeMiniNavBar())}>
                 {t("navbar_account")}
               </NavDropdown.Item>
 
               <NavDropdown.Divider />
-              <NavDropdown.Item className='text-danger' onClick={logout}>
+              <NavDropdown.Item className='text-danger' onClick={(logout,closeMiniNavBar)}>
                 {t("logout")}
               </NavDropdown.Item>
             </NavDropdown>
           ) : (
-            <Link to={"/login"}>
+            <Link to={"/login"}  onClick={closeMiniNavBar}>
               <Button className={NavCss.button} variant='outline-success'>
                 {t("login")}
               </Button>
