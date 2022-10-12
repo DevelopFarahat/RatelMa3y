@@ -11,6 +11,7 @@ import axios from "axios";
 import UserContext from "../utils/UserContext";
 import { useSnackbar } from "notistack";
 import { useTranslation } from "react-i18next";
+// import './Login.css'
 
 export default function Login() {
   const navigate = useNavigate();
@@ -70,6 +71,22 @@ export default function Login() {
     validate,
   });
 
+  // const styl = {
+  //   buttonsBelow: {
+  //     justifyContent: "center",
+  //     display: "flex",
+  //     flexWrap: "wrap",
+  //     gap: "16px",
+  //     backgroundColor: "grey",
+  //     "&:hover": {
+  //       backgroundColor: "yellow",
+  //     },
+  //     "@media(maxWidth:770px)": {
+  //       backgroundColor: "red",
+  //     },
+  //   },
+  // };
+
   return (
     <>
       <div
@@ -78,7 +95,7 @@ export default function Login() {
           height: "100%",
           marginTop: 64,
           marginBottom: 32,
-          direction: t("us") === "Us" ? "ltr" : "rtl",
+          // direction: t("us") === "Us" ? "ltr" : "rtl",
         }}
       >
         <Form
@@ -144,13 +161,17 @@ export default function Login() {
           </div>
 
           <div
-            className="w-100"
-            style={{ justifyContent: "space-between", display: "flex" }}
+            style={{
+              justifyContent: "center",
+              display: "flex",
+              flexWrap: "wrap",
+              gap: "auto",
+            }}
           >
-            <Link to="/forgot-password" className="text-dark fw-700">
+            <Link to="/forgot-password" className="text-dark fw-700 w-100">
               {t("login_forgot")}
             </Link>
-            <Link to="/register">
+            <Link to="/register" className="w-100">
               <Button variant="outline-success">{t("login_register")}</Button>
             </Link>
           </div>

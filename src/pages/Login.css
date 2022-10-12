@@ -1,0 +1,14 @@
+.buttonsBelow {
+  justify-content: "center";
+  display: "flex";
+  flex-wrap: "wrap";
+  gap: "16px";
+  background-color: "grey";
+}
+
+
+@media (max-width: 770px) {
+  .buttonsBelow {
+    background-color: "red";
+  }
+}

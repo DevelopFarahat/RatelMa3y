@@ -70,9 +70,8 @@ export default function RoomSideBar({ hideMain }) {
             {...props}
             className={[styles['no-scrollbar'],styles['wider-board']]}
             style={{
-              
               height: '85%',
-              overflow: 'scroll',
+              overflowY: 'scroll',
               position: "absolute",
               backgroundColor: "white",
               boxShadow: "0 0 8px rgb(0 0 0 / 16%)",
@@ -234,7 +233,7 @@ const EvaluationSheet = (props) => {
         <Card
           style={{
             height: '100%',
-            overflow: 'scroll',
+            overflowY: 'scroll',
             flex: 1,
             paddingTop: 16,
             width: 240,
@@ -380,7 +379,7 @@ const EvaluationSheet = (props) => {
               <Button
                 variant="success"
                 type="submit"
-                className="mt-4 mb-4"
+                className="mt-4 mb-2"
                 disabled={
                   isLoading || alreadyTested.includes(fprops.values.student)
                 }

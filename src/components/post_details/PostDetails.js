@@ -63,7 +63,7 @@ const PostDetails = () => {
           className={PostDetailsStyles["btn"]}
           onClick={() => navigate(-1)}
         >
-          <IoChevronBack size={20} style={{ marginTop: "-3px" }} />
+          <IoChevronBack size={20} style={{ marginTop: "3px" }} />
           {t("events_back")}
         </button>
       </div>

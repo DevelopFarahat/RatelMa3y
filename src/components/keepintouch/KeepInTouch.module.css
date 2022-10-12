@@ -3,6 +3,7 @@
 .keepin {
   text-align: center;
   margin-top: 85px;
+
 }
 .keepin h2 {
   color: #038674;
@@ -11,6 +12,9 @@
 .keepin h4 {
   color: #038674;
   margin-bottom: 22px;
+  min-width: 120px;
+  width: 100%;
+  min-width: 120px;
 }
 .keepinput Form {
   display: flex;
@@ -20,7 +24,8 @@
   border-radius: 8px 0px 0px 8px;
   margin-inline-end: -5px;
   font-size: 20px;
-  width: fit-content;
+  width: calc(100%-40px);
+  min-width: 120px;
 }
 .keepin button {
   height: 44px;
