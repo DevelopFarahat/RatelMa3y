@@ -8,7 +8,7 @@
   -ms-border-radius: 5px;
   -o-border-radius: 5px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  height: 471px;
+  min-height: 471px;
   padding: 10px;
   position: relative;
 }
@@ -49,7 +49,7 @@
 }
 .students-content-tap{
   width:100%;
-  height:80%;
+  height: 365px;
   position: relative;
   margin-top:13px
 }
@@ -105,7 +105,7 @@
   margin:10px auto;
   padding:10px;
   display: flex;
-  justify-content:flex-start;
+  justify-content:center;
   align-items: center;
   background-color:#c2a054 ;
 }
@@ -180,14 +180,13 @@
   .instructor-work-history-main-container{
     order:2;
     width:100%;
-    height:535px;
   }
 }
 @media screen and (max-width:500px) {
   .instructor-work-history-main-container{
     margin-top:10px;
   }
-  .settings-header{
+  .settings-header,.sessions-more-info-settings{
     flex-direction: column;
     padding:10px;
   }
@@ -197,15 +196,17 @@
   .students-data-tap,.sessions-data-tap,.workingDateAndOursTap,.sessions-schedule-data-tap{
     width:100%;
   }
-  .instructor-working-date-time-tap{
-    height:271px;
-    overflow: auto;
+  .students-content-tap{
+    height:513px;
   }
-  .empty-data-img{
-    position: absolute;
-    top: 70%;
-    left: 45%;
-    transform: translate(-50%, -50%);
-    width: 50%;
+  .sessions-more-info-settings > section{
+    width:100%;
+  }
+  .sessions-main-info-container{
+    flex-direction: column;
+  }
+  .sessions-main-info-container > div{
+    width:100%;
+    margin:5px 0 5px 0;
   }
 }

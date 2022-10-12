@@ -130,3 +130,18 @@
     display: block;
     background-position: 50% 50%;
   }
+  @media screen and (max-width:500px) {
+    .table-settings-container{
+      flex-direction: column;
+    }
+    .table-settings-container > * {
+      margin:5px 0 5px 0 ;
+    }
+    .btn{
+      width:100%;
+    }
+    .table-wrapper{
+      height:59%;
+    }
+    
+  }

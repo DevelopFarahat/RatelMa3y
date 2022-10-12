@@ -83,21 +83,31 @@ import EmptyDataImage from "../../assets/images/empty.png";
         }
 
     },[selectedInstructorData])
+    console.log(scheduleDate)
     return(
         <>
-           <section className={InstructorSessionsScheduleStyles['sessions-schedule-main']}>
+           <section className={InstructorSessionsScheduleStyles['sessions-schedule-main']} style={{direction:t("us")=== t("Us")?'ltr':'rtl'}}>
             {scheduleDate !== undefined || scheduleDate.length !== 0?scheduleDate.map((sch,index)=>(
              <section key={index}>
+                <div className={InstructorSessionsScheduleStyles['days-times']}>
                 <span style={{background:Number(sch.day) === new Date().getDay()+1?'rgb(255, 193, 7)':'rgb(25, 135, 84)'}}>{days[sch.day]}</span>
+                <div>
                 {sch.hours_stu.map((h_stu)=>(
                     <>
+                    <div>
                     <span key={h_stu.hourIndex} className={InstructorSessionsScheduleStyles['session-time']} style={{background:h_stu.sessionTime !== undefined && h_stu.sessionTime?'rgb(255, 193, 7)':'rgb(25, 135, 84)'}}>{times[h_stu.hourIndex]}</span>
-                    <span className={InstructorSessionsScheduleStyles['session-student-members']}>{h_stu.students.map((st)=>(
-                        <span key={st._id} >{st.name}</span>
-                    ))}</span>
-                    </>
+                    <section className={InstructorSessionsScheduleStyles['sessions-members']}>
+                    <div>
+                        <span className={InstructorSessionsScheduleStyles['session-student-members']}>{h_stu.students.map((st)=>(
+                            <><span key={st._id} >{st.name}</span></>
+                        ))}</span>
+                      </div>
+                      </section></div></>
                 ))}
-                        </section>
+                </div>
+                </div>
+
+            </section>
             )):<img src={EmptyDataImage} className={InstructorSessionsScheduleStyles['empty-data-img']} alt="Empty" />}
                  
         </section>

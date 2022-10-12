@@ -170,10 +170,6 @@ const Messages = ()=>{
     }
     // pagination functionality ended
     const [t, i18n] = useTranslation();
-    const [isArabic, setIsArabic] = useState(false);
-    useEffect(() => {
-        setIsArabic(localStorage.getItem("i18nextLng") === "ar");
-    }, [localStorage.getItem("i18nextLng")]);
     const [messages,setMessages] = useState([]);
     const [msgContent,setMsgContent] = useState("");
     const [selectedRow, setSelectedRow] = useState(-1);
@@ -348,9 +344,10 @@ const Messages = ()=>{
                 {msgContent}
             </p>:<img className={MessagesStyles["no-result"]} src={EmptyDataImage} alt="empty"/>}
         </div>
-        <div className={MessagesStyles['all-messages-main-container']}>
+        <div className={MessagesStyles['all-messages-main-container']} style={{direction:t("us")=== t("Us")?'ltr':'rtl'}}>
         <div className={MessagesStyles["table-settings-container"]}>
                     <Form.Label
+                    style={{textAlign:t("us")=== t("Us")?'left':'right'}}
                         htmlFor="messagesFilterTxt"
                         className={MessagesStyles["filter-label"]}
                     >
@@ -362,16 +359,16 @@ const Messages = ()=>{
                         value={filterValue}
                         onChange={handleFiltaration}
                     />
-                    <Form.Label>Sort</Form.Label>
+                    <Form.Label style={{textAlign:t("us")=== t("Us")?'left':'right'}}>{t("sort")}</Form.Label>
                     <Form.Select onChange={sortMessages}>
-                        <option value="">Select</option>
-                        <optgroup label="By Message Status">
-                        <option value="Read">Read</option>
-                        <option value="Unread">Unread</option>
+                        <option value="">{t("select")}</option>
+                        <optgroup label={t("status")}>
+                        <option value="Read">{t("read")}</option>
+                        <option value="Unread">{t("unread")}</option>
                         </optgroup>
-                        <optgroup label="By Date">
-                            <option value="ASC">ASC</option>
-                            <option value="DSC">DSC</option>
+                        <optgroup label={t("messageDate")}>
+                            <option value="ASC">{t("asc")}</option>
+                            <option value="DSC">{t("dsc")}</option>
                         </optgroup>
                     </Form.Select>
                     <button
@@ -388,7 +385,7 @@ const Messages = ()=>{
                         style={{ marginTop: "auto" }}
                         onClick={resetTableFiltaration}
                     >
-                        {t("reset_btn")}
+                        {t("reset")}
                         <BiReset />
                     </button>
                 </div>
@@ -407,12 +404,12 @@ const Messages = ()=>{
                         >
                             <thead>
                                 <tr>
-                                    <th>Name</th>
-                                    <th>Email</th>
-                                    <th>Phone</th>
-                                    <th>Date</th>
-                                    <th>Status</th>
-                                    <th>Settings</th>
+                                    <th>{t("name")}</th>
+                                    <th>{t("email")}</th>
+                                    <th>{t("mobile")}</th>
+                                    <th>{t("messageDate")}</th>
+                                    <th>{t("status")}</th>
+                                    <th>{t("settings")}</th>
                                 </tr>
                             </thead>
                             <tbody>

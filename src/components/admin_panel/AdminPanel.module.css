@@ -24,7 +24,7 @@
   background-color:#c2a054;
 }
 .navigation-links{
-  flex: 0 0 10%;
+  min-width: 170px;
   padding:10px;
   background-color: #038674;
   color: #FFFFFF;
@@ -37,7 +37,7 @@
   color: #FFFFFF;
 }
 .active-tap{
-  flex: 0 0 10%;
+  min-width: 170px;
   padding:10px;
   background-color: #038674;
   color: #FFFFFF;
@@ -54,4 +54,16 @@
 }
 .active-tap:hover{
   color: #FFFFFF;
+}
+@media screen and (max-width:904px){
+  .admin-panel-navigation{
+    flex-direction: column;
+  }
+  .navigation-links{
+    min-width: 100%;
+  }
+  .active-tap{
+    min-width: 92%;
+  }
+  
 }
