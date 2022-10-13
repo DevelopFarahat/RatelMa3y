@@ -24,7 +24,6 @@ export default function RoomSideBar({ hideMain }) {
   useEffect(() => {
     if (user && user?.in_session && user?.in_session?.members_with_access) {
       let promiseArr = [];
-      console.log("isExam should be ", user.in_session);
 
       user.in_session.members_with_access.forEach(async (id) => {
         if (id != user._id) {
@@ -127,7 +126,7 @@ export default function RoomSideBar({ hideMain }) {
               onClick={() => showBook(!bookIsShown)}
               className={styles["sideBtn"]}
             >
-              <GiBookmarklet className={styles["icons"]} />
+              <GiBookmarklet className={styles["icons"]} color="#121a24"/>
               <span className={styles["labels"]}>{t("book")}</span>
             </Button>
             {user.role === "instructor" && (
@@ -137,7 +136,7 @@ export default function RoomSideBar({ hideMain }) {
                 ref={target2}
                 className={styles["sideBtn"]}
               >
-                <MdFactCheck className={styles["icons"]} />
+                <MdFactCheck className={styles["icons"]} color="#121a24"/>
                 <span className={styles["labels"]}>{t("evaluations")}</span>
               </Button>
             )}
@@ -221,8 +220,7 @@ const EvaluationSheet = (props) => {
           })
           .catch((err) => {
             setIsLoading(false);
-            console.log("error", err);
-            enqueueSnackbar("Error: " + err);
+            enqueueSnackbar("Error: " + err?.message);
           });
 
         setAlreadyTested([...alreadyTested, values.student]);

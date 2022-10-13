@@ -168,7 +168,7 @@ export default function Login() {
               gap: "auto",
             }}
           >
-            <Link to="/forgot-password" className="text-dark fw-700 w-100">
+            <Link to="/forgot-password" className="text-dark fw-700 w-100 mb-2">
               {t("login_forgot")}
             </Link>
             <Link to="/register" className="w-100">

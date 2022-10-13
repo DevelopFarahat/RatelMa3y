@@ -104,7 +104,7 @@ function NavBar({ i18n, isRoomPrepared,closeMiniNavBar }) {
               </NavDropdown.Item>
 
               <NavDropdown.Divider />
-              <NavDropdown.Item className='text-danger' onClick={(logout,closeMiniNavBar)}>
+              <NavDropdown.Item className='text-danger' onClick={()=> (logout(),closeMiniNavBar())}>
                 {t("logout")}
               </NavDropdown.Item>
             </NavDropdown>

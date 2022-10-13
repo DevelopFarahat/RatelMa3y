@@ -1,5 +1,3 @@
-/** @format */
-
 import React from "react";
 import ContactCss from "./Contact.module.css";
 import Container from "react-bootstrap/Container";

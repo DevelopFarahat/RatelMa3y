@@ -1,7 +1,7 @@
 /** @format */
 
 import React from "react";
-import { BsFacebook, BsYoutube } from "react-icons/bs";
+import { BsFacebook,BsInstagram } from "react-icons/bs";
 import { RiWhatsappFill } from "react-icons/ri";
 import logo from "../../assets/images/logo.webp";
 import Container from "react-bootstrap/Container";
@@ -42,10 +42,10 @@ function Footer(props) {
                   <BsFacebook className={FooterCss.socialicon} />
                 </a>
                 <a href='#'>
-                  <BsYoutube className={FooterCss.socialicon} />
+                  <RiWhatsappFill className={FooterCss.socialicon} />
                 </a>
                 <a href='#'>
-                  <RiWhatsappFill className={FooterCss.socialicon} />
+                  <BsInstagram className={FooterCss.socialicon} />
                 </a>
               </div>
             </Col>
