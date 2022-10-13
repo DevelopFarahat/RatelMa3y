@@ -38,17 +38,7 @@ function App() {
       display: hideMain ? "none" : "block",
     },
   };
-  const closeMiniNavBar = () => {
-    document
-      .getElementsByClassName("navbar-toggler")[0]
-      .classList.add("collapsed");
-    document
-      .getElementsByClassName("navbar-collapse")[0]
-      .classList.remove("show");
-    document
-      .getElementsByClassName("navbar-collapse")[0]
-      .classList.add("collapse");
-  };
+  const [expanded, setExpanded] = useState(false)
 
   return (
     <>
@@ -56,11 +46,11 @@ function App() {
         {isLoading && <LoadingScreen />}
         <ScrollToTop />
         <div style={styles.hideableDiv}>
-          <NavBar i18n={i18n} isRoomPrepared={isRoomPrepared} closeMiniNavBar={closeMiniNavBar}/>
+          <NavBar i18n={i18n} isRoomPrepared={isRoomPrepared} expanded={expanded} setExpanded={setExpanded}/>
 
           <div style={{ height: 86 }}></div>
           <div style={{ minHeight: "100vh" }}>
-            <div onClick={closeMiniNavBar}>
+            <div>
               <Routes>
                 <Route path="/" element={<Navigate to="home" replace />} />
                 <Route path="home" element={<Home />} />
