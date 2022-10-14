@@ -252,7 +252,7 @@ const Messages = ()=>{
                 setFetchAgain(fetchAgain+1);
                 console.log(res.data)
             }).catch((error)=>{
-                (error);
+                console.log(error);
             });
         }
     
@@ -297,7 +297,7 @@ const Messages = ()=>{
         setPageNoArrLength(numOfPages.length);
         setPageNo(numOfPages.reverse());
         }).catch((error)=>{
-            (error);
+            console.log(error);
         })
     },[fetchAgain,currentPage])
     return(

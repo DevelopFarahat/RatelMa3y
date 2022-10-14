@@ -108,3 +108,25 @@
         
     }
   }
+  @media screen and (max-width:486px) {
+    .pagination-container > ul > li {
+      flex: 0 0 29px !important;
+      padding: 5px !important;
+      height: 34px;
+      margin: 7px !important;
+      }
+      .pagination-container > ul > button{
+        width:29px !important;
+        padding: 5px !important;
+        height: 34px !important;
+      }
+      .pages-separator{
+        position: relative;
+      }
+      .pages-separator > span{
+        position: absolute;
+        top: 34%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+  }

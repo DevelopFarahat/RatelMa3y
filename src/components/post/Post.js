@@ -96,10 +96,10 @@ const Post = (props) => {
               className={PostStyles["post-details"]}
               style={{
                 cursor: "pointer",
-                height: 200,
               }}
             >
               {props.post.content.substring(0, 374)}
+              {console.log(props.post.content.substring(0, 374).replace("\n"," "))}
             </span>
           ) : (
             <p className={PostStyles["post-details"]}>

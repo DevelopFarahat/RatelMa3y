@@ -69,7 +69,7 @@
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
-    width:100%;
+    width:99%;
   }
   .sessions-schedule-main > section > .days-times > div > div> span{
         box-sizing: border-box;

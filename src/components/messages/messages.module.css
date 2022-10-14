@@ -352,10 +352,12 @@
       flex-direction: column;
     }
     .all-messages-main-container{
-      width:100%;
+      width:95%;
+      margin:auto;
     }
     .messages-content-main-container{
-      width:100%;
+      width:95%;
+      margin:auto;
       order: 2;
       margin-top: 85px;
     }
@@ -369,6 +371,9 @@
       width: 100%;
     }
     @media screen and (max-width:486px) {
+      .messages-table{
+        width:289%;
+      }
       .pagination-container > ul > li {
         flex: 0 0 29px !important;
         padding: 5px !important;

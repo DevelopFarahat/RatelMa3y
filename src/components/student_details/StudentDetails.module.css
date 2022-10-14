@@ -537,6 +537,10 @@
   }
   .student-table-main-header{
    flex-direction: column;
+   width:147%;
+  }
+  .requested-joinnig-student-table{
+    width:136%;
   }
   .student-table-main-header > button{
     width:100%;

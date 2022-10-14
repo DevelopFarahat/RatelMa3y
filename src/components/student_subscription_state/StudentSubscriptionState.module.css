@@ -464,9 +464,22 @@ border-color: #f6003c !important;
     flex:0 0 50%;
   }
   .days-check-box-container > div{
-    width:89px !important;
+    width:75px !important;
+    margin:auto;
   }
   @media screen and (max-width:486px) {
+    .student-sessions-days-hours > form > span:nth-child(1) + div > div > div{
+      margin:28px;
+    }
+    .days-check-box-container > div{
+      padding:0;
+    }
+    .setting-student-status_instructor-container{
+      width:85%;
+    }
+    .setting-student-status_instructor-container > form > button{
+      margin-top:10px !important;
+    }
     .pagination-container > ul > li {
       flex: 0 0 29px !important;
       padding: 5px !important;
