@@ -14,7 +14,7 @@ export default function Home({ t, i18n }) {
   // useEffect(() => {
   //   setIsLoading(false);
   //   return () => {
-  //     console.log('Unmounted')
+  //     ('Unmounted')
   //     setIsLoading(true);
   //   };
   // }, []);

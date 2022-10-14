@@ -222,7 +222,7 @@ const EvaluationSheet = (props) => {
           })
           .catch((err) => {
             setIsLoading(false);
-            console.log("error", err);
+            ("error", err);
             enqueueSnackbar("Error: " + err);
           });
 

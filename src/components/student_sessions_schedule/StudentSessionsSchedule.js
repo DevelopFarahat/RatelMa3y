@@ -81,10 +81,13 @@ const StudentSessionsSchedule = ({specificStudentJoiningRequestData})=>{
         }
 
     },[specificStudentJoiningRequestData])
+    console.log("***************************************************88")
+    console.log(scheduleDate)
+    console.log("***************************************************88")
     return(
         <>
-                   <section className={StudentScheduleStyles['sessions-schedule-main']}>
-            {scheduleDate !== undefined || scheduleDate.length !== 0?scheduleDate.map((sch,index)=>(
+            <section className={StudentScheduleStyles['sessions-schedule-main']}>
+            {scheduleDate !== undefined && scheduleDate.length !== 0?scheduleDate.map((sch,index)=>(
              <section key={index}>
                 <span style={{background:Number(sch.day) === new Date().getDay()+1?'rgb(255, 193, 7)':'rgb(25, 135, 84)'}}>{days[sch.day]}</span>
                 {sch.hours_stu.map((h_stu)=>(

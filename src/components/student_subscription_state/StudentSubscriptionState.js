@@ -5,7 +5,7 @@ import { AiFillFilter } from "react-icons/ai";
 import { BiReset } from "react-icons/bi";
 import { FaSave } from "react-icons/fa";
 import { VscChromeClose } from "react-icons/vsc";
-import { MdError } from "react-icons/md";
+import { MdError, MdLteMobiledata } from "react-icons/md";
 import { FaTrash } from "react-icons/fa";
 import Form from "react-bootstrap/Form";
 import { AiFillSetting } from "react-icons/ai";
@@ -27,7 +27,16 @@ const StudentSubscriptionState = ({
   setSpecificStudentJoiningRequestData,
   initialStudentSessionsDetails,
 }) => {
-  let days = ['Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+  const [t, i18n] = useTranslation();
+  const days = [
+    t("Saturday"),
+    t("Sunday"),
+    t("Monday"),
+    t("Tuesday"),
+    t("Wednesday"),
+    t("Thursday"),
+    t("Friday"),
+  ];
   const pindingSubscriptionStateArr = [
     { subscription_id: 1, subscription_name: "Active" },
     { subscription_id: 2, subscription_name: "OnHold" },
@@ -49,7 +58,6 @@ const StudentSubscriptionState = ({
   const [isUserMakingUpdateOnStudentAccount, setIsUserMakingUpdateOnStudentAccount] = useState(false);
   const [instructorData, setInstructorData] = useState([]);
   const initialResponse = useRef();
-  const [stdObjiAfterDeleteSessDaysAndOursStatus, setStdObjiAfterDeleteSessDaysAndOursStatus] = useState(null);
   const [fetchAgain, setFetchAgain] = useState(0);
   const [studentStatus, setStudentStatus] = useState(false);
   const [selectedRow, setSelectedRow] = useState(-1);
@@ -61,7 +69,6 @@ const StudentSubscriptionState = ({
   const [typeOfProcess, setTypeOfProcess] = useState("");
   const [busyDaysHoursWarningAlert, setBusyDaysHoursWarningAlert] = useState(false);
   const [contentOfBusyDaysHoursWarningAlert, setContentOfBusyDaysHoursWarningAlert] = useState("");
-  const [t, i18n] = useTranslation();
   const [workingDays, setWorkingDays] = useState({
     d0: "",
     d1: "",
@@ -607,14 +614,14 @@ const StudentSubscriptionState = ({
     h7: false
   });
   let Working_hours = [
-    { id: 0, appointment: " 8:00 am to 10:00 pm", att: "h0" },
-    { id: 1, appointment: " 10:00 am to 12:00 pm", att: "h1" },
-    { id: 2, appointment: " 12:00 pm to 2:00 pm", att: "h2" },
-    { id: 3, appointment: " 2:00 pm to 4:00 pm", att: "h3" },
-    { id: 4, appointment: " 4:00 pm to 6:00 pm", att: "h4" },
-    { id: 5, appointment: " 6:00 pm to 8:00 pm", att: "h5" },
-    { id: 6, appointment: " 8:00 pm to 10:00 pm", att: "h6" },
-    { id: 7, appointment: " 10:00 pm to 12:00 am", att: "h7" },
+    { id: 0, appointment:  `8:00 ${t("AM")}`, att: "h0" },
+    { id: 1, appointment: `10:00 ${t("AM")}`, att: "h1" },
+    { id: 2, appointment:  `12:00 ${t("PM")}`, att: "h2" },
+    { id: 3, appointment: `2:00 ${t("PM")}`, att: "h3" },
+    { id: 4, appointment: `4:00 ${t("PM")}`, att: "h4" },
+    { id: 5, appointment:  `6:00 ${t("PM")}`, att: "h5" },
+    { id: 6, appointment:  `8:00 ${t("PM")}`, att: "h6" },
+    { id: 7, appointment: `10:00 ${t("PM")}`, att: "h7" },
   ];
   let workingHoursCheckedValuesArr = [
     [0, 1],
@@ -628,7 +635,7 @@ const StudentSubscriptionState = ({
   ];
   const handleApoointmentInHoursD0 = (event) => {
     setCheckedHoursD0({
-      ...checkedHoursD0,
+     // ...checkedHoursD0,
       [event.target.id]: !checkedHoursD0[event.target.id],
     });
     if (event.target.checked) {
@@ -652,7 +659,7 @@ const StudentSubscriptionState = ({
   };
   const handleApoointmentInHoursD1 = (event) => {
     setCheckedHoursD1({
-      ...checkedHoursD1,
+     // ...checkedHoursD1,
       [event.target.id]: !checkedHoursD1[event.target.id],
     });
     if (event.target.checked) {
@@ -676,7 +683,7 @@ const StudentSubscriptionState = ({
   };
   const handleApoointmentInHoursD2 = (event) => {
     setCheckedHoursD2({
-      ...checkedHoursD2,
+     // ...checkedHoursD2,
       [event.target.id]: !checkedHoursD2[event.target.id],
     });
     if (event.target.checked) {
@@ -700,7 +707,7 @@ const StudentSubscriptionState = ({
   };
   const handleApoointmentInHoursD3 = (event) => {
     setCheckedHoursD3({
-      ...checkedHoursD3,
+      //...checkedHoursD3,
       [event.target.id]: !checkedHoursD3[event.target.id],
     });
     if (event.target.checked) {
@@ -724,7 +731,7 @@ const StudentSubscriptionState = ({
   };
   const handleApoointmentInHoursD4 = (event) => {
     setCheckedHoursD4({
-      ...checkedHoursD4,
+    //  ...checkedHoursD4,
       [event.target.id]: !checkedHoursD4[event.target.id],
     });
     if (event.target.checked) {
@@ -741,14 +748,14 @@ const StudentSubscriptionState = ({
           setWorkingHours(arr);
           */
       setWorkingHoursD4({
-        ...WorkingHoursD4,
+       ...WorkingHoursD4,
         [`h${event.target.value}`]: "",
       });
     }
   };
   const handleApoointmentInHoursD5 = (event) => {
     setCheckedHoursD5({
-      ...checkedHoursD5,
+     // ...checkedHoursD5,
       [event.target.id]: !checkedHoursD5[event.target.id],
     });
     if (event.target.checked) {
@@ -772,12 +779,12 @@ const StudentSubscriptionState = ({
   };
   const handleApoointmentInHoursD6 = (event) => {
     setCheckedHoursD6({
-      ...checkedHoursD6,
+      //...checkedHoursD6,
       [event.target.id]: !checkedHoursD6[event.target.id],
     });
     if (event.target.checked) {
       setWorkingHoursD6({
-        ...WorkingHoursD6,
+       ...WorkingHoursD6,
         [event.target.id]: workingHoursCheckedValuesArr[event.target.value],
       });
     } else {
@@ -1268,10 +1275,6 @@ const StudentSubscriptionState = ({
       }
     }
 
-    console.log("..............................////////////////////.......................")
-    console.log(stdBusyDaysInitialObji)
-
-    console.log("...........................////////////////////////....................")
     setStdBusyDays(stdBusyDaysInitialObji);
     for (let i = 0; i < Object.entries(stdObji.busy).length; i++) {
       if (Object.entries(stdObji.busy)[i][1].length !== 0) {
@@ -1625,7 +1628,7 @@ const StudentSubscriptionState = ({
 
       })
       .catch((error) => {
-        console.log(error);
+        (error);
       });
 
   };
@@ -1817,18 +1820,18 @@ const StudentSubscriptionState = ({
     if (field === "studentStatus") {
       setErrors({
         ...errors,
-        statusError: value === "" ? "Status Is Required" : null,
+        statusError: value === "" ? t("keepintouch_required") : null,
       });
     } else if (field === "studentInstructor") {
       setErrors({
         ...errors,
-        instructorError: value === "" ? "Instructor Name Is Required" : null,
+        instructorError: value === "" ? t("keepintouch_required")  : null,
       });
     }
     else if (field === "started_in") {
       setErrors({
         ...errors,
-        started_inError: value === "" ? "Started In Is Required" : null,
+        started_inError: value === "" ? t("keepintouch_required")  : null,
       });
     }
   };
@@ -1844,13 +1847,13 @@ const StudentSubscriptionState = ({
         setSpecificStudentJoiningRequestData(res.data);
       })
       .catch((error) => {
-        console.log(error);
+        (error);
       });
     axios.get(`${process.env.REACT_APP_BACK_HOST_URL}/api/sessions?user_id=${stdObji._id}&limit=10000000000000000`).then((res) => {
       initialStudentSessionsDetails.current = res.data.data;
       setStudentSessionsDetails(res.data.data);
     }).catch((error) => {
-      console.log(error);
+      (error);
     })
     handlerRowClicked(event);
     getTotalPresentAndAbsence(stdObji);
@@ -1881,7 +1884,7 @@ const StudentSubscriptionState = ({
         setPageNo(numOfPages.reverse());
       },
       (error) => {
-        console.log(error);
+        (error);
       }
 
     );
@@ -1891,15 +1894,13 @@ const StudentSubscriptionState = ({
         setInstructorData(instructorRes.data.data);
       })
       .catch((error) => {
-        console.log(error);
+        (error);
       });
   }, [fetchAgain, currentPage]);
   const changeSubscriptionState = (event) => {
     if (studentConfiguration.studentStatus !== "Cancelled" && changableSubscriptionState.instructor === undefined && changableSubscriptionState.started_in === null) {
       setIsUserMakingUpdateOnStudentAccount(true);
-      axios
-        .put(
-          `${process.env.REACT_APP_BACK_HOST_URL}/api/students/${changableSubscriptionState._id}`,
+      axios.put(`${process.env.REACT_APP_BACK_HOST_URL}/api/students/${changableSubscriptionState._id}`,
           {
             "subscription_state": studentConfiguration.studentStatus,
             "instructor": studentConfiguration.studentInstructor,
@@ -1919,70 +1920,89 @@ const StudentSubscriptionState = ({
           getStudentRatelMa3yJoiningRequestData(changableSubscriptionState, event);
         })
         .catch((error) => {
-
-          console.log(error);
+          (error);
         });
-    } else if (studentConfiguration.studentStatus !== "Cancelled" && changableSubscriptionState.instructor !== undefined && changableSubscriptionState.started_in !== null) {
+    } else if (studentConfiguration.studentStatus !== "Cancelled" && changableSubscriptionState.instructor === null) {
+      setIsUserMakingUpdateOnStudentAccount(true);
+      axios.put(`${process.env.REACT_APP_BACK_HOST_URL}/api/students/${changableSubscriptionState._id}`,
+      {
+        subscription_state: studentConfiguration.studentStatus !== ""?studentConfiguration.studentStatus:changableSubscriptionState.subscription_state,
+        instructor: studentConfiguration.studentInstructor !== ""?studentConfiguration.studentInstructor:changableSubscriptionState.instructor
+      }
+    )
+    .then((res) => {
+      setStudentStatus((current) => !current);
+      setStudentConfiguration({
+        studentStatus: "",
+        studentInstructor: "",
+        started_in: ""
+      });
+      setIsUserMakingUpdateOnStudentAccount(false);
+      setFetchAgain(fetchAgain + 1);
+      distroyAlert();
+      getStudentRatelMa3yJoiningRequestData(changableSubscriptionState, event);
+    })
+    .catch((error) => {
+      (error);
+    });
+
+  
+    }else if (studentConfiguration.studentStatus !== "Cancelled" && (changableSubscriptionState.instructor !== undefined && changableSubscriptionState.instructor !== null)){
       setIsUserMakingUpdateOnStudentAccount(true);
       if(studentConfiguration.studentInstructor !== ''){
-      let resStatus =    handleStudentBusyOnInstructor(changableSubscriptionState);
-      console.log("////////////////////farahat/////////////////////////////")
-      console.log()
-        console.log(resStatus);
-      console.log("////////////////////farahat/////////////////////////////")
-      if(resStatus === "OK"){
-        axios.put(`${process.env.REACT_APP_BACK_HOST_URL}/api/students/${changableSubscriptionState._id}`,
-        {
-          subscription_state: studentConfiguration.studentStatus !== '' ? studentConfiguration.studentStatus : changableSubscriptionState.subscription_state,
-          instructor: studentConfiguration.studentInstructor !== '' ? studentConfiguration.studentInstructor : changableSubscriptionState.instructor
-        }
-      )
-      .then((res) => {
-        setStudentStatus((current) => !current);
-        setStudentConfiguration({
-          studentStatus: "",
-          studentInstructor: "",
-          started_in: ""
+       handleStudentBusyOnInstructor(changableSubscriptionState);
+          axios.put(`${process.env.REACT_APP_BACK_HOST_URL}/api/students/${changableSubscriptionState._id}`,
+          {
+            subscription_state: studentConfiguration.studentStatus !== '' ? studentConfiguration.studentStatus : changableSubscriptionState.subscription_state,
+            instructor:  studentConfiguration.studentInstructor
+          }
+        )
+        .then((res) => {
+          console.log("yes res");
+          setStudentStatus((current) => !current);
+          setStudentConfiguration({
+            studentStatus: "",
+            studentInstructor: "",
+            started_in: ""
+          });
+          setIsUserMakingUpdateOnStudentAccount(false);
+          distroyAlert();
+          setFetchAgain(fetchAgain + 1);
+          getStudentRatelMa3yJoiningRequestData(changableSubscriptionState, event);
+        })
+        .catch((error) => {
+          (error);
         });
-        setIsUserMakingUpdateOnStudentAccount(false);
-        distroyAlert();
-        setFetchAgain(fetchAgain + 1);
-        getStudentRatelMa3yJoiningRequestData(changableSubscriptionState, event);
-      })
-
-      .catch((error) => {
-        console.log(error);
-      });
-      }
-      }else{
-        axios.put(`${process.env.REACT_APP_BACK_HOST_URL}/api/students/${changableSubscriptionState._id}`,
-        {
-          subscription_state: studentConfiguration.studentStatus !== '' ? studentConfiguration.studentStatus : changableSubscriptionState.subscription_state,
-          instructor: studentConfiguration.studentInstructor !== '' ? studentConfiguration.studentInstructor : changableSubscriptionState.instructor
-        }
-      )
-      .then((res) => {
-        setStudentStatus((current) => !current);
-        setStudentConfiguration({
-          studentStatus: "",
-          studentInstructor: "",
-          started_in: ""
-        });
-        setIsUserMakingUpdateOnStudentAccount(false);
-        distroyAlert();
-        setFetchAgain(fetchAgain + 1);
-        getStudentRatelMa3yJoiningRequestData(changableSubscriptionState, event);
-      })
-
-      .catch((error) => {
-        console.log(error);
-      });
-      }
+        }else{
+          axios.put(`${process.env.REACT_APP_BACK_HOST_URL}/api/students/${changableSubscriptionState._id}`,
+          {
+            subscription_state: studentConfiguration.studentStatus !== '' ? studentConfiguration.studentStatus : changableSubscriptionState.subscription_state,
+            instructor: changableSubscriptionState.instructor
+          }
+        )
+        .then((res) => {
+          setStudentStatus((current) => !current);
+          setStudentConfiguration({
+            studentStatus: "",
+            studentInstructor: "",
+            started_in: ""
+          });
+          setIsUserMakingUpdateOnStudentAccount(false);
+          distroyAlert();
+          setFetchAgain(fetchAgain + 1);
+          getStudentRatelMa3yJoiningRequestData(changableSubscriptionState, event);
+        })
   
+        .catch((error) => {
+          (error);
+        });
+        }
+
     } else {
       setIsUserMakingUpdateOnStudentAccount(true);
-      let resStatus =    handleStudentBusyOnInstructor(changableSubscriptionState);
-      if(resStatus === "OK"){
+        if(changableSubscriptionState.instructor !== null && changableSubscriptionState.instructor !== undefined){
+          handleStudentBusyOnInstructor(changableSubscriptionState);
+        }
         axios.put(`${process.env.REACT_APP_BACK_HOST_URL}/api/students/${changableSubscriptionState._id}`,
         {
           subscription_state: studentConfiguration.studentStatus,
@@ -2003,10 +2023,8 @@ const StudentSubscriptionState = ({
         getStudentRatelMa3yJoiningRequestData(changableSubscriptionState, event);
       })
       .catch((error) => {
-        console.log(error);
+        (error);
       });
-      }
-
     }
   };
 
@@ -2075,7 +2093,7 @@ const StudentSubscriptionState = ({
           matchedDays.push(false);
         }
       }
-      if ((matchedDays.filter((mD) => mD === true).length >= Number(studentObject.program_prefs.sessions_in_week)) && matchedHours.filter((mH) => mH === true).length >= Number(studentObject.program_prefs.sessions_in_week)) {
+      if ((matchedDays.filter((mD) => mD === true).length >= Number(studentObject.program_prefs.sessions_in_week)) && (matchedHours.filter((mH) => mH === true).length >= Number(studentObject.program_prefs.sessions_in_week)||matchedHours.filter((mH) => mH === true).length <= Number(studentObject.program_prefs.sessions_in_week))) {
         recommendedInstructors.push(instructorData[i]);
         matchedDays = [];
         matchedHours = [];
@@ -3012,7 +3030,7 @@ const StudentSubscriptionState = ({
               d6: false,
             })
           }).catch((error) => {
-            console.log(error);
+            (error);
           })
 
           axios.put(`${process.env.REACT_APP_BACK_HOST_URL}/api/students/${changableSubscriptionState._id}`, {
@@ -3032,20 +3050,20 @@ const StudentSubscriptionState = ({
             setStudentStatus((current) => !current);
             getStudentRatelMa3yJoiningRequestData(res.data, event);
           }).catch((error) => {
-            console.log(error);
+            (error);
           })
         } else {
           setBusyDaysHoursWarningAlert(true);
           let DayObj = numberOfDaysSelectedTestCasesArr.find((evDay, index) => evDay[`testCaseDay`] === true);
-          setContentOfBusyDaysHoursWarningAlert(`You Have To  Select One Hour On ${days[DayObj['key']]}`)
+          setContentOfBusyDaysHoursWarningAlert(`${t("You Have To  Select One Hour On")}  ${days[DayObj['key']]}`)
         }
       } else {
         setBusyDaysHoursWarningAlert(true);
-        setContentOfBusyDaysHoursWarningAlert(`You Have To  Select ${changableSubscriptionState.program_prefs.sessions_in_week} Days According To Number Of Session`)
+        setContentOfBusyDaysHoursWarningAlert(`${t("You Have To  Select")} ${changableSubscriptionState.program_prefs.sessions_in_week} ${t("Days According To Number Of Session")}`)
       }
     
     }).catch((error) => {
-      console.log(error);
+      (error);
     })
   }
   const sortStudentBySubscriptionState = (sortType) => {
@@ -3117,7 +3135,7 @@ const StudentSubscriptionState = ({
                   if (typeof Object.entries(res.data.busy)[i][1][j] === 'object' && !Array.isArray(Object.entries(res.data.busy)[i][1][j])) {
                     for (let x = 0; x < Object.entries(res.data.busy)[i][1][j]['stdIds'].length; x++) {
                       if (Object.entries(res.data.busy)[i][1][j]['stdIds'][x] === studentAccountObji._id) {
-                        if (Object.entries(res.data.busy)[i][1][j]['stdIds'].max === 1) {
+                        if (Object.entries(res.data.busy)[i][1][j].max === 1) {
                           stdHoursD0[j] = [0, 0];
                         } else {
                           Object.entries(res.data.busy)[i][1][j]['stdIds'].splice(x, 1);
@@ -3296,7 +3314,7 @@ const StudentSubscriptionState = ({
           }).then((res) => {
             return res;
           }).catch((error) => {
-            console.log(error);
+            (error);
           })
         )
       })
@@ -3307,10 +3325,7 @@ const StudentSubscriptionState = ({
       if (res.statusText === "OK") {
         updateStudentInstructorBusyDataResponseStatus =    updateStudentInstructorBusyData();
         updateStudentInstructorBusyDataResponseStatus.then((res)=>{
-          if(res.statusText === "OK")return res.statusText;
-          
         })
-
       }
     })
   }
@@ -3329,7 +3344,7 @@ const StudentSubscriptionState = ({
             }, 1000)
             return res;
           }).catch((error) => {
-            console.log(error);
+            (error);
           })
 
         )
@@ -3337,6 +3352,7 @@ const StudentSubscriptionState = ({
     }
     let result = deleteReservedStudentDaysAndHours();
     result.then((res) => {
+      console.log(res)
       if (res.statusText === "OK" && studentAccountObji.subscription_state !== "Pending") {
         handleStudentBusyOnInstructor(studentAccountObji);
       }
@@ -3345,13 +3361,13 @@ const StudentSubscriptionState = ({
   return (
 
     <>
-      <div className={StudentSubscriptionStyles["student-user-data-container"]}>
+      <div className={StudentSubscriptionStyles["student-user-data-container"]} style={{direction:t("us") === t("Us")?'ltr':"rtl"}}>
         <div className={StudentSubscriptionStyles["table-settings-container"]}>
           <Form.Label
             htmlFor="userAccountFilterTxt"
             className={StudentSubscriptionStyles["filter-label"]}
           >
-            Filter
+            {t("filter")}
           </Form.Label>
           <Form.Control
             id="userAccountFilterTxt"
@@ -3359,9 +3375,9 @@ const StudentSubscriptionState = ({
             value={filterValue}
             onChange={handleFiltaration}
           />
-          <Form.Label htmlFor="sort_subscription_state">Sort</Form.Label>
+          <Form.Label htmlFor="sort_subscription_state">{t("sort")}</Form.Label>
           <Form.Select name="sort_subscription_state" id="sort_subscription_state" onChange={(event) => sortStudentBySubscriptionState(event.target.value)}>
-            <option value={""}>Select</option>
+            <option value={""}>{t("select")}</option>
             <option value="Pending">Pending</option>
             <option value="Active">Active</option>
             <option value="OnHold">OnHold</option>
@@ -3373,7 +3389,7 @@ const StudentSubscriptionState = ({
             style={{ marginTop: "auto" }}
             onClick={(event) => filterStudents(event.target.value)}
           >
-            Filter <AiFillFilter />
+            {t("filter")} <AiFillFilter />
           </button>
           <button
             type="button"
@@ -3381,7 +3397,7 @@ const StudentSubscriptionState = ({
             style={{ marginTop: "auto" }}
             onClick={resetTableFiltaration}
           >
-            Reset
+            {t("reset")}
             <BiReset />
           </button>
         </div>
@@ -3399,9 +3415,9 @@ const StudentSubscriptionState = ({
             >
               <thead>
                 <tr>
-                  <th>Name</th>
-                  <th>Subscription State</th>
-                  <th>Settings</th>
+                  <th>{t("name")}</th>
+                  <th>{t("subscription_state")}</th>
+                  <th>{t("settings")}</th>
                 </tr>
               </thead>
               <tbody>
@@ -3491,7 +3507,7 @@ const StudentSubscriptionState = ({
               >
                 <form onSubmit={handleSubmit} method="post">
                   <div>
-                    <Form.Label htmlFor="studentStatus">Status</Form.Label>
+                    <Form.Label htmlFor="studentStatus">{t("subscription_state")}</Form.Label>
                     <Form.Select
                       id="studentStatus"
                       name="student_status"
@@ -3501,7 +3517,7 @@ const StudentSubscriptionState = ({
                         }`}
                       onChange={setConfiguration}
                     >
-                      <option value="">Select</option>
+                      <option value="">{t("select")}</option>
                       {changableSubscriptionState.subscription_state ===
                         "Pending"
                         ? pindingSubscriptionStateArr.map(
@@ -3545,7 +3561,7 @@ const StudentSubscriptionState = ({
                     <>
                       <div>
                         <Form.Label htmlFor="studentInstructor">
-                          Instructor
+                          {t("instructor")}
                         </Form.Label>
                         <Form.Select
                           name="student_instructor"
@@ -3556,9 +3572,9 @@ const StudentSubscriptionState = ({
                             }`}
                           onChange={setConfiguration}
                         >
-                          <option value="">Select</option>
+                          <option value="">{t("select")}</option>
 
-                          {recommendedInstructorsData.length === 0 ? <option value="" style={{ textAlign: 'center' }} disabled>There Is No Recommendation </option> : null}
+                          {recommendedInstructorsData.length === 0 ? <option value="" style={{ textAlign: 'center' }} disabled>{t("There Is No Recommendation")}</option> : null}
                           {recommendedInstructorsData.map((instructor) => (
                             <option key={instructor._id} value={instructor._id} style={{ background: changableSubscriptionState.instructor !== undefined && changableSubscriptionState.instructor === instructor._id ? '#038674' : '', color: changableSubscriptionState.instructor !== undefined && changableSubscriptionState.instructor === instructor._id ? '#FFFFFF' : '#000000' }}>
                               {instructor.name}
@@ -3570,12 +3586,12 @@ const StudentSubscriptionState = ({
                         </small>
                       </div>
                     </>
-                  ) : studentConfiguration.studentStatus !== "" &&
-                    studentConfiguration.studentStatus !== "Cancelled" ? (
+                  ) :studentConfiguration.studentStatus !== "" &&
+                    studentConfiguration.studentStatus !== "Cancelled"  ? (
                     <>
                       <div>
                         <Form.Label htmlFor="studentInstructor">
-                          Instructor
+                          {t("instructor")}
                         </Form.Label>
                         <Form.Select
                           name="student_instructor"
@@ -3587,7 +3603,7 @@ const StudentSubscriptionState = ({
                           onChange={setConfiguration}
                         >
                           <option value="">Select</option>
-                          {recommendedInstructorsData.length === 0 ? <option style={{ textAlign: 'center' }} disabled>There Is No Recommendation </option> : null}
+                          {recommendedInstructorsData.length === 0 ? <option style={{ textAlign: 'center' }} disabled>{t("There Is No Recommendation")}</option> : null}
                           {recommendedInstructorsData.map((instructor) => (
                             <option key={instructor._id} value={instructor._id}>
                               {instructor.name}
@@ -3597,8 +3613,9 @@ const StudentSubscriptionState = ({
                         <small className="text-danger">
                           {errors.instructorError}
                         </small>
+                        {changableSubscriptionState.started_in === null?
                         <div>
-                          <Form.Label htmlFor="started_in">Start At</Form.Label>
+                          <Form.Label htmlFor="started_in">{t("std_started_at")}</Form.Label>
                           <Form.Control
                             type="date"
                             id="started_in"
@@ -3610,7 +3627,7 @@ const StudentSubscriptionState = ({
                               }`}
                             onChange={setConfiguration}
                           />
-                        </div>
+                        </div>:null}
                       </div>{" "}
                     </>
                   ) : null}
@@ -3635,12 +3652,12 @@ const StudentSubscriptionState = ({
                         <Spinner animation="grow" variant="light" style={{ width: '10px', height: '10px', marginLeft: '3px' }} />
                         <Spinner animation="grow" variant="light" style={{ width: '10px', height: '10px', marginLeft: '3px' }} />
                         <Spinner animation="grow" variant="light" style={{ width: '10px', height: '10px', marginLeft: '3px' }} />
-                      </> : <>{"Save"}<FaSave style={{ margin: "0px 0 1px 3px" }} size={15} /></>
+                      </> : <>{t("save")}<FaSave style={{ margin: "0px 0 1px 3px" }} size={15} /></>
                       }
 
 
                     </button>
-                  ) : changableSubscriptionState.instructor !== null &&
+                  ) :changableSubscriptionState.instructor !== null &&
                     changableSubscriptionState.instructor !== undefined ? (
                     <button
                       type="submit"
@@ -3652,10 +3669,37 @@ const StudentSubscriptionState = ({
                         <Spinner animation="grow" variant="light" style={{ width: '10px', height: '10px', marginLeft: '3px' }} />
                         <Spinner animation="grow" variant="light" style={{ width: '10px', height: '10px', marginLeft: '3px' }} />
                         <Spinner animation="grow" variant="light" style={{ width: '10px', height: '10px', marginLeft: '3px' }} />
-                      </> : <>{"Save"}<FaSave style={{ margin: "0px 0 1px 3px" }} size={15} /></>
+                      </> : <>{t("save")}<FaSave style={{ margin: "0px 0 1px 3px" }} size={15} /></>
                       }
                     </button>
-                  ) : (
+                  ) :changableSubscriptionState.instructor === null ? (
+                  <button
+                    type="submit"
+                    className={`${studentConfiguration.studentStatus === "" ||
+                    studentConfiguration.studentInstructor === "" ||
+                    errors.instructorError ||
+                    errors.statusError
+                    ? StudentSubscriptionStyles["disabled-btn"]
+                    : StudentSubscriptionStyles["btn"]
+                    }`}
+                  disabled={
+                    studentConfiguration.studentStatus === "" ||
+                      studentConfiguration.studentInstructor === "" ||
+                      errors.statusError ||
+                      errors.instructorError
+                      ? true
+                      : false
+                  }
+                  >
+                    {isUserMakingUpdateOnStudentAccount ? <>
+                      <Spinner animation="grow" variant="light" style={{ width: '10px', height: '10px', marginLeft: '3px' }} />
+                      <Spinner animation="grow" variant="light" style={{ width: '10px', height: '10px', marginLeft: '3px' }} />
+                      <Spinner animation="grow" variant="light" style={{ width: '10px', height: '10px', marginLeft: '3px' }} />
+                      <Spinner animation="grow" variant="light" style={{ width: '10px', height: '10px', marginLeft: '3px' }} />
+                    </> : <>{t("save")}<FaSave style={{ margin: "0px 0 1px 3px" }} size={15} /></>
+                    }
+                  </button>
+                ): (
                     <button
                       type="submit"
                       className={`${studentConfiguration.studentStatus === "" ||
@@ -3683,7 +3727,7 @@ const StudentSubscriptionState = ({
                         <Spinner animation="grow" variant="light" style={{ width: '10px', height: '10px', marginLeft: '3px' }} />
                         <Spinner animation="grow" variant="light" style={{ width: '10px', height: '10px', marginLeft: '3px' }} />
                         <Spinner animation="grow" variant="light" style={{ width: '10px', height: '10px', marginLeft: '3px' }} />
-                      </> : <>{"Save"}<FaSave style={{ margin: "0px 0 1px 3px" }} size={15} /></>
+                      </> : <>{t("save")}<FaSave style={{ margin: "0px 0 1px 3px" }} size={15} /></>
                       }
                     </button>
                   )}
@@ -3698,24 +3742,24 @@ const StudentSubscriptionState = ({
                 <section className={StudentSubscriptionStyles['colors-section-keys-whole-container']}>
                   <div>
                     <span style={{ background: '#000000' }}>{""}</span>
-                    <span>Instructor Available</span>
+                    <span>{t("Instructor Available")}</span>
                   </div>
                   <div>
                     <span style={{ background: '#d9d9f3' }}>{""}</span>
-                    <span>Instructor Not Available</span>
+                    <span>{t("Instructor Not Available")}</span>
                   </div>
                   <div>
                     <span style={{ background: '#00c07f' }}>{""}</span>
-                    <span>Student Prefers</span>
+                    <span>{t("Student Prefers")}</span>
                   </div>
                   <div>
                     <span style={{ background: 'rgba(15,255,149,.3)' }}>{""}</span>
-                    <span>Student Reserved Sessions Days And Hours</span>
+                    <span>{t("Student's Sessions Days And Hours")}</span>
                   </div>
                 </section>
                 {/* change date and time of the sessions operations */}
                 <form method="post">
-                  <span>Session Days</span>
+                  <span>{t("Session Days")}</span>
                   <div
                     className={`${StudentSubscriptionStyles["days-check-box-container"]}`}
                   >
@@ -3741,7 +3785,7 @@ const StudentSubscriptionState = ({
                       />
                     </div>
                     <div>
-                      <Form.Label htmlFor="d1" style={{ color: disabledDays.d1 ? '#d9d9f3' : prefsDays.d1 ? '#00c07f' : '#000000', backgroundColor: stdBusyDays.d1 ? 'rgba(15,255,149,.3)' : '', borderRadius: '2px' }}>Sunday</Form.Label>
+                      <Form.Label htmlFor="d1" style={{ color: disabledDays.d1 ? '#d9d9f3' : prefsDays.d1 ? '#00c07f' : '#000000', backgroundColor: stdBusyDays.d1 ? 'rgba(15,255,149,.3)' : '', borderRadius: '2px' }}>{t("Sunday")}</Form.Label>
                       <Form.Check
                         name="d1"
                         id="d1"
@@ -3868,7 +3912,7 @@ const StudentSubscriptionState = ({
                     </div>
                   </div>
                   {checkDaysRadio.d0 ? <>
-                    <span>Session Hours on<span style={{ color: '#038674', fontWeight: 'bold', verticalAlign: 'text-top' }}>Saturday</span></span>
+                    <span>{t("Session Times on")}<span style={{ color: '#038674', fontWeight: 'bold', verticalAlign: 'text-bottom' }}>{days[0]}</span></span>
                     <div className={`${StudentSubscriptionStyles["hours-check-box-container"]}`}>
                       {Working_hours.map((wh, index) => (
                         <div key={wh.id}>
@@ -3887,10 +3931,10 @@ const StudentSubscriptionState = ({
                             checked={checkedHoursD0[`h${index}`]}
 
                           />
-                          <ImUsers style={{ color: disabledCompletedHourReachedMaximumNumOfStdD0[`h${index}`] ? '#dadada' : '#000000' }} />{" "}<span style={{ verticalAlign: "text-top", color: disabledCompletedHourReachedMaximumNumOfStdD0[`h${index}`] ? '#dadada' : '#000000' }}>{nReservedSessionsByStdD0[`h${index}`]}</span>
+                          <ImUsers style={{ color: disabledCompletedHourReachedMaximumNumOfStdD0[`h${index}`] ? '#dadada' : '#000000' }} />{" "}<span style={{ verticalAlign: 'text-top', color: disabledCompletedHourReachedMaximumNumOfStdD0[`h${index}`] ? '#dadada' : '#000000' }}>{nReservedSessionsByStdD0[`h${index}`]}</span>
                         </div>
                       ))}</div></> : checkDaysRadio.d1 ? <>
-                        <span>Session Hours on <span style={{ color: '#038674', fontWeight: 'bold', verticalAlign: 'text-top' }}>Sunday</span></span>
+                        <span>{t("Session Times on")} <span style={{ color: '#038674', fontWeight: 'bold', verticalAlign: 'text-bottom' }}>{days[1]}</span></span>
                         <div className={`${StudentSubscriptionStyles["hours-check-box-container"]}`}>
                           {Working_hours.map((wh, index) => (
                             <div key={wh.id}>
@@ -3911,7 +3955,7 @@ const StudentSubscriptionState = ({
                               <ImUsers style={{ color: disabledCompletedHourReachedMaximumNumOfStdD1[`h${index}`] ? '#dadada' : '#000000' }} />{" "}<span style={{ verticalAlign: "text-top", color: disabledCompletedHourReachedMaximumNumOfStdD1[`h${index}`] ? '#dadada' : '#000000' }}>{nReservedSessionsByStdD1[`h${index}`]}</span>
                             </div>
                           ))}</div></> : checkDaysRadio.d2 ? <>
-                            <span>Session Hours on <span style={{ color: '#038674', fontWeight: 'bold', verticalAlign: 'text-top' }}>Monday</span></span>
+                            <span>{t("Session Times on")}<span style={{ color: '#038674', fontWeight: 'bold', verticalAlign: 'text-bottom' }}>{days[2]}</span></span>
                             <div className={`${StudentSubscriptionStyles["hours-check-box-container"]}`}>
                               {Working_hours.map((wh, index) => (
                                 <div key={wh.id}>
@@ -3933,7 +3977,7 @@ const StudentSubscriptionState = ({
                                 </div>
 
                               ))}</div></> : checkDaysRadio.d3 ? <>
-                                <span>Session Hours on <span style={{ color: '#038674', fontWeight: 'bold', verticalAlign: 'text-top' }}>Tuesday</span></span>
+                                <span>{t("Session Times on")} <span style={{ color: '#038674', fontWeight: 'bold', verticalAlign: 'text-bottom' }}>{days[3]}</span></span>
                                 <div className={`${StudentSubscriptionStyles["hours-check-box-container"]}`}>
                                   {Working_hours.map((wh, index) => (
                                     <div key={wh.id}>
@@ -3954,7 +3998,7 @@ const StudentSubscriptionState = ({
                                       <ImUsers style={{ color: disabledCompletedHourReachedMaximumNumOfStdD3[`h${index}`] ? '#dadada' : '#000000' }} />{" "}<span style={{ verticalAlign: "text-top", color: disabledCompletedHourReachedMaximumNumOfStdD3[`h${index}`] ? '#dadada' : '#000000' }}>{nReservedSessionsByStdD3[`h${index}`]}</span>
                                     </div>
                                   ))}</div></> : checkDaysRadio.d4 ? <>
-                                    <span>Session Hours on <span style={{ color: '#038674', fontWeight: 'bold', verticalAlign: 'text-top' }}>Wednesday</span></span>
+                                    <span>{t("Session Times on")}<span style={{ color: '#038674', fontWeight: 'bold', verticalAlign: 'text-bottom' }}>{days[4]}</span></span>
                                     <div className={`${StudentSubscriptionStyles["hours-check-box-container"]}`}>
                                       {Working_hours.map((wh, index) => (
                                         <div key={wh.id}>
@@ -3975,7 +4019,7 @@ const StudentSubscriptionState = ({
                                           <ImUsers style={{ color: disabledCompletedHourReachedMaximumNumOfStdD4[`h${index}`] ? '#dadada' : '#000000' }} />{" "}<span style={{ verticalAlign: "text-top", color: disabledCompletedHourReachedMaximumNumOfStdD4[`h${index}`] ? '#dadada' : '#000000' }}>{nReservedSessionsByStdD4[`h${index}`]}</span>
                                         </div>
                                       ))}</div></> : checkDaysRadio.d5 ? <>
-                                        <span>Session Hours on <span style={{ color: '#038674', fontWeight: 'bold', verticalAlign: 'text-top' }}>Thursday</span></span>
+                                        <span>{t("Session Times on")} <span style={{ color: '#038674', fontWeight: 'bold', verticalAlign: 'text-bottom' }}>{days[5]}</span></span>
                                         <div className={`${StudentSubscriptionStyles["hours-check-box-container"]}`}>
                                           {Working_hours.map((wh, index) => (
                                             <div key={wh.id}>
@@ -3996,7 +4040,7 @@ const StudentSubscriptionState = ({
                                               <ImUsers style={{ color: disabledCompletedHourReachedMaximumNumOfStdD5[`h${index}`] ? '#dadada' : '#000000' }} />{" "}<span style={{ verticalAlign: "text-top", color: disabledCompletedHourReachedMaximumNumOfStdD5[`h${index}`] ? '#dadada' : '#000000' }}>{nReservedSessionsByStdD5[`h${index}`]}</span>
                                             </div>
                                           ))}</div></> : checkDaysRadio.d6 ? <>
-                                            <span>Session Hours on <span style={{ color: '#038674', fontWeight: 'bold', verticalAlign: 'text-top' }}>Friday</span></span>
+                                            <span>{t("Session Times on")} <span style={{ color: '#038674', fontWeight: 'bold', verticalAlign: 'text-bottom' }}>{days[6]}</span></span>
                                             <div className={`${StudentSubscriptionStyles["hours-check-box-container"]}`}>
                                               {Working_hours.map((wh, index) => (
                                                 <div key={wh.id}>
@@ -4026,7 +4070,7 @@ const StudentSubscriptionState = ({
                       <Spinner animation="grow" variant="light" style={{ width: '10px', height: '10px', marginLeft: '3px' }} />
                       <Spinner animation="grow" variant="light" style={{ width: '10px', height: '10px', marginLeft: '3px' }} />
                       <Spinner animation="grow" variant="light" style={{ width: '10px', height: '10px', marginLeft: '3px' }} />
-                    </> : <>{"Update"}<img src={updateImageIcon} style={{ marginLeft: '10px', width: '16px', objectFit: 'contain' }} alt="update" /></>}
+                    </> : <>{t("update")}<img src={updateImageIcon} style={{ marginLeft: '10px', width: '16px', objectFit: 'contain' }} alt="update" /></>}
 
                   </button>
                 </form>
@@ -4035,26 +4079,26 @@ const StudentSubscriptionState = ({
           </div>
         ) : null}
       </div>
-      {isAlertVisible ? (
-        <div className={`${StudentSubscriptionStyles["alert"]} ${changableSubscriptionState.subscription_state !== "Pending" ? StudentSubscriptionStyles['cancelled-action-alert'] : ''} `}>
+      {isAlertVisible? (
+        <div className={`${StudentSubscriptionStyles["alert"]} `}>
           <img src={CircleGif} alt="gif-alert-circle" />
-          {changableSubscriptionState.instructor !== null && changableSubscriptionState.instructor !== undefined && changableSubscriptionState.subscription_state !== 'Cancelled' ? (
-            <p style={{ width: '80%' }}><span> {JSON.parse(localStorage.getItem('user')).privileges}</span> hase  Updated <span>{changableSubscriptionState.name} </span>Account</p>
-          ) : changableSubscriptionState.instructor === null && changableSubscriptionState.instructor === undefined && changableSubscriptionState.subscription_state === "Pending" ? (
-            <p style={{ width: '80%' }}><span> {JSON.parse(localStorage.getItem('user')).privileges}</span> hase  Changed <span>{changableSubscriptionState.name} </span> Subscription State and setting Started  Date and Instructor Successfully</p>
+          {(changableSubscriptionState.instructor !== null && changableSubscriptionState.instructor !== undefined) && changableSubscriptionState.subscription_state !== 'Cancelled' ? (
+            <p style={{ width: '80%' }}><span> {JSON.parse(localStorage.getItem('user')).privileges}</span>  {t("has_Updated")} <span>{changableSubscriptionState.name} </span> {t("Account")}</p>
+          ) : (changableSubscriptionState.instructor === null || changableSubscriptionState.instructor === undefined) && changableSubscriptionState.subscription_state === "Pending" ? (
+            <p style={{ width: '80%' }}><span> {JSON.parse(localStorage.getItem('user')).privileges}</span> {t("has_Changed")} <span>{changableSubscriptionState.name} </span> {t("Subscription State and setting Started Date and Instructor Successfully")}</p>
           ) : changableSubscriptionState.subscription_state === "Cancelled" ? (
-            <p><span> {JSON.parse(localStorage.getItem('user')).privileges}</span> hase  Cancelled  <span>{changableSubscriptionState.name} </span> Account </p>
+            <p><span> {JSON.parse(localStorage.getItem('user')).privileges}</span> {t("has_Cancelled")}  <span>{changableSubscriptionState.name} </span>{t("Account")}</p>
           ) : null}
         </div>
       ) : null}
       {isUserDeleteAnyAccount ? (
-        <div className={StudentSubscriptionStyles["alert-container"]}>
+        <div className={StudentSubscriptionStyles["alert"]}>
           <img src={CircleGif} alt="successfull" />
           <span>
             <span style={{ fontWeight: "bold", color: "#038674" }}>
               {localStorage.getItem("user_name")}
             </span>{" "}
-            Has Deleted  Student  Account Successfully
+            {t("Has Deleted  Stuff Account Successfully")}
           </span>
         </div>
       ) : null}

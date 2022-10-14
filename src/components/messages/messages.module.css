@@ -25,9 +25,13 @@
   -o-border-radius: 50%;
 }
 .messages-icon-container > img {
-  display:block;
   margin: auto;
-  margin: 26px auto;
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50%;
 }
 .messages-main > div+div{
   width: 100%;
@@ -310,8 +314,8 @@
     width:20px;
     object-fit: contain;
   }
-  .alert-container{
-    width:25%;
+  .alert{
+    width:350px;
     padding: 10px;
     border-radius: 5px;
     -webkit-border-radius: 5px;
@@ -321,24 +325,18 @@
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     background-color:#FFFFFF;
     position: fixed;
-    top: 54%;
-    left: 35%;
-    transform: translate(-50%,-50%);
-    -webkit-transform: translate(-50%,-50%);
-    -moz-transform: translate(-50%,-50%);
-    -ms-transform: translate(-50%,-50%);
-    -o-transform: translate(-50%,-50%);
-    color: #FFFFFF;
+    top: 100px;
+    right:11px;
     z-index:1500;
   }
   
-  .alert-container >  img {
+  .alert >  img {
     display: block;
     margin: auto;
     width:35%;
     object-fit: scale-down;
   }
-  .alert-container >  span {
+  .alert >  span {
     display: block;
     width: 100%;
     font-size: 1rem;
@@ -369,5 +367,43 @@
     }
     .btn{
       width: 100%;
+    }
+    @media screen and (max-width:486px) {
+      .pagination-container > ul > li {
+        flex: 0 0 29px !important;
+        padding: 5px !important;
+        height: 34px;
+        margin: 7px !important;
+        }
+        .pagination-container > ul > button{
+          width:29px !important;
+          padding: 5px !important;
+          height: 34px !important;
+        }
+        .pages-separator{
+          position: relative;
+        }
+        .pages-separator > span{
+          position: absolute;
+          top: 34%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+        }
+    }
+    @media screen and (min-width:487px) and (max-width:880px) {
+      .alert{
+        width:279px;
+      }
+      .alert > img{
+        width:35%;
+      }
+    }
+    @media screen and (min-width:881px) {
+      .alert{
+        width:350px;
+      }
+      .alert > img{
+        width:35%;
+      }
     }
   }
