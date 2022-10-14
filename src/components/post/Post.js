@@ -96,6 +96,7 @@ const Post = (props) => {
               className={PostStyles["post-details"]}
               style={{
                 cursor: "pointer",
+                height:'200px'
               }}
             >
               {props.post.content.substring(0, 374)}
