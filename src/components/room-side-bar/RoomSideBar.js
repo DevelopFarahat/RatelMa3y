@@ -24,7 +24,6 @@ export default function RoomSideBar({ hideMain }) {
   useEffect(() => {
     if (user && user?.in_session && user?.in_session?.members_with_access) {
       let promiseArr = [];
-      console.log("isExam should be ", user.in_session);
 
       user.in_session.members_with_access.forEach(async (id) => {
         if (id != user._id) {
@@ -70,9 +69,8 @@ export default function RoomSideBar({ hideMain }) {
             {...props}
             className={[styles['no-scrollbar'],styles['wider-board']]}
             style={{
-              
               height: '85%',
-              overflow: 'scroll',
+              overflowY: 'scroll',
               position: "absolute",
               backgroundColor: "white",
               boxShadow: "0 0 8px rgb(0 0 0 / 16%)",
@@ -128,7 +126,7 @@ export default function RoomSideBar({ hideMain }) {
               onClick={() => showBook(!bookIsShown)}
               className={styles["sideBtn"]}
             >
-              <GiBookmarklet className={styles["icons"]} />
+              <GiBookmarklet className={styles["icons"]} color="#121a24"/>
               <span className={styles["labels"]}>{t("book")}</span>
             </Button>
             {user.role === "instructor" && (
@@ -138,7 +136,7 @@ export default function RoomSideBar({ hideMain }) {
                 ref={target2}
                 className={styles["sideBtn"]}
               >
-                <MdFactCheck className={styles["icons"]} />
+                <MdFactCheck className={styles["icons"]} color="#121a24"/>
                 <span className={styles["labels"]}>{t("evaluations")}</span>
               </Button>
             )}
@@ -222,7 +220,7 @@ const EvaluationSheet = (props) => {
           })
           .catch((err) => {
             setIsLoading(false);
-            ("error", err);
+            console.log("error", err);
             enqueueSnackbar("Error: " + err);
           });
 
@@ -234,7 +232,7 @@ const EvaluationSheet = (props) => {
         <Card
           style={{
             height: '100%',
-            overflow: 'scroll',
+            overflowY: 'scroll',
             flex: 1,
             paddingTop: 16,
             width: 240,
@@ -380,7 +378,7 @@ const EvaluationSheet = (props) => {
               <Button
                 variant="success"
                 type="submit"
-                className="mt-4 mb-4"
+                className="mt-4 mb-2"
                 disabled={
                   isLoading || alreadyTested.includes(fprops.values.student)
                 }

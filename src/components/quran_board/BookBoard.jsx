@@ -182,7 +182,29 @@ const BookBoard = () => {
         className={styles["quran-surah-settings"]}
         style={{ backgroundColor: "#038674", color: "white" }}
       >
-        <div className="d-none d-sm-flex">
+        <div>
+          <BsArrowBarRight
+            className="d-flex d-sm-none"
+            size={28}
+            style={{
+              minWidth: 24,
+              cursor: "pointer",
+              transitionDuration: ".2s",
+            }}
+            onClick={(e) => {
+              setPageNumber((prev) => {
+                {
+                  e.target.style.transform = "translateX(4px)";
+                  setTimeout(
+                    () => (e.target.style.transform = "translateX(0px)"),
+                    200
+                  );
+                  return prev == 1 ? 1 : Number.parseInt(prev) - 1;
+                }
+              });
+            }}
+          />
+
           <Form.Select
             onChange={(event) => {
               // getNumOfSurahPages(event.target.value),
@@ -197,6 +219,25 @@ const BookBoard = () => {
               </option>
             ))}
           </Form.Select>
+          <BsArrowBarLeft
+            className="d-flex d-sm-none"
+            size={28}
+            style={{
+              minWidth: 24,
+              cursor: "pointer",
+              transitionDuration: ".2s",
+            }}
+            onClick={(e) =>
+              setPageNumber((prev) => {
+                e.target.style.transform = "translateX(-4px)";
+                setTimeout(
+                  () => (e.target.style.transform = "translateX(0px)"),
+                  200
+                );
+                return Number.parseInt(prev) + 1;
+              })
+            }
+          />
         </div>
         {/* TODO: Here to add the page changer */}
         {false && (
@@ -211,7 +252,7 @@ const BookBoard = () => {
             {pages.length > 400 ? <BiUnlink size={32} /> : <BiLink size={32} />}
           </span>
         )}
-        <div>
+        <div className="d-none d-sm-flex">
           <BsArrowBarRight
             size={28}
             style={{

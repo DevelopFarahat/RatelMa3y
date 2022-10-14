@@ -189,7 +189,7 @@ function Sessions({ setIsRoomPrepared }) {
       <Card
         className={RoomCSS.card}
         key={session._id}
-        style={{ direction: isArabic ? "rtl" : "ltr" }}
+        style={{ direction: isArabic ? "rtl" : "ltr", minWidth: '320px' }}
       >
         <Card.Header className="text-center">
           {session.is_live ? (
@@ -313,7 +313,7 @@ function Sessions({ setIsRoomPrepared }) {
           </div>
 
           {session.is_live && user && (
-            <div>
+            <div style={{display: 'flex', alignItems: 'center', justifyContent: 'end'}}>
               {(session.created_by?._id === user?._id ||
                 user?.privileges === "Admin") && (
                 <Button
