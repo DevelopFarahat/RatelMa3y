@@ -180,7 +180,8 @@ input[type="file"] {
 @media screen and  (max-width:700px){
   .add-post-main-container{
     flex-direction: column;
-    padding:5px;
+    padding:15px;
+    width:95%;
   }
   .add-post-main-container > .image-posting-settings-container{
     width:100%

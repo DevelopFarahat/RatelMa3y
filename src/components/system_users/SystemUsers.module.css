@@ -464,11 +464,12 @@ input[type="number"]{
     flex-direction: column;
   }
   .system-user-form{
-   width:100%;
+    width: 95%;
+    margin: auto;
   }
   .system-user-data-container{
-    width:100%;
-    margin-top: 10px;
+    width:95%;
+    margin: 15px auto 0 auto;
   }
   .table-settings-container{
     flex-direction: column;
@@ -482,6 +483,44 @@ input[type="number"]{
   
   .step-button-container > button{
     width:135px !important;
+  }
+  @media screen and (max-width:486px) {
+    .pagination-container > ul > li {
+      flex: 0 0 29px !important;
+      padding: 5px !important;
+      height: 34px;
+      margin: 7px !important;
+      }
+      .pagination-container > ul > button{
+        width:29px !important;
+        padding: 5px !important;
+        height: 34px !important;
+      }
+      .pages-separator{
+        position: relative;
+      }
+      .pages-separator > span{
+        position: absolute;
+        top: 34%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+  }
+  @media screen and (min-width:487px) and (max-width:880px) {
+    .alert{
+      width:279px;
+    }
+    .alert > img{
+      width:35%;
+    }
+  }
+  @media screen and (min-width:881px) {
+    .alert{
+      width:350px;
+    }
+    .alert > img{
+      width:35%;
+    }
   }
   
 }

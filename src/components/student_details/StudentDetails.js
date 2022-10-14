@@ -1,10 +1,11 @@
-import React, { useEffect, useState,useCallback } from "react";
+import React, { useEffect, useState,useCallback, createRef } from "react";
 import StudentDetailsStyles from "./StudentDetails.module.css";
 import EmptyDataImage from "../../assets/images/empty.png";
 import NoResultFiltaration from "../../assets/images/no-result.png";
 import Present from "../../assets/images/attendance.png";
 import absence from "../../assets/images/absence.png";
 import { BiReset } from "react-icons/bi";
+import { useTranslation } from "react-i18next";
 import Form from 'react-bootstrap/Form';
 import {SiGooglemeet} from "react-icons/si";
 import {AiFillLike} from "react-icons/ai";
@@ -16,32 +17,32 @@ import { VscChromeClose } from "react-icons/vsc";
 import {AiFillFilter} from "react-icons/ai";
 import {MdKeyboardArrowDown} from "react-icons/md";
 import {MdKeyboardArrowUp} from "react-icons/md";
+import { ref } from "yup";
+import { FaHourglassEnd } from "react-icons/fa";
 const StudentDetails = ({specificStudentJoiningRequestData,studentSessionsDetails,setStudentSessionsDetails, setSpecificStudentJoiningRequestData, initialStudentSessionsDetails, isStudentRequestDataVisible, isStudentRatelDataVisible, setIsStudentRequestDataVisible, setIsStudentRatelDataVisible }) => {
-  let programes = [{ id: 0, name: "programprogr1" }, { id: 1, name: "programprogr2" }, { id: 2, name: "programprogr3" },]
-  let days = ['Saturday','Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
-  let workingHoursArr = [
-    ["8:00 am", " 10:00 pm"],
-    ["10:00 am", "12:00 pm"],
-    ["12:00 pm", "2:00 pm"],
-    ["2:00 pm", " 4:00 pm"],
-    ["4:00 pm", " 6:00 pm"],
-    ["6:00 pm", " 8:00 pm"],
-    ["8:00 pm", " 10:00 pm"],
-    ["10:00 pm", "12:00 am"],
-];
+  const [t, i18n] = useTranslation();
+  const days = [
+    t("Saturday"),
+    t("Sunday"),
+    t("Monday"),
+    t("Tuesday"),
+    t("Wednesday"),
+    t("Thursday"),
+    t("Friday"),
+  ];
+
 const [isDateTimeVisable,setIsDateTimeVisable] = useState({
   visible:false,
   timeType:''
 });
+const fromDateRef = createRef();
+const toDateRef = createRef();
 const [selectedRow, setSelectedRow] = useState(-1);
 const [totalPresent,setTotalPresent] = useState(0);
 const [totalAbsence,setTotalAbsence] = useState(0);
 const [totalSession,setTotalSession] = useState(0);
 const [isSessionsMoreInfoOpend,setIsSessionsMoreInfoOpend] = useState(false);
-const [sessionsDate,setSessionsDate] = useState({
-  fromDate:'',
-  toDate:''
-})
+const [sessionInfo,setSessionInfo] = useState([]);
   const toogleViewOfStudentRequestData = () => {
     setIsStudentRequestDataVisible(current => !current);
     setIsStudentRatelDataVisible(current => !current);
@@ -58,20 +59,43 @@ const [sessionsDate,setSessionsDate] = useState({
     for (let i = 0; i < studentSessionsDetailsCopy.length; i++) {
      if(studentSessionsDetailsCopy[i].attendants.length){
       if (studentSessionsDetailsCopy[i].attendants.find((studentId)=>specificStudentJoiningRequestData._id === studentId) !== undefined){
-        studentSessionsDetailsCopy[i].isStudentPersent = true;
+        if(studentSessionsDetailsCopy[i].is_exam){
+          studentSessionsDetailsCopy[i].isStudentPersent = true;
+          studentSessionsDetailsCopy[i].isEx = true;
+          sortedSessionsArr.push(studentSessionsDetailsCopy[i]);
+        }else{
+          studentSessionsDetailsCopy[i].isStudentPersent = true;
+          studentSessionsDetailsCopy[i].isEx = false;
+          sortedSessionsArr.push(studentSessionsDetailsCopy[i]);
+        }
+        
+      }else{
+        if(studentSessionsDetailsCopy[i].is_exam){
+          studentSessionsDetailsCopy[i].isStudentPersent = false;
+          studentSessionsDetailsCopy[i].isEx = true;
+          sortedSessionsArr.push(studentSessionsDetailsCopy[i]);
+        }else{
+          studentSessionsDetailsCopy[i].isStudentPersent = false;
+          studentSessionsDetailsCopy[i].isEx = false;
+          sortedSessionsArr.push(studentSessionsDetailsCopy[i]);
+        }
+       
+      }
+    }else{
+      if(studentSessionsDetailsCopy[i].is_exam){
+        studentSessionsDetailsCopy[i].isStudentPersent = false;
+        studentSessionsDetailsCopy[i].isEx = true;
         sortedSessionsArr.push(studentSessionsDetailsCopy[i]);
       }else{
         studentSessionsDetailsCopy[i].isStudentPersent = false;
+        studentSessionsDetailsCopy[i].isEx = false;
         sortedSessionsArr.push(studentSessionsDetailsCopy[i]);
       }
-    }else{
-      studentSessionsDetailsCopy[i].isStudentPersent = false;
-          sortedSessionsArr.push(studentSessionsDetailsCopy[i]);
+      
     }
       
     }
 
-   console.log(sortedSessionsArr);
     switch(event.target.value){
       case "byPresent":
         sortedSessionsArr.sort((a, b) => {
@@ -100,6 +124,11 @@ const [sessionsDate,setSessionsDate] = useState({
           );
         });
         break;
+        case "exam":
+          sortedSessionsArr.sort((a, b) => {
+            return Number(b.isEx) - Number(a.isEx);
+          });
+        break;
       default:
     }
     //setSpecificStudentJoiningRequestData({...specificStudentJoiningRequestData,sessions:sortedSessionsArr})
@@ -127,40 +156,33 @@ const [sessionsDate,setSessionsDate] = useState({
     const id = event.currentTarget.id;
     setSelectedRow(id);
 }, []);
- const handleSessionsDate=(event)=>{
-  setSessionsDate(
-    {
-      ...sessionsDate,
-      [event.target.id]:event.target.value
-    }
-  )
-      
- }
   const getAttendaceOnSpecificPeroidOfDate =(event)=>{
+    if(fromDateRef.current.value!== '' && toDateRef.current.value !== ''){
     let sessionsFiltrated = [];
     const studentSessionsDataCopy = [...initialStudentSessionsDetails.current];
-    if(sessionsDate.fromDate !== '' && sessionsDate.toDate !== ''){
+    if(fromDateRef.current.value!== '' && toDateRef.current.value !== ''){
       for(let i = 0 ; i < studentSessionsDataCopy.length;i++){
-        if(new Date(sessionsDate.fromDate)  <= new Date(studentSessionsDataCopy[i].created_at.split("T")[0]).getTime()  && new Date(studentSessionsDataCopy[i].created_at.split("T")[0]).getTime()  <= new Date(sessionsDate.toDate) ){
+        if(new Date(fromDateRef.current.value)  <= new Date(studentSessionsDataCopy[i].created_at.split("T")[0]).getTime()  && new Date(studentSessionsDataCopy[i].created_at.split("T")[0]).getTime()  <= new Date(toDateRef.current.value) ){
           sessionsFiltrated.push(studentSessionsDataCopy[i]);
         }
       }
     }
   setStudentSessionsDetails(sessionsFiltrated);
+    }
   }
   const openCloseMoreSessionInfo = ()=>{
     setIsSessionsMoreInfoOpend(current=>!current);
   }
   useEffect(()=>{
+    
     let totalPresent = 0;
     let totalAbsence = 0;
     let totalNumberOfSession = 0;
-      const studentSessionsDataCopy = [...studentSessionsDetails];
-      for (let i = 0; i < studentSessionsDataCopy.length; i++) {
+    const studentSessionsDataCopy = [...studentSessionsDetails];
+      for (let i = 0; i < studentSessionsDetails.length; i++) {
         totalNumberOfSession+=1;
-       if(studentSessionsDataCopy[i].attendants.length !== 0){
-        console.log("hi");
-        if (studentSessionsDataCopy[i].attendants.find((studentId)=>specificStudentJoiningRequestData._id === studentId) !== undefined){
+       if(studentSessionsDetails[i].attendants.length !== 0){
+        if (studentSessionsDetails[i].attendants.find((studentId)=>specificStudentJoiningRequestData._id === studentId) !== undefined){
           totalPresent+=1;
         }else{
          totalAbsence+=1;
@@ -172,20 +194,115 @@ const [sessionsDate,setSessionsDate] = useState({
   setTotalPresent(totalPresent);
   setTotalAbsence(totalAbsence);
   setTotalSession(totalNumberOfSession)
+  let SessionAttendanceAndEvaluationArr = [];
+  for(let i = 0 ; i <studentSessionsDetails.length;i++){
+    let stdSessionDetails = {};
+    stdSessionDetails["_id"] = studentSessionsDetails[i]._id;
+   if(studentSessionsDetails[i].attendants.includes(specificStudentJoiningRequestData._id)){
+    stdSessionDetails['isStudentAttends'] = true;
+    if(studentSessionsDetails[i].evaluations[0] !== undefined){
+      if(studentSessionsDetails[i].evaluations[0].student === specificStudentJoiningRequestData._id){
+        if(studentSessionsDetails[i].is_exam){
+          stdSessionDetails['exam'] = "examC1";
+          stdSessionDetails['previously_evaluation'] ="";
+          stdSessionDetails['current_evaluation'] = "";
+          stdSessionDetails['total_evaluation'] = studentSessionsDetails[i].evaluations[0].total_eval;
+        }else{
+          stdSessionDetails['exam'] = "examC2";
+          stdSessionDetails['previously_evaluation']  = studentSessionsDetails[i].evaluations[0].previously_eval;
+          stdSessionDetails['current_evaluation'] = studentSessionsDetails[i].evaluations[0].current_eval;
+          stdSessionDetails['total_evaluation'] = "";
+        }
+        stdSessionDetails['notes'] = studentSessionsDetails[i].evaluations[0].notes;
+        stdSessionDetails['created_by'] = studentSessionsDetails[i].created_by !== null?studentSessionsDetails[i].created_by.name:"";
+        stdSessionDetails['created_at'] = studentSessionsDetails[i].created_at.split("T")[0];
+      }else{
+        if(studentSessionsDetails[i].is_exam){
+          stdSessionDetails['exam'] = "examC1";
+          stdSessionDetails['previously_evaluation'] ="";
+          stdSessionDetails['current_evaluation'] = "";
+          stdSessionDetails['total_evaluation'] = "";
+        }else{
+          stdSessionDetails['exam'] = "examC2";
+          stdSessionDetails['previously_evaluation']  = "";
+          stdSessionDetails['current_evaluation'] = "";
+          stdSessionDetails['total_evaluation'] = "";
+        }
+        stdSessionDetails['notes'] = "";
+        stdSessionDetails['created_by'] = studentSessionsDetails[i].created_by !== null?studentSessionsDetails[i].created_by.name:"";
+        stdSessionDetails['created_at'] = studentSessionsDetails[i].created_at.split("T")[0];
+      }
+   
+    }else{
+      if(studentSessionsDetails[i].is_exam){
+        stdSessionDetails['exam'] = "examC1";
+        stdSessionDetails['previously_evaluation'] ="";
+        stdSessionDetails['current_evaluation'] = "";
+        stdSessionDetails['total_evaluation'] = "";
+      }else{
+        stdSessionDetails['exam'] = "examC2";
+        stdSessionDetails['previously_evaluation']  = "";
+        stdSessionDetails['current_evaluation'] = "";
+        stdSessionDetails['total_evaluation'] = "";
+      }
+      stdSessionDetails['notes'] = "";
+      stdSessionDetails['created_by'] = studentSessionsDetails[i].created_by !== null?studentSessionsDetails[i].created_by.name:"";
+      stdSessionDetails['created_at'] = studentSessionsDetails[i].created_at.split("T")[0];
+    }
+   }else{
+    stdSessionDetails['isStudentAttends'] = false;
+    if(studentSessionsDetails[i].evaluations[0] !== undefined){
+      if(studentSessionsDetails[i].is_exam){
+        stdSessionDetails['exam'] = "examC1";
+        stdSessionDetails['previously_evaluation'] ="";
+        stdSessionDetails['current_evaluation'] = "";
+        stdSessionDetails['total_evaluation'] = studentSessionsDetails[i].evaluations[0].total_eval;
+      }else{
+        stdSessionDetails['exam'] = "examC2";
+        stdSessionDetails['previously_evaluation']  = studentSessionsDetails[i].evaluations[0].previously_eval;
+        stdSessionDetails['current_evaluation'] = studentSessionsDetails[i].evaluations[0].current_eval;
+        stdSessionDetails['total_evaluation'] = "";
+      }
+      stdSessionDetails['notes'] = studentSessionsDetails[i].evaluations[0].notes;
+      stdSessionDetails['created_by'] = studentSessionsDetails[i].created_by !== null?studentSessionsDetails[i].created_by.name:"";
+      stdSessionDetails['created_at'] = studentSessionsDetails[i].created_at.split("T")[0];
+    }else{
+      if(studentSessionsDetails[i].is_exam){
+        stdSessionDetails['exam'] = "examC1";
+        stdSessionDetails['previously_evaluation'] ="";
+        stdSessionDetails['current_evaluation'] = "";
+        stdSessionDetails['total_evaluation'] = "";
+      }else{
+        stdSessionDetails['exam'] = "examC2";
+        stdSessionDetails['previously_evaluation']  = "";
+        stdSessionDetails['current_evaluation'] = "";
+        stdSessionDetails['total_evaluation'] = "";
+      }
+        stdSessionDetails['notes'] = "";
+        stdSessionDetails['created_by'] = studentSessionsDetails[i].created_by !== null?studentSessionsDetails[i].created_by.name:"";
+        stdSessionDetails['created_at'] = studentSessionsDetails[i].created_at.split("T")[0];
+    }
+   }
+   SessionAttendanceAndEvaluationArr.push(stdSessionDetails);
+  }
+  setSessionInfo(SessionAttendanceAndEvaluationArr);
+
   },[specificStudentJoiningRequestData,studentSessionsDetails])
+
+
 
   return (
     <>
-      <div className={StudentDetailsStyles['student-details-main-container']}>
+      <div className={StudentDetailsStyles['student-details-main-container']} style={{direction:t("us") === t("Us")?'ltr':"rtl"}}>
         {Object.keys(specificStudentJoiningRequestData).length === 0 ? <img src={EmptyDataImage} className={StudentDetailsStyles['empty-data-img']} alt="Empty" /> : specificStudentJoiningRequestData.subscription_state !== 'Cancelled' ? <div className={StudentDetailsStyles['settings-header']}>
-          <span className={`${isStudentRequestDataVisible ? StudentDetailsStyles['taps-shadow'] : ''} ${StudentDetailsStyles['joinnig-request-data-tap']}`} onClick={toogleViewOfStudentRatelData}>Student Data</span>   {specificStudentJoiningRequestData.subscription_state !== 'Pending' ? <span className={`${isStudentRatelDataVisible ? StudentDetailsStyles['taps-shadow'] : ''} ${StudentDetailsStyles['ratel-student-data-tap']}`} onClick={toogleViewOfStudentRequestData}>Sessions Details</span> : null}
+          <span className={`${isStudentRequestDataVisible ? StudentDetailsStyles['taps-shadow'] : ''} ${StudentDetailsStyles['joinnig-request-data-tap']}`} onClick={toogleViewOfStudentRatelData}>{t("student_data")}</span>   {specificStudentJoiningRequestData.subscription_state !== 'Pending' ? <span className={`${isStudentRatelDataVisible ? StudentDetailsStyles['taps-shadow'] : ''} ${StudentDetailsStyles['ratel-student-data-tap']}`} onClick={toogleViewOfStudentRequestData}>{t("session_details")}</span> : null}
         </div> : <img src={EmptyDataImage} className={StudentDetailsStyles['empty-data-img']} alt="Empty" />}
         {Object.keys(specificStudentJoiningRequestData).length !== 0 && specificStudentJoiningRequestData.subscription_state !== 'Cancelled' ? isStudentRequestDataVisible && specificStudentJoiningRequestData.subscription_state !== 'Cancelled' ? <div className={StudentDetailsStyles['student-request-joinnig-info-main-container']} style={{overflow:isDateTimeVisable.visible?'hidden':'auto'}}>
           {/* request */}
           <div className={StudentDetailsStyles['student-table-main-header']}>
-            <button className={StudentDetailsStyles['btn']} onClick={()=>showDateTimeContainer('workingTime')}><SiGooglemeet size={20} style={{color:"#FFFFFF",margin: "0 0 4px 1px"}}/>Session Days Times</button>
-            <span>Student Data</span>
-            <button className={StudentDetailsStyles['btn']} onClick={()=>showDateTimeContainer('prefsTime')} ><AiFillLike size={20} style={{color:"#FFFFFF",margin: "0 0 4px 1px"}}/>Prefers Days Times</button>
+            <button className={StudentDetailsStyles['btn']} onClick={()=>showDateTimeContainer('workingTime')}><SiGooglemeet size={20} style={{color:"#FFFFFF",margin: "0 0 4px 1px"}}/>{t("schedule")}</button>
+            <span>{t("student_data")}</span>
+            <button className={StudentDetailsStyles['btn']} onClick={()=>showDateTimeContainer('prefsTime')} ><AiFillLike size={20} style={{color:"#FFFFFF",margin: "0 0 4px 1px"}}/>{t("prefs_times_days")}</button>
             </div>
             {isDateTimeVisable.visible?<div className={StudentDetailsStyles['date-time-container-main']}>
             <VscChromeClose size={30} onClick={hideDateTimeContainer} className={StudentDetailsStyles['close-date-time-container']}/>
@@ -244,9 +361,9 @@ const [sessionsDate,setSessionsDate] = useState({
           >
             <thead>
               <tr>
-                <th> 8:00 am : 10:00 pm</th>
-                <th> 10:00 am : 12:00 pm</th>
-                <th> 12:00 pm : 2:00 pm</th>
+                <th>8:00 {t("AM")}</th>
+                <th>10:00 {t("AM")}</th>
+                <th>12:00 {t("PM")}</th>
               </tr>
             </thead>
             <tbody>
@@ -256,9 +373,9 @@ const [sessionsDate,setSessionsDate] = useState({
               {specificStudentJoiningRequestData !== undefined ? specificStudentJoiningRequestData.program_prefs.pref_times_of_day[2][1]  !== 0?<td><img src={dateTimeSessionImage} className={StudentDetailsStyles['student-session-days-hours-img']} alt="correctDateTimeSession"/></td>:<td>{""}</td>:<td>{""}</td>} 
               </tr>
               <tr>
-                <td>2:00 pm : 4:00 pm</td>
-                <td>4:00 pm : 6:00 pm</td>
-                <td>6:00 pm :  8:00 pm</td>
+                <td>2:00 {t("PM")}</td>
+                <td>4:00 {t("PM")}</td>
+                <td>6:00 {t("PM")}</td>
               </tr>
               <tr>
               {specificStudentJoiningRequestData !== undefined ? specificStudentJoiningRequestData.program_prefs.pref_times_of_day[3][1] !== 0?<td><img src={dateTimeSessionImage} className={StudentDetailsStyles['student-session-days-hours-img']} alt="correctDateTimeSession"/></td>:<td>{""}</td>:<td>{""}</td>}
@@ -266,8 +383,8 @@ const [sessionsDate,setSessionsDate] = useState({
               {specificStudentJoiningRequestData !== undefined ? specificStudentJoiningRequestData.program_prefs.pref_times_of_day[5][1] !== 0?<td><img src={dateTimeSessionImage} className={StudentDetailsStyles['student-session-days-hours-img']} alt="correctDateTimeSession"/></td>:<td>{""}</td>:<td>{""}</td>} 
               </tr>
               <tr>
-                <td>8:00 pm : 10:00 pm</td>
-                <td>10:00 pm : 12:00 am</td>
+                <td>8:00 {t("PM")}</td>
+                <td>10:00 {t("PM")}</td>
               </tr>
               <tr>
                 
@@ -286,71 +403,71 @@ const [sessionsDate,setSessionsDate] = useState({
           <table className={StudentDetailsStyles['requested-joinnig-student-table']}>
             <thead>
               <tr>
-                <th >Name</th>
+                <th>{t("name")}</th>
                 <td>{specificStudentJoiningRequestData.name}</td>
               
                 {specificStudentJoiningRequestData.subscription_state !== 'Pending' && specificStudentJoiningRequestData.instructor !== null?
-                <th colSpan={"2"}>Instructor</th>:<th colSpan={"2"}>Additinal Info </th>}
+                <th colSpan={"2"}>{t("instructor")}</th>:<th colSpan={"2"}>{t("additional_info")}</th>}
               </tr>
               <tr>
-              <th>Age</th>
+              <th>{t("age")}</th>
                 <td>{specificStudentJoiningRequestData.age}</td>
               
                 {specificStudentJoiningRequestData.subscription_state !== 'Pending' && specificStudentJoiningRequestData.instructor !== null?<>
-                <th>Name</th>
-                <td>{specificStudentJoiningRequestData.instructor.name}</td></>:<><th>Program</th><td>{specificStudentJoiningRequestData.program_prefs.type}</td></>}
+                <th>{t("name")}</th>
+                <td>{specificStudentJoiningRequestData.instructor.name}</td></>:<><th>{t("program")}</th><td>{specificStudentJoiningRequestData.program_prefs.type}</td></>}
               </tr>
               <tr>
-                <th>Gender</th>
+                <th>{t("gender")}</th>
                 <td>{specificStudentJoiningRequestData.gender}</td>
                 
                 {specificStudentJoiningRequestData.subscription_state !== 'Pending' && specificStudentJoiningRequestData.instructor !== null?<>
-                <th>Gender</th>
-                <td>{specificStudentJoiningRequestData.instructor.gender}</td></>:<><th>Sessions Per Week</th><td>{specificStudentJoiningRequestData.program_prefs.sessions_in_week}</td></>}
+                <th>{t("gender")}</th>
+                <td>{specificStudentJoiningRequestData.instructor.gender}</td></>:<><th>{t("weeks_sessions")}</th><td>{specificStudentJoiningRequestData.program_prefs.sessions_in_week}</td></>}
               </tr>
               <tr>
-                <th>State</th>
+                <th>{t("state")}</th>
                 <td>{specificStudentJoiningRequestData.state}</td>
               
                 {specificStudentJoiningRequestData.subscription_state !== 'Pending' && specificStudentJoiningRequestData.instructor !== null?<>
-                <th>State</th>
-                <td>{specificStudentJoiningRequestData.instructor.state}</td></>:<><th>Surah preferred to start from</th><td>{specificStudentJoiningRequestData.started_from_surah}</td></>}
+                <th>{t("state")}</th>
+                <td>{specificStudentJoiningRequestData.instructor.state}</td></>:<><th>{t("Surah preferred to start from")}</th><td>{specificStudentJoiningRequestData.started_from_surah}</td></>}
               </tr>
               <tr>
-                <th>Mobile</th>
+                <th>{t("mobile")}</th>
                 <td>{specificStudentJoiningRequestData.mobile}</td>
                  {specificStudentJoiningRequestData.subscription_state === 'Pending' && (specificStudentJoiningRequestData.instructor === undefined)?<>
-                 <th>Quran Surah Or Juiz Reached Before</th>
+                 <th>{t("Quran Surah Or Juiz Reached Before")}</th>
                  <td>{specificStudentJoiningRequestData.reached_surah}</td>
-                 </>:<><th colSpan={"2"}> Additinal Info</th></>}
+                 </>:<><th colSpan={"2"}>{t("additional_info")}</th></>}
               </tr>
               <tr>
-                <th>Whats Number</th>
+                <th>{t("whatsapp_num")}</th>
                 <td>{specificStudentJoiningRequestData.whatsapp_number}</td>
                 {specificStudentJoiningRequestData.subscription_state !== 'Pending' && specificStudentJoiningRequestData.instructor !== null?<>
-                <th>Program</th>
+                <th>{t("program")}</th>
                 <td>{specificStudentJoiningRequestData.program_prefs.type}</td>
                 </>:null}
               </tr>
               <tr>
-                <th>Certificate</th>
+                <th>{t("qualification")}</th>
                 <td>{specificStudentJoiningRequestData.certificate}</td>
                 {specificStudentJoiningRequestData.subscription_state !== 'Pending' && specificStudentJoiningRequestData.instructor !== null?<>
-                <th>Sessions Per Week</th><td>{specificStudentJoiningRequestData.program_prefs.sessions_in_week}</td>
+                <th>{t("weeks_sessions")}</th><td>{specificStudentJoiningRequestData.program_prefs.sessions_in_week}</td>
                 </>:null}
               </tr>
               <tr>
-                <th>Email</th>
+                <th>{t("email")}</th>
                 <td>{specificStudentJoiningRequestData.email}</td>
                 {specificStudentJoiningRequestData.subscription_state !== 'Pending' && specificStudentJoiningRequestData.instructor !== null?<>
-                <th>Surah preferred to start from</th><td>{specificStudentJoiningRequestData.started_from_surah}</td>
+                <th>{t("Surah preferred to start from")}</th><td>{specificStudentJoiningRequestData.started_from_surah}</td>
                 </>:null}
               </tr>
               {specificStudentJoiningRequestData.subscription_state !== "Pending" && specificStudentJoiningRequestData.instructor !== null && specificStudentJoiningRequestData.started_in !== null?<>
               <tr>
-                <th>Started At</th>
+                <th>{t("started_at")}</th>
                 <td>{specificStudentJoiningRequestData.started_in.split("T")[0]}</td>
-                <th>Qur'an Surah Or Juiz Reached Before</th>
+                <th>{t("Quran Surah Or Juiz Reached Before")}</th>
                  <td>{specificStudentJoiningRequestData.reached_surah}</td>
               </tr>
               </>:null}
@@ -363,64 +480,80 @@ const [sessionsDate,setSessionsDate] = useState({
 
           <div className={StudentDetailsStyles['table-settings-container']}>
             <section>
-            <Form.Label htmlFor="sortStudentSessions">Sort</Form.Label>
+            <Form.Label htmlFor="sortStudentSessions">{t("sort")}</Form.Label>
             <Form.Select name="sort-student-sessions" id="sortStudentSessions" className={StudentDetailsStyles['form-sort-select']} onChange={sortSessions}>
-              <option value="">Select</option>
-              <optgroup label="By Attendance">
-              <option value={"byPresent"}>By byPresent</option>
-              <option value={"byAbsence"}>By Absence</option>
+              <option value="">{t("select")}</option>
+              <optgroup label={t("attendance")}>
+              <option value="byPresent">{t("present")}</option>
+              <option value="byAbsence">{t("absence")}</option>
               </optgroup>
-              <optgroup label="By Date">
-              <option value="dateASC">ASC</option>
-              <option value="dateDSC">DSC</option>
+              <optgroup label={t("date")}>
+              <option value="dateASC">{t("asc")}</option>
+              <option value="dateDSC">{t("dsc")}</option>
               </optgroup>
+              <option value="exam">{t("evaluations_general_exam")}</option>
             </Form.Select>
             </section>
             <section>
-            <Form.Label htmlFor="fromDate">From Date</Form.Label>
-            <Form.Control type="date" name="date-from" id="fromDate"  value={sessionsDate.fromDate} onChange={handleSessionsDate}/>
+            <Form.Label htmlFor="fromDate">{t("fromDate")}</Form.Label>
+            <Form.Control type="date" ref={fromDateRef} name="date-from" id="fromDate"  onChange={getAttendaceOnSpecificPeroidOfDate}/>
             </section>
             <section>
-            <Form.Label htmlFor="toDate">To Date</Form.Label>
-            <Form.Control type="date" name="date-to" id="toDate"  value={sessionsDate.toDate} onChange={handleSessionsDate}/>
+            <Form.Label htmlFor="toDate">{t("toDate")}</Form.Label>
+            <Form.Control ref={toDateRef} type="date" name="date-to" id="toDate"   onChange={getAttendaceOnSpecificPeroidOfDate}/>
             </section>
             <section>
-            <button type="button" className={StudentDetailsStyles['btn']} onClick={getAttendaceOnSpecificPeroidOfDate}>Filter <AiFillFilter /></button>
-            <button type="button" className={StudentDetailsStyles['btn']} onClick={resetSortSessions}>Reset<BiReset /></button>
+            <button type="button" className={StudentDetailsStyles['btn']} onClick={resetSortSessions}>{t("reset")}<BiReset /></button>
             </section>
           </div>
+          {/*
           <div className={`${StudentDetailsStyles['student-sessions-more-info'] } ${isSessionsMoreInfoOpend?StudentDetailsStyles['student-sessions-more-info-transition']:'' }`} style={{height:isSessionsMoreInfoOpend?'20%':'auto',bottom:isSessionsMoreInfoOpend?'62%':'78%'}}>
             <div className={`${isSessionsMoreInfoOpend? StudentDetailsStyles['show-more-session-info']:StudentDetailsStyles['hide-more-session-info']}`}>
-            <Form.Label htmlFor="totalNumberOfSessions">Total Sessions</Form.Label>
+            <Form.Label htmlFor="totalNumberOfSessions">{t("total_session")}</Form.Label>
             <Form.Control type="number" name="totalNumberOfSessions" id="totalNumberOfSessions" readOnly value={totalSession}/>
             </div>
             <div className={`${isSessionsMoreInfoOpend? StudentDetailsStyles['show-more-session-info']:StudentDetailsStyles['hide-more-session-info']}`}>
-            <Form.Label htmlFor="totalPresent">Total Present</Form.Label>
+            <Form.Label htmlFor="totalPresent">{t("total_present")}</Form.Label>
             <Form.Control type="number" name="totalPresent" id="totalPresent" readOnly value={totalPresent}/>
             </div>
             <div className={`${isSessionsMoreInfoOpend? StudentDetailsStyles['show-more-session-info']:StudentDetailsStyles['hide-more-session-info']}`}>
-            <Form.Label htmlFor="totalAbsence">Total Absence</Form.Label>
+            <Form.Label htmlFor="totalAbsence">{t("total_absence")}</Form.Label>
             <Form.Control type="number" name="totalAbsence" id="totalAbsence" readOnly value={totalAbsence}/>
             </div>
            {isSessionsMoreInfoOpend?<MdKeyboardArrowUp onClick={openCloseMoreSessionInfo} className={StudentDetailsStyles['open-close-arrow-icon']} style={{transform:isSessionsMoreInfoOpend?'rotate(360deg)':'rotate(0deg)',bottom:isSessionsMoreInfoOpend?'67%':'-54%'}}/>:<MdKeyboardArrowDown onClick={openCloseMoreSessionInfo} className={StudentDetailsStyles['open-close-arrow-icon']} style={{transform:isSessionsMoreInfoOpend?'rotate(360deg)':'rotate(0deg)',bottom:isSessionsMoreInfoOpend?'67%':'-54%'}}/>}
-          </div>
+          </div> */}
           <div className={StudentDetailsStyles['table-wrapper']}>
+          <div className={`${StudentDetailsStyles['student-sessions-more-info'] } ${isSessionsMoreInfoOpend?StudentDetailsStyles['student-sessions-more-info-transition']:'' }`} style={{height:isSessionsMoreInfoOpend?'39%':'auto'}}>
+            <div className={`${isSessionsMoreInfoOpend? StudentDetailsStyles['show-more-session-info']:StudentDetailsStyles['hide-more-session-info']}`}>
+            <Form.Label htmlFor="totalNumberOfSessions">{t("total_session")}</Form.Label>
+            <Form.Control type="number" name="totalNumberOfSessions" id="totalNumberOfSessions" readOnly value={totalSession}/>
+            </div>
+            <div className={`${isSessionsMoreInfoOpend? StudentDetailsStyles['show-more-session-info']:StudentDetailsStyles['hide-more-session-info']}`}>
+            <Form.Label htmlFor="totalPresent">{t("total_present")}</Form.Label>
+            <Form.Control type="number" name="totalPresent" id="totalPresent" readOnly value={totalPresent}/>
+            </div>
+            <div className={`${isSessionsMoreInfoOpend? StudentDetailsStyles['show-more-session-info']:StudentDetailsStyles['hide-more-session-info']}`}>
+            <Form.Label htmlFor="totalAbsence">{t("total_absence")}</Form.Label>
+            <Form.Control type="number" name="totalAbsence" id="totalAbsence" readOnly value={totalAbsence}/>
+            </div>
+           {isSessionsMoreInfoOpend?<MdKeyboardArrowUp onClick={openCloseMoreSessionInfo} className={StudentDetailsStyles['open-close-arrow-icon']} style={{transform:isSessionsMoreInfoOpend?'rotate(360deg)':'rotate(0deg)',bottom:isSessionsMoreInfoOpend?'67%':'-5%'}}/>:<MdKeyboardArrowDown onClick={openCloseMoreSessionInfo} className={StudentDetailsStyles['open-close-arrow-icon']} style={{transform:isSessionsMoreInfoOpend?'rotate(360deg)':'rotate(0deg)',bottom:isSessionsMoreInfoOpend?'67%':'-5%'}}/>}
+          </div>
             {studentSessionsDetails.length === 0 || studentSessionsDetails === undefined ? <img src={NoResultFiltaration} className={StudentDetailsStyles['no-result']} alt="no-result" /> : <table className={StudentDetailsStyles['student-session-info-table']}>
               <thead>
                 <tr>
-                  <th>Attendance</th>
-                  <th>Previously Evaluation</th>
-                  <th>Current Evaluation</th>
-                  <th>Exam</th>
-                  <th>Total Evaluation</th>
-                  <th>Notes</th>
-                  <th>Instructor</th>
-                  <th>Created At</th>
+                  <th>{t("attendance")}</th>
+                  <th>{t("previously_ev")}</th>
+                  <th>{t("current_ev")}</th>
+                  <th>{t("evaluations_general_exam")}</th>
+                  <th>{t("total_ev")}</th>
+                  <th>{t("notes")}</th>
+                  <th>{t("instructor")}</th>
+                  <th>{t("created_at")}</th>
                 </tr>
               </thead>
               <tbody>
-                {studentSessionsDetails !== null && studentSessionsDetails !== undefined?
-                studentSessionsDetails.map((session)=>(
+                {sessionInfo !== undefined?
+                sessionInfo.map((session)=>(
                   <tr key={session._id} id={session._id}
                   onClick={(event) => {
                     handlerRowClicked(event);
@@ -434,28 +567,14 @@ const [sessionsDate,setSessionsDate] = useState({
                             ? `rgba(0, 0, 0, 0.2) 0 6px 20px 0 rgba(0, 0, 0, 0.19)`
                             : "",
                 }}>
-                  {session.attendants.length !== 0 && session.attendants !== null && session.attendants !== undefined?<td>
-                    {session.attendants.find((studentId)=> specificStudentJoiningRequestData._id === studentId) !== undefined?<img src={Present} alt="attendance" style={{display:'block',margin:'auto',width:'40px'}}/>
-                    :<img src={absence}  alt="absence" style={{display:'block',margin:'auto',width:'30px'}} />}
-                  </td>:session.attendants.length === 0?<td><img src={absence}  alt="absence" style={{display:'block',margin:'auto',width:'30px'}}/></td>:<td>{""}</td>}
-                  {session.attendants.length !== 0 && session.attendants !== null && session.attendants !== undefined?
-                  session.evaluations !== undefined?session.evaluations.map((ev)=>(
-                      ev.student === specificStudentJoiningRequestData._id?
-                      !session.is_exam?
-                      <>
-                      <td>{ev.previously_eval}</td>
-                      <td>{ev.current_eval}</td>
-                      <td>{"No"}</td>
-                      </>:<>
-                      <td>{""}</td>
-                      <td>{""}</td>
-                      <td>{"Yes"}</td>
-                      <td>{ev.total_eval}</td>
-                      <td>{ev.notes}</td>
-                      <td>{session.created_by.name}</td>
-                      <td>{session.created_at.split("T")[0]}</td>
-                      </>:null
-                      )):<><td>{""}</td><td>{""}</td><td>{""}</td><td>{""}</td><td>{""}</td></>:null}
+                  <td>{session.isStudentAttends?<img src={Present} alt="attendance" style={{display:'block',margin:'auto',width:'40px'}}/>:<img src={absence}  alt="absence" style={{display:'block',margin:'auto',width:'30px'}} />}</td>
+                  <td>{session.previously_evaluation}</td>
+                  <td>{session.current_evaluation}</td>
+                  <td>{t(session.exam)}</td>
+                  <td>{session.total_evaluation}</td>
+                  <td>{session.notes}</td>
+                  <td>{session.created_by}</td>
+                  <td>{session.created_at}</td>
                     </tr>
                 )):null}
               </tbody>

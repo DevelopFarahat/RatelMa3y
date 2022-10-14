@@ -30,12 +30,10 @@ const Instructor = () => {
                if(currentPage+1 !== pageNo[pageNo.length-1].index && Number(id) <= pageNo[pageNo.length-1].index  ){
                 //if(Number(id) !== pageNo[pageNo.length-1].index){
                     let pageNoCopy = [...pageNo];
-                    console.log("yaa am farahat rakez");
                     pageNoCopy.splice(0,1)
                     setPageNo(pageNoCopy);
                }else{
                     if(Number(id) !== pageNoArrLength && Number(id) === 2 && lastPage.index !== 2){
-                    console.log("yaa rab saadny")
                     let pNoCopy = [...pageNoCopy];
                     pNoCopy.splice(0,1);
                     setPageNo(pNoCopy);
@@ -48,13 +46,11 @@ const Instructor = () => {
     const getThePreviousPages = (event)=>{
         let pNo = {};
         if(currentPage < pageNoArrLength  && pageNo.length === 2){ 
-            console.log("inshaa allah1")
          /*
                 pageNo.reverse().splice(0,1);
                 pageNo.reverse();
                 */
                 if(currentPage-1 !== 1){
-                    console.log("insorna yaa allah");
                     pageNo.reverse().splice(0,1);
                     pageNo.reverse();
                     pNo.id = (pageNo[0].index-1)
@@ -70,16 +66,11 @@ const Instructor = () => {
             
         }else{
             if(pageNo.length !== 2){
-                console.log("inshaa allah")
-                console.log(currentPage)
                /*
                     pageNo.reverse().splice(0,1);
                     pageNo.reverse();
                     */
-                    console.log(currentPage)
-                    console.log(pageNoCopy)
                     if(currentPage-1 !== 1){
-                        console.log("insorna yaa allah");
                         pageNo.reverse().splice(0,1);
                         pageNo.reverse();
                         pNo.id = (pageNo[0].index-1)
@@ -87,8 +78,6 @@ const Instructor = () => {
                         pageNo.unshift(pNo);
                         setPageNo(pageNo);
                     }else{
-                        console.log("mona zaki")
-                        console.log(pageNoCopy)
                         setPageNo(pageNoCopy);
                     }
                     if(currentPage > 1)
@@ -97,7 +86,6 @@ const Instructor = () => {
                 if(currentPage > 1)
                 setCurrentPage(currentPage-1);
             }
-            console.log(pageNo);
         }  
     }
     const getTheNextPages = (event)=>{
@@ -113,12 +101,10 @@ const Instructor = () => {
        }else{
         if( currentPage+1   >  pageNo[pageNo.length-1].index){
             if( pageNo.length > 2){
-                console.log("ياكريم اكرمنا");
                 setCurrentPage(currentPage+1);
             }else{
                 
                 if( currentPage !== pageNoArrLength ){
-                    console.log("hgvplm lk uk")
                     /*
                     let pNoCopy = [...pageNo];
                     pNoCopy.splice(0,1);
@@ -145,15 +131,12 @@ const Instructor = () => {
   
           //  if(currentPage === 2 && pageNo.length < 9){
             if(currentPage === 2 && pageNo.length < pageNoArrLength){
-                console.log("yaa gamad ya farahat");
                 let pNoCopy = [...pageNoCopy];
                 pNoCopy.splice(0,1);
-                console.log(pNoCopy);
                  setPageNo(pNoCopy);
                  setCurrentPage(currentPage+1);
             }else{
                 if(pageNo.length > 2){
-                    console.log("ahha")
                     let pNoCopy = [...pageNo];
                     pNoCopy.splice(0,1);
                     console.log(pNoCopy);
@@ -295,7 +278,6 @@ const Instructor = () => {
                 is_available: availability,
             })
             .then((res) => {
-                console.log(res);
                 setFetchAgain(fetchAgain + 1);
             })
             .catch((error) => {
@@ -362,7 +344,7 @@ const Instructor = () => {
                   index < 2 ?
                     <li key={pN.index} id={pN.index} style={{background:Number(currentPage)  === pN.index   ?'#c2a054':'',color:Number(currentPage)  === pN.index  ?'#FFFFFF':''}}  onClick={handleUpCommingPage}>{pN.index}</li>:null
                 ))}
-                <li className={InstructorStyles['pages-separator']}>{"..."}</li>
+                <li className={InstructorStyles['pages-separator']}><span>...</span></li>
                 {lastPage !== undefined? 
                 <li id={lastPage.id} style={{background:Number(currentPage)  === lastPage.index  ?'#c2a054':'',color:Number(currentPage)  === lastPage.index?'#FFFFFF':''}}  onClick={handleUpCommingPage}>{lastPage.index}</li>:null}
                 
@@ -438,7 +420,7 @@ const Instructor = () => {
                 </div>
 
                 <div className={InstructorStyles["table-wrapper"]}>
-                    {instructorData?.length === 0 ? (
+                    {instructorData?.length === 0 || instructorData === undefined ? (
                         <img
                             src={NoResultFiltaration}
                             className={InstructorStyles["no-result"]}

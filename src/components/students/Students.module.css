@@ -101,3 +101,10 @@
     width:20px;
     object-fit: contain;
   }
+  @media  screen and (max-width:1200px) {
+
+    .students > div + div{
+        flex-direction: column;
+        
+    }
+  }

@@ -220,7 +220,8 @@ const EvaluationSheet = (props) => {
           })
           .catch((err) => {
             setIsLoading(false);
-            enqueueSnackbar("Error: " + err?.message);
+            console.log("error", err);
+            enqueueSnackbar("Error: " + err);
           });
 
         setAlreadyTested([...alreadyTested, values.student]);

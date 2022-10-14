@@ -582,7 +582,7 @@ const SystemUsers = () => {
           }, 2000);
         })
         .catch((error) => {
-          console.log(error.message);
+          (error.message);
         });
     } else {
       axios
@@ -675,7 +675,7 @@ const SystemUsers = () => {
           }, 2000);
         })
         .catch((error) => {
-          console.log(error.message);
+          (error.message);
         });
     }
   };
@@ -896,7 +896,7 @@ console.error(error)
         setPageNo(numOfPages.reverse());
       })
       .catch((error) => {
-        console.log(error);
+        (error);
       });
   }, [fetchAgain, currentPage]);
 
@@ -911,8 +911,9 @@ console.error(error)
             </span>{" "}
             :
             <span style={{ fontWeight: "bold", color: "#038674" }}>
-              {localStorage.getItem("newAccountUserFullname")}{t("Has Added New Ratel Ma3y Stuff Account")}
+              {localStorage.getItem("newAccountUserFullname")}
             </span>
+            {t("Has Added New Ratel Ma3y Stuff Account")}
           </span>
         </div>
       ) : isUserMadeAnyUpdateToAnyAccount ? (
@@ -978,7 +979,7 @@ console.error(error)
                   </li>
                 ) : null
               )}
-              <li className={SystemUsersStyles["pages-separator"]}>{"..."}</li>
+              <li className={SystemUsersStyles["pages-separator"]}><span>...</span></li>
               {lastPage !== undefined ? (
                 lastPage.index !== -1 ? (
                   <li
@@ -1649,7 +1650,7 @@ console.error(error)
             <div
               className={SystemUsersStyles["table-wrapper"]}
             >
-              {accountsData.length === 0 ? (
+              {accountsData.length === 0 || accountsData === undefined? (
                 <img
                   src={NoResultFiltaration}
                   className={SystemUsersStyles["no-result"]}

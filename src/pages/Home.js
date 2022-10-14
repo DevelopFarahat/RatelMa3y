@@ -8,6 +8,8 @@ import KeepInTuch from "./../components/keepintouch/KeepInTuch";
 import UserContext from "../utils/UserContext";
 export default function Home({ t, i18n }) {
 
+
+
   return (
     <Fragment>
       <SliderHome i18n={i18n} t={t} />

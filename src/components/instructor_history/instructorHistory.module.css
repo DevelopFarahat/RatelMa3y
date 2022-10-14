@@ -126,9 +126,12 @@
   }
   .empty-data-img {
     margin: auto;
-    padding: 88px;
     display: block;
-    background-position: 50% 50%;
+    position: absolute;
+    top: 71%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50%;
   }
   @media screen and (max-width:500px) {
     .table-settings-container{

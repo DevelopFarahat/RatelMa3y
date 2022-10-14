@@ -252,7 +252,7 @@ const Messages = ()=>{
                 setFetchAgain(fetchAgain+1);
                 console.log(res.data)
             }).catch((error)=>{
-                console.log(error);
+                (error);
             });
         }
     
@@ -297,42 +297,44 @@ const Messages = ()=>{
         setPageNoArrLength(numOfPages.length);
         setPageNo(numOfPages.reverse());
         }).catch((error)=>{
-            console.log(error);
+            (error);
         })
     },[fetchAgain,currentPage])
     return(
 
         <>
         {isUserDeleteAnyMsg?<>
-            <div className={MessagesStyles["alert-container"]}>
+            <div className={MessagesStyles["alert"]}>
               <img src={CircleGif} alt="successfull" />
               <span>
                 <span style={{ fontWeight: "bold", color: "#038674" }}>
                   {localStorage.getItem("user_name")}
                 </span>{" "}
-                Has Deleted  Message Successfully
+                {t("Has Deleted Message Successfull")}
               </span>
             </div></>:null}
         <div className={MessagesStyles['messages-main']}>
         <div className={MessagesStyles['pagination-container']} style={{direction:'rtl'}}>
-                { 
-               pageNo !== undefined?<ul>
+           
+                
+               {pageNo !== undefined?<ul>
+                {lastPage !== undefined?
                 <button type="button" className={MessagesStyles['btn']} disabled={currentPage === 1?true:false} style={{cursor: 1 === currentPage?'not-allowed':'pointer',opacity:1 === currentPage?'.5':'1'  }}  onClick={getThePreviousPages}>
                <img src={currentPage === 1?GreaterThanGrayImage:GreaterThanWhiteImage} alt="GreaterThan"/>
-                </button>
+                </button>:null}
                 {pageNo.map((pN,index)=>(
                   index < 2 ?
                     <li key={pN.index} id={pN.index} style={{background:Number(currentPage)  === pN.index   ?'#c2a054':'',color:Number(currentPage)  === pN.index  ?'#FFFFFF':''}}  onClick={handleUpCommingPage}>{pN.index}</li>:null
                 ))}
-                <li className={MessagesStyles['pages-separator']}>{"..."}</li>
+                <li className={MessagesStyles['pages-separator']}><span>...</span></li>
                 {lastPage !== undefined? 
                 <li id={lastPage.id} style={{background:Number(currentPage)  === lastPage.index  ?'#c2a054':'',color:Number(currentPage)  === lastPage.index?'#FFFFFF':''}}  onClick={handleUpCommingPage}>{lastPage.index}</li>:null}
-                
+                {lastPage !== undefined?
                 <button type="button" className={MessagesStyles['btn']} disabled={currentPage === lastPage.index?true:false} style={{cursor:currentPage === lastPage.index?'not-allowed':'pointer',opacity:currentPage === lastPage.index?'.5':'1' }}  onClick={getTheNextPages}>
                     {lastPage !== undefined?<img src={currentPage === lastPage.index?LessThanGrayImage:LessThanWhiteImage} alt="lessThan"/>:null}
-                    </button>
-               </ul>:null
-                }
+                    </button>:null}
+               </ul>:null}
+                
             </div>
         <div>
         <div className={MessagesStyles['messages-content-main-container']}>
@@ -391,7 +393,7 @@ const Messages = ()=>{
                 </div>
         <div className={MessagesStyles["table-wrapper"]}>
                  
-                    {messages.length === 0 ? (
+                    {messages.length === 0 || messages === undefined  ? (
                         <img
                             src={NoResultFiltaration}
                             className={MessagesStyles["no-result"]}
