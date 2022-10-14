@@ -50,7 +50,7 @@ function App() {
 
           <div style={{ height: 86 }}></div>
           <div style={{ minHeight: "100vh" }}>
-            <div>
+            <div onClick={setExpanded.bind(this,false)}>
               <Routes>
                 <Route path="/" element={<Navigate to="home" replace />} />
                 <Route path="home" element={<Home />} />
