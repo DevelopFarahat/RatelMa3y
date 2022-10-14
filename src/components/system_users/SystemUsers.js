@@ -582,7 +582,7 @@ const SystemUsers = () => {
           }, 2000);
         })
         .catch((error) => {
-          (error.message);
+          console.log(error.message);
         });
     } else {
       axios
@@ -675,7 +675,7 @@ const SystemUsers = () => {
           }, 2000);
         })
         .catch((error) => {
-          (error.message);
+          console.lo(error.message);
         });
     }
   };
@@ -871,10 +871,9 @@ const SystemUsers = () => {
     },1000)
 
     }).catch((error)=>{
-console.error(error)
+    console.error(error)
     })
     
-    console.log(stuffAccount)
   }
   useEffect(() => {
     axios
@@ -896,7 +895,7 @@ console.error(error)
         setPageNo(numOfPages.reverse());
       })
       .catch((error) => {
-        (error);
+        console.log(error);
       });
   }, [fetchAgain, currentPage]);
 
@@ -1029,6 +1028,7 @@ console.error(error)
             style={{direction:t("us")=== t("Us")?'ltr':'rtl'}}
             method="post"
             encType="multipart/form-data"
+            autocomplete="off"
             onSubmit={handleSubmit}
           >
             <div
@@ -1157,6 +1157,7 @@ console.error(error)
                 <div>
                   <Form.Label htmlFor="email">{t("email")}</Form.Label>
                   <Form.Control
+                    autoComplete="off"
                     type="text"
                     name="e-mail"
                     id="email"
@@ -1204,6 +1205,7 @@ console.error(error)
                     {t("systemusers_password")}
                   </Form.Label>
                   <Form.Control
+                    autoComplete="off"
                     type="password"
                     name="Password"
                     id="password"

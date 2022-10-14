@@ -50,12 +50,14 @@ const AddPost = () => {
   };
   const handleSubmit = (event) => {
     event.preventDefault();
+    let contentWithoutBackslash = postData.content.replace(/(\r\n|\n|\r)/gm, "")
         let post = {
         article_img: postImage,
-        content: postData.content,
+        content: contentWithoutBackslash,
         title: postData.title,
         lang: postData.lang,
       };
+      console.log(contentWithoutBackslash);
       if (postImage !== undefined && postImage !== null && postImage !== '' && postData.content !== "" && postData.title !== ""){
         setIsThereAnyPostIsUploading(true);
         axios.post(`${process.env.REACT_APP_BACK_HOST_URL}/api/events`,post).then((res) => {
