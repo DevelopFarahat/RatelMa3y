@@ -62,14 +62,14 @@ const StudentRegistrationForm = () => {
   ];
 
   let Working_hours = [
-    { id: 0, appointment: t("session_appointment1"), att: "h0" },
-    { id: 1, appointment: t("session_appointment2"), att: "h1" },
-    { id: 2, appointment: t("session_appointment3"), att: "h2" },
-    { id: 3, appointment: t("session_appointment4"), att: "h3" },
-    { id: 4, appointment: t("session_appointment5"), att: "h4" },
-    { id: 5, appointment: t("session_appointment6"), att: "h5" },
-    { id: 6, appointment: t("session_appointment7"), att: "h6" },
-    { id: 7, appointment: t("session_appointment8"), att: "h7" },
+    { id: 0, appointment:  `8:00 ${t("AM")}`, att: "h0" },
+    { id: 1, appointment:  `10:00 ${t("AM")}`, att: "h1" },
+    { id: 2, appointment: `12:00 ${t("PM")}`, att: "h2" },
+    { id: 3, appointment:  `2:00 ${t("PM")}`, att: "h3" },
+    { id: 4, appointment: `4:00 ${t("PM")}`, att: "h4" },
+    { id: 5, appointment:  `6:00 ${t("PM")}`, att: "h5" },
+    { id: 6, appointment: `8:00 ${t("PM")}`, att: "h6" },
+    { id: 7, appointment: `10:00 ${t("PM")}`, att: "h7" },
   ];
   const [WorkingHours, setWorkingHours] = useState({
     h0: "",
@@ -847,7 +847,7 @@ const StudentRegistrationForm = () => {
                     {t("next")}{" "}
                     <TbPlayerTrackNext
                       style={{
-                        margin: "-2px 0 0 3px",
+                        margin:"4px -6px 0px -2px",
                         transform:
                           t("us") === "Us"
                             ? "rotate(360deg)"
@@ -958,6 +958,7 @@ const StudentRegistrationForm = () => {
                     {" "}
                     <ImPrevious2
                       style={{
+                        margin:"1px 0px -4px 1px",
                         transform:
                           t("us") === "Us"
                             ? "rotate(360deg)"
@@ -998,7 +999,7 @@ const StudentRegistrationForm = () => {
                     {t("next")}{" "}
                     <TbPlayerTrackNext
                       style={{
-                        margin: "-2px 0 0 3px",
+                        margin:"4px -6px 0px -2px",
                         transform:
                           t("us") === "Us"
                             ? "rotate(360deg)"
@@ -1113,6 +1114,7 @@ const StudentRegistrationForm = () => {
                     {" "}
                     <ImPrevious2
                       style={{
+                        margin:"1px 0px -4px 1px",
                         transform:
                           t("us") === "Us"
                             ? "rotate(360deg)"
@@ -1153,7 +1155,7 @@ const StudentRegistrationForm = () => {
                     {t("next")}{" "}
                     <TbPlayerTrackNext
                       style={{
-                        margin: "-2px 0 0 3px",
+                        margin:"4px -6px 0px -2px",
                         transform:
                           t("us") === "Us"
                             ? "rotate(360deg)"
@@ -1285,6 +1287,7 @@ const StudentRegistrationForm = () => {
                     {" "}
                     <ImPrevious2
                       style={{
+                        margin:"1px 0px -4px 1px",
                         transform:
                           t("us") === "Us"
                             ? "rotate(360deg)"
@@ -1327,7 +1330,7 @@ const StudentRegistrationForm = () => {
                     {t("next")}{" "}
                     <TbPlayerTrackNext
                       style={{
-                        margin: "-2px 0 0 3px",
+                        margin:"4px -6px 0px -2px",
                         transform:
                           t("us") === "Us"
                             ? "rotate(360deg)"
@@ -1372,6 +1375,7 @@ const StudentRegistrationForm = () => {
                     {" "}
                     <ImPrevious2
                       style={{
+                        margin:"1px 0px -4px 1px",
                         transform:
                           t("us") === "Us"
                             ? "rotate(360deg)"
@@ -1412,7 +1416,7 @@ const StudentRegistrationForm = () => {
                     {t("next")}{" "}
                     <TbPlayerTrackNext
                       style={{
-                        margin: "-2px 0 0 3px",
+                        margin:"4px -6px 0px -2px",
                         transform:
                           t("us") === "Us"
                             ? "rotate(360deg)"
@@ -1451,6 +1455,7 @@ const StudentRegistrationForm = () => {
                     {" "}
                     <ImPrevious2
                       style={{
+                        margin:"1px 0px -4px 1px",
                         transform:
                           t("us") === "Us"
                             ? "rotate(360deg)"

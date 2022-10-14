@@ -65,7 +65,14 @@ const Post = (props) => {
         ? (props.post.latest = true)
         : null}
       <div className={PostStyles["post-main-container"]}>
-        <img
+        <div className={PostStyles['post-image-container']}>
+        {props.latestPost._id === props.post._id ? (
+          <span className={PostStyles["latest-post"]}>
+            {t("events_latest")}
+            <TbUrgent style={{ marginBottom: "5px" }} />
+          </span>
+        ) : null}
+                <img
           src={props.post.article_img}
           className={`${PostStyles["post-image"]}`}
           style={{
@@ -73,6 +80,8 @@ const Post = (props) => {
           }}
           alt="dd"
         />
+        </div>
+
         <div style={{ minHeight: "100%" }}>
           <h3
             className={PostStyles["post-header"]}
@@ -103,12 +112,6 @@ const Post = (props) => {
             {dateClearified}
           </span>
         </div>
-        {props.latestPost._id === props.post._id ? (
-          <span className={PostStyles["latest-post"]}>
-            {t("events_latest")}
-            <TbUrgent style={{ marginBottom: "5px" }} />
-          </span>
-        ) : null}
       </div>
     </Link>
   );

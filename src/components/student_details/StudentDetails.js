@@ -437,7 +437,7 @@ const [sessionInfo,setSessionInfo] = useState([]);
                 <th>{t("mobile")}</th>
                 <td>{specificStudentJoiningRequestData.mobile}</td>
                  {specificStudentJoiningRequestData.subscription_state === 'Pending' && (specificStudentJoiningRequestData.instructor === undefined)?<>
-                 <th>{t("Quran Surah Or Juiz Reached Before<")}</th>
+                 <th>{t("Quran Surah Or Juiz Reached Before")}</th>
                  <td>{specificStudentJoiningRequestData.reached_surah}</td>
                  </>:<><th colSpan={"2"}>{t("additional_info")}</th></>}
               </tr>
