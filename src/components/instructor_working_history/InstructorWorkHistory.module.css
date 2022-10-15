@@ -114,7 +114,7 @@
   margin:10px auto;
   padding:10px;
   display: flex;
-  justify-content:center;
+  justify-content:space-evenly;
   align-items: center;
   background-color:#c2a054 ;
 }
@@ -125,7 +125,7 @@
   text-align: left;
 }
 .sessions-more-info-settings> section{
-  flex: 0 0 18%;
+  flex: 0 0 29%;
 }
 .sessions-more-info-settings> section:nth-child(3){
     flex: 0 0 42%;
@@ -185,15 +185,19 @@
   font-size: 2rem;
   font-weight: bold;
 }
-@media screen  and (max-width:1067px){
+@media screen  and (max-width:1200px){
   .instructor-work-history-main-container{
     order:2;
     width:100%;
+    margin-top: 30px;
   }
 }
 @media screen and (max-width:500px) {
+  .empty-data-img {
+    top:76%;
+  }
   .instructor-work-history-main-container{
-    margin-top:10px;
+    margin-top:30px;
   }
   .settings-header,.sessions-more-info-settings{
     flex-direction: column;

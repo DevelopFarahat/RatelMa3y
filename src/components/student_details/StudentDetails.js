@@ -297,12 +297,12 @@ const [sessionInfo,setSessionInfo] = useState([]);
         {Object.keys(specificStudentJoiningRequestData).length === 0 ? <img src={EmptyDataImage} className={StudentDetailsStyles['empty-data-img']} alt="Empty" /> : specificStudentJoiningRequestData.subscription_state !== 'Cancelled' ? <div className={StudentDetailsStyles['settings-header']}>
           <span className={`${isStudentRequestDataVisible ? StudentDetailsStyles['taps-shadow'] : ''} ${StudentDetailsStyles['joinnig-request-data-tap']}`} onClick={toogleViewOfStudentRatelData}>{t("student_data")}</span>   {specificStudentJoiningRequestData.subscription_state !== 'Pending' ? <span className={`${isStudentRatelDataVisible ? StudentDetailsStyles['taps-shadow'] : ''} ${StudentDetailsStyles['ratel-student-data-tap']}`} onClick={toogleViewOfStudentRequestData}>{t("session_details")}</span> : null}
         </div> : <img src={EmptyDataImage} className={StudentDetailsStyles['empty-data-img']} alt="Empty" />}
-        {Object.keys(specificStudentJoiningRequestData).length !== 0 && specificStudentJoiningRequestData.subscription_state !== 'Cancelled' ? isStudentRequestDataVisible && specificStudentJoiningRequestData.subscription_state !== 'Cancelled' ? <div className={StudentDetailsStyles['student-request-joinnig-info-main-container']} style={{overflow:isDateTimeVisable.visible?'hidden':'auto'}}>
-          {/* request */}
-          <div className={StudentDetailsStyles['student-table-main-header']}>
-            <button className={StudentDetailsStyles['btn']} onClick={()=>showDateTimeContainer('workingTime')}><SiGooglemeet size={20} style={{color:"#FFFFFF",margin: "0 0 4px 1px"}}/>{t("schedule")}</button>
+        {Object.keys(specificStudentJoiningRequestData).length !== 0 && specificStudentJoiningRequestData.subscription_state !== 'Cancelled' ? isStudentRequestDataVisible && specificStudentJoiningRequestData.subscription_state !== 'Cancelled' ? <div className={StudentDetailsStyles['student-request-joinnig-info-main-container']}>
+        {/* request */}
+        <div className={StudentDetailsStyles['student-table-main-header']}>
+            <button className={StudentDetailsStyles['btn']} onClick={()=>showDateTimeContainer('workingTime')}>{t("schedule")}</button>
             <span>{t("student_data")}</span>
-            <button className={StudentDetailsStyles['btn']} onClick={()=>showDateTimeContainer('prefsTime')} ><AiFillLike size={20} style={{color:"#FFFFFF",margin: "0 0 4px 1px"}}/>{t("prefs_times_days")}</button>
+            <button className={StudentDetailsStyles['btn']} onClick={()=>showDateTimeContainer('prefsTime')} >{t("prefs_times_days")}</button>
             </div>
             {isDateTimeVisable.visible?<div className={StudentDetailsStyles['date-time-container-main']}>
             <VscChromeClose size={30} onClick={hideDateTimeContainer} className={StudentDetailsStyles['close-date-time-container']}/>
@@ -400,6 +400,7 @@ const [sessionInfo,setSessionInfo] = useState([]);
               <StudentSessionsSchedule specificStudentJoiningRequestData={specificStudentJoiningRequestData}/>
               </div>}
             </div>:null}
+            <div className={StudentDetailsStyles['requested-joinnig-student-table-wrapper']}>
           <table className={StudentDetailsStyles['requested-joinnig-student-table']}>
             <thead>
               <tr>
@@ -474,6 +475,7 @@ const [sessionInfo,setSessionInfo] = useState([]);
               <tr></tr>
             </thead>
           </table>
+          </div>
 
         </div> :specificStudentJoiningRequestData.sessions.length !== 0?<div className={StudentDetailsStyles['student-ratel-info-main-container']}>
           {/* ratel member */}

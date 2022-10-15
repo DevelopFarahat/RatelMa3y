@@ -459,31 +459,40 @@ input[type="number"]{
   object-fit: contain;
 }
 @media screen and (max-width:1060px) {
+  
   .system-user-form-table-container{
     flex-direction: column;
   }
+
   .system-user-form{
-    width: 95%;
+    width: 99%;
     margin: auto;
   }
+  
+  
   .system-user-data-container{
-    width:95%;
+    width:99%;
     margin: 15px auto 0 auto;
   }
-  .table-settings-container{
-    flex-direction: column;
-  }
-  .table-settings-container > *{
-    margin:5px 0 5px 0;
-  }
-  .btn{
-    width:100%;
-  }
-  
   .step-button-container > button{
     width:135px !important;
   }
-  @media screen and (max-width:486px) {
+  @media screen and (max-width:586px) {
+    .alert{
+      width:279px;
+    }
+    .alert > img{
+      width:35%;
+    }
+    .table-settings-container{
+      flex-direction: column;
+    }
+    .table-settings-container > *{
+      margin:5px 0 5px 0;
+    }
+    .btn{
+      width:100%;
+    }
     .pagination-container > ul > li {
       flex: 0 0 29px !important;
       padding: 5px !important;
@@ -506,21 +515,4 @@ input[type="number"]{
         transform: translate(-50%, -50%);
       }
   }
-  @media screen and (min-width:487px) and (max-width:880px) {
-    .alert{
-      width:279px;
-    }
-    .alert > img{
-      width:35%;
-    }
-  }
-  @media screen and (min-width:881px) {
-    .alert{
-      width:350px;
-    }
-    .alert > img{
-      width:35%;
-    }
-  }
-  
 }
