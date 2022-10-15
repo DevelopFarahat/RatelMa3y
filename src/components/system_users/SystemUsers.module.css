@@ -37,7 +37,7 @@
   padding: 8px;
   font-size: 1rem;
   color: #000;
-  text-transform: capitalize;
+  text-transform: lowercase;
   text-align: left;
 }
 .days-check-box-container , .hours-check-box-container {
