@@ -125,7 +125,7 @@
 @media screen and (max-width:680px){
     .post-details{
         width:99%;
-        height:370px !important;
+       /* height:370px !important;*/
     }
     .post-main-container{
         padding:0;
@@ -143,7 +143,7 @@
     .post-details{
         width:100%;
         padding: 15px 0 0 43px;
-        height:370px !important;
+       /* height:370px !important;*/
     }
     .post-main-container >  div {
         flex:  0 0 100%;
