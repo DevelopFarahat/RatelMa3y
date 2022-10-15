@@ -96,7 +96,7 @@ const Post = (props) => {
               className={PostStyles["post-details"]}
               style={{
                 cursor: "pointer",
-                height:'200px'
+                minHeight:'200px'
               }}
             >
               {props.post.content.substring(0, 374)}
@@ -105,7 +105,7 @@ const Post = (props) => {
             <p className={PostStyles["post-details"]}
             style={{
               cursor: "pointer",
-              height:'200px'
+              minHeight:'200px'
             }}
             >
               {" "}{""}{linkify(props.post.content)}
