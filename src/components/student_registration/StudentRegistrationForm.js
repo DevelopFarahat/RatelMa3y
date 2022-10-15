@@ -256,8 +256,7 @@ const StudentRegistrationForm = () => {
 
   //TO SEND PIN WHEN REACHING 6th STEP
   
-  //TODO: Unhash this when you finish testing
-  /*
+  //MARK: hash for testing /Unhash when deploying
   useEffect(() => {
     
     if (!!studentRegistrationFormSteps.sixStep)
@@ -266,7 +265,7 @@ const StudentRegistrationForm = () => {
         { email: userData.email, rpin: true }
       );
     }, [studentRegistrationFormSteps.sixStep]);
-*/
+
   // just case if the user demande student can register in multiple programs
   /*
   const handleStudentPrograms = (event) => {
@@ -448,7 +447,7 @@ const StudentRegistrationForm = () => {
     event.preventDefault();
 
     //CHECK IF VERIFICATION GOES WRONG
-    //TODO: Unhash this when you finish testing
+    //MARK: hash for testing /Unhash when deploying
 
     let result = await axios.post(
       `${process.env.REACT_APP_BACK_HOST_URL}/api/auth/confirm_pin`,

@@ -77,12 +77,13 @@ const Post = (props) => {
           className={`${PostStyles["post-image"]}`}
           style={{
             cursor: "pointer",
+            width: '100%'
           }}
-          alt="dd"
+          alt="post image"
         />
         </div>
 
-        <div style={{ minHeight: "100%" }}>
+        <div style={{ minHeight: "100%",width: '100%' }}>
           <h3
             className={PostStyles["post-header"]}
             style={{
@@ -96,7 +97,9 @@ const Post = (props) => {
               className={PostStyles["post-details"]}
               style={{
                 cursor: "pointer",
-                height:'200px'
+                height:'200px',
+                marginBottom: 40
+                
               }}
             >
               {props.post.content.substring(0, 374)}
@@ -113,7 +116,7 @@ const Post = (props) => {
           )}
 
           <span className={PostStyles["post-date"]}>
-            <BsCalendarDate size={15} style={{ marginBottom: "4px" }} />{" "}
+            <BsCalendarDate size={15}/>{" "}
             {dateClearified}
           </span>
         </div>

@@ -1,5 +1,3 @@
-/** @format */
-
 import React from "react";
 import ProgramsCss from "./Programs.module.css";
 import Container from "react-bootstrap/Container";
@@ -7,13 +5,13 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import program1 from "../../assets/images/program1.webp";
 import program2 from "../../assets/images/program2.webp";
-import program3 from "../../assets/images/program3.jpg";
+import program3 from "../../assets/images/program3.webp";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
 function Programs() {
   const navigate = useNavigate();
-  const [t, i18n] = useTranslation();
+  const [t] = useTranslation();
   return (
     <div
       style={{ direction: t("us") === "Us" ? "ltr" : "rtl" }}
@@ -46,7 +44,7 @@ function Programs() {
           <Col md={4}>
             <div className={ProgramsCss.ProgramCard}>
               <div className={ProgramsCss.programImage}>
-                <img src={program3} alt='program3' />
+                <img src={program3} alt='program3'/>
               </div>
               <h4>{t("prorams_memorizing")}</h4>
               <button onClick={() => navigate("/register")}>

@@ -148,7 +148,7 @@ function NavBar({ i18n, isRoomPrepared, expanded,setExpanded }) {
           )}
           <Button
             className={NavCss.button}
-            style={{ marginInlineStart: 24 }}
+            style={{ marginInlineStart: 8 }}
             variant="outline-success"
             onClick={(e) => changeLang(e)}
           >

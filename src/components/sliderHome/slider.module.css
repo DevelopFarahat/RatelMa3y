@@ -3,8 +3,21 @@
   margin-top: 0px;
 }
 .CarouselItem {
-  max-height: 571px;
+  height: calc(100vh);
+  min-height: 288px;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
+.CarouselItem:nth-of-type(1) {
+  background-image: url('../../assets/images/slider1.webp');
+}
+.CarouselItem:nth-of-type(2) {
+  background-image: url('../../assets/images/slider2.webp');
+}
+.CarouselItem:nth-of-type(3) {
+  background-image: url('../../assets/images/slider3.webp');
+}
+
 .CarouselItem h2 {
   font-size: 45px;
 }
@@ -47,8 +60,8 @@
     font-size: 15px;
   }
 }
-@media (max-width: 576px) {
+/* @media (max-width: 576px) {
   .Caption {
     display: none;
   }
-}
+} */

@@ -12,7 +12,6 @@ function SliderHome() {
     <Carousel className={SliderCss.Carousel} fade indicators={false}>
       <Carousel.Item className={SliderCss.CarouselItem}>
         <div className='overlay'></div>
-        <img className='d-block w-100' src={slider1} alt='First slide' />
         <Carousel.Caption className={SliderCss.Caption}>
           <h2>{t("slider_title")}</h2>
           <p>
@@ -27,7 +26,6 @@ function SliderHome() {
       </Carousel.Item>
       <Carousel.Item className={SliderCss.CarouselItem}>
         <div className='overlay'></div>
-        <img className='d-block w-100' src={slider2} alt='Second slide' />
         <Carousel.Caption className={SliderCss.Caption}>
           <h2>{t("slider_h2")}</h2>
           <p>{t("slider_text2")}</p>
@@ -40,7 +38,6 @@ function SliderHome() {
       </Carousel.Item>
       <Carousel.Item className={SliderCss.CarouselItem}>
         <div className='overlay'></div>
-        <img className='d-block w-100' src={slider3} alt='Third slide' />
         <Carousel.Caption className={SliderCss.Caption}>
           <h2>{t("slider_nourbayan")}</h2>
           <p>
