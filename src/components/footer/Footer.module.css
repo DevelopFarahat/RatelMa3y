@@ -33,8 +33,10 @@
   color: #c2a556;
 }
 .logo {
-  height: 155px;
+ /* height: 155px;*/
   margin-top: -45px;
+  width: 221px;
+  height: 100px;
 }
 .social {
   display: flex;
