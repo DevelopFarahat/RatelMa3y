@@ -506,9 +506,10 @@ const StudentRegistrationForm = () => {
         finalStudentRegistrationDataObji
       )
       .then((res) => {
-        res.status === 200
-          ? navigate("/login")
-          : setIsRegistrationErrorAlertVisible(true);
+        if(res.status !== 200) setIsRegistrationErrorAlertVisible(true);
+        
+        enqueueSnackbar(t('success_registration'),{variant: 'success'})
+        navigate("/login")
         setIsThereNewRegistration(false);
       })
       .catch((error) => {
