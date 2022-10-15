@@ -1628,7 +1628,7 @@ const StudentSubscriptionState = ({
 
       })
       .catch((error) => {
-        (error);
+        console.log(error);
       });
 
   };
@@ -1847,13 +1847,13 @@ const StudentSubscriptionState = ({
         setSpecificStudentJoiningRequestData(res.data);
       })
       .catch((error) => {
-        (error);
+        console.log(error);
       });
     axios.get(`${process.env.REACT_APP_BACK_HOST_URL}/api/sessions?user_id=${stdObji._id}&limit=10000000000000000`).then((res) => {
       initialStudentSessionsDetails.current = res.data.data;
       setStudentSessionsDetails(res.data.data);
     }).catch((error) => {
-      (error);
+      console.log(error);
     })
     handlerRowClicked(event);
     getTotalPresentAndAbsence(stdObji);
@@ -1884,7 +1884,7 @@ const StudentSubscriptionState = ({
         setPageNo(numOfPages.reverse());
       },
       (error) => {
-        (error);
+        console.log(error);
       }
 
     );
@@ -1894,7 +1894,7 @@ const StudentSubscriptionState = ({
         setInstructorData(instructorRes.data.data);
       })
       .catch((error) => {
-        (error);
+        console.log(error);
       });
   }, [fetchAgain, currentPage]);
   const changeSubscriptionState = (event) => {
@@ -1920,7 +1920,7 @@ const StudentSubscriptionState = ({
           getStudentRatelMa3yJoiningRequestData(changableSubscriptionState, event);
         })
         .catch((error) => {
-          (error);
+          console.log(error);
         });
     } else if (studentConfiguration.studentStatus !== "Cancelled" && changableSubscriptionState.instructor === null) {
       setIsUserMakingUpdateOnStudentAccount(true);
@@ -1943,7 +1943,7 @@ const StudentSubscriptionState = ({
       getStudentRatelMa3yJoiningRequestData(changableSubscriptionState, event);
     })
     .catch((error) => {
-      (error);
+      console.log(error);
     });
 
   
@@ -1971,7 +1971,7 @@ const StudentSubscriptionState = ({
           getStudentRatelMa3yJoiningRequestData(changableSubscriptionState, event);
         })
         .catch((error) => {
-          (error);
+          console.log(error);
         });
         }else{
           axios.put(`${process.env.REACT_APP_BACK_HOST_URL}/api/students/${changableSubscriptionState._id}`,
@@ -1994,7 +1994,7 @@ const StudentSubscriptionState = ({
         })
   
         .catch((error) => {
-          (error);
+          console.log(error);
         });
         }
 
@@ -2023,7 +2023,7 @@ const StudentSubscriptionState = ({
         getStudentRatelMa3yJoiningRequestData(changableSubscriptionState, event);
       })
       .catch((error) => {
-        (error);
+        console.log(error);
       });
     }
   };
@@ -3030,7 +3030,7 @@ const StudentSubscriptionState = ({
               d6: false,
             })
           }).catch((error) => {
-            (error);
+            console.log(error);
           })
 
           axios.put(`${process.env.REACT_APP_BACK_HOST_URL}/api/students/${changableSubscriptionState._id}`, {
@@ -3050,7 +3050,7 @@ const StudentSubscriptionState = ({
             setStudentStatus((current) => !current);
             getStudentRatelMa3yJoiningRequestData(res.data, event);
           }).catch((error) => {
-            (error);
+            console.log(error);
           })
         } else {
           setBusyDaysHoursWarningAlert(true);
@@ -3063,7 +3063,7 @@ const StudentSubscriptionState = ({
       }
     
     }).catch((error) => {
-      (error);
+      console.log(error);
     })
   }
   const sortStudentBySubscriptionState = (sortType) => {
@@ -3314,7 +3314,7 @@ const StudentSubscriptionState = ({
           }).then((res) => {
             return res;
           }).catch((error) => {
-            (error);
+            console.log(error);
           })
         )
       })
@@ -3344,7 +3344,7 @@ const StudentSubscriptionState = ({
             }, 1000)
             return res;
           }).catch((error) => {
-            (error);
+            console.log(error);
           })
 
         )
@@ -3412,12 +3412,13 @@ const StudentSubscriptionState = ({
           ) : (
             <table
               className={StudentSubscriptionStyles["student-accounts-table"]}
+             
             >
               <thead>
                 <tr>
-                  <th>{t("name")}</th>
-                  <th>{t("subscription_state")}</th>
-                  <th>{t("settings")}</th>
+                  <th >{t("name")}</th>
+                  <th >{t("subscription_state")}</th>
+                  <th >{t("settings")}</th>
                 </tr>
               </thead>
               <tbody>
@@ -3429,7 +3430,7 @@ const StudentSubscriptionState = ({
                       getStudentRatelMa3yJoiningRequestData(stdData, event)
                     }
                     style={{
-                      background: selectedRow === stdData._id ? "#038674" : "",
+                      background: selectedRow === stdData._id ? "#198754" : "",
                       color: selectedRow === stdData._id ? "#FFFFFF" : "",
                       boxShadow:
                         selectedRow === stdData._id
@@ -3576,7 +3577,7 @@ const StudentSubscriptionState = ({
 
                           {recommendedInstructorsData.length === 0 ? <option value="" style={{ textAlign: 'center' }} disabled>{t("There Is No Recommendation")}</option> : null}
                           {recommendedInstructorsData.map((instructor) => (
-                            <option key={instructor._id} value={instructor._id} style={{ background: changableSubscriptionState.instructor !== undefined && changableSubscriptionState.instructor === instructor._id ? '#038674' : '', color: changableSubscriptionState.instructor !== undefined && changableSubscriptionState.instructor === instructor._id ? '#FFFFFF' : '#000000' }}>
+                            <option key={instructor._id} value={instructor._id} style={{ background: changableSubscriptionState.instructor !== undefined && changableSubscriptionState.instructor === instructor._id ? '#198754' : '', color: changableSubscriptionState.instructor !== undefined && changableSubscriptionState.instructor === instructor._id ? '#FFFFFF' : '#000000' }}>
                               {instructor.name}
                             </option>
                           ))}
@@ -3652,7 +3653,7 @@ const StudentSubscriptionState = ({
                         <Spinner animation="grow" variant="light" style={{ width: '10px', height: '10px', marginLeft: '3px' }} />
                         <Spinner animation="grow" variant="light" style={{ width: '10px', height: '10px', marginLeft: '3px' }} />
                         <Spinner animation="grow" variant="light" style={{ width: '10px', height: '10px', marginLeft: '3px' }} />
-                      </> : <>{t("save")}<FaSave style={{ margin: "0px 0 1px 3px" }} size={15} /></>
+                      </> : <>{t("save")}<FaSave style={{ margin: "3px 6px 1px 3px" }} size={15} /></>
                       }
 
 
@@ -3669,7 +3670,7 @@ const StudentSubscriptionState = ({
                         <Spinner animation="grow" variant="light" style={{ width: '10px', height: '10px', marginLeft: '3px' }} />
                         <Spinner animation="grow" variant="light" style={{ width: '10px', height: '10px', marginLeft: '3px' }} />
                         <Spinner animation="grow" variant="light" style={{ width: '10px', height: '10px', marginLeft: '3px' }} />
-                      </> : <>{t("save")}<FaSave style={{ margin: "0px 0 1px 3px" }} size={15} /></>
+                      </> : <>{t("save")}<FaSave style={{ margin: "3px 6px 1px 3px" }} size={15} /></>
                       }
                     </button>
                   ) :changableSubscriptionState.instructor === null ? (
@@ -3696,7 +3697,7 @@ const StudentSubscriptionState = ({
                       <Spinner animation="grow" variant="light" style={{ width: '10px', height: '10px', marginLeft: '3px' }} />
                       <Spinner animation="grow" variant="light" style={{ width: '10px', height: '10px', marginLeft: '3px' }} />
                       <Spinner animation="grow" variant="light" style={{ width: '10px', height: '10px', marginLeft: '3px' }} />
-                    </> : <>{t("save")}<FaSave style={{ margin: "0px 0 1px 3px" }} size={15} /></>
+                    </> : <>{t("save")}<FaSave style={{ margin: "3px 6px 1px 3px" }} size={15} /></>
                     }
                   </button>
                 ): (
@@ -3727,7 +3728,7 @@ const StudentSubscriptionState = ({
                         <Spinner animation="grow" variant="light" style={{ width: '10px', height: '10px', marginLeft: '3px' }} />
                         <Spinner animation="grow" variant="light" style={{ width: '10px', height: '10px', marginLeft: '3px' }} />
                         <Spinner animation="grow" variant="light" style={{ width: '10px', height: '10px', marginLeft: '3px' }} />
-                      </> : <>{t("save")}<FaSave style={{ margin: "0px 0 1px 3px" }} size={15} /></>
+                      </> : <>{t("save")}<FaSave style={{ margin: "3px 6px 1px 3px" }} size={15} /></>
                       }
                     </button>
                   )}
@@ -3753,7 +3754,7 @@ const StudentSubscriptionState = ({
                     <span>{t("Student Prefers")}</span>
                   </div>
                   <div>
-                    <span style={{ background: 'rgba(15,255,149,.3)' }}>{""}</span>
+                    <span style={{ background: '#f9c324' }}>{""}</span>
                     <span>{t("Student's Sessions Days And Hours")}</span>
                   </div>
                 </section>
@@ -3764,7 +3765,7 @@ const StudentSubscriptionState = ({
                     className={`${StudentSubscriptionStyles["days-check-box-container"]}`}
                   >
                     <div>
-                      <Form.Label htmlFor="d0" style={{ color: disabledDays.d0 ? '#d9d9f3' : prefsDays.d0 ? '#00c07f' : '#000000', background: stdBusyDays.d0 ? 'rgba(15,255,149,.3)' : '', borderRadius: '2px' }}>{t("Saturday")}</Form.Label>
+                      <Form.Label htmlFor="d0" style={{ color: disabledDays.d0 ? '#d9d9f3' : prefsDays.d0 ? '#00c07f' : '#000000', background: stdBusyDays.d0 ? '#f9c324' : '', borderRadius: '2px' }}>{t("Saturday")}</Form.Label>
                       <Form.Check
                         name="d0"
                         id="d0"
@@ -3785,7 +3786,7 @@ const StudentSubscriptionState = ({
                       />
                     </div>
                     <div>
-                      <Form.Label htmlFor="d1" style={{ color: disabledDays.d1 ? '#d9d9f3' : prefsDays.d1 ? '#00c07f' : '#000000', backgroundColor: stdBusyDays.d1 ? 'rgba(15,255,149,.3)' : '', borderRadius: '2px' }}>{t("Sunday")}</Form.Label>
+                      <Form.Label htmlFor="d1" style={{ color: disabledDays.d1 ? '#d9d9f3' : prefsDays.d1 ? '#00c07f' : '#000000', backgroundColor: stdBusyDays.d1 ? '#f9c324' : '', borderRadius: '2px' }}>{t("Sunday")}</Form.Label>
                       <Form.Check
                         name="d1"
                         id="d1"
@@ -3806,7 +3807,7 @@ const StudentSubscriptionState = ({
                       />
                     </div>
                     <div>
-                      <Form.Label htmlFor="d2" style={{ color: disabledDays.d2 ? '#d9d9f3' : prefsDays.d2 ? '#00c07f' : '#000000', backgroundColor: stdBusyDays.d2 ? 'rgba(15,255,149,.3)' : '', borderRadius: '2px' }}>{t("Monday")}</Form.Label>
+                      <Form.Label htmlFor="d2" style={{ color: disabledDays.d2 ? '#d9d9f3' : prefsDays.d2 ? '#00c07f' : '#000000', backgroundColor: stdBusyDays.d2 ? '#f9c324' : '', borderRadius: '2px' }}>{t("Monday")}</Form.Label>
                       <Form.Check
                         name="d2"
                         id="d2"
@@ -3827,7 +3828,7 @@ const StudentSubscriptionState = ({
                       />
                     </div>
                     <div>
-                      <Form.Label htmlFor="d3" style={{ color: disabledDays.d3 ? '#d9d9f3' : prefsDays.d3 ? '#00c07f' : '#000000', backgroundColor: stdBusyDays.d3 ? 'rgba(15,255,149,.3)' : '', borderRadius: '2px' }}>{t("Tuesday")}</Form.Label>
+                      <Form.Label htmlFor="d3" style={{ color: disabledDays.d3 ? '#d9d9f3' : prefsDays.d3 ? '#00c07f' : '#000000', backgroundColor: stdBusyDays.d3 ? '#f9c324' : '', borderRadius: '2px' }}>{t("Tuesday")}</Form.Label>
                       <Form.Check
                         name="d3"
                         id="d3"
@@ -3848,7 +3849,7 @@ const StudentSubscriptionState = ({
                       />
                     </div>
                     <div>
-                      <Form.Label htmlFor="d4" style={{ color: disabledDays.d4 ? '#d9d9f3' : prefsDays.d4 ? '#00c07f' : '#000000', backgroundColor: stdBusyDays.d4 ? 'rgba(15,255,149,.3)' : '', borderRadius: '2px' }}>{t("Wednesday")}</Form.Label>
+                      <Form.Label htmlFor="d4" style={{ color: disabledDays.d4 ? '#d9d9f3' : prefsDays.d4 ? '#00c07f' : '#000000', backgroundColor: stdBusyDays.d4 ? '#f9c324' : '', borderRadius: '2px' }}>{t("Wednesday")}</Form.Label>
                       <Form.Check
                         name="d4"
                         id="d4"
@@ -3869,7 +3870,7 @@ const StudentSubscriptionState = ({
                       />
                     </div>
                     <div>
-                      <Form.Label htmlFor="d5" style={{ color: disabledDays.d5 ? '#d9d9f3' : prefsDays.d5 ? '#00c07f' : '#000000', backgroundColor: stdBusyDays.d5 ? 'rgba(15,255,149,.3)' : '', borderRadius: '2px' }}>{t("Thursday")}</Form.Label>
+                      <Form.Label htmlFor="d5" style={{ color: disabledDays.d5 ? '#d9d9f3' : prefsDays.d5 ? '#00c07f' : '#000000', backgroundColor: stdBusyDays.d5 ? '#f9c324' : '', borderRadius: '2px' }}>{t("Thursday")}</Form.Label>
                       <Form.Check
                         name="d5"
                         id="d5"
@@ -3890,7 +3891,7 @@ const StudentSubscriptionState = ({
                       />
                     </div>
                     <div>
-                      <Form.Label htmlFor="d6" style={{ color: disabledDays.d6 ? '#d9d9f3' : prefsDays.d6 ? '#00c07f' : '#000000', backgroundColor: stdBusyDays.d6 ? 'rgba(15,255,149,.3)' : '', borderRadius: '2px' }}>{t("Friday")}</Form.Label>
+                      <Form.Label htmlFor="d6" style={{ color: disabledDays.d6 ? '#d9d9f3' : prefsDays.d6 ? '#00c07f' : '#000000', backgroundColor: stdBusyDays.d6 ? '#f9c324' : '', borderRadius: '2px' }}>{t("Friday")}</Form.Label>
                       <Form.Check
                         name="d6"
                         id="d6"
@@ -3912,7 +3913,7 @@ const StudentSubscriptionState = ({
                     </div>
                   </div>
                   {checkDaysRadio.d0 ? <>
-                    <span>{t("Session Times on")}<span style={{ color: '#038674', fontWeight: 'bold', verticalAlign: 'text-bottom' }}>{days[0]}</span></span>
+                    <span>{t("Session Times on")}<span style={{ color: '#198754', fontWeight: 'bold', verticalAlign: 'text-bottom' }}>{days[0]}</span></span>
                     <div className={`${StudentSubscriptionStyles["hours-check-box-container"]}`}>
                       {Working_hours.map((wh, index) => (
                         <div key={wh.id}>
@@ -3934,7 +3935,7 @@ const StudentSubscriptionState = ({
                           <ImUsers style={{ color: disabledCompletedHourReachedMaximumNumOfStdD0[`h${index}`] ? '#dadada' : '#000000' }} />{" "}<span style={{ verticalAlign: 'text-top', color: disabledCompletedHourReachedMaximumNumOfStdD0[`h${index}`] ? '#dadada' : '#000000' }}>{nReservedSessionsByStdD0[`h${index}`]}</span>
                         </div>
                       ))}</div></> : checkDaysRadio.d1 ? <>
-                        <span>{t("Session Times on")} <span style={{ color: '#038674', fontWeight: 'bold', verticalAlign: 'text-bottom' }}>{days[1]}</span></span>
+                        <span>{t("Session Times on")} <span style={{ color: '#198754', fontWeight: 'bold', verticalAlign: 'text-bottom' }}>{days[1]}</span></span>
                         <div className={`${StudentSubscriptionStyles["hours-check-box-container"]}`}>
                           {Working_hours.map((wh, index) => (
                             <div key={wh.id}>
@@ -3955,7 +3956,7 @@ const StudentSubscriptionState = ({
                               <ImUsers style={{ color: disabledCompletedHourReachedMaximumNumOfStdD1[`h${index}`] ? '#dadada' : '#000000' }} />{" "}<span style={{ verticalAlign: "text-top", color: disabledCompletedHourReachedMaximumNumOfStdD1[`h${index}`] ? '#dadada' : '#000000' }}>{nReservedSessionsByStdD1[`h${index}`]}</span>
                             </div>
                           ))}</div></> : checkDaysRadio.d2 ? <>
-                            <span>{t("Session Times on")}<span style={{ color: '#038674', fontWeight: 'bold', verticalAlign: 'text-bottom' }}>{days[2]}</span></span>
+                            <span>{t("Session Times on")}<span style={{ color: '#198754', fontWeight: 'bold', verticalAlign: 'text-bottom' }}>{days[2]}</span></span>
                             <div className={`${StudentSubscriptionStyles["hours-check-box-container"]}`}>
                               {Working_hours.map((wh, index) => (
                                 <div key={wh.id}>
@@ -3977,7 +3978,7 @@ const StudentSubscriptionState = ({
                                 </div>
 
                               ))}</div></> : checkDaysRadio.d3 ? <>
-                                <span>{t("Session Times on")} <span style={{ color: '#038674', fontWeight: 'bold', verticalAlign: 'text-bottom' }}>{days[3]}</span></span>
+                                <span>{t("Session Times on")} <span style={{ color: '#198754', fontWeight: 'bold', verticalAlign: 'text-bottom' }}>{days[3]}</span></span>
                                 <div className={`${StudentSubscriptionStyles["hours-check-box-container"]}`}>
                                   {Working_hours.map((wh, index) => (
                                     <div key={wh.id}>
@@ -3998,7 +3999,7 @@ const StudentSubscriptionState = ({
                                       <ImUsers style={{ color: disabledCompletedHourReachedMaximumNumOfStdD3[`h${index}`] ? '#dadada' : '#000000' }} />{" "}<span style={{ verticalAlign: "text-top", color: disabledCompletedHourReachedMaximumNumOfStdD3[`h${index}`] ? '#dadada' : '#000000' }}>{nReservedSessionsByStdD3[`h${index}`]}</span>
                                     </div>
                                   ))}</div></> : checkDaysRadio.d4 ? <>
-                                    <span>{t("Session Times on")}<span style={{ color: '#038674', fontWeight: 'bold', verticalAlign: 'text-bottom' }}>{days[4]}</span></span>
+                                    <span>{t("Session Times on")}<span style={{ color: '#198754', fontWeight: 'bold', verticalAlign: 'text-bottom' }}>{days[4]}</span></span>
                                     <div className={`${StudentSubscriptionStyles["hours-check-box-container"]}`}>
                                       {Working_hours.map((wh, index) => (
                                         <div key={wh.id}>
@@ -4019,7 +4020,7 @@ const StudentSubscriptionState = ({
                                           <ImUsers style={{ color: disabledCompletedHourReachedMaximumNumOfStdD4[`h${index}`] ? '#dadada' : '#000000' }} />{" "}<span style={{ verticalAlign: "text-top", color: disabledCompletedHourReachedMaximumNumOfStdD4[`h${index}`] ? '#dadada' : '#000000' }}>{nReservedSessionsByStdD4[`h${index}`]}</span>
                                         </div>
                                       ))}</div></> : checkDaysRadio.d5 ? <>
-                                        <span>{t("Session Times on")} <span style={{ color: '#038674', fontWeight: 'bold', verticalAlign: 'text-bottom' }}>{days[5]}</span></span>
+                                        <span>{t("Session Times on")} <span style={{ color: '#198754', fontWeight: 'bold', verticalAlign: 'text-bottom' }}>{days[5]}</span></span>
                                         <div className={`${StudentSubscriptionStyles["hours-check-box-container"]}`}>
                                           {Working_hours.map((wh, index) => (
                                             <div key={wh.id}>
@@ -4040,7 +4041,7 @@ const StudentSubscriptionState = ({
                                               <ImUsers style={{ color: disabledCompletedHourReachedMaximumNumOfStdD5[`h${index}`] ? '#dadada' : '#000000' }} />{" "}<span style={{ verticalAlign: "text-top", color: disabledCompletedHourReachedMaximumNumOfStdD5[`h${index}`] ? '#dadada' : '#000000' }}>{nReservedSessionsByStdD5[`h${index}`]}</span>
                                             </div>
                                           ))}</div></> : checkDaysRadio.d6 ? <>
-                                            <span>{t("Session Times on")} <span style={{ color: '#038674', fontWeight: 'bold', verticalAlign: 'text-bottom' }}>{days[6]}</span></span>
+                                            <span>{t("Session Times on")} <span style={{ color: '#198754', fontWeight: 'bold', verticalAlign: 'text-bottom' }}>{days[6]}</span></span>
                                             <div className={`${StudentSubscriptionStyles["hours-check-box-container"]}`}>
                                               {Working_hours.map((wh, index) => (
                                                 <div key={wh.id}>
@@ -4070,7 +4071,7 @@ const StudentSubscriptionState = ({
                       <Spinner animation="grow" variant="light" style={{ width: '10px', height: '10px', marginLeft: '3px' }} />
                       <Spinner animation="grow" variant="light" style={{ width: '10px', height: '10px', marginLeft: '3px' }} />
                       <Spinner animation="grow" variant="light" style={{ width: '10px', height: '10px', marginLeft: '3px' }} />
-                    </> : <>{t("update")}<img src={updateImageIcon} style={{ marginLeft: '10px', width: '16px', objectFit: 'contain' }} alt="update" /></>}
+                    </> : <>{t("update")}<img src={updateImageIcon} style={{ margin:'6px 6px 0 1px',width:'16px', objectFit: 'contain' }} alt="update" /></>}
 
                   </button>
                 </form>
@@ -4095,7 +4096,7 @@ const StudentSubscriptionState = ({
         <div className={StudentSubscriptionStyles["alert"]}>
           <img src={CircleGif} alt="successfull" />
           <span>
-            <span style={{ fontWeight: "bold", color: "#038674" }}>
+            <span style={{ fontWeight: "bold", color: "#198754" }}>
               {localStorage.getItem("user_name")}
             </span>{" "}
             {t("Has Deleted  Stuff Account Successfully")}

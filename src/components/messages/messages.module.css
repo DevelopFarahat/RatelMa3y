@@ -24,6 +24,7 @@
   -ms-border-radius: 50%;
   -o-border-radius: 50%;
 }
+
 .messages-icon-container > img {
   margin: auto;
   display: block;
@@ -33,6 +34,7 @@
   transform: translate(-50%, -50%);
   width: 50%;
 }
+
 .messages-main > div+div{
   width: 100%;
   display: flex;
@@ -62,9 +64,6 @@
     flex-direction: row;
     justify-content:center;
     align-items: center;
-}
-.messages-content-main-container > img{
-  width:32%;
 }
 .msg-content{
   font-family: 'Times New Roman', Times, serif;
@@ -141,7 +140,7 @@
     background-color: #dadada;
   }
   .messages-table > tbody > tr:hover{
-    background-color:#c2a054;
+    background-color:#20aa69;
     color:#FFFFFF;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     transition: all .3s ease-in-out;
@@ -168,7 +167,7 @@
     border: 6px solid rgba(0, 0, 0, 0.18);
     border-left: 0;
     border-right: 0;
-    background-color: #038674;
+    background-color: #198754;
     -webkit-border-radius: 70px;
     -moz-border-radius: 70px;
     -ms-border-radius: 70px;
@@ -187,7 +186,7 @@
     font-size: 1rem;
     text-transform: capitalize;
     padding: 8px 8px;
-    background-color: #038674;
+    background-color: #198754;
     margin-top: 20px;
     color: #ffffff;
   }
@@ -222,6 +221,18 @@
     -ms-transform: translate(-50%,-50%);
     -o-transform: translate(-50%,-50%);
   }
+  .empty-data-img{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%,-50%);
+    -webkit-transform: translate(-50%,-50%);
+    -moz-transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    -o-transform: translate(-50%,-50%);
+    object-fit: contain;
+    display: block;
+  }
   .pagination-container{
 
     width: 100%;
@@ -253,7 +264,7 @@
     -ms-border-radius: 5px;
     -o-border-radius: 5px;
     cursor: pointer;
-    background:#038674;
+    background:#198754;
     color: #FFFFFF;
   }
   .pages-separator{
@@ -261,7 +272,7 @@
     height: 46px;
     cursor: auto;
     color: #FFFFFF;
-    background-color: #c2a054;
+    background-color: #198754;
     font-size: 1.5rem;
     font-weight: bold;
     font-family: 'Times New Roman', Times, serif;
@@ -273,7 +284,7 @@
     box-sizing: border-box;
   }
   .pagination-container > ul > li:hover:not(.pages-separator){
-    background-color: #c2a054 !important;
+    background-color: #20aa69 !important;
     transform: scale(1.1,1.1);
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     color: #FFFFFF;
@@ -305,7 +316,7 @@
     -ms-border-radius: 5px;
     -o-border-radius: 5px;
     cursor: pointer;
-    background-color: #038674;
+    background-color: #198754;
     color:#FFFFFF;
   }
   .btn > img{
@@ -384,6 +395,7 @@
           width:29px !important;
           padding: 5px !important;
           height: 34px !important;
+          flex: 0 !important;
         }
         .pages-separator{
           position: relative;

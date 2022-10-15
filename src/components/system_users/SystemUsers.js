@@ -905,11 +905,11 @@ const SystemUsers = () => {
         <div className={SystemUsersStyles["alert-container"]}>
           <img src={CircleGif} alt="successfull" />
           <span>
-            <span style={{ fontWeight: "bold", color: "#038674" }}>
+            <span style={{ fontWeight: "bold", color: "#198754" }}>
               {localStorage.getItem("user_name")}
             </span>{" "}
             :
-            <span style={{ fontWeight: "bold", color: "#038674" }}>
+            <span style={{ fontWeight: "bold", color: "#198754" }}>
               {localStorage.getItem("newAccountUserFullname")}
             </span>
             {t("Has Added New Ratel Ma3y Stuff Account")}
@@ -919,7 +919,7 @@ const SystemUsers = () => {
         <div className={SystemUsersStyles["alert-container"]}>
           <img src={CircleGif} alt="successfull" />
           <span>
-            <span style={{ fontWeight: "bold", color: "#038674" }}>
+            <span style={{ fontWeight: "bold", color: "#198754" }}>
               {localStorage.getItem("user_name")}
             </span>{" "}
            {t("Has Updated Stuff Account Successfully")}
@@ -929,7 +929,7 @@ const SystemUsers = () => {
         <div className={SystemUsersStyles["alert-container"]}>
           <img src={CircleGif} alt="successfull" />
           <span>
-            <span style={{ fontWeight: "bold", color: "#038674" }}>
+            <span style={{ fontWeight: "bold", color: "#198754" }}>
               {localStorage.getItem("user_name")}
             </span>{" "}
             {t("Has Deleted  Stuff Account Successfully")}
@@ -937,7 +937,7 @@ const SystemUsers = () => {
         </div>
       ):null}
       <div className={SystemUsersStyles["system-user-main"]}>
-        <div
+      <div
           className={SystemUsersStyles["pagination-container"]}
           style={{ direction: "rtl" }}
         >
@@ -948,8 +948,7 @@ const SystemUsers = () => {
                 className={SystemUsersStyles["btn"]}
                 disabled={currentPage === 1 ? true : false}
                 style={{
-                  cursor: 1 === currentPage ? "not-allowed" : "pointer",
-                  opacity: 1 === currentPage ? ".5" : "1",
+                  cursor: 1 === currentPage ? "not-allowed" : "pointer"
                 }}
                 onClick={getThePreviousPages}
               >
@@ -969,7 +968,7 @@ const SystemUsers = () => {
                     id={pN.index}
                     style={{
                       background:
-                        Number(currentPage) === pN.index ? "#c2a054" : "",
+                        Number(currentPage) === pN.index ? "#198754" : "",
                       color: Number(currentPage) === pN.index ? "#FFFFFF" : "",
                     }}
                     onClick={handleUpCommingPage}
@@ -985,7 +984,7 @@ const SystemUsers = () => {
                     id={lastPage.id}
                     style={{
                       background:
-                        Number(currentPage) === lastPage.index ? "#c2a054" : "",
+                        Number(currentPage) === lastPage.index ? "#198754" : "",
                       color:
                         Number(currentPage) === lastPage.index ? "#FFFFFF" : "",
                     }}
@@ -1002,8 +1001,7 @@ const SystemUsers = () => {
                 disabled={currentPage === lastPage.index ? true : false}
                 style={{
                   cursor:
-                    currentPage === lastPage.index ? "not-allowed" : "pointer",
-                  opacity: currentPage === lastPage.index ? ".5" : "1",
+                    currentPage === lastPage.index ? "not-allowed" : "pointer"
                 }}
                 onClick={getTheNextPages}
               >
@@ -1022,14 +1020,15 @@ const SystemUsers = () => {
           ) : null}
         </div>
 
+
         <div className={SystemUsersStyles["system-user-form-table-container"]}>
           <form
             className={SystemUsersStyles["system-user-form"]}
             style={{direction:t("us")=== t("Us")?'ltr':'rtl'}}
             method="post"
             encType="multipart/form-data"
-            autocomplete="off"
             onSubmit={handleSubmit}
+            autoComplete="off"
           >
             <div
             style={{margin:systemUsersFormSteps.thirdStep || systemUsersFormSteps.fourthStep ?'0 0 29px 0':'0 0 10px 0'}}
@@ -1157,7 +1156,6 @@ const SystemUsers = () => {
                 <div>
                   <Form.Label htmlFor="email">{t("email")}</Form.Label>
                   <Form.Control
-                    autoComplete="off"
                     type="text"
                     name="e-mail"
                     id="email"
@@ -1205,7 +1203,6 @@ const SystemUsers = () => {
                     {t("systemusers_password")}
                   </Form.Label>
                   <Form.Control
-                    autoComplete="off"
                     type="password"
                     name="Password"
                     id="password"
@@ -1252,7 +1249,7 @@ const SystemUsers = () => {
                   onClick={(event) => systemUsersNextStep(event)}
                 >
                   {t("next")}
-                  <TbPlayerTrackNext style={{ margin: "-2px 0 0 3px" }} />
+                  <TbPlayerTrackNext style={{ margin: "-6px 0  0 3px" }} />
                 </button>
                 </div>
               </>
@@ -1373,7 +1370,7 @@ const SystemUsers = () => {
                   id="thirdStep"
                   onClick={(event) => systemUsersNextStep(event)}
                 >   {t("next")}
-                <TbPlayerTrackNext style={{ margin: "-2px 0 0 3px" }} />
+                <TbPlayerTrackNext style={{ margin: "-6px 0  0 3px"}} />
                 </button>
                 </div>
               </>
@@ -1520,7 +1517,7 @@ const SystemUsers = () => {
                   onClick={(event) => systemUsersNextStep(event)}
                 >
                   {t("next")}
-                  <TbPlayerTrackNext style={{ margin: "-2px 0 0 3px" }} />
+                  <TbPlayerTrackNext style={{ margin: "-6px 0  0 3px" }} />
                 </button>
                 </div>
               </>
@@ -1680,7 +1677,7 @@ const SystemUsers = () => {
                         }
                         style={{
                           background:
-                            selectedRow === userAccount._id ? "#038674" : "",
+                            selectedRow === userAccount._id ? "#198754" : "",
                           color:
                             selectedRow === userAccount._id ? "#FFFFFF" : "",
                           boxShadow:

@@ -32,7 +32,7 @@
   text-transform: capitalize;
   letter-spacing: 0.5px;
   color: #ffffff;
-  background-color: #038674;
+  background-color: #198754;
   padding: 10px;
   cursor: pointer;
 }
@@ -45,13 +45,16 @@
   -o-transform: scale(1.1,1.1);
 }
 .empty-data-img {
-  margin: auto;
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform: translate(-50%,-50%);
+  -webkit-transform: translate(-50%,-50%);
+  -moz-transform: translate(-50%,-50%);
+  -ms-transform: translate(-50%,-50%);
+  -o-transform: translate(-50%,-50%);
+  object-fit: contain;
   display: block;
-  position: absolute;
-  top: 71%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 50%;
 }
 .students-content-tap{
   width:100%;
@@ -84,7 +87,7 @@
   border: 6px solid rgba(0, 0, 0, 0.18);
   border-left: 0;
   border-right: 0;
-  background-color: #038674;
+  background-color: #198754;
   -webkit-border-radius: 70px;
   -moz-border-radius: 70px;
   -ms-border-radius: 70px;
@@ -103,7 +106,7 @@
   font-size: 1rem;
   text-transform: capitalize;
   padding: 8px 8px;
-  background-color: #038674;
+  background-color: #198754;
   color: #ffffff;
 }
 .sessions-more-info-settings{
@@ -166,7 +169,7 @@
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   margin-left: 5px;
   padding: 10px;
-  background-color: #038674;
+  background-color: #198754;
 }
 .sessions-main-info-container > div > span{
   font-size: 1.4rem;

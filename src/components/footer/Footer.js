@@ -14,6 +14,9 @@ import FooterCss from "./Footer.module.css";
 
 function Footer(props) {
   const { t } = useTranslation();
+  
+  let date = new Date();
+
   return (
     <div
       className={FooterCss.footer}
@@ -41,7 +44,7 @@ function Footer(props) {
                   rel='noreferrer'>
                   <BsFacebook className={FooterCss.socialicon} />
                 </a>
-                <a href='#'>
+                <a href='https://wa.me/+201154823980'  target='_blank' rel="noreferrer">
                   <RiWhatsappFill className={FooterCss.socialicon} />
                 </a>
                 <a href='#'>
@@ -83,7 +86,7 @@ function Footer(props) {
               </Link>
             </Col>
           </Row>
-          <p className={FooterCss.Ratelcopyright}>{t("footer_end")}&copy;</p>
+          <p className={FooterCss.Ratelcopyright}>{t("footer_end")}{date.getFullYear()}</p>
         </Container>
       </div>
     </div>

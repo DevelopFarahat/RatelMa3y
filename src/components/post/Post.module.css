@@ -124,6 +124,7 @@
 @media screen and (max-width:680px){
     .post-details{
         width:99%;
+        height:370px !important;
     }
     .post-main-container{
         padding:0;
@@ -134,6 +135,11 @@
     }
     .post-header{
         padding-left: 1px;
+    }
+}
+@media screen and(max-width:1200) {
+    .post-details{
+        height:370px !important;
     }
 }
 

@@ -41,14 +41,14 @@
     -ms-border-radius: 5px;
     -o-border-radius: 5px;
     cursor: pointer;
-    background:#038674;
+    background:#198754;
 }
 .pages-separator{
     flex: 0 0 39px;
     height: 46px;
     cursor: auto;
     color: #FFFFFF;
-    background-color: #c2a054;
+    background-color: #198754;
     font-size: 1.5rem;
     font-weight: bold;
     font-family: 'Times New Roman', Times, serif;
@@ -60,7 +60,7 @@
     box-sizing: border-box;
 }
 .pagination-container > ul > li:hover:not(.pages-separator){
-    background-color: #c2a054 !important;
+    background-color: #20aa69 !important;
     transform: scale(1.1,1.1);
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     color: #FFFFFF;
@@ -92,7 +92,7 @@
     -ms-border-radius: 5px;
     -o-border-radius: 5px;
     cursor: pointer;
-    background-color: #038674;
+    background-color: #198754;
     color:#FFFFFF;
   }
   .btn > img{
@@ -119,6 +119,7 @@
         width:29px !important;
         padding: 5px !important;
         height: 34px !important;
+        flex: 0 !important;
       }
       .pages-separator{
         position: relative;

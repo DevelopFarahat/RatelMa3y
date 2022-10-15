@@ -21,7 +21,7 @@ const StudentRegistrationForm = () => {
   const { enqueueSnackbar } = useSnackbar();
   const [studentRegistrationFormSteps, setStudentRegistrationFormSteps] =
     useState({
-      firstStep: true,
+      firstStep: false,
       secondStep: false,
       thirdStep: false,
       fourStep: false,
@@ -449,14 +449,14 @@ const StudentRegistrationForm = () => {
 
     //CHECK IF VERIFICATION GOES WRONG
     //TODO: Unhash this when you finish testing
-/*
+
     let result = await axios.post(
       `${process.env.REACT_APP_BACK_HOST_URL}/api/auth/confirm_pin`,
       { email: userData.email, rpin: true, pin: userData.email_verification }
     );
 
     if (result.status !== 200) return enqueueSnackbar(t('login_error_pin'));
-*/
+
 
     let wD = [];
     for (let i = 0; i < Object.values(workingDays).length; i++) {
@@ -722,6 +722,8 @@ const StudentRegistrationForm = () => {
                     display: "bloxk",
                     backgroundColor: "#c2a054",
                     color: "#FFFFFF",
+                    padding:'0 !important',
+                    fontSize:'1.3rem !important'
                   }}
                 >
                   {t("as_student")}
@@ -847,7 +849,7 @@ const StudentRegistrationForm = () => {
                     {t("next")}{" "}
                     <TbPlayerTrackNext
                       style={{
-                        margin:"4px -6px 0px -2px",
+                        margin:t("us")===t("Us")?'4px -3px 0px -2px':'6px -3px 0px -2px',
                         transform:
                           t("us") === "Us"
                             ? "rotate(360deg)"
@@ -958,7 +960,7 @@ const StudentRegistrationForm = () => {
                     {" "}
                     <ImPrevious2
                       style={{
-                        margin:"1px 0px -4px 1px",
+                        margin:t("us")===t("Us")?'0px 0px -4px':'1px 0px -4px 1px',
                         transform:
                           t("us") === "Us"
                             ? "rotate(360deg)"
@@ -999,7 +1001,7 @@ const StudentRegistrationForm = () => {
                     {t("next")}{" "}
                     <TbPlayerTrackNext
                       style={{
-                        margin:"4px -6px 0px -2px",
+                        margin:t("us")===t("Us")?'4px -3px 0px -2px':'6px -3px 0px -2px',
                         transform:
                           t("us") === "Us"
                             ? "rotate(360deg)"
@@ -1062,7 +1064,7 @@ const StudentRegistrationForm = () => {
                 </div>
                 <div>
                   <Form.Label htmlFor="certificate">
-                    {t("qualified")}
+                    {t("qualification")}
                   </Form.Label>
                   <Form.Control
                     type="text"
@@ -1114,7 +1116,7 @@ const StudentRegistrationForm = () => {
                     {" "}
                     <ImPrevious2
                       style={{
-                        margin:"1px 0px -4px 1px",
+                        margin:t("us")===t("Us")?'0px 0px -4px':'1px 0px -4px 1px',
                         transform:
                           t("us") === "Us"
                             ? "rotate(360deg)"
@@ -1155,7 +1157,7 @@ const StudentRegistrationForm = () => {
                     {t("next")}{" "}
                     <TbPlayerTrackNext
                       style={{
-                        margin:"4px -6px 0px -2px",
+                        margin:t("us")===t("Us")?'4px -3px 0px -2px':'6px -3px 0px -2px',
                         transform:
                           t("us") === "Us"
                             ? "rotate(360deg)"
@@ -1287,7 +1289,7 @@ const StudentRegistrationForm = () => {
                     {" "}
                     <ImPrevious2
                       style={{
-                        margin:"1px 0px -4px 1px",
+                        margin:t("us")===t("Us")?'0px 0px -4px':'1px 0px -4px 1px',
                         transform:
                           t("us") === "Us"
                             ? "rotate(360deg)"
@@ -1330,7 +1332,7 @@ const StudentRegistrationForm = () => {
                     {t("next")}{" "}
                     <TbPlayerTrackNext
                       style={{
-                        margin:"4px -6px 0px -2px",
+                        margin:t("us")===t("Us")?'4px -3px 0px -2px':'6px -3px 0px -2px',
                         transform:
                           t("us") === "Us"
                             ? "rotate(360deg)"
@@ -1375,7 +1377,7 @@ const StudentRegistrationForm = () => {
                     {" "}
                     <ImPrevious2
                       style={{
-                        margin:"1px 0px -4px 1px",
+                        margin:t("us")===t("Us")?'0px 0px -4px':'1px 0px -4px 1px',
                         transform:
                           t("us") === "Us"
                             ? "rotate(360deg)"
@@ -1416,7 +1418,7 @@ const StudentRegistrationForm = () => {
                     {t("next")}{" "}
                     <TbPlayerTrackNext
                       style={{
-                        margin:"4px -6px 0px -2px",
+                        margin:t("us")===t("Us")?'4px -3px 0px -2px':'6px -3px 0px -2px',
                         transform:
                           t("us") === "Us"
                             ? "rotate(360deg)"
@@ -1455,7 +1457,7 @@ const StudentRegistrationForm = () => {
                     {" "}
                     <ImPrevious2
                       style={{
-                        margin:"1px 0px -4px 1px",
+                        margin:t("us")===t("Us")?'0px 0px -4px':'1px 0px -4px 1px',
                         transform:
                           t("us") === "Us"
                             ? "rotate(360deg)"

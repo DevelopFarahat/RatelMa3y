@@ -307,7 +307,7 @@ const Messages = ()=>{
             <div className={MessagesStyles["alert"]}>
               <img src={CircleGif} alt="successfull" />
               <span>
-                <span style={{ fontWeight: "bold", color: "#038674" }}>
+                <span style={{ fontWeight: "bold", color: "#198754" }}>
                   {localStorage.getItem("user_name")}
                 </span>{" "}
                 {t("Has Deleted Message Successfull")}
@@ -319,18 +319,18 @@ const Messages = ()=>{
                 
                {pageNo !== undefined?<ul>
                 {lastPage !== undefined?
-                <button type="button" className={MessagesStyles['btn']} disabled={currentPage === 1?true:false} style={{cursor: 1 === currentPage?'not-allowed':'pointer',opacity:1 === currentPage?'.5':'1'  }}  onClick={getThePreviousPages}>
+                <button type="button" className={MessagesStyles['btn']} disabled={currentPage === 1?true:false} style={{cursor: 1 === currentPage?'not-allowed':'pointer'}}  onClick={getThePreviousPages}>
                <img src={currentPage === 1?GreaterThanGrayImage:GreaterThanWhiteImage} alt="GreaterThan"/>
                 </button>:null}
                 {pageNo.map((pN,index)=>(
                   index < 2 ?
-                    <li key={pN.index} id={pN.index} style={{background:Number(currentPage)  === pN.index   ?'#c2a054':'',color:Number(currentPage)  === pN.index  ?'#FFFFFF':''}}  onClick={handleUpCommingPage}>{pN.index}</li>:null
+                    <li key={pN.index} id={pN.index} style={{background:Number(currentPage)  === pN.index   ?'#198754':'',color:Number(currentPage)  === pN.index  ?'#FFFFFF':''}}  onClick={handleUpCommingPage}>{pN.index}</li>:null
                 ))}
                 <li className={MessagesStyles['pages-separator']}><span>...</span></li>
                 {lastPage !== undefined? 
-                <li id={lastPage.id} style={{background:Number(currentPage)  === lastPage.index  ?'#c2a054':'',color:Number(currentPage)  === lastPage.index?'#FFFFFF':''}}  onClick={handleUpCommingPage}>{lastPage.index}</li>:null}
+                <li id={lastPage.id} style={{background:Number(currentPage)  === lastPage.index  ?'#198754':'',color:Number(currentPage)  === lastPage.index?'#FFFFFF':''}}  onClick={handleUpCommingPage}>{lastPage.index}</li>:null}
                 {lastPage !== undefined?
-                <button type="button" className={MessagesStyles['btn']} disabled={currentPage === lastPage.index?true:false} style={{cursor:currentPage === lastPage.index?'not-allowed':'pointer',opacity:currentPage === lastPage.index?'.5':'1' }}  onClick={getTheNextPages}>
+                <button type="button" className={MessagesStyles['btn']} disabled={currentPage === lastPage.index?true:false} style={{cursor:currentPage === lastPage.index?'not-allowed':'pointer' }}  onClick={getTheNextPages}>
                     {lastPage !== undefined?<img src={currentPage === lastPage.index?LessThanGrayImage:LessThanWhiteImage} alt="lessThan"/>:null}
                     </button>:null}
                </ul>:null}
@@ -416,7 +416,7 @@ const Messages = ()=>{
                             </thead>
                             <tbody>
                                 {messages.map((ms) => (
-                                    <tr key={ms._id} id={ms._id} onClick={(event)=>handlerRowClicked(event,ms)}  style={{ background: selectedRow === ms._id ? '#038674' : '', color: selectedRow === ms._id ? '#FFFFFF' : '', boxShadow: selectedRow === ms._id ? `rgba(0, 0, 0, 0.2) 0 6px 20px 0 rgba(0, 0, 0, 0.19)` : '' }}>
+                                    <tr key={ms._id} id={ms._id} onClick={(event)=>handlerRowClicked(event,ms)}  style={{ background: selectedRow === ms._id ? '#198754' : '', color: selectedRow === ms._id ? '#FFFFFF' : '', boxShadow: selectedRow === ms._id ? `rgba(0, 0, 0, 0.2) 0 6px 20px 0 rgba(0, 0, 0, 0.19)` : '' }}>
                                         <td>{ms.name}</td>
                                         <td>{ms.email}</td>
                                         <td>{ms.phone}</td>

@@ -250,7 +250,7 @@ const AddPost = () => {
             ) : (
               <>
                 {t("post")}
-                <BsFillFileEarmarkPostFill size={15} style={{margin:" -1px 0 0 3px"}}/>
+                <BsFillFileEarmarkPostFill size={15} style={{margin:"5px 4px 0px 3px"}}/>
               </>
             )}
           </button>

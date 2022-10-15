@@ -560,7 +560,7 @@ const [sessionInfo,setSessionInfo] = useState([]);
                 }}
                 style={{
                     background:
-                        selectedRow === session._id ? "#038674" : "",
+                        selectedRow === session._id ? "#198754" : "",
                     color: selectedRow === session._id ? "#FFFFFF" : "",
                     boxShadow:
                         selectedRow === session._id

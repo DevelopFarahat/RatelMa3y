@@ -71,7 +71,7 @@ const InstructorHistory = ({col1Name,col2Name,col3Name,arrName,selectedInstructo
                         </thead>
                         <tbody>
                             {selectedInstructorData[arrName].map((stdData) => (
-                                <tr key={stdData._id} id={stdData._id} onClick={handlerRowClicked} style={{ background: selectedRow === stdData._id ? '#038674' : '', color: selectedRow === stdData._id ? '#FFFFFF' : '', boxShadow: selectedRow === stdData._id ? `rgba(0, 0, 0, 0.2) 0 6px 20px 0 rgba(0, 0, 0, 0.19)` : '' }}>
+                                <tr key={stdData._id} id={stdData._id} onClick={handlerRowClicked} style={{ background: selectedRow === stdData._id ? '#198754' : '', color: selectedRow === stdData._id ? '#FFFFFF' : '', boxShadow: selectedRow === stdData._id ? `rgba(0, 0, 0, 0.2) 0 6px 20px 0 rgba(0, 0, 0, 0.19)` : '' }}>
                                     <td>{stdData.name}</td>
                                     <td>{stdData.email}</td>
                                     <td>{stdData.mobile}</td>

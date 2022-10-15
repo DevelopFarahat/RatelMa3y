@@ -7,7 +7,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import program1 from "../../assets/images/program1.webp";
 import program2 from "../../assets/images/program2.webp";
-import program3 from "../../assets/images/program3.webp";
+import program3 from "../../assets/images/program3.jpg";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 

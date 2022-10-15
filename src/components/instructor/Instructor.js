@@ -337,18 +337,18 @@ const Instructor = () => {
         <div className={InstructorStyles['pagination-container']} style={{direction:'rtl'}}>
                 { 
                pageNo !== undefined?<ul>
-                <button type="button" className={InstructorStyles['btn']} disabled={currentPage === 1?true:false} style={{cursor: 1 === currentPage?'not-allowed':'pointer',opacity:1 === currentPage?'.5':'1'  }}  onClick={getThePreviousPages}>
+                <button type="button" className={InstructorStyles['btn']} disabled={currentPage === 1?true:false} style={{cursor: 1 === currentPage?'not-allowed':'pointer'}}  onClick={getThePreviousPages}>
                <img src={currentPage === 1?GreaterThanGrayImage:GreaterThanWhiteImage} alt="GreaterThan"/>
                 </button>
                 {pageNo.map((pN,index)=>(
                   index < 2 ?
-                    <li key={pN.index} id={pN.index} style={{background:Number(currentPage)  === pN.index   ?'#c2a054':'',color:Number(currentPage)  === pN.index  ?'#FFFFFF':''}}  onClick={handleUpCommingPage}>{pN.index}</li>:null
+                    <li key={pN.index} id={pN.index} style={{background:Number(currentPage)  === pN.index   ?'#198754':'',color:Number(currentPage)  === pN.index  ?'#FFFFFF':''}}  onClick={handleUpCommingPage}>{pN.index}</li>:null
                 ))}
                 <li className={InstructorStyles['pages-separator']}><span>...</span></li>
                 {lastPage !== undefined? 
-                <li id={lastPage.id} style={{background:Number(currentPage)  === lastPage.index  ?'#c2a054':'',color:Number(currentPage)  === lastPage.index?'#FFFFFF':''}}  onClick={handleUpCommingPage}>{lastPage.index}</li>:null}
+                <li id={lastPage.id} style={{background:Number(currentPage)  === lastPage.index  ?'#198754':'',color:Number(currentPage)  === lastPage.index?'#FFFFFF':''}}  onClick={handleUpCommingPage}>{lastPage.index}</li>:null}
                 
-                <button type="button" className={InstructorStyles['btn']} disabled={currentPage === lastPage.index?true:false} style={{cursor:currentPage === lastPage.index?'not-allowed':'pointer',opacity:currentPage === lastPage.index?'.5':'1' }}  onClick={getTheNextPages}>
+                <button type="button" className={InstructorStyles['btn']} disabled={currentPage === lastPage.index?true:false} style={{cursor:currentPage === lastPage.index?'not-allowed':'pointer' }}  onClick={getTheNextPages}>
                     {lastPage !== undefined?<img src={currentPage === lastPage.index?LessThanGrayImage:LessThanWhiteImage} alt="lessThan"/>:null}
                     </button>
                </ul>:null
@@ -430,17 +430,17 @@ const Instructor = () => {
                         <table className={InstructorStyles["instructor-table"]}>
                             <thead>
                                 <tr>
-                                    <th>{t("name")}</th>
-                                    <th>{t("studentN")}</th>
-                                    <th>{t("sessionN")}</th>
-                                    <th>{t("age")}</th>
-                                    <th>{t("gender")}</th>
-                                    <th>{t("state")}</th>
-                                    <th>{t("email")}</th>
-                                    <th>{t("mobile")}</th>
-                                    <th>{t("started_at")}</th>
-                                    <th>{t("isAvailable")}</th>
-                                    <th>{t("inSession")}</th>
+                                    <th  >{t("name")}</th>
+                                    <th  >{t("studentN")}</th>
+                                    <th  >{t("sessionN")}</th>
+                                    <th  >{t("age")}</th>
+                                    <th  >{t("gender")}</th>
+                                    <th  >{t("state")}</th>
+                                    <th  >{t("email")}</th>
+                                    <th  >{t("mobile")}</th>
+                                    <th  >{t("started_at")}</th>
+                                    <th  >{t("isAvailable")}</th>
+                                    <th  >{t("inSession")}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -453,7 +453,7 @@ const Instructor = () => {
                                         }}
                                         style={{
                                             background:
-                                                selectedRow === instructData._id ? "#038674" : "",
+                                                selectedRow === instructData._id ? "#198754" : "",
                                             color: selectedRow === instructData._id ? "#FFFFFF" : "",
                                             boxShadow:
                                                 selectedRow === instructData._id

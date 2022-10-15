@@ -42,7 +42,6 @@
     padding: 0 20px 0 20px;
 }
 .student-form > div:first-child+div> div > label{
-  font-family: 'Times New Roman', Times, serif;
   text-transform:capitalize;
   font-size: 1rem;
   color: #040000;
@@ -65,7 +64,7 @@
 .registration-form-hint{
     width:100%;
     font-size: 1.5rem;
-    font-family: 'Times New Roman', Times, serif;
+
     letter-spacing: .5px;
     word-spacing: 1px;
     line-height: 1.2;
@@ -80,7 +79,7 @@
     padding: 0 10px 0 22px;
 }
 .registration-form-hint > span{
-    color: #038674;
+    color: #198754;
     display: block;
     padding: 10px 0 10px 0;
    
@@ -121,7 +120,7 @@
   
   }
   .days-check-box-container > div > label , .hours-check-box-container >  div > label{
-    font-family: 'Times New Roman', Times, serif;
+
     text-transform:capitalize;
     font-size: 1rem;
     color: #040000;
@@ -147,7 +146,7 @@
     font-size: 1rem;
     text-transform: capitalize;
     padding: 8px 8px;
-    background-color: #038674;
+    background-color: #198754;
     margin-top: 20px;
     color: #ffffff;
   }
@@ -183,8 +182,8 @@
     border:1px solid #dadada;
   }
   .coloredCircle{
-    background-color: #038674;
-    border:1px solid #038674;
+    background-color: #198754;
+    border:1px solid #198754;
     color: #FFFFFF;
     transition: all .5s ease;
     -webkit-transition: all .5s ease;
@@ -199,7 +198,7 @@
   }
   .coloredLine{
 
-    background:#038674;
+    background:#198754;
     transition: all .25s ease;
     -webkit-transition: all .25s ease;
     -moz-transition: all .25s ease;
@@ -266,7 +265,6 @@
   letter-spacing: 1px;
   text-transform: lowercase;
   line-height: 1.5;
-  font-family: 'Times New Roman', Times, serif;
   text-align: center;
   font-weight: bold;
   color: #FFFFFF;
@@ -313,7 +311,7 @@
     background: #dadada;
   }
   .coloredLine{
-    background:#038674;
+    background:#198754;
   }
 }
 @media screen and (max-width:422px) {

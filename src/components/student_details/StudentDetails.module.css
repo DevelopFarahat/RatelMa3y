@@ -27,7 +27,7 @@
   text-transform: capitalize;
   letter-spacing: 0.5px;
   color: #ffffff;
-  background-color: #038674;
+  background-color: #198754;
   padding: 10px;
   cursor: pointer;
 }
@@ -95,7 +95,7 @@
   border: 6px solid rgba(0, 0, 0, 0.18);
   border-left: 0;
   border-right: 0;
-  background-color: #038674;
+  background-color: #198754;
   -webkit-border-radius: 70px;
   -moz-border-radius: 70px;
   -ms-border-radius: 70px;
@@ -190,7 +190,7 @@
     text-transform: capitalize;
     text-align: center;
     color: #FFFFFF;
-    background-color:#038674;
+    background-color:#198754;
     border-radius:5px ;
     -webkit-border-radius:5px ;
     -moz-border-radius:5px ;
@@ -200,7 +200,7 @@
     margin: 0 3px 0 3px;
 }
 .table-wrapper {
-  width: 99%;
+  width: 100%;
   height: 84%;
   overflow: auto;
   position: relative;
@@ -264,7 +264,7 @@
   border: 6px solid rgba(0, 0, 0, 0.18);
   border-left: 0;
   border-right: 0;
-  background-color: #038674;
+  background-color: #198754;
   -webkit-border-radius: 70px;
   -moz-border-radius: 70px;
   -ms-border-radius: 70px;
@@ -302,7 +302,7 @@
   font-size: 1rem;
   text-transform: capitalize;
   padding: 8px 8px;
-  background-color: #038674;
+  background-color: #198754;
   color: #ffffff;
 }
 .student-ratel-info-main-container{
@@ -347,7 +347,7 @@
   margin-left: 3px;
 }
 .student-sessions-more-info{
-  width: 100%;
+  width: 190%;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -396,8 +396,8 @@
   color: #000000;
 }
 .table-wrapper {
-  width: 99%;
-  height: 84%;
+  width: 100%;
+  height: 301px;
   overflow: auto;
   position: relative;
 }
@@ -451,7 +451,7 @@
   border: 6px solid rgba(0, 0, 0, 0.18);
   border-left: 0;
   border-right: 0;
-  background-color: #038674;
+  background-color: #198754;
   -webkit-border-radius: 70px;
   -moz-border-radius: 70px;
   -ms-border-radius: 70px;
@@ -507,13 +507,14 @@
   -o-transform: translate(-50%,-50%);
   object-fit: contain;
   display: block;
-  width:50%;
-
 }
 @media  screen and (max-width:1200px) {
 
   .student-details-main-container{
     width:100%;
+    order:1;
+    margin-top: 50px;
+    
   }
   .table-settings-container{
     flex-direction: column;
@@ -537,7 +538,7 @@
   }
   .student-table-main-header{
    flex-direction: column;
-   width:147%;
+   width:150%;
   }
   .requested-joinnig-student-table{
     width:136%;

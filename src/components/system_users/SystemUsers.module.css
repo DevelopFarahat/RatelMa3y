@@ -99,7 +99,7 @@
   font-size: 1rem;
   text-transform: capitalize;
   padding: 8px 8px;
-  background-color: #038674;
+  background-color: #198754;
   margin-top: 20px;
   color: #ffffff;
 }
@@ -196,7 +196,7 @@
   background-color: #dadada;
 }
 .system-accounts-table > tbody > tr:hover{
-  background-color:#c2a054;
+  background-color:#20aa69;
   color:#FFFFFF;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   transition: all .3s ease-in-out;
@@ -223,7 +223,7 @@
   border: 6px solid rgba(0, 0, 0, 0.18);
   border-left: 0;
   border-right: 0;
-  background-color: #038674;
+  background-color: #198754;
   -webkit-border-radius: 70px;
   -moz-border-radius: 70px;
   -ms-border-radius: 70px;
@@ -297,11 +297,11 @@ input[type="number"]{
 }
 .coloredLine{
 
-  border-bottom: 2px solid #038674;
+  border-bottom: 2px solid #198754;
 }
 .coloredCircle{
-  background-color: #038674;
-  border:1px solid #038674;
+  background-color: #198754;
+  border:1px solid #198754;
   color: #FFFFFF;
 }
 .alert-container{
@@ -368,7 +368,6 @@ input[type="number"]{
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 .pagination-container{
-
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -398,7 +397,7 @@ input[type="number"]{
   -ms-border-radius: 5px;
   -o-border-radius: 5px;
   cursor: pointer;
-  background:#038674;
+  background:#198754;
   color: #FFFFFF;
 }
 .pages-separator{
@@ -406,7 +405,7 @@ input[type="number"]{
   height: 46px;
   cursor: auto;
   color: #FFFFFF;
-  background-color: #c2a054;
+  background-color: #198754;
   font-size: 1.5rem;
   font-weight: bold;
   font-family: 'Times New Roman', Times, serif;
@@ -418,7 +417,7 @@ input[type="number"]{
   box-sizing: border-box;
 }
 .pagination-container > ul > li:hover:not(.pages-separator){
-  background-color: #c2a054 !important;
+  background-color: #20aa69 !important;
   transform: scale(1.1,1.1);
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   color: #FFFFFF;
@@ -450,7 +449,7 @@ input[type="number"]{
   -ms-border-radius: 5px;
   -o-border-radius: 5px;
   cursor: pointer;
-  background-color: #038674;
+  background-color: #198754;
   color:#FFFFFF;
 }
 .btn > img{
@@ -495,6 +494,7 @@ input[type="number"]{
         width:29px !important;
         padding: 5px !important;
         height: 34px !important;
+        flex: 0 !important;
       }
       .pages-separator{
         position: relative;

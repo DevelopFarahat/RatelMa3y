@@ -39,13 +39,13 @@
     flex: 0 0 15%;
   }
   .table-wrapper {
-    width: 99%;
+    width: 100%;
     height: 403px;
     overflow: auto;
     position: relative;
   }
   .student-accounts-table {
-    width: 99%;
+    width: 100%;
     margin: auto;
    
   }
@@ -75,14 +75,11 @@
   .student-accounts-table > thead > tr >  th{
     border-left: 1px solid #dadada;
   }
-  .student-accounts-table > thead > tr >  th:nth-child(1){
-    border-left: none;
-  }
   .student-accounts-table > tbody > tr:nth-child(even) {
     background-color: #dadada;
   }
   .student-accounts-table > tbody > tr:hover{
-    background-color:#c2a054;
+    background-color:#20aa69;
     color:#FFFFFF;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     transition: all .3s ease-in-out;
@@ -110,7 +107,7 @@
     border: 6px solid rgba(0, 0, 0, 0.18);
     border-left: 0;
     border-right: 0;
-    background-color: #038674;
+    background-color: #198754;
     -webkit-border-radius: 70px;
     -moz-border-radius: 70px;
     -ms-border-radius: 70px;
@@ -129,7 +126,7 @@
     font-size: 1rem;
     text-transform: capitalize;
     padding: 8px 8px;
-    background-color: #038674;
+    background-color: #198754;
     margin-top: 20px;
     color: #ffffff;
   }
@@ -241,7 +238,7 @@
   border: 6px solid rgba(0, 0, 0, 0.18);
   border-left: 0;
   border-right: 0;
-  background-color: #038674;
+  background-color: #198754;
   -webkit-border-radius: 70px;
   -moz-border-radius: 70px;
   -ms-border-radius: 70px;
@@ -336,7 +333,7 @@
     top: 0%;
 }
 .close-dime:hover{
-  color: #038674;
+  color: #198754;
 }
 .alert{
   width:350px;
@@ -382,7 +379,7 @@
   text-align: justify;
   margin: auto;
   font-family:'Times New Roman', Times, serif;
-  color:#038674;
+  color:#198754;
   text-align: center;
 }
 .alert>  span {
@@ -407,8 +404,6 @@
   -o-transform: translate(-50%,-50%);
   object-fit: contain;
   display: block;
-  width:75%;
-  height:75%;
 }
 .no-result{
   position: absolute;
@@ -464,18 +459,18 @@ border-color: #f6003c !important;
     flex:0 0 50%;
   }
   .days-check-box-container > div{
-    width:75px !important;
+    width:53px !important;
     margin:auto;
   }
   @media screen and (max-width:486px) {
     .student-sessions-days-hours > form > span:nth-child(1) + div > div > div{
-      margin:28px;
+      margin:5px;
     }
     .days-check-box-container > div{
-      padding:0;
+      padding:2px;
     }
     .setting-student-status_instructor-container{
-      width:85%;
+      width:95%;
     }
     .setting-student-status_instructor-container > form > button{
       margin-top:10px !important;

@@ -52,7 +52,7 @@
   height: 40px;
   text-align: center;
   text-transform: capitalize;
-  background-color: #038674;
+  background-color: #198754;
   padding: 8px;
   margin: 21px 0 0 0;
 }
@@ -95,7 +95,7 @@ input[type="file"] {
   font-size: 1rem;
   text-transform: capitalize;
   padding: 8px 8px;
-  background-color: #038674;
+  background-color: #198754;
   margin-top: 20px;
   color: #ffffff;
   float: right;
@@ -169,7 +169,7 @@ input[type="file"] {
 .post-alert-faild-container >  button{
   margin: auto;
   display: block;
-  background-color: #038674 !important;
+  background-color: #198754 !important;
   color: #FFFFFF !important;
   width:40%;
   outline: none;

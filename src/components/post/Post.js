@@ -20,7 +20,7 @@ const Post = (props) => {
       minute: "2-digit",
     }
   );
-
+  
   const urlRegex =
     /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gi;
 
@@ -91,7 +91,7 @@ const Post = (props) => {
           >
             {props.post.title}
           </h3>
-          {props.post.content.split(" ").length > 63 ? (
+            {props.post.content.split(" ").length > 63  ? (
             <span
               className={PostStyles["post-details"]}
               style={{
@@ -100,11 +100,15 @@ const Post = (props) => {
               }}
             >
               {props.post.content.substring(0, 374)}
-              {console.log(props.post.content.substring(0, 374).replace("\n"," "))}
             </span>
           ) : (
-            <p className={PostStyles["post-details"]}>
-              {linkify(props.post.content)}
+            <p className={PostStyles["post-details"]}
+            style={{
+              cursor: "pointer",
+              height:'200px'
+            }}
+            >
+              {" "}{""}{linkify(props.post.content)}
             </p>
           )}
 
