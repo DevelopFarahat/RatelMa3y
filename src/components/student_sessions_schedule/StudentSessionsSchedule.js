@@ -81,9 +81,6 @@ const StudentSessionsSchedule = ({specificStudentJoiningRequestData})=>{
         }
 
     },[specificStudentJoiningRequestData])
-    console.log("***************************************************88")
-    console.log(scheduleDate)
-    console.log("***************************************************88")
     return(
         <>
             <section className={StudentScheduleStyles['sessions-schedule-main']}>

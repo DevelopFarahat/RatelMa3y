@@ -47,7 +47,7 @@
     min-width: 100%;
   }
   .sessions-schedule-main > section > span{
-    flex: 0 0 26%;
+    flex: 0 0 45%;
     font-size: 1rem;
     font-family: 'Times New Roman', Times, serif;
     text-transform: capitalize;

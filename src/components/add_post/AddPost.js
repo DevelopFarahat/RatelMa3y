@@ -157,7 +157,7 @@ const AddPost = () => {
               <div className={` ${AddPostStyles["button-container"]}`}>
                 <button type="button">
                 {t("upload")}{" "}
-                  <RiFolder5Fill size={15} style={{margin:" -4px 0px 0 -3px"}} />
+                  <RiFolder5Fill size={15} style={{margin:"5px 0px 0px -3px"}} />
                 </button>
                 <Form.Control
                   type="file"
@@ -173,7 +173,7 @@ const AddPost = () => {
               onClick={clearImagePath}
               style={{ marginTop: "21px" }}
             >
-              {t("imagePostClear")} <MdOutlineClear size={20} style={{margin:" -1px 0px 0 -3px"}} />
+              {t("imagePostClear")} <MdOutlineClear size={20} style={{margin:"4px 0px 0px 0px"}} />
             </button>
           </div>
         </div>

@@ -21,7 +21,7 @@ const StudentRegistrationForm = () => {
   const { enqueueSnackbar } = useSnackbar();
   const [studentRegistrationFormSteps, setStudentRegistrationFormSteps] =
     useState({
-      firstStep: false,
+      firstStep: true,
       secondStep: false,
       thirdStep: false,
       fourStep: false,

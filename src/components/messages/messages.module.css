@@ -135,6 +135,7 @@
   font-size: 1rem;
   letter-spacing: .5px;
   border: none;
+  font-family: 'Times New Roman', Times, serif;
 }
 
 .messages-table>thead>tr {

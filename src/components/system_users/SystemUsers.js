@@ -901,7 +901,7 @@ const SystemUsers = () => {
 
   return (
     <>
-      {isUserCreateNewAccount ? (
+      {isUserCreateNewAccount  ? (
         <div className={SystemUsersStyles["alert-container"]}>
           <img src={CircleGif} alt="successfull" />
           <span>
@@ -1249,7 +1249,7 @@ const SystemUsers = () => {
                   onClick={(event) => systemUsersNextStep(event)}
                 >
                   {t("next")}
-                  <TbPlayerTrackNext style={{ margin: "-6px 0  0 3px" }} />
+                  <TbPlayerTrackNext style={{margin:t("us")===t("Us")?'0px 0px 0px 3px':'-7px 0px 0px 3px'}} />
                 </button>
                 </div>
               </>
@@ -1338,7 +1338,7 @@ const SystemUsers = () => {
                   id="firstStepPrevious"
                   onClick={(event) => systemUsersNextStep(event)}
                 >
-                  <ImPrevious2 style={{ margin: "-2px -3px 0px -10px" }} />
+                  <ImPrevious2 style={{margin:'-3px -3px 0px -10px' }} />
                   {t("prevoius")}
                 </button>
                 <button
@@ -1370,7 +1370,7 @@ const SystemUsers = () => {
                   id="thirdStep"
                   onClick={(event) => systemUsersNextStep(event)}
                 >   {t("next")}
-                <TbPlayerTrackNext style={{ margin: "-6px 0  0 3px"}} />
+                <TbPlayerTrackNext style={{margin:t("us")===t("Us")?'0px 0px 0px 3px':'-7px 0px 0px 3px'}} />
                 </button>
                 </div>
               </>
@@ -1485,7 +1485,7 @@ const SystemUsers = () => {
                   id="secondStepPrevious"
                   onClick={(event) => systemUsersNextStep(event)}
                 >
-                  <ImPrevious2 style={{ margin: "-2px -3px 0px -10px" }} />
+                  <ImPrevious2 style={{margin:'-3px -3px 0px -10px' }} />
                   {t("prevoius")}
                 </button>
                 <button
@@ -1517,7 +1517,7 @@ const SystemUsers = () => {
                   onClick={(event) => systemUsersNextStep(event)}
                 >
                   {t("next")}
-                  <TbPlayerTrackNext style={{ margin: "-6px 0  0 3px" }} />
+                  <TbPlayerTrackNext style={{margin:t("us")===t("Us")?'0px 0px 0px 3px':'-7px 0px 0px 3px'}} />
                 </button>
                 </div>
               </>
@@ -1555,7 +1555,7 @@ const SystemUsers = () => {
                   id="thirdStepPrevious"
                   onClick={(event) => systemUsersNextStep(event)}
                 >
-                  <ImPrevious2 style={{ margin:"-2px -3px 0px -10px" }} />
+                  <ImPrevious2 style={{margin:'-3px -3px 0px -10px'  }} />
                   {t("prevoius")}
                 </button>
                 <button

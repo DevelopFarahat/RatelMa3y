@@ -3364,6 +3364,7 @@ const StudentSubscriptionState = ({
       <div className={StudentSubscriptionStyles["student-user-data-container"]} style={{direction:t("us") === t("Us")?'ltr':"rtl"}}>
         <div className={StudentSubscriptionStyles["table-settings-container"]}>
           <Form.Label
+          style={{textAlign:t("us")===t("Us")?'left':'right'}}
             htmlFor="userAccountFilterTxt"
             className={StudentSubscriptionStyles["filter-label"]}
           >
@@ -3375,7 +3376,7 @@ const StudentSubscriptionState = ({
             value={filterValue}
             onChange={handleFiltaration}
           />
-          <Form.Label htmlFor="sort_subscription_state">{t("sort")}</Form.Label>
+          <Form.Label htmlFor="sort_subscription_state" style={{textAlign:t("us")===t("Us")?'left':'right'}}>{t("sort")}</Form.Label>
           <Form.Select name="sort_subscription_state" id="sort_subscription_state" onChange={(event) => sortStudentBySubscriptionState(event.target.value)}>
             <option value={""}>{t("select")}</option>
             <option value="Pending">Pending</option>
@@ -3653,7 +3654,7 @@ const StudentSubscriptionState = ({
                         <Spinner animation="grow" variant="light" style={{ width: '10px', height: '10px', marginLeft: '3px' }} />
                         <Spinner animation="grow" variant="light" style={{ width: '10px', height: '10px', marginLeft: '3px' }} />
                         <Spinner animation="grow" variant="light" style={{ width: '10px', height: '10px', marginLeft: '3px' }} />
-                      </> : <>{t("save")}<FaSave style={{ margin: "3px 6px 1px 3px" }} size={15} /></>
+                      </> : <>{t("save")}<FaSave style={{ margin:t("us")===t("Us")?"3px 6px 1px 3px":"5px 6px 1px 3px"}} size={15} /></>
                       }
 
 
@@ -3670,7 +3671,7 @@ const StudentSubscriptionState = ({
                         <Spinner animation="grow" variant="light" style={{ width: '10px', height: '10px', marginLeft: '3px' }} />
                         <Spinner animation="grow" variant="light" style={{ width: '10px', height: '10px', marginLeft: '3px' }} />
                         <Spinner animation="grow" variant="light" style={{ width: '10px', height: '10px', marginLeft: '3px' }} />
-                      </> : <>{t("save")}<FaSave style={{ margin: "3px 6px 1px 3px" }} size={15} /></>
+                      </> : <>{t("save")}<FaSave style={{ margin:t("us")===t("Us")?"3px 6px 1px 3px":"5px 6px 1px 3px"}} size={15} /></>
                       }
                     </button>
                   ) :changableSubscriptionState.instructor === null ? (
@@ -3697,7 +3698,7 @@ const StudentSubscriptionState = ({
                       <Spinner animation="grow" variant="light" style={{ width: '10px', height: '10px', marginLeft: '3px' }} />
                       <Spinner animation="grow" variant="light" style={{ width: '10px', height: '10px', marginLeft: '3px' }} />
                       <Spinner animation="grow" variant="light" style={{ width: '10px', height: '10px', marginLeft: '3px' }} />
-                    </> : <>{t("save")}<FaSave style={{ margin: "3px 6px 1px 3px" }} size={15} /></>
+                    </> : <>{t("save")}<FaSave style={{ margin:t("us")===t("Us")?"3px 6px 1px 3px":"5px 6px 1px 3px"}} size={15} /></>
                     }
                   </button>
                 ): (
@@ -3728,7 +3729,7 @@ const StudentSubscriptionState = ({
                         <Spinner animation="grow" variant="light" style={{ width: '10px', height: '10px', marginLeft: '3px' }} />
                         <Spinner animation="grow" variant="light" style={{ width: '10px', height: '10px', marginLeft: '3px' }} />
                         <Spinner animation="grow" variant="light" style={{ width: '10px', height: '10px', marginLeft: '3px' }} />
-                      </> : <>{t("save")}<FaSave style={{ margin: "3px 6px 1px 3px" }} size={15} /></>
+                      </> : <>{t("save")}<FaSave style={{ margin:t("us")===t("Us")?"3px 6px 1px 3px":"5px 6px 1px 3px"}} size={15} /></>
                       }
                     </button>
                   )}
@@ -4071,7 +4072,7 @@ const StudentSubscriptionState = ({
                       <Spinner animation="grow" variant="light" style={{ width: '10px', height: '10px', marginLeft: '3px' }} />
                       <Spinner animation="grow" variant="light" style={{ width: '10px', height: '10px', marginLeft: '3px' }} />
                       <Spinner animation="grow" variant="light" style={{ width: '10px', height: '10px', marginLeft: '3px' }} />
-                    </> : <>{t("update")}<img src={updateImageIcon} style={{ margin:'6px 6px 0 1px',width:'16px', objectFit: 'contain' }} alt="update" /></>}
+                    </> : <>{t("update")}<img src={updateImageIcon} style={{ margin:t("us")===t("Us")?'6px 7px 0px 6px':'6px 6px 0 1px',width:'16px', objectFit: 'contain' }} alt="update" /></>}
 
                   </button>
                 </form>
