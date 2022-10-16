@@ -33,12 +33,20 @@ function App() {
   const [isRoomPrepared, setIsRoomPrepared] = useState(false);
   const { isLoading } = useContext(UserContext);
 
+  useEffect(() => {
+    if (!localStorage.getItem("i18nextLng") || localStorage.getItem("i18nextLng")=== 'en-US') {
+      console.log('done one')
+      localStorage.setItem("i18nextLng", 'ar');
+      i18n.changeLanguage("ar")
+    }
+  }, []);
+
   const styles = {
     hideableDiv: {
       display: hideMain ? "none" : "block",
     },
   };
-  const [expanded, setExpanded] = useState(false)
+  const [expanded, setExpanded] = useState(false);
 
   return (
     <>
@@ -46,11 +54,16 @@ function App() {
         {isLoading && <LoadingScreen />}
         <ScrollToTop />
         <div style={styles.hideableDiv}>
-          <NavBar i18n={i18n} isRoomPrepared={isRoomPrepared} expanded={expanded} setExpanded={setExpanded}/>
+          <NavBar
+            i18n={i18n}
+            isRoomPrepared={isRoomPrepared}
+            expanded={expanded}
+            setExpanded={setExpanded}
+          />
 
           <div style={{ height: 86 }}></div>
           <div style={{ minHeight: "100vh" }}>
-            <div onClick={setExpanded.bind(this,false)}>
+            <div onClick={setExpanded.bind(this, false)}>
               <Routes>
                 <Route path="/" element={<Navigate to="home" replace />} />
                 <Route path="home" element={<Home />} />
