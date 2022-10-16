@@ -1,4 +1,3 @@
-/** @format */
 import React from "react";
 import Carousel from "react-bootstrap/Carousel";
 import slider1 from "../../assets/images/slider1.webp";
@@ -7,7 +6,7 @@ import slider3 from "../../assets/images/slider3.webp";
 import SliderCss from "./slider.module.css";
 import { useTranslation } from "react-i18next";
 function SliderHome() {
-  const [t, i18n] = useTranslation();
+  const [t] = useTranslation();
   return (
     <Carousel className={SliderCss.Carousel} fade indicators={false}>
       <Carousel.Item className={SliderCss.CarouselItem}>

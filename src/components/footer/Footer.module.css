@@ -1,7 +1,7 @@
 /** @format */
 
 .footer {
-  background: url(../../assets/images/footer.webp) no-repeat center center ;
+  background: url(../../assets/images/footer.webp) no-repeat center center;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -11,6 +11,7 @@
   margin-top: 65px;
   text-align: center;
   direction: ltr;
+  overflow-x: hidden;
 }
 .footer .innerfooter {
   background: rgb(0 0 0 / 90%);
@@ -33,10 +34,14 @@
   color: #c2a556;
 }
 .logo {
- /* height: 155px;*/
+  /* height: 155px;*/
   margin-top: -45px;
   width: 221px;
-  height: 100px;
+}
+@media screen and (max-width: 230px) {
+  .logo {
+    width: min(100%, 221px);
+  }
 }
 .social {
   display: flex;

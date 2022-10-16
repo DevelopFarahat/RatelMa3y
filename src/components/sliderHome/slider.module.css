@@ -3,10 +3,11 @@
   margin-top: 0px;
 }
 .CarouselItem {
-  height: calc(100vh);
+  height: calc(100vh - 140px);
   min-height: 288px;
   background-size: cover;
   background-repeat: no-repeat;
+  background-origin: content-box;
 }
 .CarouselItem:nth-of-type(1) {
   background-image: url('../../assets/images/slider1.webp');
@@ -40,19 +41,37 @@
   position: absolute;
   right: 15%;
   bottom: 15%;
-  top: 25%;
+  top: 24%;
   left: 15%;
   color: #fff;
   text-align: center;
   color: #c2a054;
 }
+
+
+@media screen and (max-width: 444px) {
+  .Caption{
+    transform: scale(0.8) translateY(-80px);
+  }
+}
+
+@media screen and (max-width: 300px) {
+  .Caption{
+    transform: scale(0.67) translateY(-80px) translateX(-60px);
+    width: 100%;
+    
+  }
+  .CarouselItem{
+    height: 120px;
+  }
+}
+
 @media (max-width: 768px) {
   .CarouselItem h2 {
     font-size: 30px;
   }
   .CarouselItem p {
     font-size: 15px;
-    line-height: 1;
     margin-bottom: 0;
     margin-top: 10px;
   }

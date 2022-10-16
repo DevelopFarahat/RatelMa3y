@@ -14,6 +14,14 @@
 .logo {
   height: 85px;
 }
+
+@media screen and (max-width: 300px) {
+  .logo {
+    height: 60px;
+    margin-top: 12px;
+    margin-bottom: 12px;
+  }
+}
 .link {
   color: #01332c !important;
   font-size: 18px !important;
