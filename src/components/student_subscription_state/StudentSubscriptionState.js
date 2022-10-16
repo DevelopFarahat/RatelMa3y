@@ -3387,7 +3387,7 @@ const StudentSubscriptionState = ({
           <button
             type="button"
             className={StudentSubscriptionStyles["btn"]}
-            style={{ marginTop: "auto" }}
+            style={{ marginTop: "auto",direction: 'ltr'  }}
             onClick={(event) => filterStudents(event.target.value)}
           >
             {t("filter")} <AiFillFilter />
@@ -3395,7 +3395,7 @@ const StudentSubscriptionState = ({
           <button
             type="button"
             className={StudentSubscriptionStyles["btn"]}
-            style={{ marginTop: "auto" }}
+            style={{ marginTop: "auto",direction: 'ltr'  }}
             onClick={resetTableFiltaration}
           >
             {t("reset")}

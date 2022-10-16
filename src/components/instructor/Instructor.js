@@ -296,7 +296,7 @@ const Instructor = () => {
             .catch((error) => {
                 console.log(error);
             });
-            axios.get(`${process.env.REACT_APP_BACK_HOST_URL}/api/sessions?user_id=${event.currentTarget.id}&limit=10000000000000000`).then((res)=>{
+            axios.get(`${process.env.REACT_APP_BACK_HOST_URL}/api/sessions?user_id=${event.currentTarget.id}&limit=10000000000000000`,{headers:{'Access-Control-Allow-Origin': '*'}}).then((res)=>{
                 initialInstructorSessionsDetails.current = res.data.data;
                 setInstructorSessionsDetails(res.data.data);
 
@@ -403,7 +403,7 @@ const Instructor = () => {
                     <button
                         type="button"
                         className={InstructorStyles["btn"]}
-                        style={{ marginTop: "auto" }}
+                        style={{ marginTop: "auto",direction: 'ltr'  }}
                         onClick={(event) => filterStudents(event.target.value)}
                     >
                         {t("filter")} <AiFillFilter />
@@ -411,7 +411,7 @@ const Instructor = () => {
                     <button
                         type="button"
                         className={InstructorStyles["btn"]}
-                        style={{ marginTop: "auto" }}
+                        style={{ marginTop: "auto",direction: 'ltr'  }}
                         onClick={resetTableFiltaration}
                     >
                         {t("reset")}

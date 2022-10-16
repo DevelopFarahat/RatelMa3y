@@ -1631,7 +1631,7 @@ const SystemUsers = () => {
               <button
                 type="button"
                 className={SystemUsersStyles["btn"]}
-                style={{ marginTop: "auto" }}
+                style={{ marginTop: "auto",direction: 'ltr'  }}
                 onClick={(event) => filterAccounts(event.target.value)}
               >
                 {t("filter")} <AiFillFilter />
@@ -1639,7 +1639,7 @@ const SystemUsers = () => {
               <button
                 type="button"
                 className={SystemUsersStyles["btn"]}
-                style={{ marginTop: "auto" }}
+                style={{ marginTop: "auto",direction: 'ltr' }}
                 onClick={resetTableFiltaration}
               >
                 {t("reset")}

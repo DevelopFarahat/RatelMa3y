@@ -505,7 +505,7 @@ const [sessionInfo,setSessionInfo] = useState([]);
             <Form.Control ref={toDateRef} type="date" name="date-to" id="toDate"   onChange={getAttendaceOnSpecificPeroidOfDate}/>
             </section>
             <section>
-            <button type="button" className={StudentDetailsStyles['btn']} onClick={resetSortSessions}>{t("reset")}<BiReset /></button>
+            <button type="button" className={StudentDetailsStyles['btn']} onClick={resetSortSessions} style={{direction: 'ltr' }}>{t("reset")}<BiReset /></button>
             </section>
           </div>
           {/*

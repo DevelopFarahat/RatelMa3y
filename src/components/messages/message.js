@@ -376,7 +376,7 @@ const Messages = ()=>{
                     <button
                         type="button"
                         className={MessagesStyles["btn"]}
-                        style={{ marginTop: "auto" }}
+                        style={{ marginTop: "auto",direction: 'ltr' }}
                         onClick={(event) => filterMessages(event.target.value)}
                     >
                         {t("filter_btn")} <AiFillFilter />
@@ -384,11 +384,11 @@ const Messages = ()=>{
                     <button
                         type="button"
                         className={MessagesStyles["btn"]}
-                        style={{ marginTop: "auto" }}
+                        style={{ marginTop: "auto",direction: 'ltr' }}
                         onClick={resetTableFiltaration}
                     >
                         {t("reset")}
-                        <BiReset />
+                        <BiReset style={{marginInline: 8}}/>
                     </button>
                 </div>
         <div className={MessagesStyles["table-wrapper"]}>

@@ -139,17 +139,23 @@ function NavBar({ i18n, isRoomPrepared, expanded,setExpanded }) {
                 {t("logout")}
               </NavDropdown.Item>
             </NavDropdown>
-          ) : (
+          ) : (<span>
+            {/* <Link to={"/register"} onClick={setExpanded.bind(this,false)}>
+              <Button className={NavCss.button} variant="outline-success">
+                {t("register")}
+              </Button>
+            </Link> */}
             <Link to={"/login"} onClick={setExpanded.bind(this,false)}>
               <Button className={NavCss.button} variant="outline-success">
                 {t("login")}
               </Button>
             </Link>
+            </span>
           )}
           <Button
             className={NavCss.button}
             style={{ marginInlineStart: 8 }}
-            variant="outline-success"
+            variant="success"
             onClick={(e) => changeLang(e)}
           >
             {isArabic ? "en" : "ar"}
