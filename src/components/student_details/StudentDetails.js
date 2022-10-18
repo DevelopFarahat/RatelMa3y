@@ -437,7 +437,7 @@ const [sessionInfo,setSessionInfo] = useState([]);
               <tr>
                 <th>{t("mobile")}</th>
                 <td>{specificStudentJoiningRequestData.mobile}</td>
-                 {specificStudentJoiningRequestData.subscription_state === 'Pending' && (specificStudentJoiningRequestData.instructor === undefined)?<>
+                 {specificStudentJoiningRequestData.subscription_state !== 'Cancelled' && (specificStudentJoiningRequestData.instructor === undefined || specificStudentJoiningRequestData.instructor === null)?<>
                  <th>{t("Quran Surah Or Juiz Reached Before")}</th>
                  <td>{specificStudentJoiningRequestData.reached_surah}</td>
                  </>:<><th colSpan={"2"}>{t("additional_info")}</th></>}
@@ -479,11 +479,26 @@ const [sessionInfo,setSessionInfo] = useState([]);
 
         </div> :specificStudentJoiningRequestData.sessions.length !== 0?<div className={StudentDetailsStyles['student-ratel-info-main-container']}>
           {/* ratel member */}
-
           <div className={StudentDetailsStyles['table-settings-container']}>
+          <section  style={{bottom:isSessionsMoreInfoOpend?'100%':'0',height:isSessionsMoreInfoOpend?'100%':'0',direction:t("us")===t("Us")?'ltr':'rtl'}}>
+          <div className={`${isSessionsMoreInfoOpend? StudentDetailsStyles['show-more-session-info']:StudentDetailsStyles['hide-more-session-info']}`}>
+            <Form.Label htmlFor="totalNumberOfSessions" style={{textAlign:t("us")===t("Us")?'end':'start'}}>{t("total_session")}</Form.Label>
+            <Form.Control type="number" name="totalNumberOfSessions" id="totalNumberOfSessions" readOnly value={totalSession}/>
+            </div>
+            <div className={`${isSessionsMoreInfoOpend? StudentDetailsStyles['show-more-session-info']:StudentDetailsStyles['hide-more-session-info']}`}>
+            <Form.Label htmlFor="totalPresent" style={{textAlign:t("us")===t("Us")?'end':'start'}}>{t("total_present")}</Form.Label>
+            <Form.Control type="number" name="totalPresent" id="totalPresent" readOnly value={totalPresent}/>
+            </div>
+            <div className={`${isSessionsMoreInfoOpend? StudentDetailsStyles['show-more-session-info']:StudentDetailsStyles['hide-more-session-info']}`}>
+            <Form.Label htmlFor="totalAbsence" style={{textAlign:t("us")===t("Us")?'end':'start'}}>{t("total_absence")}</Form.Label>
+            <Form.Control type="number" name="totalAbsence" id="totalAbsence" readOnly value={totalAbsence}/>
+            </div>
+
+           {isSessionsMoreInfoOpend?<MdKeyboardArrowUp onClick={openCloseMoreSessionInfo} className={StudentDetailsStyles['open-close-arrow-icon']} style={{transform:isSessionsMoreInfoOpend?'rotate(360deg)':'rotate(0deg)',bottom:isSessionsMoreInfoOpend?'67%':'-5%',right:t("us")===t("Us")?'0':'95%'}}/>:<MdKeyboardArrowDown onClick={openCloseMoreSessionInfo} className={StudentDetailsStyles['open-close-arrow-icon']} style={{transform:isSessionsMoreInfoOpend?'rotate(360deg)':'rotate(0deg)',bottom:isSessionsMoreInfoOpend?'67%':'-5%',right:t("us")===t("Us")?'0':'95%'}}/>}
+          </section>
             <section>
             <Form.Label htmlFor="sortStudentSessions">{t("sort")}</Form.Label>
-            <Form.Select name="sort-student-sessions" id="sortStudentSessions" className={StudentDetailsStyles['form-sort-select']} onChange={sortSessions}>
+            <Form.Select name="sort-student-sessions" id="sortStudentSessions" className={StudentDetailsStyles['form-sort-select']} onChange={sortSessions} style={{textAlign:t("us")===t("Us")?'start':'end'}}>
               <option value="">{t("select")}</option>
               <optgroup label={t("attendance")}>
               <option value="byPresent">{t("present")}</option>
@@ -508,39 +523,8 @@ const [sessionInfo,setSessionInfo] = useState([]);
             <button type="button" className={StudentDetailsStyles['btn']} onClick={resetSortSessions} style={{direction: 'ltr' }}>{t("reset")}<BiReset /></button>
             </section>
           </div>
-          {/*
-          <div className={`${StudentDetailsStyles['student-sessions-more-info'] } ${isSessionsMoreInfoOpend?StudentDetailsStyles['student-sessions-more-info-transition']:'' }`} style={{height:isSessionsMoreInfoOpend?'20%':'auto',bottom:isSessionsMoreInfoOpend?'62%':'78%'}}>
-            <div className={`${isSessionsMoreInfoOpend? StudentDetailsStyles['show-more-session-info']:StudentDetailsStyles['hide-more-session-info']}`}>
-            <Form.Label htmlFor="totalNumberOfSessions">{t("total_session")}</Form.Label>
-            <Form.Control type="number" name="totalNumberOfSessions" id="totalNumberOfSessions" readOnly value={totalSession}/>
-            </div>
-            <div className={`${isSessionsMoreInfoOpend? StudentDetailsStyles['show-more-session-info']:StudentDetailsStyles['hide-more-session-info']}`}>
-            <Form.Label htmlFor="totalPresent">{t("total_present")}</Form.Label>
-            <Form.Control type="number" name="totalPresent" id="totalPresent" readOnly value={totalPresent}/>
-            </div>
-            <div className={`${isSessionsMoreInfoOpend? StudentDetailsStyles['show-more-session-info']:StudentDetailsStyles['hide-more-session-info']}`}>
-            <Form.Label htmlFor="totalAbsence">{t("total_absence")}</Form.Label>
-            <Form.Control type="number" name="totalAbsence" id="totalAbsence" readOnly value={totalAbsence}/>
-            </div>
-           {isSessionsMoreInfoOpend?<MdKeyboardArrowUp onClick={openCloseMoreSessionInfo} className={StudentDetailsStyles['open-close-arrow-icon']} style={{transform:isSessionsMoreInfoOpend?'rotate(360deg)':'rotate(0deg)',bottom:isSessionsMoreInfoOpend?'67%':'-54%'}}/>:<MdKeyboardArrowDown onClick={openCloseMoreSessionInfo} className={StudentDetailsStyles['open-close-arrow-icon']} style={{transform:isSessionsMoreInfoOpend?'rotate(360deg)':'rotate(0deg)',bottom:isSessionsMoreInfoOpend?'67%':'-54%'}}/>}
-          </div> */}
           <div className={StudentDetailsStyles['table-wrapper']}>
-          <div className={`${StudentDetailsStyles['student-sessions-more-info'] } ${isSessionsMoreInfoOpend?StudentDetailsStyles['student-sessions-more-info-transition']:'' }`} style={{height:isSessionsMoreInfoOpend?'39%':'auto'}}>
-            <div className={`${isSessionsMoreInfoOpend? StudentDetailsStyles['show-more-session-info']:StudentDetailsStyles['hide-more-session-info']}`}>
-            <Form.Label htmlFor="totalNumberOfSessions">{t("total_session")}</Form.Label>
-            <Form.Control type="number" name="totalNumberOfSessions" id="totalNumberOfSessions" readOnly value={totalSession}/>
-            </div>
-            <div className={`${isSessionsMoreInfoOpend? StudentDetailsStyles['show-more-session-info']:StudentDetailsStyles['hide-more-session-info']}`}>
-            <Form.Label htmlFor="totalPresent">{t("total_present")}</Form.Label>
-            <Form.Control type="number" name="totalPresent" id="totalPresent" readOnly value={totalPresent}/>
-            </div>
-            <div className={`${isSessionsMoreInfoOpend? StudentDetailsStyles['show-more-session-info']:StudentDetailsStyles['hide-more-session-info']}`}>
-            <Form.Label htmlFor="totalAbsence">{t("total_absence")}</Form.Label>
-            <Form.Control type="number" name="totalAbsence" id="totalAbsence" readOnly value={totalAbsence}/>
-            </div>
-           {isSessionsMoreInfoOpend?<MdKeyboardArrowUp onClick={openCloseMoreSessionInfo} className={StudentDetailsStyles['open-close-arrow-icon']} style={{transform:isSessionsMoreInfoOpend?'rotate(360deg)':'rotate(0deg)',bottom:isSessionsMoreInfoOpend?'67%':'-5%'}}/>:<MdKeyboardArrowDown onClick={openCloseMoreSessionInfo} className={StudentDetailsStyles['open-close-arrow-icon']} style={{transform:isSessionsMoreInfoOpend?'rotate(360deg)':'rotate(0deg)',bottom:isSessionsMoreInfoOpend?'67%':'-5%'}}/>}
-          </div>
-            {studentSessionsDetails.length === 0 || studentSessionsDetails === undefined ? <img src={NoResultFiltaration} className={StudentDetailsStyles['no-result']} alt="no-result" /> : <table className={StudentDetailsStyles['student-session-info-table']}>
+            {studentSessionsDetails.length === 0 || studentSessionsDetails === undefined ? <section><img src={NoResultFiltaration} className={StudentDetailsStyles['no-result']} alt="no-result" /><span>{t("thre are no sessions during this period")}</span></section> : <table className={StudentDetailsStyles['student-session-info-table']}>
               <thead>
                 <tr>
                   <th>{t("attendance")}</th>

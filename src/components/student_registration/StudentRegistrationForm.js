@@ -723,7 +723,8 @@ const StudentRegistrationForm = () => {
                     backgroundColor: "#c2a054",
                     color: "#FFFFFF",
                     padding:'0 !important',
-                    fontSize:'1.3rem !important'
+                    fontSize:'1.1rem !important',
+                    fontFamliy:'math'
                   }}
                 >
                   {t("as_student")}

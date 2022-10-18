@@ -10,44 +10,49 @@
   -o-border-radius: 5px;
   position: relative;
 }
-
 .table-settings-container {
   width: 99%;
   margin: auto;
-  background-color: #c2a054;
-  padding: 5px;
+  background-color: #20aa69;
   display: flex;
+  flex-wrap: wrap;
   flex-direction: row;
   justify-content: space-evenly;
   align-items: center;
   color: #ffffff;
   margin-bottom: 25px;
 }
-
-.table-settings-container>label {
-  flex: 0 0 6%;
-  color: #FFFFFF;
-  font-family: 'Times New Roman', Times, serif;
-  text-transform: capitalize;
+.table-settings-container > section{
+  flex: 0 0 33.33%;
+  padding: 5px;
+}
+.table-settings-container > section > label {
+  color: #FFFF;
+  font-size: 1rem;
   text-align: left;
 }
-
-.table-settings-container>input,
-.table-settings-container>select {
-  flex: 0 0 25%;
+.table-settings-container > section > label:nth-of-type(2){
+  text-align: center;
 }
-
-.table-settings-container>select {
-  cursor: pointer;
+.table-settings-container > section > input , .table-settings-container > section > select {
+  padding: 8px 8px;
+  height: 40px;
 }
-
-.table-settings-container>button {
-  flex: 0 0 15%;
+.table-settings-container > section:nth-child(3){
+  height: 87px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;
 }
-
+.table-settings-container > section > button {
+  
+  width:49%;
+  border:1px solid #FFFFFF;
+}
 .table-wrapper {
   width: 100%;
-  height: 403px;
+  height: 365px;
   overflow: auto;
   position: relative;
 }
@@ -78,7 +83,7 @@
 }
 
 .student-accounts-table>thead>tr {
-  background-color: #c2a054;
+  background-color: #20aa69;
   color: #ffffff;
   position: sticky;
   top: -1px;
@@ -95,7 +100,6 @@
 .student-accounts-table>tbody>tr:hover {
   background-color: #20aa69;
   color: #FFFFFF;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   transition: all .3s ease-in-out;
   -webkit-transition: all .3s ease-in-out;
   -moz-transition: all .3s ease-in-out;
@@ -146,9 +150,8 @@
   margin-top: 20px;
   color: #ffffff;
 }
-
-.btn:hover {
-  opacity: .9;
+.btn:hover{
+  box-shadow: inset  0.3em 0.3em 1em rgba(0, 0, 0, 0.3);
 }
 
 .disabled-btn {
@@ -284,8 +287,9 @@
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
-
-
+}
+.hours-check-box-container{
+  justify-content: flex-start;
 }
 
 .hours-check-box-container>div {
@@ -449,7 +453,42 @@
   color: #000000;
   clear: both;
 }
-
+.warning-alert{
+  padding:15px;
+  width:410px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.warning-alert > section {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  padding:5px;
+}
+.warning-alert > section:nth-child(2){
+  justify-content: flex-start;
+  margin: auto;
+}
+.warning-alert > section:nth-child(2) > *{
+  margin-left: 5px;
+  color: #198754;
+ /* padding-left: 12px;*/
+}
+.warning-alert > section > span{
+  font-size: 1.2rem;
+  font-family: 'Times New Roman', Times, serif;
+  text-align: center;
+  text-transform: lowercase;
+  color: #000000;
+}
+.warning-alert > section > button{
+  width:135px !important;
+}
+.warning-alert > section > .btn:hover{
+  box-shadow: inset  0.3em 0.3em 1em rgba(0, 0, 0, 0.3);
+}
 .empty-data-img {
   position: absolute;
   top: 50%;
@@ -489,7 +528,6 @@
 @media screen and (max-width:1200px) {
   .student-user-data-container {
     width: 100%;
-    margin-top: 40px;
   }
 
   .student-accounts-table>tbody>tr>td:nth-child(3) {
@@ -501,13 +539,17 @@
   }
 
   @media screen and (max-width:586px) {
+    .table-settings-container > section{
+      flex: 0 0 50%;
+    }
+    .table-settings-container > section:nth-child(3){
+      flex: 0 0 100%;
+      height:50px;
+    }
     .student-accounts-table {
       width: 219%;
     }
 
-    .table-settings-container {
-      flex-direction: column;
-    }
     .btn{
       width:100%;
       margin: 5px 0 5px 0;
@@ -549,12 +591,22 @@
     }
 
     .alert {
-      width: 279px;
+      width: 245px;
     }
 
     .alert>img {
       width: 35%;
     }
+    .warning-alert{
+      padding:1px;
+    }
+    .warning-alert > section > span{
+      padding-top: 22px;
+    }
+    .warning-alert > section >button{
+      width:45% !important;
+      padding:5px;
+    };
   }
 
   .pagination-container>ul>li {

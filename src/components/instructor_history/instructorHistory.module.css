@@ -1,7 +1,7 @@
 .table-settings-container {
     width: 99%;
     margin: auto;
-    background-color: #c2a054;
+    background-color: #20aa69;
     padding: 5px;
     display: flex;
     flex-direction: row;
@@ -46,7 +46,7 @@
     font-family: 'Times New Roman', Times, serif;
   }
   .system-accounts-table > thead > tr {
-    background-color: #c2a054;
+    background-color: #20aa69;
     color: #ffffff;
     position: sticky;
     top: -1px;
@@ -65,7 +65,6 @@
   .system-accounts-table > tbody > tr:hover{
     background-color:#20aa69;
     color:#FFFFFF;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     transition: all .3s ease-in-out;
     -webkit-transition: all .3s ease-in-out;
     -moz-transition: all .3s ease-in-out;
@@ -111,6 +110,10 @@
     background-color: #198754;
     margin-top: 20px;
     color: #ffffff;
+    border:1px solid #FFFFFF;
+  }
+  .btn:hover{
+    box-shadow: inset  0.3em 0.3em 1em rgba(0, 0, 0, 0.3);
   }
   .no-result {
     position: absolute;

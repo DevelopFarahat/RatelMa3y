@@ -311,9 +311,9 @@
   "Admin_messages":"رسائل",
   "addUser": "اضافة مستخدم",
   "updateUser":"تعديل مستخدم",
-  "Has Added New Ratel Ma3y Stuff Account":"قام باضافة حساب جديد لدى رتل معى بنجاح",
-  "Has Updated Stuff Account Successfully":"قام بتعديل الحساب بنجاح",
-  "Has Deleted  Stuff Account Successfully":"قام بمسح الحساب بنجاح",
+  "Has Added New Ratel Ma3y Staff Account":"قام باضافة حساب جديد لدى رتل معى بنجاح",
+  "Has Updated Staff Account Successfully":"قام بتعديل الحساب بنجاح",
+  "Has Deleted  Staff Account Successfully":"قام بمسح الحساب بنجاح",
   "examC1":"نعم",
   "examC2":"لا",
   "subscription_state":"حالة الاشتراك",
@@ -354,7 +354,13 @@
   "You Have To  Select One Hour On":"ينبغى ان تختار ساعة واحدة فى يوم",
   "You Have To  Select":"ينبغى ان تختار",
   "Days According To Number Of Session":"ايام وفقا لعدد الحلقات",
-  "Has Deleted Message Successfully":"قام بمسح الرسالة بنجاح"
+  "Has Deleted Message Successfully":"قام بمسح الرسالة بنجاح",
+  "are you sure you want to delete this account":"هل انت متاكد انك ترغب فى مسح هذا الحساب",
+  "confirm":"تاكيد",
+  "cancel":"الغاء",
+  "don't ask me again!":"لاتسالنى مجدد",
+  "selectAll":"اختار الكل",
+  "thre are no sessions during this period":"لاتوجد اى حلقات خلال هذه الفترة"
 
 
 

@@ -27,12 +27,10 @@ const Students = () => {
                if(currentPage+1 !== pageNo[pageNo.length-1].index && Number(id) <= pageNo[pageNo.length-1].index  ){
                 //if(Number(id) !== pageNo[pageNo.length-1].index){
                     let pageNoCopy = [...pageNo];
-                    console.log("yaa am farahat rakez");
                     pageNoCopy.splice(0,1)
                     setPageNo(pageNoCopy);
                }else{
                     if(Number(id) !== pageNoArrLength && Number(id) === 2 && lastPage.index !== 2){
-                    console.log("yaa rab saadny")
                     let pNoCopy = [...pageNoCopy];
                     pNoCopy.splice(0,1);
                     setPageNo(pNoCopy);
@@ -45,13 +43,11 @@ const Students = () => {
     const getThePreviousPages = (event)=>{
         let pNo = {};
         if(currentPage < pageNoArrLength  && pageNo.length === 2){ 
-            console.log("inshaa allah1")
          /*
                 pageNo.reverse().splice(0,1);
                 pageNo.reverse();
                 */
                 if(currentPage-1 !== 1){
-                    console.log("insorna yaa allah");
                     pageNo.reverse().splice(0,1);
                     pageNo.reverse();
                     pNo.id = (pageNo[0].index-1)
@@ -67,7 +63,6 @@ const Students = () => {
             
         }else{
             if(pageNo.length !== 2){
-                console.log("inshaa allah")
                 console.log(currentPage)
                /*
                     pageNo.reverse().splice(0,1);
@@ -76,7 +71,6 @@ const Students = () => {
                     console.log(currentPage)
                     console.log(pageNoCopy)
                     if(currentPage-1 !== 1){
-                        console.log("insorna yaa allah");
                         pageNo.reverse().splice(0,1);
                         pageNo.reverse();
                         pNo.id = (pageNo[0].index-1)
@@ -84,7 +78,6 @@ const Students = () => {
                         pageNo.unshift(pNo);
                         setPageNo(pageNo);
                     }else{
-                        console.log("mona zaki")
                         console.log(pageNoCopy)
                         setPageNo(pageNoCopy);
                     }
@@ -110,12 +103,10 @@ const Students = () => {
        }else{
         if( currentPage+1   >  pageNo[pageNo.length-1].index){
             if( pageNo.length > 2){
-                console.log("ياكريم اكرمنا");
                 setCurrentPage(currentPage+1);
             }else{
                 
                 if( currentPage !== pageNoArrLength ){
-                    console.log("hgvplm lk uk")
                     /*
                     let pNoCopy = [...pageNo];
                     pNoCopy.splice(0,1);
@@ -142,7 +133,6 @@ const Students = () => {
 
           //  if(currentPage === 2 && pageNo.length < 9){
             if(currentPage === 2 && pageNo.length < pageNoArrLength){
-                console.log("yaa gamad ya farahat");
                 let pNoCopy = [...pageNoCopy];
                 pNoCopy.splice(0,1);
                 console.log(pNoCopy);
@@ -150,7 +140,6 @@ const Students = () => {
                  setCurrentPage(currentPage+1);
             }else{
                 if(pageNo.length > 2){
-                    console.log("ahha")
                     let pNoCopy = [...pageNo];
                     pNoCopy.splice(0,1);
                     console.log(pNoCopy);

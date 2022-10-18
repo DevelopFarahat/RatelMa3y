@@ -2,6 +2,7 @@ import React, { useState,useEffect } from "react";
 import InstructorWorkHistoryStyles from "./InstructorWorkHistory.module.css";
 import EmptyDataImage from "../../assets/images/empty.png";
 import InstructorHistory from "../instructor_history/instructorHistory";
+import NoResultFiltaration from "../../assets/images/no-result.png";
 import { useTranslation } from "react-i18next";    
 import {BiReset} from "react-icons/bi";
 import {AiFillFilter} from "react-icons/ai";
@@ -111,8 +112,8 @@ const InstructorWorkHistory = ({instructorSessionsDetails, setInstructorSessions
             <Form.Control type="date" name="date-to" id="toDate"  value={sessionsDate.toDate} onChange={handleSessionsDate}/>
             </section>
             <section>
-            <button type="button" className={InstructorWorkHistoryStyles['btn']} onClick={getAttendaceOnSpecificPeroidOfDate}>{t("filter")} <AiFillFilter /></button>
-            <button type="button" className={InstructorWorkHistoryStyles['btn']} onClick={resetSortSessions}>{t("reset")}<BiReset /></button>
+            <button type="button" className={InstructorWorkHistoryStyles['btn']} onClick={getAttendaceOnSpecificPeroidOfDate}>{t("filter")} <AiFillFilter style={{margin:'0px 0 -9px -4px'}}/></button>
+            <button type="button" className={InstructorWorkHistoryStyles['btn']} onClick={resetSortSessions}>{t("reset")}<BiReset style={{margin: '0 0 -5px -1px'}}/></button>
             </section>
           </div>
           <div className={InstructorWorkHistoryStyles['sessions-main-info-container']}>
@@ -124,7 +125,7 @@ const InstructorWorkHistory = ({instructorSessionsDetails, setInstructorSessions
                 <span>{t("totalNumberOfStudents")}</span>
                 <span>{numberOfStudent}</span>
             </div>
-          </div></>:<img src={EmptyDataImage} className={InstructorWorkHistoryStyles['empty-data-img']} alt="Empty" />}
+          </div></>:<section className={InstructorWorkHistoryStyles['no-sessions']}><img src={NoResultFiltaration} className={InstructorWorkHistoryStyles['no-result']} alt="no-result" /><span>{t("thre are no sessions during this period")}</span></section>}
                     </div>
                         :tapVisible.evaluationsTap? <div style={{display:"none"}}  className={InstructorWorkHistoryStyles['evaluations-content-tap']}>
                             {/* evaluations */}

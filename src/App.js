@@ -44,7 +44,7 @@ function App() {
   const styles = {
     hideableDiv: {
       display: hideMain ? "none" : "block",
-    },
+    }
   };
   const [expanded, setExpanded] = useState(false);
 
@@ -62,7 +62,7 @@ function App() {
           />
 
           <div style={{ height: 86 }}></div>
-          <div style={{ minHeight: "100vh" }}>
+          <div style={{ minHeight: "100vh",position:'relative'}}>
             <div onClick={setExpanded.bind(this, false)}>
               <Routes>
                 <Route path="/" element={<Navigate to="home" replace />} />

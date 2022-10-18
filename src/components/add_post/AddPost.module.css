@@ -56,6 +56,9 @@
   padding: 8px;
   margin: 21px 0 0 0;
 }
+.button-container:hover{
+  box-shadow: inset  0.3em 0.3em 1em rgba(0, 0, 0, 0.3);
+}
 .button-container > button {
   outline: none;
   border: none;
@@ -99,6 +102,9 @@ input[type="file"] {
   margin-top: 20px;
   color: #ffffff;
   float: right;
+}
+.btn:hover{
+  box-shadow: inset  0.3em 0.3em 1em rgba(0, 0, 0, 0.3);
 }
 .clear-btn {
   padding:8px;

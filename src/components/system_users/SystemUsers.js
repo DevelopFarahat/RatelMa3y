@@ -5,9 +5,10 @@ import { AiFillFilter } from "react-icons/ai";
 import { BiReset } from "react-icons/bi";
 import SystemUsersStyles from "./SystemUsers.module.css";
 import NoResultFiltaration from "../../assets/images/no-result.png";
+import WarningIcon from "../../assets/images/warning.png";
 import { TbChevronDownLeft, TbPlayerTrackNext } from "react-icons/tb";
 import CircleGif from "../../assets/images/check-circle.gif";
-import {FaTrash} from "react-icons/fa";
+import { FaTrash } from "react-icons/fa";
 import { ImPrevious2 } from "react-icons/im";
 import Spinner from 'react-bootstrap/Spinner';
 import { useTranslation } from "react-i18next";
@@ -35,7 +36,6 @@ const SystemUsers = () => {
       ) {
         //if(Number(id) !== pageNo[pageNo.length-1].index){
         let pageNoCopy = [...pageNo];
-        console.log("yaa am farahat rakez");
         pageNoCopy.splice(0, 1);
         setPageNo(pageNoCopy);
       } else {
@@ -44,7 +44,6 @@ const SystemUsers = () => {
           Number(id) === 2 &&
           lastPage.index !== 2
         ) {
-          console.log("yaa rab saadny");
           let pNoCopy = [...pageNoCopy];
           pNoCopy.splice(0, 1);
           setPageNo(pNoCopy);
@@ -56,13 +55,11 @@ const SystemUsers = () => {
   const getThePreviousPages = (event) => {
     let pNo = {};
     if (currentPage < pageNoArrLength && pageNo.length === 2) {
-      console.log("inshaa allah1");
       /*
                 pageNo.reverse().splice(0,1);
                 pageNo.reverse();
                 */
       if (currentPage - 1 !== 1) {
-        console.log("insorna yaa allah");
         pageNo.reverse().splice(0, 1);
         pageNo.reverse();
         pNo.id = pageNo[0].index - 1;
@@ -75,16 +72,11 @@ const SystemUsers = () => {
       if (currentPage > 1) setCurrentPage(currentPage - 1);
     } else {
       if (pageNo.length !== 2) {
-        console.log("inshaa allah");
-        console.log(currentPage);
         /*
                     pageNo.reverse().splice(0,1);
                     pageNo.reverse();
                     */
-        console.log(currentPage);
-        console.log(pageNoCopy);
         if (currentPage - 1 !== 1) {
-          console.log("insorna yaa allah");
           pageNo.reverse().splice(0, 1);
           pageNo.reverse();
           pNo.id = pageNo[0].index - 1;
@@ -92,7 +84,6 @@ const SystemUsers = () => {
           pageNo.unshift(pNo);
           setPageNo(pageNo);
         } else {
-          console.log("mona zaki");
           console.log(pageNoCopy);
           setPageNo(pageNoCopy);
         }
@@ -118,11 +109,9 @@ const SystemUsers = () => {
     } else {
       if (currentPage + 1 > pageNo[pageNo.length - 1].index) {
         if (pageNo.length > 2) {
-          console.log("ياكريم اكرمنا");
           setCurrentPage(currentPage + 1);
         } else {
           if (currentPage !== pageNoArrLength) {
-            console.log("hgvplm lk uk");
             /*
                     let pNoCopy = [...pageNo];
                     pNoCopy.splice(0,1);
@@ -145,7 +134,6 @@ const SystemUsers = () => {
       } else {
         //  if(currentPage === 2 && pageNo.length < 9){
         if (currentPage === 2 && pageNo.length < pageNoArrLength) {
-          console.log("yaa gamad ya farahat");
           let pNoCopy = [...pageNoCopy];
           pNoCopy.splice(0, 1);
           console.log(pNoCopy);
@@ -153,7 +141,6 @@ const SystemUsers = () => {
           setCurrentPage(currentPage + 1);
         } else {
           if (pageNo.length > 2) {
-            console.log("ahha");
             let pNoCopy = [...pageNo];
             pNoCopy.splice(0, 1);
             console.log(pNoCopy);
@@ -191,9 +178,9 @@ const SystemUsers = () => {
   ];
 
   let Working_hours = [
-    { id: 0, appointment:  `8:00 ${t("AM")}`, att: "h0" },
-    { id: 1, appointment:  `10:00 ${t("AM")}`, att: "h1" },
-    { id: 2, appointment:  `12:00 ${t("PM")}`, att: "h2" },
+    { id: 0, appointment: `8:00 ${t("AM")}`, att: "h0" },
+    { id: 1, appointment: `10:00 ${t("AM")}`, att: "h1" },
+    { id: 2, appointment: `12:00 ${t("PM")}`, att: "h2" },
     { id: 3, appointment: `2:00 ${t("PM")}`, att: "h3" },
     { id: 4, appointment: `4:00 ${t("PM")}`, att: "h4" },
     { id: 5, appointment: `6:00 ${t("PM")}`, att: "h5" },
@@ -205,13 +192,19 @@ const SystemUsers = () => {
   const [accountsData, setAccountsData] = useState([]);
   const [selectedRow, setSelectedRow] = useState(-1);
   const [filterValue, setFilterValue] = useState("");
-  const [isThereAnyUpdateOrCreatingNewAccount,setIsThereAnyUpdateOrCreatingNewAccount] = useState(false);
-  const [isThereAnyUpdateOnAccount,setIsThereAnyUpdateOnAccount] = useState(false);
+  const [isThereAnyUpdateOrCreatingNewAccount, setIsThereAnyUpdateOrCreatingNewAccount] = useState(false);
+  const [isThereAnyUpdateOnAccount, setIsThereAnyUpdateOnAccount] = useState(false);
   const [isUserCreateNewAccount, setIsUserCreateNewAccount] = useState(false);
-  const [isUserDeleteAnyAccount,setIsUserDeleteAnyAccount] = useState(false);
+  const [deleteAlertConfirmation, setAlertDeleteConfirmation] = useState(false);
+  const [donnotAskmeAgain, setDonotAskmeAgain] = useState(false);
+  const [staffAccount, setStaffAcount] = useState([]);
+  const [donnotAskmeAgainChecked, setDonotAskmeAgainChecked] = useState(false);
+  const [isUserDeleteAnyAccount, setIsUserDeleteAnyAccount] = useState(false);
   const [isUserMadeAnyUpdateToAnyAccount, setIsUserMadeAnyUpdateToAnyAccount] =
     useState(false);
   const initialResponse = useRef();
+  const [selectAllDays, setSelectAllDays] = useState(false);
+  const [selectAllHours, setSlectAllHours] = useState(false);
   const [workingDays, setWorkingDays] = useState({
     d0: "",
     d1: "",
@@ -288,7 +281,14 @@ const SystemUsers = () => {
   });
 
   const [fetchAgain, setFetchAgain] = useState(0); //Just dummy number to tell that another fetch call is needed
-
+  const handleDonnotAskmeAgainChange = (event) => {
+    setDonotAskmeAgainChecked(current => !current);
+    if (event.target.checked) {
+      setDonotAskmeAgain(true);
+    } else {
+      setDonotAskmeAgain(false);
+    }
+  }
   const handleChange = (event) => {
     if (event.target.id !== "age") {
       setUserData({
@@ -333,19 +333,102 @@ const SystemUsers = () => {
         [event.target.id]: workingHoursCheckedValuesArr[event.target.value],
       });
     } else {
-      /*
-          let workingHoursCloneObji = WorkingHours;
-          let arr = Object.values(workingHoursCloneObji);
-    
-          arr[event.target.value] = [0, 0];
-          setWorkingHours(arr);
-          */
       setWorkingHours({
         ...WorkingHours,
         [`h${event.target.value}`]: "",
       });
     }
   };
+
+  const handleSelectAllDays = (event) => {
+    setSelectAllDays(current => !current);
+    if (event.currentTarget.checked) {
+      setCheckedDays({
+        d0: true,
+        d1: true,
+        d2: true,
+        d3: true,
+        d4: true,
+        d5: true,
+        d6: true,
+      });
+      setWorkingDays({
+        d0: 0,
+        d1: 1,
+        d2: 2,
+        d3: 3,
+        d4: 4,
+        d5: 5,
+        d6: 6,
+      })
+    } else {
+      setWorkingDays({
+        d0: false,
+        d1: false,
+        d2: false,
+        d3: false,
+        d4: false,
+        d5: false,
+        d6: false,
+      });
+      setCheckedDays({
+        d0: "",
+        d1: "",
+        d2: "",
+        d3: "",
+        d4: "",
+        d5: "",
+        d6: "",
+      })
+    }
+
+  }
+  const handleSelectAllHours = (event) => {
+    setSlectAllHours(current => !current);
+    if (event.currentTarget.checked) {
+      setCheckedHours({
+        h0: true,
+        h1: true,
+        h2: true,
+        h3: true,
+        h4: true,
+        h5: true,
+        h6: true,
+        h7: true,
+      });
+      setWorkingHours({
+        h0: workingHoursCheckedValuesArr[0],
+        h1: workingHoursCheckedValuesArr[1],
+        h2: workingHoursCheckedValuesArr[2],
+        h3: workingHoursCheckedValuesArr[3],
+        h4: workingHoursCheckedValuesArr[4],
+        h5: workingHoursCheckedValuesArr[5],
+        h6: workingHoursCheckedValuesArr[6],
+        h7: workingHoursCheckedValuesArr[7],
+      });
+    } else {
+      setCheckedHours({
+        h0: false,
+        h1: false,
+        h2: false,
+        h3: false,
+        h4: false,
+        h5: false,
+        h6: false,
+        h7: false,
+      });
+      setWorkingHours({
+        h0: "",
+        h1: "",
+        h2: "",
+        h3: "",
+        h4: "",
+        h5: "",
+        h6: "",
+        h7: "",
+      });
+    }
+  }
   const handlerRowClicked = useCallback((event) => {
     const id = event.currentTarget.id;
     setSelectedRow(id);
@@ -359,8 +442,8 @@ const SystemUsers = () => {
           value.length === 0
             ? t("keepintouch_required")
             : emailRegx.test(value)
-            ? null
-            : t("student_email_error_message")
+              ? null
+              : t("student_email_error_message")
       });
     } else if (filed === "mobile") {
       const mobileRegx = /^[+][0-9]+(01)(0|1|2|5)[0-9]{8}$/;
@@ -368,9 +451,9 @@ const SystemUsers = () => {
         ...errors,
         mobileError:
           value.length === 0
-            ? t("keepintouch_required") 
+            ? t("keepintouch_required")
             : mobileRegx.test(value)
-           
+
       });
     } else if (filed === "name") {
       const nameRegx = /[a-z A-Z]{3,}\s{1}[a-z A-Z]{3,}$/;
@@ -378,9 +461,9 @@ const SystemUsers = () => {
         ...errors,
         nameError:
           value.length === 0
-            ? t("keepintouch_required") 
-            : nameRegx.test(value)?null:t("student_fullname_error")
-            
+            ? t("keepintouch_required")
+            : nameRegx.test(value) ? null : t("student_fullname_error")
+
       });
     } else if (filed === "age") {
       setErrors({
@@ -390,12 +473,12 @@ const SystemUsers = () => {
     } else if (filed === "gender") {
       setErrors({
         ...errors,
-        genderError: value.length === 0 ? t("keepintouch_required")  : "",
+        genderError: value.length === 0 ? t("keepintouch_required") : "",
       });
     } else if (filed === "programs") {
       setErrors({
         ...errors,
-        programsError: value.length === 0 ? t("keepintouch_required")  : "",
+        programsError: value.length === 0 ? t("keepintouch_required") : "",
       });
     } else if (filed === "password") {
       const passwordRegx = /([0-9]|[a-zA-Z])+([0-9]|[a-zA-Z]){7}/;
@@ -403,10 +486,10 @@ const SystemUsers = () => {
         ...errors,
         passwordError:
           value.length === 0
-            ? t("keepintouch_required") 
+            ? t("keepintouch_required")
             : passwordRegx.test(value)
-            ? null
-            : t("student_password_error")
+              ? null
+              : t("student_password_error")
       });
     } else if (filed === "privileges") {
       setErrors({
@@ -416,7 +499,7 @@ const SystemUsers = () => {
     } else if (filed === "state") {
       setErrors({
         ...errors,
-        stateError: value.length === 0 ? t("keepintouch_required")  : "",
+        stateError: value.length === 0 ? t("keepintouch_required") : "",
       });
     } else if (filed === "started_at") {
       setErrors({
@@ -515,7 +598,7 @@ const SystemUsers = () => {
         .then((res) => {
           setFetchAgain(fetchAgain + 1);
           setUserData({
-            _id:"",
+            _id: "",
             email: "",
             name: "",
             gender: "",
@@ -572,7 +655,7 @@ const SystemUsers = () => {
             firstStep: true,
             secondStep: false,
             thirdStep: false,
-            fourthStep:false
+            fourthStep: false
           });
           setIsThereAnyUpdateOrCreatingNewAccount(false);
           setIsUserCreateNewAccount(true);
@@ -608,7 +691,7 @@ const SystemUsers = () => {
           setSelectedRow(-1);
           console.log(res.data);
           setUserData({
-            _id:"",
+            _id: "",
             email: "",
             name: "",
             gender: "",
@@ -665,7 +748,7 @@ const SystemUsers = () => {
             firstStep: true,
             secondStep: false,
             thirdStep: false,
-            fourthStep:false
+            fourthStep: false
           });
           setIsThereAnyUpdateOrCreatingNewAccount(false);
           setIsThereAnyUpdateOnAccount(false);
@@ -710,52 +793,52 @@ const SystemUsers = () => {
     event.preventDefault();
     event.currentTarget.id === "firstStep"
       ? setSystemUsersFormSteps({
-          firstStep: true,
-          secondStep: false,
-          thirdStep: false,
-          fourthStep: false,
-        })
+        firstStep: true,
+        secondStep: false,
+        thirdStep: false,
+        fourthStep: false,
+      })
       : event.currentTarget.id === "secondStep"
-      ? setSystemUsersFormSteps({
+        ? setSystemUsersFormSteps({
           firstStep: false,
           secondStep: true,
           thirdStep: false,
           fourthStep: false,
         })
-      : event.currentTarget.id === "thirdStep"
-      ? setSystemUsersFormSteps({
-          firstStep: false,
-          secondStep: false,
-          thirdStep: true,
-          fourthStep: false,
-        })
-      : event.currentTarget.id === "fourthStep"
-      ? setSystemUsersFormSteps({
-          firstStep: false,
-          secondStep: false,
-          thirdStep: false,
-          fourthStep: true,
-        })
-      : event.currentTarget.id === "firstStepPrevious"
-      ? setSystemUsersFormSteps({
-          firstStep: true,
-          secondStep: false,
-          thirdStep: false,
-          fourthStep: false,
-        })
-      : event.currentTarget.id === "secondStepPrevious"
-      ? setSystemUsersFormSteps({
-          firstStep: false,
-          secondStep: true,
-          thirdStep: false,
-          fourthStep: false,
-        })
-      : setSystemUsersFormSteps({
-          firstStep: false,
-          secondStep: false,
-          thirdStep: true,
-          fourthStep: false,
-        });
+        : event.currentTarget.id === "thirdStep"
+          ? setSystemUsersFormSteps({
+            firstStep: false,
+            secondStep: false,
+            thirdStep: true,
+            fourthStep: false,
+          })
+          : event.currentTarget.id === "fourthStep"
+            ? setSystemUsersFormSteps({
+              firstStep: false,
+              secondStep: false,
+              thirdStep: false,
+              fourthStep: true,
+            })
+            : event.currentTarget.id === "firstStepPrevious"
+              ? setSystemUsersFormSteps({
+                firstStep: true,
+                secondStep: false,
+                thirdStep: false,
+                fourthStep: false,
+              })
+              : event.currentTarget.id === "secondStepPrevious"
+                ? setSystemUsersFormSteps({
+                  firstStep: false,
+                  secondStep: true,
+                  thirdStep: false,
+                  fourthStep: false,
+                })
+                : setSystemUsersFormSteps({
+                  firstStep: false,
+                  secondStep: false,
+                  thirdStep: true,
+                  fourthStep: false,
+                });
   };
 
   const updateSpecificAccount = (event, userAccount) => {
@@ -778,7 +861,7 @@ const SystemUsers = () => {
       },
       mobile: userAccount.mobile,
       privileges: userAccount.privileges,
-      password:'whpLr4ZX'
+      password: 'whpLr4ZX'
     });
     for (let i = 0; i < userAccount.prefs.working_days.length; i++) {
       if (userAccount.prefs.working_days[i] !== -1) {
@@ -810,70 +893,87 @@ const SystemUsers = () => {
     setCheckedHours(workingHoursCheckedInitialObji);
     handlerRowClicked(event);
   };
-  const sortSystemUsersTableByRoleOfTheUser = (event)=>{
+  const sortSystemUsersTableByRoleOfTheUser = (event) => {
     let userDataCopy = [...accountsData];
-    for(let i = 0 ; i < userDataCopy.length;i++){
-        if(event.target.value === 'ADMIN'){
-            if(userDataCopy[i].privileges === 'Admin'){
-                userDataCopy[i].precedence = 2;
-            }else if (userDataCopy[i].privileges === 'Supervisor'){
-                userDataCopy[i].precedence = 1;
-            }else{
-                userDataCopy[i].precedence = 0;
-            }
-        }else if (event.target.value === 'SUPERVISOR'){
-            console.log(true);
-            if(userDataCopy[i].privileges === 'Admin'){
-                userDataCopy[i].precedence = 1;
-            }else if (userDataCopy[i].privileges === 'Supervisor'){
-                userDataCopy[i].precedence = 2;
-            }else{
-                userDataCopy[i].precedence = 0;
-            }
-        }else{
-            if(userDataCopy[i].privileges === 'Admin'){
-                userDataCopy[i].precedence = 0;
-            }else if (userDataCopy[i].privileges === 'Supervisor'){
-                userDataCopy[i].precedence = 1;
-            }else{
-                userDataCopy[i].precedence = 2;
-            }
+    for (let i = 0; i < userDataCopy.length; i++) {
+      if (event.target.value === 'ADMIN') {
+        if (userDataCopy[i].privileges === 'Admin') {
+          userDataCopy[i].precedence = 2;
+        } else if (userDataCopy[i].privileges === 'Supervisor') {
+          userDataCopy[i].precedence = 1;
+        } else {
+          userDataCopy[i].precedence = 0;
         }
-       
+      } else if (event.target.value === 'SUPERVISOR') {
+        console.log(true);
+        if (userDataCopy[i].privileges === 'Admin') {
+          userDataCopy[i].precedence = 1;
+        } else if (userDataCopy[i].privileges === 'Supervisor') {
+          userDataCopy[i].precedence = 2;
+        } else {
+          userDataCopy[i].precedence = 0;
+        }
+      } else {
+        if (userDataCopy[i].privileges === 'Admin') {
+          userDataCopy[i].precedence = 0;
+        } else if (userDataCopy[i].privileges === 'Supervisor') {
+          userDataCopy[i].precedence = 1;
+        } else {
+          userDataCopy[i].precedence = 2;
+        }
+      }
+
     }
-    switch(event.target.value){
-        case "ADMIN":
-            userDataCopy.sort((a,b)=>{
-                return b.precedence - a.precedence;
-            });
-            break;
-            case "SUPERVISOR":
-            userDataCopy.sort((a,b)=>{
-                return b.precedence - a.precedence;
-            });
-            break;
-            case "INSTRUCTOR":
-                userDataCopy.sort((a,b)=>{
-                    return b.precedence - a.precedence;
-                });
-                break;
-                default: 
+    switch (event.target.value) {
+      case "ADMIN":
+        userDataCopy.sort((a, b) => {
+          return b.precedence - a.precedence;
+        });
+        break;
+      case "SUPERVISOR":
+        userDataCopy.sort((a, b) => {
+          return b.precedence - a.precedence;
+        });
+        break;
+      case "INSTRUCTOR":
+        userDataCopy.sort((a, b) => {
+          return b.precedence - a.precedence;
+        });
+        break;
+      default:
     }
     setAccountsData(userDataCopy);
   }
-  const deleteStuffAccount = (event,stuffAccount)=>{
+  const deleteStaffAccount = (event, sAccount) => {
     event.stopPropagation();
-    axios.delete(`${process.env.REACT_APP_BACK_HOST_URL}/api/instructors/${stuffAccount._id}`,{headers:{},data:{studentsIDs:stuffAccount.students}}).then((res)=>{
-    setFetchAgain(fetchAgain+1);
-    setIsUserDeleteAnyAccount(true);
-    setTimeout(()=>{
-        setIsUserDeleteAnyAccount(false);
-    },1000)
+    if (sAccount !== undefined) {
+      setStaffAcount(sAccount);
+    }
+    if (donnotAskmeAgain === false || event.currentTarget.value === 'confirm') {
+      if (event.currentTarget.value === 'cancel') {
+        setAlertDeleteConfirmation(false);
+      } else {
+        setAlertDeleteConfirmation(true);
+      }
 
-    }).catch((error)=>{
-    console.error(error)
-    })
-    
+    } else {
+      setAlertDeleteConfirmation(false);
+    }
+    if (event.currentTarget.value === 'confirm' || donnotAskmeAgain === true) {
+      let staffAcc = sAccount === undefined ? staffAccount : sAccount;
+      axios.delete(`${process.env.REACT_APP_BACK_HOST_URL}/api/instructors/${staffAcc._id}`, { headers: {}, data: { studentsIDs: staffAcc.students } }).then((res) => {
+        setAlertDeleteConfirmation(false);
+        setFetchAgain(fetchAgain + 1);
+        setIsUserDeleteAnyAccount(true);
+        setTimeout(() => {
+          setIsUserDeleteAnyAccount(false);
+        }, 1000)
+
+      }).catch((error) => {
+        console.error(error)
+      })
+    }
+
   }
   useEffect(() => {
     axios
@@ -901,7 +1001,7 @@ const SystemUsers = () => {
 
   return (
     <>
-      {isUserCreateNewAccount  ? (
+      {isUserCreateNewAccount ? (
         <div className={SystemUsersStyles["alert-container"]}>
           <img src={CircleGif} alt="successfull" />
           <span>
@@ -912,7 +1012,7 @@ const SystemUsers = () => {
             <span style={{ fontWeight: "bold", color: "#198754" }}>
               {localStorage.getItem("newAccountUserFullname")}
             </span>
-            {t("Has Added New Ratel Ma3y Stuff Account")}
+            {t("Has Added New Ratel Ma3y Staff Account")}
           </span>
         </div>
       ) : isUserMadeAnyUpdateToAnyAccount ? (
@@ -922,22 +1022,36 @@ const SystemUsers = () => {
             <span style={{ fontWeight: "bold", color: "#198754" }}>
               {localStorage.getItem("user_name")}
             </span>{" "}
-           {t("Has Updated Stuff Account Successfully")}
+            {t("Has Updated Staff Account Successfully")}
           </span>
         </div>
-      ) : isUserDeleteAnyAccount? (
+      ) : isUserDeleteAnyAccount ? (
         <div className={SystemUsersStyles["alert-container"]}>
           <img src={CircleGif} alt="successfull" />
           <span>
             <span style={{ fontWeight: "bold", color: "#198754" }}>
               {localStorage.getItem("user_name")}
             </span>{" "}
-            {t("Has Deleted  Stuff Account Successfully")}
+            {t("Has Deleted  Staff Account Successfully")}
           </span>
         </div>
-      ):null}
+      ) : null}
+      {deleteAlertConfirmation ? <div className={`${SystemUsersStyles["alert-container"]} ${SystemUsersStyles["warning-alert"]}`}>
+        <section>
+          <img src={WarningIcon} alt="warning" />
+          <span>{t("are you sure you want to delete this account")}</span>
+        </section>
+        <section style={{width:t("us")===t("Us")?'98%':'88%'}}>
+          <Form.Check checked={donnotAskmeAgainChecked} name="donotAskmeAgain" id="donotAskmeAgain" onChange={handleDonnotAskmeAgainChange} />
+          <Form.Label htmlFor="donotAskmeAgain">{t("don't ask me again!")}</Form.Label>
+        </section>
+        <section style={{direction:t("us")===t("Us")?'ltr':'rtl'}}>
+          <button type="submit" className={SystemUsersStyles['btn']} value={"confirm"} onClick={deleteStaffAccount}>{t("confirm")}</button>
+          <button type="submit" value={"cancel"} className={SystemUsersStyles['btn']} onClick={deleteStaffAccount}>{t("cancel")}</button>
+        </section>
+      </div> : null}
       <div className={SystemUsersStyles["system-user-main"]}>
-      <div
+        <div
           className={SystemUsersStyles["pagination-container"]}
           style={{ direction: "rtl" }}
         >
@@ -1024,14 +1138,14 @@ const SystemUsers = () => {
         <div className={SystemUsersStyles["system-user-form-table-container"]}>
           <form
             className={SystemUsersStyles["system-user-form"]}
-            style={{direction:t("us")=== t("Us")?'ltr':'rtl'}}
+            style={{ direction: t("us") === t("Us") ? 'ltr' : 'rtl' }}
             method="post"
             encType="multipart/form-data"
             onSubmit={handleSubmit}
             autoComplete="off"
           >
             <div
-            style={{margin:systemUsersFormSteps.thirdStep || systemUsersFormSteps.fourthStep ?'0 0 29px 0':'0 0 10px 0'}}
+              style={{ margin: systemUsersFormSteps.thirdStep || systemUsersFormSteps.fourthStep ? '0 0 29px 0' : '0 0 10px 0' }}
               className={
                 SystemUsersStyles["system-user-steps-circle-container"]
               }
@@ -1044,8 +1158,7 @@ const SystemUsers = () => {
                 readOnly
               />
               <div
-                className={`${SystemUsersStyles["circle"]} ${
-                  userData.email === "" ||
+                className={`${SystemUsersStyles["circle"]} ${userData.email === "" ||
                   userData.name === "" ||
                   userData.age === "" ||
                   userData.password === "" ||
@@ -1053,15 +1166,14 @@ const SystemUsers = () => {
                   errors.nameError ||
                   errors.ageError ||
                   errors.passwordError
-                    ? ""
-                    : SystemUsersStyles["coloredCircle"]
-                }`}
+                  ? ""
+                  : SystemUsersStyles["coloredCircle"]
+                  }`}
               >
                 1
               </div>
               <span
-                className={`${SystemUsersStyles["line"]} ${
-                  userData.email === "" ||
+                className={`${SystemUsersStyles["line"]} ${userData.email === "" ||
                   userData.name === "" ||
                   userData.age === "" ||
                   userData.password === "" ||
@@ -1069,13 +1181,12 @@ const SystemUsers = () => {
                   errors.nameError ||
                   errors.ageError ||
                   errors.passwordError
-                    ? ""
-                    : SystemUsersStyles["coloredLine"]
-                }`}
+                  ? ""
+                  : SystemUsersStyles["coloredLine"]
+                  }`}
               ></span>
               <div
-                className={`${SystemUsersStyles["circle"]} ${
-                  userData.gender === "" ||
+                className={`${SystemUsersStyles["circle"]} ${userData.gender === "" ||
                   userData.state === "" ||
                   userData.mobile === "" ||
                   userData.privileges === "" ||
@@ -1083,15 +1194,14 @@ const SystemUsers = () => {
                   errors.stateError ||
                   errors.mobileError ||
                   errors.privilegesError
-                    ? ""
-                    : SystemUsersStyles["coloredCircle"]
-                }`}
+                  ? ""
+                  : SystemUsersStyles["coloredCircle"]
+                  }`}
               >
                 2
               </div>
               <span
-                className={`${SystemUsersStyles["line"]} ${
-                  userData.gender === "" ||
+                className={`${SystemUsersStyles["line"]} ${userData.gender === "" ||
                   userData.state === "" ||
                   userData.mobile === "" ||
                   userData.privileges === "" ||
@@ -1099,54 +1209,51 @@ const SystemUsers = () => {
                   errors.stateError ||
                   errors.mobileError ||
                   errors.privilegesError
-                    ? ""
-                    : SystemUsersStyles["coloredLine"]
-                }`}
+                  ? ""
+                  : SystemUsersStyles["coloredLine"]
+                  }`}
               ></span>
               <div
-                className={`${SystemUsersStyles["circle"]} ${
-                  (workingDays.d0 !== "" ||
-                    workingDays.d1 !== "" ||
-                    workingDays.d2 !== "" ||
-                    workingDays.d3 !== "" ||
-                    workingDays.d4 !== "" ||
-                    workingDays.d5 !== "" ||
-                    workingDays.d6 !== "") &&
+                className={`${SystemUsersStyles["circle"]} ${(workingDays.d0 !== "" ||
+                  workingDays.d1 !== "" ||
+                  workingDays.d2 !== "" ||
+                  workingDays.d3 !== "" ||
+                  workingDays.d4 !== "" ||
+                  workingDays.d5 !== "" ||
+                  workingDays.d6 !== "") &&
                   (userData.started_at !== "" || errors.started_atError)
-                    ? SystemUsersStyles["coloredCircle"]
-                    : ""
-                }`}
+                  ? SystemUsersStyles["coloredCircle"]
+                  : ""
+                  }`}
               >
                 3
               </div>
               <span
-                className={`${SystemUsersStyles["line"]} ${
-                  (workingDays.d0 !== "" ||
-                    workingDays.d1 !== "" ||
-                    workingDays.d2 !== "" ||
-                    workingDays.d3 !== "" ||
-                    workingDays.d4 !== "" ||
-                    workingDays.d5 !== "" ||
-                    workingDays.d6 !== "") &&
+                className={`${SystemUsersStyles["line"]} ${(workingDays.d0 !== "" ||
+                  workingDays.d1 !== "" ||
+                  workingDays.d2 !== "" ||
+                  workingDays.d3 !== "" ||
+                  workingDays.d4 !== "" ||
+                  workingDays.d5 !== "" ||
+                  workingDays.d6 !== "") &&
                   (userData.started_at !== "" || errors.started_atError)
-                    ? SystemUsersStyles["coloredLine"]
-                    : ""
-                }`}
+                  ? SystemUsersStyles["coloredLine"]
+                  : ""
+                  }`}
               ></span>
               <div
                 className={`${SystemUsersStyles["circle"]}
-                            ${
-                              WorkingHours.h0 !== "" ||
-                              WorkingHours.h1 !== "" ||
-                              WorkingHours.h2 !== "" ||
-                              WorkingHours.h3 !== "" ||
-                              WorkingHours.h4 !== "" ||
-                              WorkingHours.h5 !== "" ||
-                              WorkingHours.h6 !== "" ||
-                              WorkingHours.h7 !== ""
-                                ? SystemUsersStyles["coloredCircle"]
-                                : ""
-                            }`}
+                            ${WorkingHours.h0 !== "" ||
+                    WorkingHours.h1 !== "" ||
+                    WorkingHours.h2 !== "" ||
+                    WorkingHours.h3 !== "" ||
+                    WorkingHours.h4 !== "" ||
+                    WorkingHours.h5 !== "" ||
+                    WorkingHours.h6 !== "" ||
+                    WorkingHours.h7 !== ""
+                    ? SystemUsersStyles["coloredCircle"]
+                    : ""
+                  }`}
               >
                 4
               </div>
@@ -1161,9 +1268,8 @@ const SystemUsers = () => {
                     id="email"
                     value={userData.email}
                     onChange={handleChange}
-                    className={`${
-                      SystemUsersStyles["system-user-form-controls"]
-                    } ${errors.emailError ? SystemUsersStyles["errors"] : ""}`}
+                    className={`${SystemUsersStyles["system-user-form-controls"]
+                      } ${errors.emailError ? SystemUsersStyles["errors"] : ""}`}
                   />
                   <small className="text-danger">{errors.emailError}</small>
                 </div>
@@ -1175,9 +1281,8 @@ const SystemUsers = () => {
                     id="name"
                     value={userData.name}
                     onChange={handleChange}
-                    className={`${
-                      SystemUsersStyles["system-user-form-controls"]
-                    } ${errors.nameError ? SystemUsersStyles["errors"] : ""}`}
+                    className={`${SystemUsersStyles["system-user-form-controls"]
+                      } ${errors.nameError ? SystemUsersStyles["errors"] : ""}`}
                   />
                   <small className="text-danger">{errors.nameError}</small>
                 </div>
@@ -1192,9 +1297,8 @@ const SystemUsers = () => {
                     id="age"
                     value={userData.age}
                     onChange={handleChange}
-                    className={`${
-                      SystemUsersStyles["system-user-form-controls"]
-                    } ${errors.ageError ? SystemUsersStyles["errors"] : ""}`}
+                    className={`${SystemUsersStyles["system-user-form-controls"]
+                      } ${errors.ageError ? SystemUsersStyles["errors"] : ""}`}
                   />
                   <small className="text-danger">{errors.ageError}</small>
                 </div>
@@ -1207,50 +1311,47 @@ const SystemUsers = () => {
                     name="Password"
                     id="password"
                     value={userData.password}
-                    readOnly={isThereAnyUpdateOnAccount?true:false}
-                    style={{backgroundColor:isThereAnyUpdateOnAccount?'#e9ecef':''}}
+                    readOnly={isThereAnyUpdateOnAccount ? true : false}
+                    style={{ backgroundColor: isThereAnyUpdateOnAccount ? '#e9ecef' : '' }}
                     onChange={handleChange}
-                    className={`${
-                      SystemUsersStyles["system-user-form-controls"]
-                    } ${
-                      errors.passwordError ? SystemUsersStyles["errors"] : ""
-                    }`}
+                    className={`${SystemUsersStyles["system-user-form-controls"]
+                      } ${errors.passwordError ? SystemUsersStyles["errors"] : ""
+                      }`}
                   />
                   <small className="text-danger">{errors.passwordError}</small>
                 </div>
-                <div className={SystemUsersStyles["step-button-container"]} style={{direction:t("us")=== t("Us")?'ltr':'ltr'}}>
-                <button
-                  type="button"
-                  className={`${
-                    userData.email === "" ||
-                    userData.name === "" ||
-                    userData.age === "" ||
-                    userData.password === "" ||
-                    errors.emailError ||
-                    errors.nameError ||
-                    errors.ageError ||
-                    errors.passwordError
+                <div className={SystemUsersStyles["step-button-container"]} style={{ direction: t("us") === t("Us") ? 'ltr' : 'ltr' }}>
+                  <button
+                    type="button"
+                    className={`${userData.email === "" ||
+                      userData.name === "" ||
+                      userData.age === "" ||
+                      userData.password === "" ||
+                      errors.emailError ||
+                      errors.nameError ||
+                      errors.ageError ||
+                      errors.passwordError
                       ? SystemUsersStyles["disabled-btn"]
                       : SystemUsersStyles["btn"]
-                  }`}
-                  disabled={
-                    userData.email === "" ||
-                    userData.name === "" ||
-                    userData.age === "" ||
-                    userData.password === "" ||
-                    errors.emailError ||
-                    errors.nameError ||
-                    errors.ageError ||
-                    errors.passwordError
-                      ? true
-                      : false
-                  }
-                  id="secondStep"
-                  onClick={(event) => systemUsersNextStep(event)}
-                >
-                  {t("next")}
-                  <TbPlayerTrackNext style={{margin:t("us")===t("Us")?'0px 0px 0px 3px':'-7px 0px 0px 3px'}} />
-                </button>
+                      }`}
+                    disabled={
+                      userData.email === "" ||
+                        userData.name === "" ||
+                        userData.age === "" ||
+                        userData.password === "" ||
+                        errors.emailError ||
+                        errors.nameError ||
+                        errors.ageError ||
+                        errors.passwordError
+                        ? true
+                        : false
+                    }
+                    id="secondStep"
+                    onClick={(event) => systemUsersNextStep(event)}
+                  >
+                    {t("next")}
+                    <TbPlayerTrackNext style={{ margin: t("us") === t("Us") ? '0px 0px 0px 3px' : '-7px 0px 0px 3px' }} />
+                  </button>
                 </div>
               </>
             ) : systemUsersFormSteps.secondStep ? (
@@ -1262,9 +1363,8 @@ const SystemUsers = () => {
                     id="gender"
                     value={userData.gender}
                     onChange={handleChange.bind(this)}
-                    className={`${
-                      SystemUsersStyles["system-user-form-controls"]
-                    } ${errors.genderError ? SystemUsersStyles["errors"] : ""}`}
+                    className={`${SystemUsersStyles["system-user-form-controls"]
+                      } ${errors.genderError ? SystemUsersStyles["errors"] : ""}`}
                   >
                     <option value="">{t("select")}</option>
                     <option value="Male">{t("male")}</option>
@@ -1279,9 +1379,8 @@ const SystemUsers = () => {
                     id="state"
                     value={userData.state}
                     onChange={handleChange}
-                    className={`${
-                      SystemUsersStyles["system-user-form-controls"]
-                    } ${errors.stateError ? SystemUsersStyles["errors"] : ""}`}
+                    className={`${SystemUsersStyles["system-user-form-controls"]
+                      } ${errors.stateError ? SystemUsersStyles["errors"] : ""}`}
                   >
                     <option value="">{t("select")}</option>
                     {listOfCountries.map((country) => (
@@ -1301,9 +1400,8 @@ const SystemUsers = () => {
                     id="mobile"
                     value={userData.mobile}
                     onChange={handleChange}
-                    className={`${
-                      SystemUsersStyles["system-user-form-controls"]
-                    } ${errors.mobileError ? SystemUsersStyles["errors"] : ""}`}
+                    className={`${SystemUsersStyles["system-user-form-controls"]
+                      } ${errors.mobileError ? SystemUsersStyles["errors"] : ""}`}
                   />
                   <small className="text-danger">{errors.mobileError}</small>
                 </div>
@@ -1316,11 +1414,9 @@ const SystemUsers = () => {
                     name="Privileges"
                     value={userData.privileges}
                     onChange={handleChange}
-                    className={`${
-                      SystemUsersStyles["system-user-form-controls"]
-                    } ${
-                      errors.privilegesError ? SystemUsersStyles["errors"] : ""
-                    }`}
+                    className={`${SystemUsersStyles["system-user-form-controls"]
+                      } ${errors.privilegesError ? SystemUsersStyles["errors"] : ""
+                      }`}
                   >
                     <option value="">{t("select")}</option>
                     <option value="Admin">{t("admin")}</option>
@@ -1331,47 +1427,46 @@ const SystemUsers = () => {
                     {errors.privilegesError}
                   </small>
                 </div>
-                <div className={SystemUsersStyles["step-button-container"]} style={{direction:t("us")=== t("Us")?'ltr':'ltr'}}>
-                <button
-                  type="button"
-                  className={SystemUsersStyles["btn"]}
-                  id="firstStepPrevious"
-                  onClick={(event) => systemUsersNextStep(event)}
-                >
-                  <ImPrevious2 style={{margin:'-3px -3px 0px -10px' }} />
-                  {t("prevoius")}
-                </button>
-                <button
-                  type="button"
-                  className={`${
-                    userData.gender === "" ||
-                    userData.state === "" ||
-                    userData.mobile === "" ||
-                    userData.privileges === "" ||
-                    errors.genderError ||
-                    errors.stateError ||
-                    errors.mobileError ||
-                    errors.privilegesError
+                <div className={SystemUsersStyles["step-button-container"]} style={{ direction: t("us") === t("Us") ? 'ltr' : 'ltr' }}>
+                  <button
+                    type="button"
+                    className={SystemUsersStyles["btn"]}
+                    id="firstStepPrevious"
+                    onClick={(event) => systemUsersNextStep(event)}
+                  >
+                    <ImPrevious2 style={{ margin: '-3px -3px 0px -10px' }} />
+                    {t("prevoius")}
+                  </button>
+                  <button
+                    type="button"
+                    className={`${userData.gender === "" ||
+                      userData.state === "" ||
+                      userData.mobile === "" ||
+                      userData.privileges === "" ||
+                      errors.genderError ||
+                      errors.stateError ||
+                      errors.mobileError ||
+                      errors.privilegesError
                       ? SystemUsersStyles["disabled-btn"]
                       : SystemUsersStyles["btn"]
-                  }`}
-                  disabled={
-                    userData.gender === "" ||
-                    userData.state === "" ||
-                    userData.mobile === "" ||
-                    userData.privileges === "" ||
-                    errors.genderError ||
-                    errors.stateError ||
-                    errors.mobileError ||
-                    errors.privilegesError
-                      ? true
-                      : false
-                  }
-                  id="thirdStep"
-                  onClick={(event) => systemUsersNextStep(event)}
-                >   {t("next")}
-                <TbPlayerTrackNext style={{margin:t("us")===t("Us")?'0px 0px 0px 3px':'-7px 0px 0px 3px'}} />
-                </button>
+                      }`}
+                    disabled={
+                      userData.gender === "" ||
+                        userData.state === "" ||
+                        userData.mobile === "" ||
+                        userData.privileges === "" ||
+                        errors.genderError ||
+                        errors.stateError ||
+                        errors.mobileError ||
+                        errors.privilegesError
+                        ? true
+                        : false
+                    }
+                    id="thirdStep"
+                    onClick={(event) => systemUsersNextStep(event)}
+                  >   {t("next")}
+                    <TbPlayerTrackNext style={{ margin: t("us") === t("Us") ? '0px 0px 0px 3px' : '-7px 0px 0px 3px' }} />
+                  </button>
                 </div>
               </>
             ) : systemUsersFormSteps.thirdStep ? (
@@ -1386,23 +1481,20 @@ const SystemUsers = () => {
                     name="started_at"
                     value={userData.started_at}
                     onChange={handleChange}
-                    className={`${
-                      SystemUsersStyles["system-user-form-controls"]
-                    } ${
-                      errors.started_atError ? SystemUsersStyles["errors"] : ""
-                    }`}
+                    className={`${SystemUsersStyles["system-user-form-controls"]
+                      } ${errors.started_atError ? SystemUsersStyles["errors"] : ""
+                      }`}
                   />
                   <small className="text-danger">
                     {errors.started_atError}
                   </small>
                 </div>
-                <span style={{display:'block',marginBottom:'12px'}}>{t("working_Days")}</span>
+                <span style={{ display: 'block', marginBottom: '12px' }}>{t("working_Days")}</span>
                 <div
-                  className={`${t("us")===t("Us")?
-                    SystemUsersStyles["days-check-box-container"]:SystemUsersStyles["days-check-box-container-arabic-version"]
-                  } ${
-                    errors.working_daysError ? SystemUsersStyles["errors"] : ""
-                  }`}
+                  className={`${t("us") === t("Us") ?
+                    SystemUsersStyles["days-check-box-container"] : SystemUsersStyles["days-check-box-container-arabic-version"]
+                    } ${errors.working_daysError ? SystemUsersStyles["errors"] : ""
+                    }`}
                 >
                   <div>
                     <Form.Label htmlFor="d0">{t("Saturday")}</Form.Label>
@@ -1474,63 +1566,61 @@ const SystemUsers = () => {
                       checked={checkedDays["d6"]}
                     />
                   </div>
+                  <div>
+                    <Form.Label htmlFor="select-all">{t("selectAll")}</Form.Label>
+                    <Form.Check id="select-all" name="select-all" onChange={handleSelectAllDays} checked={selectAllDays} />
+                  </div>
                 </div>
-                <small className="text-danger">
-                  {errors.working_daysError}
-                </small>
-                <div className={SystemUsersStyles["step-button-container"]} style={{direction:t("us")=== t("Us")?'ltr':'ltr'}}>
-                <button
-                  type="button"
-                  className={SystemUsersStyles["btn"]}
-                  id="secondStepPrevious"
-                  onClick={(event) => systemUsersNextStep(event)}
-                >
-                  <ImPrevious2 style={{margin:'-3px -3px 0px -10px' }} />
-                  {t("prevoius")}
-                </button>
-                <button
-                  type="button"
-                  className={`${
-                    (workingDays.d0 !== "" ||
+                <div className={SystemUsersStyles["step-button-container"]} style={{ direction: t("us") === t("Us") ? 'ltr' : 'ltr' }}>
+                  <button
+                    type="button"
+                    className={SystemUsersStyles["btn"]}
+                    id="secondStepPrevious"
+                    onClick={(event) => systemUsersNextStep(event)}
+                  >
+                    <ImPrevious2 style={{ margin: '-3px -3px 0px -10px' }} />
+                    {t("prevoius")}
+                  </button>
+                  <button
+                    type="button"
+                    className={`${(workingDays.d0 !== "" ||
                       workingDays.d1 !== "" ||
                       workingDays.d2 !== "" ||
                       workingDays.d3 !== "" ||
                       workingDays.d4 !== "" ||
                       workingDays.d5 !== "" ||
                       workingDays.d6 !== "") &&
-                    (userData.started_at !== "" || errors.started_atError)
+                      (userData.started_at !== "" || errors.started_atError)
                       ? SystemUsersStyles["btn"]
                       : SystemUsersStyles["disabled-btn"]
-                  }`}
-                  disabled={
-                    (workingDays.d0 !== "" ||
-                    workingDays.d1 !== "" ||
-                    workingDays.d2 !== "" ||
-                    workingDays.d3 !== "" ||
-                    workingDays.d4 !== "" ||
-                    workingDays.d5 !== "" ||
-                    workingDays.d6 !== "") &&
-                  (userData.started_at !== "" || errors.started_atError)
-                    ? false:true
-                  }
-                  id="fourthStep"
-                  onClick={(event) => systemUsersNextStep(event)}
-                >
-                  {t("next")}
-                  <TbPlayerTrackNext style={{margin:t("us")===t("Us")?'0px 0px 0px 3px':'-7px 0px 0px 3px'}} />
-                </button>
+                      }`}
+                    disabled={
+                      (workingDays.d0 !== "" ||
+                        workingDays.d1 !== "" ||
+                        workingDays.d2 !== "" ||
+                        workingDays.d3 !== "" ||
+                        workingDays.d4 !== "" ||
+                        workingDays.d5 !== "" ||
+                        workingDays.d6 !== "") &&
+                        (userData.started_at !== "" || errors.started_atError)
+                        ? false : true
+                    }
+                    id="fourthStep"
+                    onClick={(event) => systemUsersNextStep(event)}
+                  >
+                    {t("next")}
+                    <TbPlayerTrackNext style={{ margin: t("us") === t("Us") ? '0px 0px 0px 3px' : '-7px 0px 0px 3px' }} />
+                  </button>
                 </div>
               </>
             ) : (
               <>
                 <span>{t("Working_Hours")}</span>
-                <br/>
+                <br />
                 <div
-                  className={`${
-                    SystemUsersStyles["hours-check-box-container"]
-                  } ${
-                    errors.working_hoursError ? SystemUsersStyles["errors"] : ""
-                  }`}
+                  className={`${SystemUsersStyles["hours-check-box-container"]
+                    } ${errors.working_hoursError ? SystemUsersStyles["errors"] : ""
+                    }`}
                 >
                   {Working_hours.map((wh, index) => (
                     <div key={wh.id}>
@@ -1544,112 +1634,120 @@ const SystemUsers = () => {
                       />
                     </div>
                   ))}
+                  <div>
+                    <Form.Label htmlFor="select-all-hours">{t("selectAll")}</Form.Label>
+                    <Form.Check name="select-all-hours" id="select-all-hours" onChange={handleSelectAllHours} checked={selectAllHours} />
+                  </div>
                 </div>
-                <small className="text-danger">
-                  {errors.working_hoursError}
-                </small>
-                <div className={SystemUsersStyles["step-button-container"]} style={{direction:t("us")=== t("Us")?'ltr':'ltr'}}>
-                <button
-                  type="button"
-                  className={SystemUsersStyles["btn"]}
-                  id="thirdStepPrevious"
-                  onClick={(event) => systemUsersNextStep(event)}
-                >
-                  <ImPrevious2 style={{margin:'-3px -3px 0px -10px'  }} />
-                  {t("prevoius")}
-                </button>
-                <button
-                  type="submit"
-                  className={`${
-                    WorkingHours.h0 !== "" ||
-                    WorkingHours.h1 !== "" ||
-                    WorkingHours.h2 !== "" ||
-                    WorkingHours.h3 !== "" ||
-                    WorkingHours.h4 !== "" ||
-                    WorkingHours.h5 !== "" ||
-                    WorkingHours.h6 !== "" ||
-                    WorkingHours.h7 !== ""
+                <div className={SystemUsersStyles["step-button-container"]} style={{ direction: t("us") === t("Us") ? 'ltr' : 'ltr' }}>
+                  <button
+                    type="button"
+                    className={SystemUsersStyles["btn"]}
+                    id="thirdStepPrevious"
+                    onClick={(event) => systemUsersNextStep(event)}
+                  >
+                    <ImPrevious2 style={{ margin: '-3px -3px 0px -10px' }} />
+                    {t("prevoius")}
+                  </button>
+                  <button
+                    type="submit"
+                    className={`${WorkingHours.h0 !== "" ||
+                      WorkingHours.h1 !== "" ||
+                      WorkingHours.h2 !== "" ||
+                      WorkingHours.h3 !== "" ||
+                      WorkingHours.h4 !== "" ||
+                      WorkingHours.h5 !== "" ||
+                      WorkingHours.h6 !== "" ||
+                      WorkingHours.h7 !== ""
                       ? SystemUsersStyles["btn"]
                       : SystemUsersStyles["disabled-btn"]
-                  }`}
-                  disabled={
-                    WorkingHours.h0 !== "" ||
-                    WorkingHours.h1 !== "" ||
-                    WorkingHours.h2 !== "" ||
-                    WorkingHours.h3 !== "" ||
-                    WorkingHours.h4 !== "" ||
-                    WorkingHours.h5 !== "" ||
-                    WorkingHours.h6 !== "" ||
-                    WorkingHours.h7 !== ""
-                      ? false
-                      : true
-                  }
-                >
-                         {isThereAnyUpdateOrCreatingNewAccount?<>
-                    <Spinner animation="grow" variant="light" style={{width:'10px',height:'10px',marginLeft:'3px'}} />
-                    <Spinner animation="grow" variant="light" style={{width:'10px',height:'10px',marginLeft:'3px'}} />
-                    <Spinner animation="grow" variant="light" style={{width:'10px',height:'10px',marginLeft:'3px'}} />
-                    <Spinner animation="grow" variant="light" style={{width:'10px',height:'10px',marginLeft:'3px'}} />
-                    <Spinner animation="grow" variant="light" style={{width:'10px',height:'10px',marginLeft:'3px'}} />
-                    <Spinner animation="grow" variant="light" style={{width:'10px',height:'10px',marginLeft:'3px'}} />
-                    </>:isThereAnyUpdateOnAccount?<>{t("updateUser")}<IoIosPersonAdd style={{ margin: '0 0 3px 3px' }}/></>:<>{t("addUser")}<IoIosPersonAdd style={{ margin: '0 0 3px 3px' }}/></>
+                      }`}
+                    disabled={
+                      WorkingHours.h0 !== "" ||
+                        WorkingHours.h1 !== "" ||
+                        WorkingHours.h2 !== "" ||
+                        WorkingHours.h3 !== "" ||
+                        WorkingHours.h4 !== "" ||
+                        WorkingHours.h5 !== "" ||
+                        WorkingHours.h6 !== "" ||
+                        WorkingHours.h7 !== ""
+                        ? false
+                        : true
                     }
-                  
-                </button>
+                  >
+                    {isThereAnyUpdateOrCreatingNewAccount ? <>
+                      <Spinner animation="grow" variant="light" style={{ width: '10px', height: '10px', marginLeft: '3px' }} />
+                      <Spinner animation="grow" variant="light" style={{ width: '10px', height: '10px', marginLeft: '3px' }} />
+                      <Spinner animation="grow" variant="light" style={{ width: '10px', height: '10px', marginLeft: '3px' }} />
+                      <Spinner animation="grow" variant="light" style={{ width: '10px', height: '10px', marginLeft: '3px' }} />
+                      <Spinner animation="grow" variant="light" style={{ width: '10px', height: '10px', marginLeft: '3px' }} />
+                      <Spinner animation="grow" variant="light" style={{ width: '10px', height: '10px', marginLeft: '3px' }} />
+                    </> : isThereAnyUpdateOnAccount ? <>{t("updateUser")}<IoIosPersonAdd style={{ margin: '0 0 3px 3px' }} /></> : <>{t("addUser")}<IoIosPersonAdd style={{ margin: '0 0 3px 3px' }} /></>
+                    }
+
+                  </button>
                 </div>
               </>
             )}
           </form>
           <div
             className={SystemUsersStyles["system-user-data-container"]}
-            style={{direction:t("us")=== t("Us")?'ltr':'rtl'}}
+            style={{ direction: t("us") === t("Us") ? 'ltr' : 'rtl' }}
           >
             <div
               className={SystemUsersStyles["table-settings-container"]}
-           
+
             >
-              <Form.Label
-              style={{textAlign:t("us")=== t("Us")?'left':'right'}}
-                htmlFor="userAccountFilterTxt"
-                className={SystemUsersStyles["filter-label"]}
-              >
-                {t("filter")}
-              </Form.Label>
-              <Form.Control
-                id="userAccountFilterTxt"
-                className={SystemUsersStyles["filter-txt"]}
-                value={filterValue}
-                onChange={handleFiltaration}
-              />
-              <Form.Label htmlFor="sortUserRole" style={{textAlign:t("us")=== t("Us")?'left':'right'}}>{t("sort")}</Form.Label>
-              <Form.Select id="sortUserRole" name="sortUserRole" onChange={sortSystemUsersTableByRoleOfTheUser}>
-                <option value="">{t("select")}</option>
-                <option value="ADMIN">{t("admin")}</option>
-                <option value="SUPERVISOR">{t("supervisor")}</option>
-                <option value="INSTRUCTOR">{t("instructor")}</option>
-              </Form.Select>
-              <button
-                type="button"
-                className={SystemUsersStyles["btn"]}
-                style={{ marginTop: "auto",direction: 'ltr'  }}
-                onClick={(event) => filterAccounts(event.target.value)}
-              >
-                {t("filter")} <AiFillFilter />
-              </button>
-              <button
-                type="button"
-                className={SystemUsersStyles["btn"]}
-                style={{ marginTop: "auto",direction: 'ltr' }}
-                onClick={resetTableFiltaration}
-              >
-                {t("reset")}
-                <BiReset />
-              </button>
+              <section>
+                <Form.Label
+                  style={{ textAlign: t("us") === t("Us") ? 'end' : 'start', paddingRight: t("us") === t("Us") ? '0' : '3px' }}
+                  htmlFor="userAccountFilterTxt"
+                  className={SystemUsersStyles["filter-label"]}
+                >
+                  {t("filter")}
+                </Form.Label>
+                <Form.Control
+                  id="userAccountFilterTxt"
+                  className={SystemUsersStyles["filter-txt"]}
+                  value={filterValue}
+                  onChange={handleFiltaration}
+                />
+              </section>
+              <section>
+                <Form.Label htmlFor="sortUserRole" style={{ textAlign: t("us") === t("Us") ? 'end' : 'start', paddingRight: t("us") === t("Us") ? '0' : '3px' }}>{t("sort")}</Form.Label>
+                <Form.Select id="sortUserRole" name="sortUserRole" onChange={sortSystemUsersTableByRoleOfTheUser} style={{ textAlign: t("us") === t("Us") ? 'start' : 'end' }}>
+                  <option value="">{t("select")}</option>
+                  <option value="ADMIN">{t("admin")}</option>
+                  <option value="SUPERVISOR">{t("supervisor")}</option>
+                  <option value="INSTRUCTOR">{t("instructor")}</option>
+                </Form.Select>
+              </section>
+              <section>
+                <button
+                  type="button"
+                  className={SystemUsersStyles["btn"]}
+                  style={{ marginTop: "auto", direction: 'ltr' }}
+                  onClick={(event) => filterAccounts(event.target.value)}
+                >
+                  {t("filter")} <AiFillFilter />
+                </button>
+                <button
+                  type="button"
+                  className={SystemUsersStyles["btn"]}
+                  style={{ marginTop: "auto", direction: 'ltr' }}
+                  onClick={resetTableFiltaration}
+                >
+                  {t("reset")}
+                  <BiReset style={{margin:'0px 0px 2px 0'}}/>
+                </button>
+              </section>
+
+
             </div>
             <div
               className={SystemUsersStyles["table-wrapper"]}
             >
-              {accountsData.length === 0 || accountsData === undefined? (
+              {accountsData.length === 0 || accountsData === undefined ? (
                 <img
                   src={NoResultFiltaration}
                   className={SystemUsersStyles["no-result"]}
@@ -1692,7 +1790,7 @@ const SystemUsers = () => {
                         <td>
                           {userAccount.privilages ?? userAccount.privileges}
                         </td>
-                        <td><FaTrash  onClick={(event)=>deleteStuffAccount(event,userAccount)}/></td>
+                        <td><FaTrash onClick={(event) => deleteStaffAccount(event, userAccount)} /></td>
                       </tr>
                     ))}
                   </tbody>

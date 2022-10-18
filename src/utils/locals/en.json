@@ -309,9 +309,9 @@
   "Admin_messages":"Messages",
   "addUser": "Add User",
   "updateUser":"update User",
-  "Has Added New Ratel Ma3y Stuff Account":"Has Added New Ratel Ma3y Stuff Account",
-  "Has Updated Stuff Account Successfully":" Has Updated Stuff Account Successfully",
-  "Has Deleted  Stuff Account Successfully":"Has Deleted  Stuff Account Successfully",
+  "Has Added New Ratel Ma3y Staff Account":"Has Added New Ratel Ma3y Staff Account",
+  "Has Updated Staff Account Successfully":" Has Updated Staff Account Successfully",
+  "Has Deleted  Staff Account Successfully":"Has Deleted  Staff Account Successfully",
   "examC1":"Yes",
   "examC2":"No",
   "subscription_state":"Subscription State",
@@ -352,10 +352,11 @@
   "You Have To  Select One Hour On":"You Have To  Select One Hour On",
   "You Have To  Select":"You Have To  Select",
   "Days According To Number Of Session":"Days According To Number Of Session",
-  "Has Deleted Message Successfully":"Has Deleted Message Successfully"
-  
-
-
-
-
+  "Has Deleted Message Successfully":"Has Deleted Message Successfully",
+  "are you sure you want to delete this account":"are you sure you want to delete this account",
+  "confirm":"Confirm",
+  "cancel":"Cancel",
+  "don't ask me again!":"don't ask me again!",
+  "selectAll":"Select All",
+  "thre are no sessions during this period":"thre are no sessions during this period"
 }

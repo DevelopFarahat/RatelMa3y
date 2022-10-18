@@ -369,6 +369,7 @@ const Instructor = () => {
             />
             <div className={InstructorStyles["instructor-data-container"]} style={{direction:t("us") === t("Us")?'ltr':'rtl'}}>
                 <div className={InstructorStyles["table-settings-container"]}>
+                    <section>
                     <Form.Label
                         htmlFor="instructorFilterTxt"
                         className={InstructorStyles["filter-label"]}
@@ -381,6 +382,8 @@ const Instructor = () => {
                         value={filterValue}
                         onChange={handleFiltaration}
                     />
+                    </section>
+                    <section>
                     <Form.Select id="instructor-sort-select" onChange={sortInstructorTable}>
                         <option value="">{t("select")}</option>
                         <optgroup label={t("instructorAccountStatus")}>
@@ -400,13 +403,15 @@ const Instructor = () => {
                             <option value="startedAtASC">{t("asc")}</option>
                         </optgroup>
                     </Form.Select>
+                    </section>
+                    <section>
                     <button
                         type="button"
                         className={InstructorStyles["btn"]}
                         style={{ marginTop: "auto",direction: 'ltr'  }}
                         onClick={(event) => filterStudents(event.target.value)}
                     >
-                        {t("filter")} <AiFillFilter />
+                        {t("filter")} <AiFillFilter style={{margin:'0px 0px -8px -5px'}}/>
                     </button>
                     <button
                         type="button"
@@ -415,10 +420,10 @@ const Instructor = () => {
                         onClick={resetTableFiltaration}
                     >
                         {t("reset")}
-                        <BiReset />
+                        <BiReset style={{margin:'0px 0px -4px 0'}}/>
                     </button>
+                    </section>
                 </div>
-
                 <div className={InstructorStyles["table-wrapper"]}>
                     {instructorData?.length === 0 || instructorData === undefined ? (
                         <img

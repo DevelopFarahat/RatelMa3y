@@ -9,6 +9,7 @@ import LessThanWhiteImage from "../../assets/images/less-than-white.png";
 import LessThanGrayImage from "../../assets/images/less-than-gray.png";
 import MessagesIcon from "../../assets/images/messages.png";
 import { useTranslation } from "react-i18next";
+import WarningIcon from "../../assets/images/warning.png";
 import {AiFillFilter} from "react-icons/ai";
 import {BiReset} from "react-icons/bi";
 import CircleGif from "../../assets/images/check-circle.gif";
@@ -171,15 +172,26 @@ const Messages = ()=>{
     // pagination functionality ended
     const [t, i18n] = useTranslation();
     const [messages,setMessages] = useState([]);
+    const [changeableMsg,setChangeableMsg] = useState([]);
     const [msgContent,setMsgContent] = useState("");
     const [selectedRow, setSelectedRow] = useState(-1);
     const [fetchAgain,setFetchAgain] = useState(0);
     const [filterValue, setFilterValue] = useState("");
+    const [deleteAlertConfirmation, setAlertDeleteConfirmation] = useState(false);
+    const [donnotAskmeAgain, setDonotAskmeAgain] = useState(false);
+    const [donnotAskmeAgainChecked, setDonotAskmeAgainChecked] = useState(false);
     const [isUserDeleteAnyMsg,setIsUserDeleteAnymsg] = useState(false);
     const initialResponse = useRef();
 
 
-
+    const handleDonnotAskmeAgainChange = (event) => {
+        setDonotAskmeAgainChecked(current => !current);
+        if (event.target.checked) {
+          setDonotAskmeAgain(true);
+        } else {
+          setDonotAskmeAgain(false);
+        }
+      }
     const handlerRowClicked = useCallback((event,msg) => {
         const id = event.currentTarget.id;
         setSelectedRow(id);
@@ -260,7 +272,23 @@ const Messages = ()=>{
     }
     const deleteMessage = (event,msg)=>{
         event.stopPropagation();
-        axios.delete(`${process.env.REACT_APP_BACK_HOST_URL}/api/contacts/${msg._id}`).then((res)=>{
+        if (msg !== undefined) {
+            setChangeableMsg(msg);
+          }
+          if (donnotAskmeAgain === false || event.currentTarget.value === 'confirm') {
+            if (event.currentTarget.value === 'cancel') {
+              setAlertDeleteConfirmation(false);
+            } else {
+              setAlertDeleteConfirmation(true);
+            }
+      
+          } else {
+            setAlertDeleteConfirmation(false);
+          }
+        if (event.currentTarget.value === 'confirm' || donnotAskmeAgain === true) {
+        let chMsg = msg === undefined ? changeableMsg : msg;
+        axios.delete(`${process.env.REACT_APP_BACK_HOST_URL}/api/contacts/${chMsg._id}`).then((res)=>{
+        setAlertDeleteConfirmation(false);
         setFetchAgain(fetchAgain+1);
         setIsUserDeleteAnymsg(true);
         setTimeout(()=>{
@@ -270,6 +298,7 @@ const Messages = ()=>{
         }).catch((error)=>{
     
         })
+    }
     }
     useEffect(()=>{
         axios.get(`${process.env.REACT_APP_BACK_HOST_URL}/api/contacts?limit=300&page=${currentPage}`).then((res)=>{
@@ -313,6 +342,20 @@ const Messages = ()=>{
                 {t("Has Deleted Message Successfull")}
               </span>
             </div></>:null}
+            {deleteAlertConfirmation ? <div className={`${MessagesStyles["alert"]} ${MessagesStyles["warning-alert"]}`}>
+        <section>
+          <img src={WarningIcon} alt="warning" />
+          <span>{t("are you sure you want to delete this account")}</span>
+        </section>
+        <section style={{width:t("us")===t("Us")?'98%':'88%'}}>
+          <Form.Check checked={donnotAskmeAgainChecked} name="dontAskmeAgain" id="donotAskmeAgain" onChange={handleDonnotAskmeAgainChange} />
+          <Form.Label htmlFor="donotAskmeAgain">{t("don't ask me again!")}</Form.Label>
+        </section>
+        <section style={{direction:t("us")===t("Us")?'ltr':'rtl'}}>
+          <button type="submit" className={MessagesStyles['btn']} value={"confirm"} onClick={deleteMessage}>{t("confirm")}</button>
+          <button type="submit" value={"cancel"} className={MessagesStyles['btn']} onClick={deleteMessage}>{t("cancel")}</button>
+        </section>
+      </div> : null}
         <div className={MessagesStyles['messages-main']}>
         <div className={MessagesStyles['pagination-container']} style={{direction:'rtl'}}>
            
@@ -348,7 +391,8 @@ const Messages = ()=>{
         </div>
         <div className={MessagesStyles['all-messages-main-container']} style={{direction:t("us")=== t("Us")?'ltr':'rtl'}}>
         <div className={MessagesStyles["table-settings-container"]}>
-                    <Form.Label
+            <section>
+            <Form.Label
                     style={{textAlign:t("us")=== t("Us")?'left':'right'}}
                         htmlFor="messagesFilterTxt"
                         className={MessagesStyles["filter-label"]}
@@ -361,7 +405,9 @@ const Messages = ()=>{
                         value={filterValue}
                         onChange={handleFiltaration}
                     />
-                    <Form.Label style={{textAlign:t("us")=== t("Us")?'left':'right'}}>{t("sort")}</Form.Label>
+            </section>
+            <section>
+            <Form.Label style={{textAlign:t("us")=== t("Us")?'left':'right'}}>{t("sort")}</Form.Label>
                     <Form.Select onChange={sortMessages}>
                         <option value="">{t("select")}</option>
                         <optgroup label={t("status")}>
@@ -373,7 +419,9 @@ const Messages = ()=>{
                             <option value="DSC">{t("dsc")}</option>
                         </optgroup>
                     </Form.Select>
-                    <button
+                </section>
+                <section>
+                <button
                         type="button"
                         className={MessagesStyles["btn"]}
                         style={{ marginTop: "auto",direction: 'ltr' }}
@@ -390,6 +438,7 @@ const Messages = ()=>{
                         {t("reset")}
                         <BiReset style={{marginInline: 8}}/>
                     </button>
+                </section>
                 </div>
         <div className={MessagesStyles["table-wrapper"]}>
                  

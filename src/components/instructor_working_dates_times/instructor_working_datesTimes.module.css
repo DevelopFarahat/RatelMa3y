@@ -43,7 +43,7 @@
     font-family: 'Times New Roman', Times, serif;
   }
   .instructor-working-date-time-table > thead > tr {
-    background-color: #c2a054;
+    background-color: #20aa69;
     color: #ffffff;
   }
   .instructor-working-date-time-table > thead > tr >  th{
@@ -53,7 +53,7 @@
     border-left: none;
   }
   .instructor-working-date-time-table > tbody > tr:nth-child(2n+2) {
-    background-color:#c2a054;
+    background-color:#20aa69;
     color: #FFFFFF;
   
   }

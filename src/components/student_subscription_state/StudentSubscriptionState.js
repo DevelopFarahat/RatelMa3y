@@ -3,6 +3,7 @@ import axios from "axios";
 import StudentSubscriptionStyles from "./StudentSubscriptionState.module.css";
 import { AiFillFilter } from "react-icons/ai";
 import { BiReset } from "react-icons/bi";
+import WarningIcon from "../../assets/images/warning.png";
 import { FaSave } from "react-icons/fa";
 import { VscChromeClose } from "react-icons/vsc";
 import { MdError, MdLteMobiledata } from "react-icons/md";
@@ -60,6 +61,9 @@ const StudentSubscriptionState = ({
   const initialResponse = useRef();
   const [fetchAgain, setFetchAgain] = useState(0);
   const [studentStatus, setStudentStatus] = useState(false);
+  const [deleteAlertConfirmation, setAlertDeleteConfirmation] = useState(false);
+  const [donnotAskmeAgain, setDonotAskmeAgain] = useState(false);
+  const [donnotAskmeAgainChecked, setDonotAskmeAgainChecked] = useState(false);
   const [selectedRow, setSelectedRow] = useState(-1);
   const [changableSubscriptionState, setChangableSubscriptionState] = useState(
     {}
@@ -633,6 +637,14 @@ const StudentSubscriptionState = ({
     [0, 1],
     [0, 1],
   ];
+  const handleDonnotAskmeAgainChange = (event) => {
+    setDonotAskmeAgainChecked(current => !current);
+    if (event.target.checked) {
+      setDonotAskmeAgain(true);
+    } else {
+      setDonotAskmeAgain(false);
+    }
+  }
   const handleApoointmentInHoursD0 = (event) => {
     setCheckedHoursD0({
      // ...checkedHoursD0,
@@ -1089,13 +1101,6 @@ const StudentSubscriptionState = ({
     setSelectedRow(id);
 
   }, []);
-  const getTotalPresentAndAbsence = (stdData) => {
-
-
-
-
-
-  }
   const toogleStudentStatus = (stdObject, event, index, process) => {
     if (stdObject.subscription_state !== "Cancelled") {
 
@@ -1856,7 +1861,6 @@ const StudentSubscriptionState = ({
       console.log(error);
     })
     handlerRowClicked(event);
-    getTotalPresentAndAbsence(stdObji);
   };
   const distroyAlert = () => {
     setIsAlertVisible(true);
@@ -2074,7 +2078,7 @@ const StudentSubscriptionState = ({
 
       for (let x = 0; x < Object.entries(avaliableDayaHours).length; x++) {
 
-        if (studentObject.program_prefs.pref_days[x] === Number(Object.entries(avaliableDayaHours)[x][0])) {
+        if (studentObject.program_prefs.pref_days[x] === Number(Object.entries(avaliableDayaHours)[x][0]) && Object.entries(avaliableDayaHours)[x][1].length !== 0 ) {
           matchedDays.push(true);
           if (Object.entries(avaliableDayaHours)[x][1].length !== 0) {
             for (let prefHoursIndex = 0; prefHoursIndex < studentObject.program_prefs.pref_times_of_day.length; prefHoursIndex++) {
@@ -3330,18 +3334,32 @@ const StudentSubscriptionState = ({
     })
   }
   const deleteStudent = async (event, studentAccountObji) => {
-    event.stopPropagation();
-
-
-    let deleteReservedStudentDaysAndHours = () => {
+    if (studentAccountObji !== undefined) {
+      setChangableSubscriptionState(studentAccountObji);
+    }
+    if (donnotAskmeAgain === false || event.currentTarget.value === 'confirm') {
+      if (event.currentTarget.value === 'cancel') {
+        setAlertDeleteConfirmation(false);
+      } else {
+        setAlertDeleteConfirmation(true);
+      }
+    } else {
+    setAlertDeleteConfirmation(false);
+    }
+    
+    //let deleteReservedStudentDaysAndHours = () => {
+      if (event.currentTarget.value === 'confirm' || donnotAskmeAgain ===  true) {
+        let stdAcc = studentAccountObji === undefined ? changableSubscriptionState : studentAccountObji;
       return new Promise((resolve, reject) => {
         resolve(
-          axios.delete(`${process.env.REACT_APP_BACK_HOST_URL}/api/students/${studentAccountObji._id}`,{headers:{},data:{instructorID:studentAccountObji.instructor}}).then((res) => {
+          axios.delete(`${process.env.REACT_APP_BACK_HOST_URL}/api/students/${stdAcc._id}`,{headers:{},data:{instructorID:stdAcc.instructor}}).then((res) => {
+            setAlertDeleteConfirmation(false);
             setFetchAgain(fetchAgain + 1);
             setIsUserDeleteAnyAccount(true);
             setTimeout(() => {
               setIsUserDeleteAnyAccount(false);
-            }, 1000)
+            }, 1000);
+            handleStudentBusyOnInstructor(stdAcc);
             return res;
           }).catch((error) => {
             console.log(error);
@@ -3350,19 +3368,25 @@ const StudentSubscriptionState = ({
         )
       })
     }
-    let result = deleteReservedStudentDaysAndHours();
+    //}
+    //let result = deleteReservedStudentDaysAndHours();
+    //handleStudentBusyOnInstructor(changableSubscriptionState);
+    /*
     result.then((res) => {
       console.log(res)
-      if (res.statusText === "OK" && studentAccountObji.subscription_state !== "Pending") {
-        handleStudentBusyOnInstructor(studentAccountObji);
+      if (res.statusText === "OK" && changableSubscriptionState.subscription_state !== "Pending") {
+        handleStudentBusyOnInstructor(changableSubscriptionState);
       }
     })
+*/
+setSpecificStudentJoiningRequestData([])
   }
   return (
 
     <>
       <div className={StudentSubscriptionStyles["student-user-data-container"]} style={{direction:t("us") === t("Us")?'ltr':"rtl"}}>
         <div className={StudentSubscriptionStyles["table-settings-container"]}>
+          <section>
           <Form.Label
           style={{textAlign:t("us")===t("Us")?'left':'right'}}
             htmlFor="userAccountFilterTxt"
@@ -3376,21 +3400,25 @@ const StudentSubscriptionState = ({
             value={filterValue}
             onChange={handleFiltaration}
           />
-          <Form.Label htmlFor="sort_subscription_state" style={{textAlign:t("us")===t("Us")?'left':'right'}}>{t("sort")}</Form.Label>
-          <Form.Select name="sort_subscription_state" id="sort_subscription_state" onChange={(event) => sortStudentBySubscriptionState(event.target.value)}>
+          </section>
+          <section>
+          <Form.Label htmlFor="sort_subscription_state" style={{textAlign:t("us")===t("Us")?'end':'start'}}>{t("sort")}</Form.Label>
+          <Form.Select name="sort_subscription_state" id="sort_subscription_state" style={{textAlign:t("us")===t("Us")?'start':'end'}} onChange={(event) => sortStudentBySubscriptionState(event.target.value)}>
             <option value={""}>{t("select")}</option>
             <option value="Pending">Pending</option>
             <option value="Active">Active</option>
             <option value="OnHold">OnHold</option>
             <option value="Cancelled">Cancelled</option>
           </Form.Select>
+          </section>
+          <section>
           <button
             type="button"
             className={StudentSubscriptionStyles["btn"]}
-            style={{ marginTop: "auto",direction: 'ltr'  }}
+            style={{ marginTop: "auto",direction: 'ltr'}}
             onClick={(event) => filterStudents(event.target.value)}
           >
-            {t("filter")} <AiFillFilter />
+            {t("filter")} <AiFillFilter style={{margin:'0px 0px -5px -4px'}}/>
           </button>
           <button
             type="button"
@@ -3399,10 +3427,10 @@ const StudentSubscriptionState = ({
             onClick={resetTableFiltaration}
           >
             {t("reset")}
-            <BiReset />
+            <BiReset style={{margin:'0px 0px -5px 3px'}}/>
           </button>
+          </section>
         </div>
-
         <div className={StudentSubscriptionStyles["table-wrapper"]}>
           {studentData.length === 0 || studentData === undefined ? (
             <img
@@ -4104,6 +4132,20 @@ const StudentSubscriptionState = ({
           </span>
         </div>
       ) : null}
+            {deleteAlertConfirmation ? <div className={`${StudentSubscriptionStyles["alert"]} ${StudentSubscriptionStyles["warning-alert"]}`}>
+        <section>
+          <img src={WarningIcon} alt="warning" />
+          <span>{t("are you sure you want to delete this account")}</span>
+        </section>
+        <section style={{width:t("us")===t("Us")?'98%':'88%'}}>
+          <Form.Check checked={donnotAskmeAgainChecked} name="dontAskmeAgain" id="donotAskmeAgain" onChange={handleDonnotAskmeAgainChange} />
+          <Form.Label htmlFor="donotAskmeAgain">{t("don't ask me again!")}</Form.Label>
+        </section>
+        <section style={{direction:t("us")===t("Us")?'ltr':'rtl'}}>
+          <button type="submit" className={StudentSubscriptionStyles['btn']} value={"confirm"} onClick={deleteStudent}>{t("confirm")}</button>
+          <button type="submit" value={"cancel"} className={StudentSubscriptionStyles['btn']} onClick={deleteStudent}>{t("cancel")}</button>
+        </section>
+      </div> : null}
     </>
   );
 };
