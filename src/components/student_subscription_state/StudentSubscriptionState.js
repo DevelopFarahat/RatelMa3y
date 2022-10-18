@@ -1449,7 +1449,7 @@ const StudentSubscriptionState = ({
     };
 
     axios
-      .get(`${process.env.REACT_APP_BACK_HOST_URL}/api/instructors/${stObj.instructor}`)
+      .get(`${process.env.REACT_APP_BACK_HOST_URL}/api/instructors/${stObj.instructor}`,{headers:{'Access-Control-Allow-Origin': '*'}})
       .then((res) => {
         for (let i = 0; i < res.data.prefs.working_days.length; i++) {
           if (res.data.prefs.working_days[i] === -1) {
@@ -1846,7 +1846,7 @@ const StudentSubscriptionState = ({
   };
   const getStudentRatelMa3yJoiningRequestData = (stdObji, event) => {
     axios
-      .get(`${process.env.REACT_APP_BACK_HOST_URL}/api/students/${stdObji._id}`)
+      .get(`${process.env.REACT_APP_BACK_HOST_URL}/api/students/${stdObji._id}`,{headers:{'Access-Control-Allow-Origin': '*'}})
       .then((res) => {
         // initialSpecificStudentJoiningRequestData.current = res.data;
         setSpecificStudentJoiningRequestData(res.data);
@@ -1854,9 +1854,10 @@ const StudentSubscriptionState = ({
       .catch((error) => {
         console.log(error);
       });
-    axios.get(`${process.env.REACT_APP_BACK_HOST_URL}/api/sessions?user_id=${stdObji._id}&limit=10000000000000000`).then((res) => {
+    axios.get(`${process.env.REACT_APP_BACK_HOST_URL}/api/sessions?user_id=${stdObji._id}&limit=10000000000000000`,{headers:{'Access-Control-Allow-Origin': '*'}}).then((res) => {
       initialStudentSessionsDetails.current = res.data.data;
       setStudentSessionsDetails(res.data.data);
+      console.log(res.data.data)
     }).catch((error) => {
       console.log(error);
     })
@@ -1872,7 +1873,7 @@ const StudentSubscriptionState = ({
   };
   //
   useEffect(() => {
-    axios.get(`${process.env.REACT_APP_BACK_HOST_URL}/api/students?limit=300&page=${currentPage}`).then(
+    axios.get(`${process.env.REACT_APP_BACK_HOST_URL}/api/students?limit=300&page=${currentPage}`,{headers:{'Access-Control-Allow-Origin': '*'}}).then(
       (res) => {
         initialResponse.current = res.data.data;
         setStudentData(res.data.data);
@@ -1893,7 +1894,7 @@ const StudentSubscriptionState = ({
 
     );
     axios
-      .get(`${process.env.REACT_APP_BACK_HOST_URL}/api/instructors?limit=10000000000`)
+      .get(`${process.env.REACT_APP_BACK_HOST_URL}/api/instructors?limit=10000000000`,{headers:{'Access-Control-Allow-Origin': '*'}})
       .then((instructorRes) => {
         setInstructorData(instructorRes.data.data);
       })
@@ -1910,6 +1911,7 @@ const StudentSubscriptionState = ({
             "instructor": studentConfiguration.studentInstructor,
             "started_in": studentConfiguration.started_in
           }
+          ,{headers:{'Access-Control-Allow-Origin': '*'}}
         )
         .then((res) => {
           setStudentStatus((current) => !current);
@@ -1933,6 +1935,7 @@ const StudentSubscriptionState = ({
         subscription_state: studentConfiguration.studentStatus !== ""?studentConfiguration.studentStatus:changableSubscriptionState.subscription_state,
         instructor: studentConfiguration.studentInstructor !== ""?studentConfiguration.studentInstructor:changableSubscriptionState.instructor
       }
+      ,{headers:{'Access-Control-Allow-Origin': '*'}}
     )
     .then((res) => {
       setStudentStatus((current) => !current);
@@ -1960,6 +1963,7 @@ const StudentSubscriptionState = ({
             subscription_state: studentConfiguration.studentStatus !== '' ? studentConfiguration.studentStatus : changableSubscriptionState.subscription_state,
             instructor:  studentConfiguration.studentInstructor
           }
+          ,{headers:{'Access-Control-Allow-Origin': '*'}}
         )
         .then((res) => {
           console.log("yes res");
@@ -1983,6 +1987,7 @@ const StudentSubscriptionState = ({
             subscription_state: studentConfiguration.studentStatus !== '' ? studentConfiguration.studentStatus : changableSubscriptionState.subscription_state,
             instructor: changableSubscriptionState.instructor
           }
+          ,{headers:{'Access-Control-Allow-Origin': '*'}}
         )
         .then((res) => {
           setStudentStatus((current) => !current);
@@ -2013,6 +2018,7 @@ const StudentSubscriptionState = ({
           instructor: null
 
         }
+        ,{headers:{'Access-Control-Allow-Origin': '*'}}
       )
       .then((res) => {
         setStudentStatus((current) => !current);
@@ -2266,7 +2272,7 @@ const StudentSubscriptionState = ({
     }
     let instructorBusy = {};
 
-    axios.get(`${process.env.REACT_APP_BACK_HOST_URL}/api/instructors/${changableSubscriptionState.instructor}`).then((res) => {
+    axios.get(`${process.env.REACT_APP_BACK_HOST_URL}/api/instructors/${changableSubscriptionState.instructor}`,{headers:{'Access-Control-Allow-Origin': '*'}}).then((res) => {
       let getThePreviuosReservedSessionsDaysHours = (arr0,arr1,arr2,arr3,arr4,arr5,arr6,SelectedDayIndex)=>{
         for(let busyIndex = 0 ; busyIndex < Object.entries(res.data.busy).length;busyIndex++){
           for(let busyDayIndex = 0 ; busyDayIndex < Object.entries(res.data.busy)[busyIndex][1].length;busyDayIndex++){
@@ -2858,7 +2864,7 @@ const StudentSubscriptionState = ({
         if (numberOfDaysSelectedTestCasesArr.every((evDay) => evDay[`testCaseDay`] === false) === true) {
           setIsUserMakingUpdateOnStudentAccount(true);
           setBusyDaysHoursWarningAlert(false);
-          axios.put(`${process.env.REACT_APP_BACK_HOST_URL}/api/instructors/${changableSubscriptionState.instructor}`, { "busy": busyInstructorDaysHours }).then((res) => {
+          axios.put(`${process.env.REACT_APP_BACK_HOST_URL}/api/instructors/${changableSubscriptionState.instructor}`, { "busy": busyInstructorDaysHours },{headers:{'Access-Control-Allow-Origin': '*'}}).then((res) => {
             stdwHoursD0 = [];
             stdwHoursD1 = [];
             stdwHoursD2 = [];
@@ -3047,7 +3053,8 @@ const StudentSubscriptionState = ({
               "5": studentBusy['5'],
               "6": studentBusy['6']
             }
-          }).then((res) => {
+          
+          },{headers:{'Access-Control-Allow-Origin': '*'}}).then((res) => {
             distroyAlert();
             setFetchAgain(fetchAgain + 1);
             setIsUserMakingUpdateOnStudentAccount(false);
@@ -3132,7 +3139,7 @@ const StudentSubscriptionState = ({
     let getStudentInstructorBusyData = () => {
       return new Promise((resolve, reject) => {
         resolve(
-          axios.get(`${process.env.REACT_APP_BACK_HOST_URL}/api/instructors/${studentAccountObji.instructor}`).then((res) => {
+          axios.get(`${process.env.REACT_APP_BACK_HOST_URL}/api/instructors/${studentAccountObji.instructor}`,{headers:{'Access-Control-Allow-Origin': '*'}}).then((res) => {
             for (let i = 0; i < Object.entries(res.data.busy).length; i++) {
               if (i === 0) {
                 for (let j = 0; j < Object.entries(res.data.busy)[i][1].length; j++) {
@@ -3315,7 +3322,7 @@ const StudentSubscriptionState = ({
               "5": busyInstructorInitialObject[`5`],
               "6": busyInstructorInitialObject[`6`]
             }
-          }).then((res) => {
+          },{headers:{'Access-Control-Allow-Origin': '*'}}).then((res) => {
             return res;
           }).catch((error) => {
             console.log(error);

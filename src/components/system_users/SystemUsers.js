@@ -594,7 +594,7 @@ const SystemUsers = () => {
     };
     if (userData._id === "") {
       axios
-        .post(`${process.env.REACT_APP_BACK_HOST_URL}/api/instructors`, finalUser)
+        .post(`${process.env.REACT_APP_BACK_HOST_URL}/api/instructors`, finalUser,{headers:{'Access-Control-Allow-Origin': '*'}})
         .then((res) => {
           setFetchAgain(fetchAgain + 1);
           setUserData({
@@ -685,6 +685,7 @@ const SystemUsers = () => {
             mobile: userData.mobile,
             privileges: userData.privileges,
           }
+          ,{headers:{'Access-Control-Allow-Origin': '*'}}
         )
         .then((res) => {
           setFetchAgain(fetchAgain + 1);
@@ -978,7 +979,7 @@ const SystemUsers = () => {
   useEffect(() => {
     axios
       .get(
-        `${process.env.REACT_APP_BACK_HOST_URL}/api/instructors?limit=300&page=${currentPage}`
+        `${process.env.REACT_APP_BACK_HOST_URL}/api/instructors?limit=300&page=${currentPage}`,{headers:{'Access-Control-Allow-Origin': '*'}}
       )
       .then((res) => {
         initialResponse.current = res.data.data;

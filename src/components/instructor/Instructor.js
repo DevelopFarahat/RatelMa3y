@@ -276,7 +276,7 @@ const Instructor = () => {
         axios
             .put(`${process.env.REACT_APP_BACK_HOST_URL}/api/instructors/${instructorObji._id}`, {
                 is_available: availability,
-            })
+            },{headers:{'Access-Control-Allow-Origin': '*'}})
             .then((res) => {
                 setFetchAgain(fetchAgain + 1);
             })
@@ -288,7 +288,7 @@ const Instructor = () => {
     const getSpecificInstructorData = (event) => {
         event.stopPropagation();
         axios
-            .get(`${process.env.REACT_APP_BACK_HOST_URL}/api/instructors/${event.currentTarget.id}`)
+            .get(`${process.env.REACT_APP_BACK_HOST_URL}/api/instructors/${event.currentTarget.id}`,{headers:{'Access-Control-Allow-Origin': '*'}})
             .then((res) => {
                 initialResponseSpecificInstructorData.current = res.data;
                 setSelectedInstructorData(res.data);
@@ -309,7 +309,7 @@ const Instructor = () => {
 
     useEffect(() => {
         axios
-            .get(`${process.env.REACT_APP_BACK_HOST_URL}/api/instructors?limit=300&page=${currentPage}`)
+            .get(`${process.env.REACT_APP_BACK_HOST_URL}/api/instructors?limit=300&page=${currentPage}`,{headers:{'Access-Control-Allow-Origin': '*'}})
             .then((res) => {
                 initialResponse.current = res.data.data;
                 setInstructorData(res.data.data);

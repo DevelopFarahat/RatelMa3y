@@ -50,6 +50,7 @@ const InstructorHistory = ({col1Name,col2Name,col3Name,arrName,selectedInstructo
         const id = event.currentTarget.id;
         setSelectedRow(id);
     }, []);
+    console.log(selectedInstructorData)
     return (
         <>
             {selectedInstructorData[arrName] === undefined || selectedInstructorData[arrName].length === 0 ? <img src={EmptyDataImage} className={InstructorHistoryStyles['no-result']} alt="no-result" /> : <>

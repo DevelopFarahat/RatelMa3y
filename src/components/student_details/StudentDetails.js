@@ -286,6 +286,7 @@ const [sessionInfo,setSessionInfo] = useState([]);
    SessionAttendanceAndEvaluationArr.push(stdSessionDetails);
   }
   setSessionInfo(SessionAttendanceAndEvaluationArr);
+  console.log(studentSessionsDetails)
 
   },[specificStudentJoiningRequestData,studentSessionsDetails])
 
@@ -476,7 +477,6 @@ const [sessionInfo,setSessionInfo] = useState([]);
             </thead>
           </table>
           </div>
-
         </div> :specificStudentJoiningRequestData.sessions.length !== 0?<div className={StudentDetailsStyles['student-ratel-info-main-container']}>
           {/* ratel member */}
           <div className={StudentDetailsStyles['table-settings-container']}>
