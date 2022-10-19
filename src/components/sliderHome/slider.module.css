@@ -61,9 +61,11 @@
     width: 100%;
     
   }
+  
   .CarouselItem{
     height: 120px;
   }
+  
 }
 
 @media (max-width: 768px) {
@@ -79,8 +81,10 @@
     font-size: 15px;
   }
 }
-/* @media (max-width: 576px) {
+
+@media (max-width: 576px) {
   .Caption {
     display: none;
   }
-} */
+} 
+

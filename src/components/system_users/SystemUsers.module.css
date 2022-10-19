@@ -113,6 +113,7 @@
   background-color: #198754;
   margin-top: 20px;
   color: #ffffff;
+  position: relative;
 }
 .step-button-container{
   width: 100%;
