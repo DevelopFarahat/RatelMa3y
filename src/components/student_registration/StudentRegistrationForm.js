@@ -257,7 +257,7 @@ const StudentRegistrationForm = () => {
   //TO SEND PIN WHEN REACHING 6th STEP
   
   //MARK: hash for testing /Unhash when deploying
-  /*
+  
   useEffect(() => {
     
     if (!!studentRegistrationFormSteps.sixStep)
@@ -266,7 +266,7 @@ const StudentRegistrationForm = () => {
         { email: userData.email, rpin: true },{headers:{'Access-Control-Allow-Origin': '*'}}
       );
     }, [studentRegistrationFormSteps.sixStep]);
-*/
+
   // just case if the user demande student can register in multiple programs
   /*
   const handleStudentPrograms = (event) => {
@@ -449,7 +449,6 @@ const StudentRegistrationForm = () => {
 
     //CHECK IF VERIFICATION GOES WRONG
     //MARK: hash for testing /Unhash when deploying
-/*
     let result = await axios.post(
       `${process.env.REACT_APP_BACK_HOST_URL}/api/auth/confirm_pin`,
       { email: userData.email, rpin: true, pin: userData.email_verification },{headers:{'Access-Control-Allow-Origin': '*'}}
@@ -457,7 +456,7 @@ const StudentRegistrationForm = () => {
 
     if (result.status !== 200) return enqueueSnackbar(t('login_error_pin'));
 
-*/
+
     let wD = [];
     for (let i = 0; i < Object.values(workingDays).length; i++) {
       if (Object.values(workingDays)[i] === "") {

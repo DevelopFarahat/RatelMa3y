@@ -407,8 +407,8 @@ const Messages = ()=>{
                     />
             </section>
             <section>
-            <Form.Label style={{textAlign:t("us")=== t("Us")?'left':'right'}}>{t("sort")}</Form.Label>
-                    <Form.Select onChange={sortMessages}>
+            <Form.Label style={{textAlign:t("us")=== t("Us")?'start':'end'}}>{t("sort")}</Form.Label>
+                    <Form.Select onChange={sortMessages} style={{textAlign:t("us")=== t("Us")?'start':'end'}}>
                         <option value="">{t("select")}</option>
                         <optgroup label={t("status")}>
                         <option value="Read">{t("read")}</option>

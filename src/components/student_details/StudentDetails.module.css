@@ -47,13 +47,13 @@
   width: 100%;
   height: 394px;
   position: relative;
-  margin-top: 20px;
+  margin-top: 15px;
 }
 
 .requested-joinnig-student-table-wrapper {
   width: 100%;
   overflow: auto;
-  height: 323px;
+  height: 330px;
 }
 
 .requested-joinnig-student-table {

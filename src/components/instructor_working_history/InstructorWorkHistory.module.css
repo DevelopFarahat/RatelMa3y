@@ -20,6 +20,7 @@
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
+  flex-wrap: wrap;
   align-items: center;
 }
 .students-data-tap,
@@ -191,7 +192,7 @@
 
 }
 .sessions-main-info-container > div{
-  flex: 0 0 48%;
+  flex: 0 0 50%;
   height: 172px;
   border-radius: 5px;
   -webkit-border-radius: 5px;
@@ -237,10 +238,12 @@
   .instructor-work-history-main-container{
     margin-top:30px;
   }
+  /*
   .settings-header{
     flex-direction: column;
     padding:10px;
   }
+  */
   .sessions-more-info-settings> section{
     flex: 0 0 50%;
     width: 50%;
@@ -252,8 +255,14 @@
   .settings-header > *{
     margin:5px 0 5px 0;
   }
-  .students-data-tap,.sessions-data-tap,.workingDateAndOursTap,.sessions-schedule-data-tap{
-    width:100%;
+  .students-data-tap,.sessions-data-tap{
+    flex: 0 0 50%;
+  }
+  .workingDateAndOursTap,.sessions-schedule-data-tap{
+    flex: 0 0 68%;
+  }
+  .sessions-schedule-data-tap{
+    flex: 0 0 32%;
   }
   .students-content-tap{
     height:513px;

@@ -3362,6 +3362,7 @@ const StudentSubscriptionState = ({
           axios.delete(`${process.env.REACT_APP_BACK_HOST_URL}/api/students/${stdAcc._id}`,{headers:{},data:{instructorID:stdAcc.instructor}}).then((res) => {
             setAlertDeleteConfirmation(false);
             setFetchAgain(fetchAgain + 1);
+            setSpecificStudentJoiningRequestData([]);
             setIsUserDeleteAnyAccount(true);
             setTimeout(() => {
               setIsUserDeleteAnyAccount(false);
@@ -3386,7 +3387,7 @@ const StudentSubscriptionState = ({
       }
     })
 */
-setSpecificStudentJoiningRequestData([])
+    
   }
   return (
 
@@ -3953,7 +3954,7 @@ setSpecificStudentJoiningRequestData([])
                     <div className={`${StudentSubscriptionStyles["hours-check-box-container"]}`}>
                       {Working_hours.map((wh, index) => (
                         <div key={wh.id}>
-                          <Form.Label htmlFor={wh.att} style={{ color: disabledHoursD0[`h${index}`] || disabledCompletedHourReachedMaximumNumOfStdD0[`h${index}`] ? '#dadada' : prefsHoursD0[`h${index}`] ? '#00c07f' : '#000000', backgroundColor: stdBusyHoursD0[`h${index}`] ? 'rgba(15,255,149,.3)' : '', borderRadius: '2px' }}>
+                          <Form.Label htmlFor={wh.att} style={{ color: disabledHoursD0[`h${index}`] || disabledCompletedHourReachedMaximumNumOfStdD0[`h${index}`] ? '#dadada' : prefsHoursD0[`h${index}`] ? '#00c07f' : '#000000', backgroundColor: stdBusyHoursD0[`h${index}`] ? '#f9c324' : '', borderRadius: '2px' }}>
                             {wh.appointment}
                           </Form.Label>
                           <Form.Check
@@ -3975,7 +3976,7 @@ setSpecificStudentJoiningRequestData([])
                         <div className={`${StudentSubscriptionStyles["hours-check-box-container"]}`}>
                           {Working_hours.map((wh, index) => (
                             <div key={wh.id}>
-                              <Form.Label htmlFor={wh.att} style={{ color: disabledHoursD1[`h${index}`] || disabledCompletedHourReachedMaximumNumOfStdD1[`h${index}`] ? '#dadada' : prefsHoursD1[`h${index}`] ? '#00c07f' : '#000000', backgroundColor: stdBusyHoursD1[`h${index}`] ? 'rgba(15,255,149,.3)' : '', borderRadius: '2px' }}>
+                              <Form.Label htmlFor={wh.att} style={{ color: disabledHoursD1[`h${index}`] || disabledCompletedHourReachedMaximumNumOfStdD1[`h${index}`] ? '#dadada' : prefsHoursD1[`h${index}`] ? '#00c07f' : '#000000', backgroundColor: stdBusyHoursD1[`h${index}`] ? '#f9c324' : '', borderRadius: '2px' }}>
                                 {wh.appointment}
                               </Form.Label>
                               <Form.Check
@@ -3996,7 +3997,7 @@ setSpecificStudentJoiningRequestData([])
                             <div className={`${StudentSubscriptionStyles["hours-check-box-container"]}`}>
                               {Working_hours.map((wh, index) => (
                                 <div key={wh.id}>
-                                  <Form.Label htmlFor={wh.att} style={{ color: disabledHoursD2[`h${index}`] || disabledCompletedHourReachedMaximumNumOfStdD2[`h${index}`] ? '#dadada' : prefsHoursD2[`h${index}`] ? '#00c07f' : '#000000', backgroundColor: stdBusyHoursD2[`h${index}`] ? 'rgba(15,255,149,.3)' : '', borderRadius: '2px' }}>
+                                  <Form.Label htmlFor={wh.att} style={{ color: disabledHoursD2[`h${index}`] || disabledCompletedHourReachedMaximumNumOfStdD2[`h${index}`] ? '#dadada' : prefsHoursD2[`h${index}`] ? '#00c07f' : '#000000', backgroundColor: stdBusyHoursD2[`h${index}`] ? '#f9c324' : '', borderRadius: '2px' }}>
                                     {wh.appointment}
                                   </Form.Label>
                                   <Form.Check
@@ -4018,7 +4019,7 @@ setSpecificStudentJoiningRequestData([])
                                 <div className={`${StudentSubscriptionStyles["hours-check-box-container"]}`}>
                                   {Working_hours.map((wh, index) => (
                                     <div key={wh.id}>
-                                      <Form.Label htmlFor={wh.att} style={{ color: disabledHoursD3[`h${index}`] || disabledCompletedHourReachedMaximumNumOfStdD3[`h${index}`] ? '#dadada' : prefsHoursD3[`h${index}`] ? '#00c07f' : '#000000', backgroundColor: stdBusyHoursD3[`h${index}`] ? 'rgba(15,255,149,.3)' : '', borderRadius: '2px' }}>
+                                      <Form.Label htmlFor={wh.att} style={{ color: disabledHoursD3[`h${index}`] || disabledCompletedHourReachedMaximumNumOfStdD3[`h${index}`] ? '#dadada' : prefsHoursD3[`h${index}`] ? '#00c07f' : '#000000', backgroundColor: stdBusyHoursD3[`h${index}`] ? '#f9c324' : '', borderRadius: '2px' }}>
                                         {wh.appointment}
                                       </Form.Label>
                                       <Form.Check
@@ -4039,7 +4040,7 @@ setSpecificStudentJoiningRequestData([])
                                     <div className={`${StudentSubscriptionStyles["hours-check-box-container"]}`}>
                                       {Working_hours.map((wh, index) => (
                                         <div key={wh.id}>
-                                          <Form.Label htmlFor={wh.att} style={{ color: disabledHoursD4[`h${index}`] || disabledCompletedHourReachedMaximumNumOfStdD4[`h${index}`] ? '#dadada' : prefsHoursD4[`h${index}`] ? '#00c07f' : '#000000', backgroundColor: stdBusyHoursD4[`h${index}`] ? 'rgba(15,255,149,.3)' : '', borderRadius: '2px' }}>
+                                          <Form.Label htmlFor={wh.att} style={{ color: disabledHoursD4[`h${index}`] || disabledCompletedHourReachedMaximumNumOfStdD4[`h${index}`] ? '#dadada' : prefsHoursD4[`h${index}`] ? '#00c07f' : '#000000', backgroundColor: stdBusyHoursD4[`h${index}`] ? '#f9c324' : '', borderRadius: '2px' }}>
                                             {wh.appointment}
                                           </Form.Label>
                                           <Form.Check
@@ -4060,7 +4061,7 @@ setSpecificStudentJoiningRequestData([])
                                         <div className={`${StudentSubscriptionStyles["hours-check-box-container"]}`}>
                                           {Working_hours.map((wh, index) => (
                                             <div key={wh.id}>
-                                              <Form.Label htmlFor={wh.att} style={{ color: disabledHoursD5[`h${index}`] || disabledCompletedHourReachedMaximumNumOfStdD5[`h${index}`] ? '#dadada' : prefsHoursD5[`h${index}`] ? '#00c07f' : '#000000', backgroundColor: stdBusyHoursD5[`h${index}`] ? 'rgba(15,255,149,.3)' : '', borderRadius: '2px' }}>
+                                              <Form.Label htmlFor={wh.att} style={{ color: disabledHoursD5[`h${index}`] || disabledCompletedHourReachedMaximumNumOfStdD5[`h${index}`] ? '#dadada' : prefsHoursD5[`h${index}`] ? '#00c07f' : '#000000', backgroundColor: stdBusyHoursD5[`h${index}`] ? '#f9c324' : '', borderRadius: '2px' }}>
                                                 {wh.appointment}
                                               </Form.Label>
                                               <Form.Check
@@ -4081,7 +4082,7 @@ setSpecificStudentJoiningRequestData([])
                                             <div className={`${StudentSubscriptionStyles["hours-check-box-container"]}`}>
                                               {Working_hours.map((wh, index) => (
                                                 <div key={wh.id}>
-                                                  <Form.Label htmlFor={wh.att} style={{ color: disabledHoursD6[`h${index}`] || disabledCompletedHourReachedMaximumNumOfStdD6[`h${index}`] ? '#dadada' : prefsHoursD6[`h${index}`] ? '#00c07f' : '#000000', backgroundColor: stdBusyHoursD6[`h${index}`] ? 'rgba(15,255,149,.3)' : '', borderRadius: '2px' }}>
+                                                  <Form.Label htmlFor={wh.att} style={{ color: disabledHoursD6[`h${index}`] || disabledCompletedHourReachedMaximumNumOfStdD6[`h${index}`] ? '#dadada' : prefsHoursD6[`h${index}`] ? '#00c07f' : '#000000', backgroundColor: stdBusyHoursD6[`h${index}`] ? ' #f9c324' : '', borderRadius: '2px' }}>
                                                     {wh.appointment}
                                                   </Form.Label>
                                                   <Form.Check

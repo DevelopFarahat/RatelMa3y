@@ -494,7 +494,7 @@ const [sessionInfo,setSessionInfo] = useState([]);
             <Form.Control type="number" name="totalAbsence" id="totalAbsence" readOnly value={totalAbsence}/>
             </div>
 
-           {isSessionsMoreInfoOpend?<MdKeyboardArrowUp onClick={openCloseMoreSessionInfo} className={StudentDetailsStyles['open-close-arrow-icon']} style={{transform:isSessionsMoreInfoOpend?'rotate(360deg)':'rotate(0deg)',bottom:isSessionsMoreInfoOpend?'67%':'-5%',right:t("us")===t("Us")?'0':'95%'}}/>:<MdKeyboardArrowDown onClick={openCloseMoreSessionInfo} className={StudentDetailsStyles['open-close-arrow-icon']} style={{transform:isSessionsMoreInfoOpend?'rotate(360deg)':'rotate(0deg)',bottom:isSessionsMoreInfoOpend?'67%':'-5%',right:t("us")===t("Us")?'0':'95%'}}/>}
+           {isSessionsMoreInfoOpend?<MdKeyboardArrowUp onClick={openCloseMoreSessionInfo} className={StudentDetailsStyles['open-close-arrow-icon']} style={{transform:isSessionsMoreInfoOpend?'rotate(360deg)':'rotate(0deg)',bottom:isSessionsMoreInfoOpend?'67%':'-5%',right:t("us")===t("Us")?'0':'90%'}}/>:<MdKeyboardArrowDown onClick={openCloseMoreSessionInfo} className={StudentDetailsStyles['open-close-arrow-icon']} style={{transform:isSessionsMoreInfoOpend?'rotate(360deg)':'rotate(0deg)',bottom:isSessionsMoreInfoOpend?'67%':'-5%',right:t("us")===t("Us")?'0':'90%'}}/>}
           </section>
             <section>
             <Form.Label htmlFor="sortStudentSessions">{t("sort")}</Form.Label>

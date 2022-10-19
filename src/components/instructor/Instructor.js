@@ -384,7 +384,7 @@ const Instructor = () => {
                     />
                     </section>
                     <section>
-                    <Form.Select id="instructor-sort-select" onChange={sortInstructorTable}>
+                    <Form.Select id="instructor-sort-select" onChange={sortInstructorTable} style={{textAlign:t("us")===t("Us")?'start':'end'}}>
                         <option value="">{t("select")}</option>
                         <optgroup label={t("instructorAccountStatus")}>
                             <option value="inACall">{t("inCall")}</option>

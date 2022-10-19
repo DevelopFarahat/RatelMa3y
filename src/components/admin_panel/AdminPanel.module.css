@@ -20,11 +20,13 @@
   display: flex;
   flex-direction: row;
   justify-content:flex-start;
+  flex-wrap: wrap;
   align-items: center;
   background-color:#20aa69;
 }
 .navigation-links{
-  min-width: 170px;
+ /* min-width: 170px;*/
+ flex: 0 0 20%;
   padding:10px;
   background-color: #198754;
   color: #FFFFFF;
@@ -62,6 +64,7 @@
   .navigation-links{
     min-width: 100%;
   }
+  
   .active-tap{
     min-width: 92%;
   }
