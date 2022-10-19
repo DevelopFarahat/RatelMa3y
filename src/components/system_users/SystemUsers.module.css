@@ -115,6 +115,18 @@
   color: #ffffff;
   position: relative;
 }
+.next-en{
+  margin: 0px 0px 0px 3px;
+}
+.next-ar{
+margin:-7px 0px 0px 3px;
+}
+.previous-en{
+ margin: -3px -3px 0px -10px;
+}
+.previous-ar{
+
+}
 .step-button-container{
   width: 100%;
   display: flex;

@@ -339,7 +339,7 @@ const StudentRegistrationForm = () => {
   };
   const errorHandle = (filed, value) => {
     if (filed === "email") {
-      const emailRegx = /^[A-Z a-z]+[0-9]*@[A-Z a-z]+.com$/;
+      const emailRegx = /^[A-Z0-9._%+-]+@[A-Z0-9._]+\.[A-Z]{2,4}$/i;
       setErrors({
         ...errors,
         emailError:
