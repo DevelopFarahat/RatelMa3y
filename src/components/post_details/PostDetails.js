@@ -4,6 +4,7 @@ import PostDetailsStyles from "./PostDetails.module.css";
 import { IoChevronBack } from "react-icons/io5";
 import { TbUrgent } from "react-icons/tb";
 import { useTranslation } from "react-i18next";
+import { Helmet } from "react-helmet-async";
 
 const PostDetails = () => {
   const location = useLocation();
@@ -23,13 +24,33 @@ const PostDetails = () => {
 
   function linkify(text) {
     return text?.replace(urlRegex, function (url) {
-      link = <a href={url} target="_blank" style={{backgroundColor: '#198754',padding: 8,paddingInline: 16,textDecoration: 'none',fontWeight:500, borderRadius: 4,color:'white'}}>{postDetails.lang == 'ar'? 'الرابط':'Link'}</a>
-      return ""
+      link = (
+        <a
+          href={url}
+          target="_blank"
+          style={{
+            backgroundColor: "#198754",
+            padding: 8,
+            paddingInline: 16,
+            textDecoration: "none",
+            fontWeight: 500,
+            borderRadius: 4,
+            color: "white",
+          }}
+        >
+          {postDetails.lang == "ar" ? "الرابط" : "Link"}
+        </a>
+      );
+      return "";
     });
   }
 
   return (
     <>
+      {/* <Helmet>
+        <title>{postDetails.title?? 'Ratel May | رتل معي'}</title>
+        <link rel="canonical" href="https://www.tacobell.com/" />
+      </Helmet> */}
       <div className={PostDetailsStyles["post-details-main-container"]}>
         <img
           src={postDetails.article_img}

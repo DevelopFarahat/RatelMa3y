@@ -130,6 +130,8 @@
   "sessions_select_info": "حدد الطلاب الذين لهم صلاحية المشاركة في الحلقة",
   "sessions_select_title": "حلقة جديدة",
   "sessions_table": "الجدول",
+  "sessions_select_instructor": "معلم الحلقة",
+  "not_authorized":"غير مصرح",
   "account_title": "إدارة الحساب",
   "sidebar_eval_title": "حلقة جديدة",
   "sidebar_eval_is_exam": "اختبار عام",

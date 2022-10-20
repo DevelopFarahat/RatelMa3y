@@ -161,8 +161,9 @@ function Sessions({ setIsRoomPrepared }) {
       if (obj) {
         notes = obj.notes;
         c_eval = obj.current_eval;
-        p_eval = obj.previously_eval;
+        p_eval = obj.total_eval ?? obj.previously_eval ?? 0;
       }
+      console.log("pe", obj);
     }
 
     let date = new Date(session.created_at);
@@ -189,7 +190,10 @@ function Sessions({ setIsRoomPrepared }) {
       <Card
         className={RoomCSS.card}
         key={session._id}
-        style={{ direction: isArabic ? "rtl" : "ltr", minWidth: '320px' }}
+        style={{
+          direction: t("us") !== "Us" ? "rtl" : "ltr",
+          minWidth: "320px",
+        }}
       >
         <Card.Header className="text-center">
           {session.is_live ? (
@@ -214,20 +218,22 @@ function Sessions({ setIsRoomPrepared }) {
               {session.created_by?.name ?? user?.name}
             </span>
           </h6>
-          {user && user.role === "student" && (!(p_eval === 0 && session.is_live)) && (
-            <>
-              <h6>
-                {t("sessions_mem_eval")}{" "}
-                <span style={{ fontWeight: 300 }}>{p_eval}</span>
-              </h6>
-              {!session.is_exam && (
+          {user &&
+            user.role === "student" &&
+            !(p_eval === 0 && session.is_live) && (
+              <>
                 <h6>
-                  {t("sessions_cur_eval")}{" "}
-                  <span style={{ fontWeight: 300 }}>{c_eval}</span>
+                  {t("sessions_mem_eval")}{" "}
+                  <span style={{ fontWeight: 300 }}>{p_eval}</span>
                 </h6>
-              )}
-            </>
-          )}
+                {!session.is_exam && (
+                  <h6>
+                    {t("sessions_cur_eval")}{" "}
+                    <span style={{ fontWeight: 300 }}>{c_eval}</span>
+                  </h6>
+                )}
+              </>
+            )}
 
           {!session.is_live && (
             <div>
@@ -313,7 +319,13 @@ function Sessions({ setIsRoomPrepared }) {
           </div>
 
           {session.is_live && user && (
-            <div style={{display: 'flex', alignItems: 'center', justifyContent: 'end'}}>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "end",
+              }}
+            >
               {(session.created_by?._id === user?._id ||
                 user?.privileges === "Admin") && (
                 <Button

@@ -13,17 +13,20 @@ import { BsTable } from "react-icons/bs";
 export default function ModalCreateSession(props) {
   const { t } = useTranslation();
   const [options, setOptions] = useState([]); //For the dropdown
+  const [instructors, setInstructors] = useState([]);
   const [participants, setParticipants] = useState([]);
   const [isExam, setIsExam] = useState(false);
   const { user, isLoading, setIsLoading } = useContext(UserContext);
   const { enqueueSnackbar } = useSnackbar();
+  const instrRef = useRef({ label: user.name, value: user._id });
 
   let page = 1;
   // let postsCount = undefined,
   //   currentCount = undefined;
 
   useEffect(() => {
-    fetchData(page,10000);
+    fetchData(page, 10000);
+    fetchInstructors(page, 10000);
   }, []);
 
   //To observe last item
@@ -50,7 +53,20 @@ export default function ModalCreateSession(props) {
   //   if (node) observer.current.observe(node);
   // }, []);
 
-  async function fetchData(page,limit=10) {
+  async function fetchInstructors(page, limit = 10) {
+    let res = await axios.get(
+      `${process.env.REACT_APP_BACK_HOST_URL}/api/instructors?page=${page}&&limit=${limit}`
+    );
+    let opts = res.data.data.map((stu) => {
+      return {
+        value: stu._id,
+        label: stu.name,
+      };
+    });
+    setInstructors(opts);
+  }
+
+  async function fetchData(page, limit = 10) {
     //Add students as options to select
     let opts = [];
     let mine = [];
@@ -104,7 +120,19 @@ export default function ModalCreateSession(props) {
     option: (styles, i) => {
       return {
         ...styles,
-        color: i.data.instructor == user._id ? "green" : "grey",
+        color:
+          i.data.instructor == user._id
+            ? "green"
+            : i.data.instructor === undefined
+            ? "black"
+            : "grey",
+      };
+    },
+    singleValue: (styles) => {
+      return {
+        ...styles,
+
+        ":hover": { color: "white", backgroundColor: "#00875a" },
       };
     },
     multiValue: (styles) => {
@@ -128,23 +156,6 @@ export default function ModalCreateSession(props) {
     },
   };
 
-  const checkStyles = {
-    "&:hover": { color: "white", backgroundColor: "#00875a" },
-    "&:checked": { backgroundColor: "red" },
-  };
-
-  const groupStyles = {
-    border: `2px dotted ${"grey"}`,
-    borderRadius: "5px",
-    background: "#f2fcff",
-  };
-
-  const Group = (props) => (
-    <div style={groupStyles}>
-      <components.Group {...props} />
-    </div>
-  );
-
   function handleChange(selectedOption) {
     let chosen = selectedOption?.map((sel) => sel.value);
     setParticipants(chosen);
@@ -154,25 +165,26 @@ export default function ModalCreateSession(props) {
     if (participants.length === 0)
       return enqueueSnackbar("there are no participants");
 
-    participants[participants.length] = localStorage.getItem("user_id");
+    participants[participants.length] = instrRef.current.props.value.value;
 
     //room id as the name of instructor and time of creation
     //Create a session and send it to the backend
 
     let date = Date.now();
-    let rid = date + "-" + localStorage.getItem("user_id");
+    let rid = date + "-" + instrRef.current.props.value.value;
+
     let resSession = await axios.post(
       `${process.env.REACT_APP_BACK_HOST_URL}/api/sessions`,
       {
         room_id: rid.slice(0, -3),
         members_with_access: participants,
-        created_by: localStorage.getItem("user_id"),
+        created_by: instrRef.current.props.value.value,
         previously_reached: {},
         evaluations: [],
         is_live: true,
         attendants: [],
         created_at: date,
-        is_exam: isExam
+        is_exam: isExam,
       },
       {
         headers: {
@@ -214,12 +226,43 @@ export default function ModalCreateSession(props) {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body style={{ direction: props.isArabic ? "rtl" : "ltr" }}>
+
+        {["Admin", "Supervisor"].includes(user?.privileges) && (
+          <div className="mb-4">
+            <p>{t("sessions_select_instructor")}</p>
+            <Select
+              ref={instrRef}
+              options={instructors}
+              onChange={(e) => console.log(e)}
+              // components={{ Group }}
+              theme={(theme) => ({
+                ...theme,
+                colors: {
+                  ...theme.colors,
+                  primary25: "#e5f3ee",
+                  primary: "#198754",
+                },
+              })}
+              defaultValue={{ label: user.name, value: user._id }}
+              placeholder={t("sessions_select")}
+            />
+          </div>
+        )}
+
         <p>{t("sessions_select_info")}</p>
 
         <Select
           options={options}
           onChange={handleChange}
           isMulti
+          theme={(theme) => ({
+            ...theme,
+            colors: {
+              ...theme.colors,
+              primary25: "#e5f3ee",
+              primary: "#198754",
+            },
+          })}
           // components={{ Group }}
           closeMenuOnSelect={false}
           placeholder={t("sessions_select")}
@@ -259,32 +302,3 @@ export default function ModalCreateSession(props) {
     </Modal>
   );
 }
-
-const CustomMenu = React.forwardRef(
-  ({ children, style, className, "aria-labelledby": labeledBy }, ref) => {
-    const [value, setValue] = useState("");
-
-    return (
-      <div
-        ref={ref}
-        style={style}
-        className={className}
-        aria-labelledby={labeledBy}
-      >
-        <Form.Control
-          autoFocus
-          className="mx-3 my-2 w-auto"
-          placeholder="Type to filter..."
-          onChange={(e) => setValue(e.target.value)}
-          value={value}
-        />
-        <ul className="list-unstyled">
-          {React.Children.toArray(children).filter(
-            (child) =>
-              !value || child.props.children.toLowerCase().startsWith(value)
-          )}
-        </ul>
-      </div>
-    );
-  }
-);

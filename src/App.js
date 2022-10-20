@@ -25,6 +25,7 @@ import Forgot from "./pages/Forgot";
 import ManageAcc from "./pages/ManageAcc";
 import Messages from "./components/messages/message";
 import BookBoard from "./components/quran_board/BookBoard";
+import { HelmetProvider } from 'react-helmet-async'
 
 function App() {
   const [t, i18n] = useTranslation();
@@ -35,7 +36,6 @@ function App() {
 
   useEffect(() => {
     if (!localStorage.getItem("i18nextLng") || localStorage.getItem("i18nextLng")=== 'en-US') {
-      console.log('done one')
       localStorage.setItem("i18nextLng", 'ar');
       i18n.changeLanguage("ar")
     }
@@ -49,7 +49,7 @@ function App() {
   const [expanded, setExpanded] = useState(false);
 
   return (
-    <>
+    <HelmetProvider>
       <div className="App" style={styles.body}>
         {isLoading && <LoadingScreen />}
         <ScrollToTop />
@@ -150,7 +150,7 @@ function App() {
           <RoomSideBar hideMain={hideMain} />
         </div>
       </div>
-    </>
+    </HelmetProvider>
   );
 }
 

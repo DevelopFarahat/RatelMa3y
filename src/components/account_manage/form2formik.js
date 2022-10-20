@@ -41,9 +41,9 @@ function Formikform({ user, setUser, t }) {
         if (!validateEmail.test(values.email)) {
           errors.email = "Please enter  valid email";
         }
-        if (!validatemobile.test(values.mobile)) {
-          errors.mobile = "Please enter  valid mobile number";
-        }
+        // if (!validatemobile.test(values.mobile)) {
+        //   errors.mobile = "Please enter  valid mobile number";
+        // }
 
         return errors;
       }}
@@ -136,7 +136,7 @@ function Formikform({ user, setUser, t }) {
                     <Field
                       required
                       name="mobile"
-                      type="text"
+                      type="number"
                       className="form-control"
                       placeholder={t('systemusers_mobile')}
                     ></Field>
