@@ -27,6 +27,7 @@ const PostsBoard = () => {
   const [isUserDeleteAnyPost, setIsUserDeleteAnyPost] = useState(false);
   const [posId, setPosId] = useState("");
   const [fetchAgain, setFetchAgain] = useState(0);
+  const { user } = useContext(UserContext)
   const [posInfo, setPosInfo] = useState({});
   const styles = {
     moreOptionVisible: {
@@ -177,8 +178,7 @@ const PostsBoard = () => {
                 }}
                 key={post._id}
               >
-                {localStorage.getItem("user") && JSON.parse(localStorage.getItem("user"))?.privileges ===
-                "Admin" ? (
+                {user && user?.privileges === "Admin" ? (
                   <>
                     <button
                       className={PostBoardStyles["post-more-option"]}
