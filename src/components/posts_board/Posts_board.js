@@ -18,34 +18,33 @@ import AddPost from "../add_post/AddPost";
 const PostsBoard = () => {
   const { isLoading, setIsLoading } = useContext(UserContext);
   const [posts, setPosts] = useState([]);
-  const [isMoreOptionVisible,setIsMoreOptionVisible] = useState(false);
+  const [isMoreOptionVisible, setIsMoreOptionVisible] = useState(false);
   const [deleteAlertConfirmation, setAlertDeleteConfirmation] = useState(false);
   const [donnotAskmeAgain, setDonotAskmeAgain] = useState(false);
   const [donnotAskmeAgainChecked, setDonotAskmeAgainChecked] = useState(false);
-  const [selectedPostMoreOption,setSelectedPostMoreOption] = useState(-1);
-  const [isEditeComponentVisible,setIsEditeComponentVisible] = useState(false);
-  const [isUserDeleteAnyPost,setIsUserDeleteAnyPost] = useState(false);
-  const [posId,setPosId] = useState("");
-  const [fetchAgain,setFetchAgain] = useState(0);
-  const [posInfo,setPosInfo] = useState({});
-  const styles ={
-    moreOptionVisible:{
-      display:'flex',
+  const [selectedPostMoreOption, setSelectedPostMoreOption] = useState(-1);
+  const [isEditeComponentVisible, setIsEditeComponentVisible] = useState(false);
+  const [isUserDeleteAnyPost, setIsUserDeleteAnyPost] = useState(false);
+  const [posId, setPosId] = useState("");
+  const [fetchAgain, setFetchAgain] = useState(0);
+  const [posInfo, setPosInfo] = useState({});
+  const styles = {
+    moreOptionVisible: {
+      display: "flex",
     },
-    moreOptionHidden:{
-      display:'none',
-    }
-
-  }
+    moreOptionHidden: {
+      display: "none",
+    },
+  };
   const [t, i18n] = useTranslation();
   const handleDonnotAskmeAgainChange = (event) => {
-    setDonotAskmeAgainChecked(current => !current);
+    setDonotAskmeAgainChecked((current) => !current);
     if (event.target.checked) {
       setDonotAskmeAgain(true);
     } else {
       setDonotAskmeAgain(false);
     }
-  }
+  };
 
   let page = 1,
     postsCount = undefined,
@@ -103,131 +102,245 @@ const PostsBoard = () => {
     if (node) observer.current.observe(node);
   }, []);
 
-  const handleMoreOptionVisibility = (event)=>{
+  const handleMoreOptionVisibility = (event) => {
     event.stopPropagation();
     setSelectedPostMoreOption(event.currentTarget.id);
-    setIsMoreOptionVisible(current=>!current);
-  }
-  const handleEditComponentVisibility = (event,pId)=>{
+    setIsMoreOptionVisible((current) => !current);
+  };
+  const handleEditComponentVisibility = (event, pId) => {
     event.stopPropagation();
     setIsEditeComponentVisible(true);
-    getSpecificPostDetails(pId)
-  }
-  const getSpecificPostDetails = (postId)=>{
-    axios.get(`${process.env.REACT_APP_BACK_HOST_URL}/api/events/${postId}`,{headers:{'Access-Control-Allow-Origin': '*'}}).then((res)=>{
-      setPosInfo(res.data);
-    }).catch((error)=>{
-      console.log(error);
-    })
-  }
-  const distroyBackrop = (event)=>{
+    getSpecificPostDetails(pId);
+  };
+  const getSpecificPostDetails = (postId) => {
+    axios
+      .get(`${process.env.REACT_APP_BACK_HOST_URL}/api/events/${postId}`, {
+        headers: { "Access-Control-Allow-Origin": "*" },
+      })
+      .then((res) => {
+        setPosInfo(res.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  const distroyBackrop = (event) => {
     event.stopPropagation();
     setSelectedPostMoreOption(-1);
-    setIsMoreOptionVisible(current=>!current);
+    setIsMoreOptionVisible((current) => !current);
     setIsEditeComponentVisible(false);
     setPosInfo({});
-  }
-  const deletePost = (event,postId)=>{
+  };
+  const deletePost = (event, postId) => {
     event.stopPropagation();
     setIsMoreOptionVisible(false);
     if (postId !== undefined) {
       setPosId(postId);
     }
-    if (donnotAskmeAgain === false || event.currentTarget.value === 'confirm') {
-      if (event.currentTarget.value === 'cancel') {
+    if (donnotAskmeAgain === false || event.currentTarget.value === "confirm") {
+      if (event.currentTarget.value === "cancel") {
         setAlertDeleteConfirmation(false);
       } else {
         setAlertDeleteConfirmation(true);
       }
-
     } else {
       setAlertDeleteConfirmation(false);
     }
-    if (event.currentTarget.value === 'confirm' || donnotAskmeAgain === true) {
+    if (event.currentTarget.value === "confirm" || donnotAskmeAgain === true) {
       let pId = postId === undefined ? posId : postId;
-    axios.delete(`${process.env.REACT_APP_BACK_HOST_URL}/api/events/${pId}`).then(()=>{
-      setAlertDeleteConfirmation(false);
-      setFetchAgain(fetchAgain + 1);
-      setIsUserDeleteAnyPost(true);
-      setTimeout(() => {
-        setIsUserDeleteAnyPost(false);
-      }, 1000)
-    }).catch((error)=>{
-      console.log(error);
-    })
-  }
-  }
+      axios
+        .delete(`${process.env.REACT_APP_BACK_HOST_URL}/api/events/${pId}`)
+        .then(() => {
+          setAlertDeleteConfirmation(false);
+          setFetchAgain(fetchAgain + 1);
+          setIsUserDeleteAnyPost(true);
+          setTimeout(() => {
+            setIsUserDeleteAnyPost(false);
+          }, 1000);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  };
   return (
     <>
-    <div className={PostBoardStyles["post-board"]}>
-      {posts?.map((post, index, arr) => {
-        if (index === posts.length - 1)
-          return (
-            <div
-              ref={lastPostElementRef}
-              style={{
-                width: "100%",
-                position:'relative'
-              }}
-              key={post._id}
-            >
-              {JSON.parse(localStorage.getItem("user")).privileges === "Admin"?<>
-              <button className={PostBoardStyles['post-more-option']} id={post._id} onClick={handleMoreOptionVisibility} >...</button>
-              <ul className={PostBoardStyles['more-option-menu-list']}  style={selectedPostMoreOption === post._id && isMoreOptionVisible?styles.moreOptionVisible:styles.moreOptionHidden}>
-              <li onClick={(event)=>handleEditComponentVisibility(event,post._id)} style={{textAlign:t("us")===t("Us")?'start':'end',padding:t("us")===t("Us")?'0 0 0 10px':'0 10px 0 0'}}>{t("edit")}</li>
-                <li onClick={(event)=>deletePost(event,post._id)} style={{textAlign:t("us")===t("Us")?'start':'end',padding:t("us")===t("Us")?'0 0 0 10px':'0 10px 0 0'}}>{t("delete")}</li>
-              </ul></>:null}
-              <Post post={post} latestPost={arr[0]} />
-            </div>
-          );
-        else
-          return (
-            <div
-              style={{
-                width: "100%",
-                position:'relative'
-              }}
-              key={post._id}
-            >
-              <button className={PostBoardStyles['post-more-option']} id={post._id} onClick={handleMoreOptionVisibility} >...</button>
-              <ul className={PostBoardStyles['more-option-menu-list']}   style={selectedPostMoreOption === post._id && isMoreOptionVisible?styles.moreOptionVisible:styles.moreOptionHidden}>
-                <li onClick={(event)=>handleEditComponentVisibility(event,post._id)} style={{textAlign:t("us")===t("Us")?'start':'end',padding:t("us")===t("Us")?'0 0 0 10px':'0 10px 0 0'}}>{t("edit")}</li>
-                <li onClick={(event)=>deletePost(event,post._id)} style={{textAlign:t("us")===t("Us")?'start':'end',padding:t("us")===t("Us")?'0 0 0 10px':'0 10px 0 0'}}>{t("delete")}</li>
-              </ul>
-              <Post post={post} latestPost={arr[0]} />
-            </div>
-          )
-      })}
-     {isUserDeleteAnyPost ? (
-        <div className={PostBoardStyles["alert-container"]}>
-          <img src={CircleGif} alt="successfull" />
-          <span>
-            <span style={{ fontWeight: "bold", color: "#198754" }}>
-              {localStorage.getItem("user_name")}
-            </span>{" "}
-            {t("has deleted post successfully")}
-          </span>
+      <div className={PostBoardStyles["post-board"]}>
+        {posts?.map((post, index, arr) => {
+          if (index === posts.length - 1)
+            return (
+              <div
+                ref={lastPostElementRef}
+                style={{
+                  width: "100%",
+                  position: "relative",
+                }}
+                key={post._id}
+              >
+                {localStorage.getItem("user") && JSON.parse(localStorage.getItem("user"))?.privileges ===
+                "Admin" ? (
+                  <>
+                    <button
+                      className={PostBoardStyles["post-more-option"]}
+                      id={post._id}
+                      onClick={handleMoreOptionVisibility}
+                    >
+                      ...
+                    </button>
+                    <ul
+                      className={PostBoardStyles["more-option-menu-list"]}
+                      style={
+                        selectedPostMoreOption === post._id &&
+                        isMoreOptionVisible
+                          ? styles.moreOptionVisible
+                          : styles.moreOptionHidden
+                      }
+                    >
+                      <li
+                        onClick={(event) =>
+                          handleEditComponentVisibility(event, post._id)
+                        }
+                        style={{
+                          textAlign: t("us") === t("Us") ? "start" : "end",
+                          padding:
+                            t("us") === t("Us") ? "0 0 0 10px" : "0 10px 0 0",
+                        }}
+                      >
+                        {t("edit")}
+                      </li>
+                      <li
+                        onClick={(event) => deletePost(event, post._id)}
+                        style={{
+                          textAlign: t("us") === t("Us") ? "start" : "end",
+                          padding:
+                            t("us") === t("Us") ? "0 0 0 10px" : "0 10px 0 0",
+                        }}
+                      >
+                        {t("delete")}
+                      </li>
+                    </ul>
+                  </>
+                ) : null}
+                <Post post={post} latestPost={arr[0]} />
+              </div>
+            );
+          else
+            return (
+              <div
+                style={{
+                  width: "100%",
+                  position: "relative",
+                }}
+                key={post._id}
+              >
+                <button
+                  className={PostBoardStyles["post-more-option"]}
+                  id={post._id}
+                  onClick={handleMoreOptionVisibility}
+                >
+                  ...
+                </button>
+                <ul
+                  className={PostBoardStyles["more-option-menu-list"]}
+                  style={
+                    selectedPostMoreOption === post._id && isMoreOptionVisible
+                      ? styles.moreOptionVisible
+                      : styles.moreOptionHidden
+                  }
+                >
+                  <li
+                    onClick={(event) =>
+                      handleEditComponentVisibility(event, post._id)
+                    }
+                    style={{
+                      textAlign: t("us") === t("Us") ? "start" : "end",
+                      padding:
+                        t("us") === t("Us") ? "0 0 0 10px" : "0 10px 0 0",
+                    }}
+                  >
+                    {t("edit")}
+                  </li>
+                  <li
+                    onClick={(event) => deletePost(event, post._id)}
+                    style={{
+                      textAlign: t("us") === t("Us") ? "start" : "end",
+                      padding:
+                        t("us") === t("Us") ? "0 0 0 10px" : "0 10px 0 0",
+                    }}
+                  >
+                    {t("delete")}
+                  </li>
+                </ul>
+                <Post post={post} latestPost={arr[0]} />
+              </div>
+            );
+        })}
+        {isUserDeleteAnyPost ? (
+          <div className={PostBoardStyles["alert-container"]}>
+            <img src={CircleGif} alt="successfull" />
+            <span>
+              <span style={{ fontWeight: "bold", color: "#198754" }}>
+                {localStorage.getItem("user_name")}
+              </span>{" "}
+              {t("has deleted post successfully")}
+            </span>
+          </div>
+        ) : null}
+        {deleteAlertConfirmation ? (
+          <div
+            className={`${PostBoardStyles["alert-container"]} ${PostBoardStyles["warning-alert"]}`}
+          >
+            <section>
+              <img src={WarningIcon} alt="warning" />
+              <span>{t("are you sure you want to delete this account")}</span>
+            </section>
+            <section style={{ width: t("us") === t("Us") ? "98%" : "88%" }}>
+              <Form.Check
+                checked={donnotAskmeAgainChecked}
+                name="donotAskmeAgain"
+                id="donotAskmeAgain"
+                onChange={handleDonnotAskmeAgainChange}
+              />
+              <Form.Label htmlFor="donotAskmeAgain">
+                {t("don't ask me again!")}
+              </Form.Label>
+            </section>
+            <section style={{ direction: t("us") === t("Us") ? "ltr" : "rtl" }}>
+              <button
+                type="submit"
+                className={PostBoardStyles["btn"]}
+                value={"confirm"}
+                onClick={deletePost}
+              >
+                {t("confirm")}
+              </button>
+              <button
+                type="submit"
+                value={"cancel"}
+                className={PostBoardStyles["btn"]}
+                onClick={deletePost}
+              >
+                {t("cancel")}
+              </button>
+            </section>
+          </div>
+        ) : null}
+      </div>
+      {isEditeComponentVisible ? (
+        <div
+          className={PostBoardStyles["backdrop"]}
+          onClick={(event) => distroyBackrop(event)}
+        >
+          <AddPost
+            isEditeComponentVisible={isEditeComponentVisible}
+            posInfo={posInfo}
+            setPosInfo={setPosInfo}
+            setIsEditeComponentVisible={setIsEditeComponentVisible}
+            setIsMoreOptionVisible={setIsMoreOptionVisible}
+            setFetchAgain={setFetchAgain}
+          />
         </div>
       ) : null}
-        { deleteAlertConfirmation? <div className={`${PostBoardStyles["alert-container"]} ${PostBoardStyles["warning-alert"]}`}>
-        <section>
-          <img src={WarningIcon} alt="warning" />
-          <span>{t("are you sure you want to delete this account")}</span>
-        </section>
-        <section style={{width:t("us")===t("Us")?'98%':'88%'}}>
-          <Form.Check checked={donnotAskmeAgainChecked} name="donotAskmeAgain" id="donotAskmeAgain" onChange={handleDonnotAskmeAgainChange} />
-          <Form.Label htmlFor="donotAskmeAgain">{t("don't ask me again!")}</Form.Label>
-        </section>
-        <section style={{direction:t("us")===t("Us")?'ltr':'rtl'}}>
-          <button type="submit" className={PostBoardStyles['btn']} value={"confirm"} onClick={deletePost}>{t("confirm")}</button>
-          <button type="submit" value={"cancel"} className={PostBoardStyles['btn']} onClick={deletePost}>{t("cancel")}</button>
-        </section>
-      </div> : null}
-    </div>
-    {isEditeComponentVisible?
-    <div className={PostBoardStyles['backdrop']} onClick={(event)=>distroyBackrop(event)}>
-      <AddPost isEditeComponentVisible={isEditeComponentVisible} posInfo={posInfo} setPosInfo={setPosInfo} setIsEditeComponentVisible={setIsEditeComponentVisible} setIsMoreOptionVisible={setIsMoreOptionVisible} setFetchAgain={setFetchAgain}/>
-    </div>:null}
     </>
   );
 };
