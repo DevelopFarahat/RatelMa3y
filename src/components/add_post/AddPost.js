@@ -10,13 +10,14 @@ import CircleGif from "../../assets/images/check-circle.gif";
 import formEmptyFieldSadEmoji from "../../assets/images/emotions.png";
 import axios from "axios";
 
-const AddPost = () => {
+const AddPost = ({ isEditeComponentVisible, posInfo, setPosInfo, setIsEditeComponentVisible, setIsMoreOptionVisible, setFetchAgain }) => {
   const [t, i18n] = useTranslation();
   const [postData, setPostData] = useState({
     title: "",
     content: "",
     lang: "ar",
   });
+
   const [postImage, setPostImage] = useState("");
   const [isUserMadeAPost, setIsUserMadeAPost] = useState(false);
   const [isThereAnyFormFieldEmpty, setIsThereAnyFormFieldEmpty] =
@@ -30,81 +31,120 @@ const AddPost = () => {
   });
 
   const openFile = (event) => {
+
     let reader = new FileReader();
     reader.onload = function () {
       let dataURL = reader.result;
-      setPostImage(dataURL);
+      !posInfo ? setPostImage(dataURL) : setPosInfo({
+        ...posInfo,
+        article_img: dataURL
+      })
+
     };
     reader.readAsDataURL(event.target.files[0]);
   };
-
   const handleChange = (event) => {
-    setPostData({
-      ...postData,
-      [event.target.name]: event.target.value,
-    });
+    event.stopPropagation();
+    posInfo === undefined ?
+      setPostData({
+        ...postData,
+        [event.target.name]: event.target.value,
+      }) : setPosInfo({
+        ...posInfo,
+        [event.target.name]: event.target.value
+      })
   };
 
-  const clearImagePath = () => {
-    setPostImage("");
+  const clearImagePath = (event) => {
+    event.stopPropagation();
+    posInfo ? setPosInfo({
+      ...posInfo,
+      article_img: ''
+    }) : setPostImage("");
   };
   const handleSubmit = (event) => {
     event.preventDefault();
-    let contentWithoutBackslash = postData.content.replace(/(\r\n|\n|\r)/gm, "")
-        let post = {
-        article_img: postImage,
-        content: contentWithoutBackslash,
-        title: postData.title,
-        lang: postData.lang,
-      };
-      if (postImage !== undefined && postImage !== null && postImage !== '' && postData.content !== "" && postData.title !== ""){
-        setIsThereAnyPostIsUploading(true);
-        axios.post(`${process.env.REACT_APP_BACK_HOST_URL}/api/events`,post).then((res) => {
-            setIsThereAnyPostIsUploading(false);
-            setIsUserMadeAPost(true);
-            setTimeout(() => {
-              setIsUserMadeAPost(false);
-            }, 1000);
-            setPostData({
-              title: "",
-              content: "",
-              lang: "ar",
-            });
-            setPostImage("");
-          })
+    console.log(postData);
+    console.log(posInfo)
+    let contentWithoutBackslash = !posInfo? postData.content.replace(/(\r\n|\n|\r)/gm, "") : posInfo.content.replace(/(\r\n|\n|\r)/gm, "")
+    let post = {
+      article_img: !posInfo ? postImage : posInfo['article_img'],
+      content: contentWithoutBackslash,
+      title: !posInfo ? postData.title : posInfo['title'],
+      lang: !posInfo ? postData.lang : posInfo['lang'],
+    };
+
+    if ((!posInfo ? postImage !== undefined && postImage !== '' : posInfo['article_img']) && (!posInfo ? postData.content !== "" : posInfo.content !== "") && (!posInfo ? postData.title !== "" : posInfo.title !== "")) {
+      setIsThereAnyPostIsUploading(true);
+      if (!posInfo) {
+        axios.post(`${process.env.REACT_APP_BACK_HOST_URL}/api/events`, post, { headers: { 'Access-Control-Allow-Origin': '*' } }).then((res) => {
+          setIsThereAnyPostIsUploading(false);
+          setIsUserMadeAPost(true);
+          setTimeout(() => {
+            setIsUserMadeAPost(false);
+          }, 1000);
+          setPostData({
+            title: "",
+            content: "",
+            lang: "ar",
+          });
+          setPostImage("");
+        })
           .catch((err) => console.error(err));
       } else {
-        if (postImage === undefined || postImage === null || postImage === '') {
-          setIsThereAnyFormFieldEmpty(true);
-          setError({
-            ...error,
-            imgError:t("imageError")
+        axios.put(`${process.env.REACT_APP_BACK_HOST_URL}/api/events/${posInfo._id}`, post, { headers: { 'Access-Control-Allow-Origin': '*' } }).then(() => {
+          setIsThereAnyPostIsUploading(false);
+          setIsMoreOptionVisible(false);
+          setFetchAgain(current => current + 1);
+          setIsUserMadeAPost(true);
+          setTimeout(() => {
+            setIsUserMadeAPost(false);
+            setIsEditeComponentVisible(false);
+          }, 1000);
+          setPostData({
+            title: "",
+            content: "",
+            lang: "ar",
           });
-        }
-        if (postData.title.length === 0) {
-          setError({
-            ...error,
-            titleError: t("titleError"),
-          });
-          setIsThereAnyFormFieldEmpty(true);
-        }
-        if (postData.content.length === 0) {
-          setError({
-            ...error,
-            contentError:t("contentError"),
-          });
-          setIsThereAnyFormFieldEmpty(true);
-        }
+          setPostImage("");
+        }).catch((error) => {
+          console.log(error)
+        })
       }
-      setTimeout(() => {
-        setIsUserMadeAPost(false);
-      }, 1000);
-    
+    } else {
+      if (!posInfo ? postImage === undefined || postImage === '' : posInfo.article_img !== "") {
+        setIsThereAnyFormFieldEmpty(true);
+        setError({
+          ...error,
+          imgError: t("imageError")
+        });
+      }
+       if (!posInfo ? postData.title.length === 0 : posInfo.title.length === 0) {
+        setError({
+          ...error,
+          titleError: t("titleError"),
+        });
+        setIsThereAnyFormFieldEmpty(true);
+      }
+      
+      if(!posInfo ? postData.content.length === 0 : posInfo.content.length === 0) {
+        setError({
+          ...error,
+          contentError: t("contentError"),
+        });
+        setIsThereAnyFormFieldEmpty(true);
+      }
+    }
+    setTimeout(() => {
+      setIsUserMadeAPost(false);
+    }, 1000);
+
+
   }
-  const distroyPostingFaildAlert = () => {
+  const distroyPostingFaildAlert = (event) => {
+    event.stopPropagation();
     setIsThereAnyFormFieldEmpty(false);
   };
-
   return (
     <>
       {isUserMadeAPost ? (
@@ -131,8 +171,8 @@ const AddPost = () => {
           </button>
         </div>
       ) : null}
-      <form
-        className={AddPostStyles["add-post-main-container"]}
+        <form
+        className={`${AddPostStyles["add-post-main-container"]} ${setIsEditeComponentVisible?AddPostStyles["add-post-main-container-center"]:''}`}
         onSubmit={handleSubmit}
         encType="multipart/form-data"
         method="post"
@@ -141,17 +181,23 @@ const AddPost = () => {
         <div className={AddPostStyles["image-posting-settings-container"]}>
           <Form.Label htmlFor="postImage">{t("postImage")}</Form.Label>
           <div id="postImage" className={AddPostStyles["post-image-area"]}>
-            {postImage ? (
+            {postImage && posInfo === undefined? (
               <img
                 src={postImage}
                 className={AddPostStyles["image-post"]}
-                alt="post_image"
+                alt={"post_image"}
               />
-            ) : (
+            ):posInfo !== undefined?(
+              posInfo['article_img'] !== ""?<img
+              src={posInfo['article_img']}
+              className={AddPostStyles["image-post"]}
+              alt={"post_image"}
+            />:''
+            ):(
               ""
             )}
           </div>
-          <div className={AddPostStyles['btn-post-image-settings']}>
+          <div className={`${AddPostStyles['btn-post-image-settings']} `}>
             <div>
               <div className={` ${AddPostStyles["button-container"]}`}>
                 <button type="button">
@@ -163,6 +209,7 @@ const AddPost = () => {
                   id="file"
                   name="post_img"
                   accept="image/*"
+                  onClick={e=>e.stopPropagation()}
                   onChange={(event) => {openFile(event)}}/>
               </div>
             </div>
@@ -183,16 +230,18 @@ const AddPost = () => {
               type="text"
               id="postTitle"
               name="title"
-              value={postData.title}
+              value={!posInfo?postData.title:posInfo['title']}
               onChange={handleChange}
+              onClick={e=>e.stopPropagation()}
             />
 
             <Form.Label htmlFor="postTitle">{t("Language")}</Form.Label>
             <Form.Select
               id="postLang"
               name="lang"
-              value={postData.lang}
+              value={!posInfo?postData.lang:posInfo['lang']}
               onChange={handleChange}
+              onClick={e=>e.stopPropagation()}
               placeholder={"Choose Language"}
             >
               <option value={"ar"}>عربي</option>
@@ -206,13 +255,14 @@ const AddPost = () => {
               id="postPargraph"
               name="content"
               className={` ${AddPostStyles["post-paragraph-area"]}`}
-              value={postData.content}
+              value={!posInfo?postData.content:posInfo['content']}
               onChange={handleChange}
+              onClick={e=>e.stopPropagation()}
             />
           </div>
         </div>
         <div className={AddPostStyles["posting-button-container"]}>
-          <button type="submit" className={AddPostStyles["btn"]} style={{float:t("us") === t("Us")?'right':'left'}}>
+          <button type="submit" className={AddPostStyles["btn"]} style={{float:t("us") === t("Us")?'right':'left'}}   onClick={e=>e.stopPropagation()}>
             {isThereAnyPostIsUploading ? (
               <>
                 <Spinner

@@ -36,7 +36,7 @@ const PostDetails = () => {
             fontWeight: 500,
             borderRadius: 4,
             color: "white",
-          }}
+          }} rel="noreferrer"
         >
           {postDetails.lang == "ar" ? "الرابط" : "Link"}
         </a>
@@ -47,15 +47,15 @@ const PostDetails = () => {
 
   return (
     <>
-      {/* <Helmet>
+     {/*<Helmet>
         <title>{postDetails.title?? 'Ratel May | رتل معي'}</title>
         <link rel="canonical" href="https://www.tacobell.com/" />
-      </Helmet> */}
+  </Helmet> */}
       <div className={PostDetailsStyles["post-details-main-container"]}>
         <img
           src={postDetails.article_img}
           className={PostDetailsStyles["post-image-details"]}
-          alt="Post Image"
+          alt="Post_Image"
         />
         <div
           className={PostDetailsStyles["post-details-title"]}

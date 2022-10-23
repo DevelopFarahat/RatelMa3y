@@ -362,7 +362,10 @@
   "cancel":"الغاء",
   "don't ask me again!":"لاتسالنى مجدد",
   "selectAll":"اختار الكل",
-  "thre are no sessions during this period":"لاتوجد اى حلقات خلال هذه الفترة"
+  "thre are no sessions during this period":"لاتوجد اى حلقات خلال هذه الفترة",
+  "has deleted post successfully":"قام بمسح المنشور بنجاح",
+  "edit":"تعديل",
+  "delete":"مسح"
 
 
 

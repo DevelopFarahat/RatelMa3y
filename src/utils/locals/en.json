@@ -361,5 +361,8 @@
   "cancel":"Cancel",
   "don't ask me again!":"don't ask me again!",
   "selectAll":"Select All",
-  "thre are no sessions during this period":"thre are no sessions during this period"
+  "thre are no sessions during this period":"thre are no sessions during this period",
+  "has deleted post successfully":"has deleted post successfully",
+  "edit":"Edit",
+  "delete":"Delete"
 }

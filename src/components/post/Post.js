@@ -40,9 +40,9 @@ const Post = (props) => {
             fontWeight: 500,
             borderRadius: 4,
             color: "white",
-          }}
+          }} rel="noreferrer"
         >
-          {props.post.lang == "ar" ? "الرابط" : "Link"}
+          {props.post.lang === "ar" ? "الرابط" : "Link"}
         </a>
       );
       return "";
@@ -79,7 +79,7 @@ const Post = (props) => {
             cursor: "pointer",
             width: '100%'
           }}
-          alt="post image"
+          alt="post_image"
         />
         </div>
 
