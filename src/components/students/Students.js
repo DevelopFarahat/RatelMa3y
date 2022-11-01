@@ -63,13 +63,13 @@ const Students = () => {
             
         }else{
             if(pageNo.length !== 2){
-                console.log(currentPage)
+             
                /*
                     pageNo.reverse().splice(0,1);
                     pageNo.reverse();
                     */
-                    console.log(currentPage)
-                    console.log(pageNoCopy)
+                 
+             
                     if(currentPage-1 !== 1){
                         pageNo.reverse().splice(0,1);
                         pageNo.reverse();
@@ -78,7 +78,7 @@ const Students = () => {
                         pageNo.unshift(pNo);
                         setPageNo(pageNo);
                     }else{
-                        console.log(pageNoCopy)
+                 
                         setPageNo(pageNoCopy);
                     }
                     if(currentPage > 1)
@@ -87,7 +87,6 @@ const Students = () => {
                 if(currentPage > 1)
                 setCurrentPage(currentPage-1);
             }
-            console.log(pageNo);
         }  
     }
     const getTheNextPages = (event)=>{
@@ -135,14 +134,13 @@ const Students = () => {
             if(currentPage === 2 && pageNo.length < pageNoArrLength){
                 let pNoCopy = [...pageNoCopy];
                 pNoCopy.splice(0,1);
-                console.log(pNoCopy);
                  setPageNo(pNoCopy);
                  setCurrentPage(currentPage+1);
             }else{
                 if(pageNo.length > 2){
                     let pNoCopy = [...pageNo];
                     pNoCopy.splice(0,1);
-                    console.log(pNoCopy);
+
                      setPageNo(pNoCopy);
                      setCurrentPage(currentPage+1);
                 }else{
@@ -155,7 +153,6 @@ const Students = () => {
        }
        
     }
-    console.log(currentPage);
     return (
         <>
         <div className={studentStyles['students']}>

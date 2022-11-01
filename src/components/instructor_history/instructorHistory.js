@@ -11,15 +11,13 @@ const InstructorHistory = ({col1Name,col2Name,col3Name,arrName,selectedInstructo
     const [filterValue, setFilterValue] = useState('');
     const [selectedRow, setSelectedRow] = useState(-1);
     const filterAccounts = () => {
-        console.log(filterValue);
+        
         let filtarationArr = [];
-        console.log("selectedInstructorData");
-        console.log(selectedInstructorData)
-        console.log("selectedInstructorData");
+
         for (let i = 0; i < selectedInstructorData[arrName].length; i++) {
 
             if (selectedInstructorData[arrName][i].name.toLowerCase().includes(filterValue.toLowerCase())) {
-                console.log("inside name condition");
+          
                 filtarationArr.push(selectedInstructorData[arrName][i]);
 
             }
@@ -40,7 +38,7 @@ const InstructorHistory = ({col1Name,col2Name,col3Name,arrName,selectedInstructo
 
     const resetTableFiltaration = () => {
         setFilterValue('');
-        console.log(initialResponseSpecificInstructorData);
+    
         setSelectedInstructorData(initialResponseSpecificInstructorData.current);
     }
     const handleFiltaration = (event) => {

@@ -30,12 +30,12 @@ const Messages = ()=>{
                if(currentPage+1 !== pageNo[pageNo.length-1].index && Number(id) <= pageNo[pageNo.length-1].index  ){
                 //if(Number(id) !== pageNo[pageNo.length-1].index){
                     let pageNoCopy = [...pageNo];
-                    console.log("yaa am farahat rakez");
+    
                     pageNoCopy.splice(0,1)
                     setPageNo(pageNoCopy);
                }else{
                     if(Number(id) !== pageNoArrLength && Number(id) === 2 && lastPage.index !== 2){
-                    console.log("yaa rab saadny")
+    
                     let pNoCopy = [...pageNoCopy];
                     pNoCopy.splice(0,1);
                     setPageNo(pNoCopy);
@@ -48,13 +48,13 @@ const Messages = ()=>{
     const getThePreviousPages = (event)=>{
         let pNo = {};
         if(currentPage < pageNoArrLength  && pageNo.length === 2){ 
-            console.log("inshaa allah1")
+          
          /*
                 pageNo.reverse().splice(0,1);
                 pageNo.reverse();
                 */
                 if(currentPage-1 !== 1){
-                    console.log("insorna yaa allah");
+                 
                     pageNo.reverse().splice(0,1);
                     pageNo.reverse();
                     pNo.id = (pageNo[0].index-1)
@@ -70,16 +70,14 @@ const Messages = ()=>{
             
         }else{
             if(pageNo.length !== 2){
-                console.log("inshaa allah")
-                console.log(currentPage)
+    
                /*
                     pageNo.reverse().splice(0,1);
                     pageNo.reverse();
                     */
-                    console.log(currentPage)
-                    console.log(pageNoCopy)
+          
                     if(currentPage-1 !== 1){
-                        console.log("insorna yaa allah");
+              
                         pageNo.reverse().splice(0,1);
                         pageNo.reverse();
                         pNo.id = (pageNo[0].index-1)
@@ -87,8 +85,7 @@ const Messages = ()=>{
                         pageNo.unshift(pNo);
                         setPageNo(pageNo);
                     }else{
-                        console.log("mona zaki")
-                        console.log(pageNoCopy)
+             
                         setPageNo(pageNoCopy);
                     }
                     if(currentPage > 1)
@@ -97,7 +94,7 @@ const Messages = ()=>{
                 if(currentPage > 1)
                 setCurrentPage(currentPage-1);
             }
-            console.log(pageNo);
+         
         }  
     }
     const getTheNextPages = (event)=>{
@@ -113,12 +110,12 @@ const Messages = ()=>{
        }else{
         if( currentPage+1   >  pageNo[pageNo.length-1].index){
             if( pageNo.length > 2){
-                console.log("ياكريم اكرمنا");
+          
                 setCurrentPage(currentPage+1);
             }else{
                 
                 if( currentPage !== pageNoArrLength ){
-                    console.log("hgvplm lk uk")
+               
                     /*
                     let pNoCopy = [...pageNo];
                     pNoCopy.splice(0,1);
@@ -145,18 +142,18 @@ const Messages = ()=>{
   
           //  if(currentPage === 2 && pageNo.length < 9){
             if(currentPage === 2 && pageNo.length < pageNoArrLength){
-                console.log("yaa gamad ya farahat");
+             
                 let pNoCopy = [...pageNoCopy];
                 pNoCopy.splice(0,1);
-                console.log(pNoCopy);
+    
                  setPageNo(pNoCopy);
                  setCurrentPage(currentPage+1);
             }else{
                 if(pageNo.length > 2){
-                    console.log("ahha")
+               
                     let pNoCopy = [...pageNo];
                     pNoCopy.splice(0,1);
-                    console.log(pNoCopy);
+       
                      setPageNo(pNoCopy);
                      setCurrentPage(currentPage+1);
                 }else{
@@ -262,7 +259,7 @@ const Messages = ()=>{
             
             axios.put(`${process.env.REACT_APP_BACK_HOST_URL}/api/contacts/${msg._id}`,{status:'Read'},{headers:{'Access-Control-Allow-Origin': '*'}}).then((res)=>{
                 setFetchAgain(fetchAgain+1);
-                console.log(res.data)
+         
             }).catch((error)=>{
                 console.log(error);
             });

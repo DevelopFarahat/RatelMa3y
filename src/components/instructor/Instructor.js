@@ -139,7 +139,7 @@ const Instructor = () => {
                 if(pageNo.length > 2){
                     let pNoCopy = [...pageNo];
                     pNoCopy.splice(0,1);
-                    console.log(pNoCopy);
+                
                      setPageNo(pNoCopy);
                      setCurrentPage(currentPage+1);
                 }else{
@@ -165,7 +165,7 @@ const Instructor = () => {
     const [fetchAgain, setFetchAgain] = useState(0); //Just dummy number to tell that another fetch call is needed
 
     const handleFiltaration = (event) => {
-        console.log(event.target.value);
+  
         setFilterValue(event.target.value);
     };
 
@@ -222,7 +222,7 @@ const Instructor = () => {
                 break;
             case "avaliable":
                 sortedInstructorArr.sort((a, b) => {
-                    console.log("yes man");
+              
                     return Number(b.is_available) - Number(a.is_available);
                 });
                 break;

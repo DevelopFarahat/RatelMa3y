@@ -286,7 +286,6 @@ const [sessionInfo,setSessionInfo] = useState([]);
    SessionAttendanceAndEvaluationArr.push(stdSessionDetails);
   }
   setSessionInfo(SessionAttendanceAndEvaluationArr);
-  console.log(studentSessionsDetails)
 
   },[specificStudentJoiningRequestData,studentSessionsDetails])
 

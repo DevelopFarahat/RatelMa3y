@@ -64,8 +64,7 @@ const AddPost = ({ isEditeComponentVisible, posInfo, setPosInfo, setIsEditeCompo
   };
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(postData);
-    console.log(posInfo)
+
     let contentWithoutBackslash = !posInfo? postData.content.replace(/(\r\n|\n|\r)/gm, "") : posInfo.content.replace(/(\r\n|\n|\r)/gm, "")
     let post = {
       article_img: !posInfo ? postImage : posInfo['article_img'],

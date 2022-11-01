@@ -1857,7 +1857,6 @@ const StudentSubscriptionState = ({
     axios.get(`${process.env.REACT_APP_BACK_HOST_URL}/api/sessions?user_id=${stdObji._id}&limit=10000000000000000`,{headers:{'Access-Control-Allow-Origin': '*'}}).then((res) => {
       initialStudentSessionsDetails.current = res.data.data;
       setStudentSessionsDetails(res.data.data);
-      console.log(res.data.data)
     }).catch((error) => {
       console.log(error);
     })
@@ -1966,7 +1965,6 @@ const StudentSubscriptionState = ({
           ,{headers:{'Access-Control-Allow-Origin': '*'}}
         )
         .then((res) => {
-          console.log("yes res");
           setStudentStatus((current) => !current);
           setStudentConfiguration({
             studentStatus: "",

@@ -83,7 +83,6 @@ import EmptyDataImage from "../../assets/images/empty.png";
         }
 
     },[selectedInstructorData])
-    console.log(scheduleDate)
     return(
         <>
            <section className={InstructorSessionsScheduleStyles['sessions-schedule-main']} style={{direction:t("us")=== t("Us")?'ltr':'rtl'}}>

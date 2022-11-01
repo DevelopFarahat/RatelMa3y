@@ -84,14 +84,12 @@ const SystemUsers = () => {
           pageNo.unshift(pNo);
           setPageNo(pageNo);
         } else {
-          console.log(pageNoCopy);
           setPageNo(pageNoCopy);
         }
         if (currentPage > 1) setCurrentPage(currentPage - 1);
       } else {
         if (currentPage > 1) setCurrentPage(currentPage - 1);
       }
-      console.log(pageNo);
     }
   };
   const getTheNextPages = (event) => {
@@ -136,14 +134,13 @@ const SystemUsers = () => {
         if (currentPage === 2 && pageNo.length < pageNoArrLength) {
           let pNoCopy = [...pageNoCopy];
           pNoCopy.splice(0, 1);
-          console.log(pNoCopy);
           setPageNo(pNoCopy);
           setCurrentPage(currentPage + 1);
         } else {
           if (pageNo.length > 2) {
             let pNoCopy = [...pageNo];
             pNoCopy.splice(0, 1);
-            console.log(pNoCopy);
+
             setPageNo(pNoCopy);
             setCurrentPage(currentPage + 1);
           } else {
@@ -690,7 +687,6 @@ const SystemUsers = () => {
         .then((res) => {
           setFetchAgain(fetchAgain + 1);
           setSelectedRow(-1);
-          console.log(res.data);
           setUserData({
             _id: "",
             email: "",
@@ -906,7 +902,6 @@ const SystemUsers = () => {
           userDataCopy[i].precedence = 0;
         }
       } else if (event.target.value === 'SUPERVISOR') {
-        console.log(true);
         if (userDataCopy[i].privileges === 'Admin') {
           userDataCopy[i].precedence = 1;
         } else if (userDataCopy[i].privileges === 'Supervisor') {
