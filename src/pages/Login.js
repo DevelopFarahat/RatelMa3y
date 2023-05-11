@@ -1,5 +1,3 @@
-/** @format */
-
 import React, { useContext } from "react";
 import { Button, Form, InputGroup } from "react-bootstrap";
 import { useFormik } from "formik";
@@ -8,9 +6,9 @@ import { IoMdMail } from "react-icons/io";
 import { AiFillLock } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import UserContext from "../utils/UserContext";
 import { useSnackbar } from "notistack";
 import { useTranslation } from "react-i18next";
+import UserContext from "../utils/UserContext";
 // import './Login.css'
 
 export default function Login() {

@@ -33,17 +33,18 @@ function KeepInTuch() {
       <h2>{t("keepintouch_title")}</h2>
       <h4>{t("keepintouch_texttitle")}</h4>
       <div className={KeepCss.keepinput}>
-        <Form>
-          <Form.Group className='mb-3' controlId='formBasicEmail'>
-            <Form.Control
-              type='email'
-              placeholder={t("keepintouch_hint_email")}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </Form.Group>
-          <Button variant='danger' onClick={confirm}>
+        <Form className="input-group" style={{minWidth: 310,width: '90%', maxWidth: 420, marginInline: "auto"}}>
+          <Button variant='danger' onClick={confirm} className="btn btn-danger mx-0">
             {t("keepintouch_subscribe")}
           </Button>{" "}
+
+          <Form.Control controlId='formBasicEmail'
+            className="form-control"
+            dir="rtl"
+            type='email'
+            placeholder={t("keepintouch_hint_email")}
+            onChange={(e) => setEmail(e.target.value)}
+          />
         </Form>
       </div>
     </div>

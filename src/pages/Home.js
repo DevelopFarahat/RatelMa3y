@@ -1,10 +1,12 @@
 import React from "react";
-import SliderHome from "./../components/sliderHome/SliderHome";
-import Statistics from "../components/statistics/Statistics";
-import Programs from "./../components/programs/Programs";
-import Features from "./../components/ourfeatures/Features";
-import ContactUs from "./../components/contactus/ContactUs";
-import KeepInTuch from "./../components/keepintouch/KeepInTuch";
+import {
+  SliderHome,
+  Statistics,
+  Programs,
+  Features,
+  ContactUs,
+  KeepInTuch
+} from '../components'
 
 export default function Home({ t, i18n }) {
   return (

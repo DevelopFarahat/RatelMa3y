@@ -1,31 +1,13 @@
 import "./App.css";
-import NavBar from "./components/navbar/NavBar";
 import { Routes, Route, Navigate, Outlet } from "react-router-dom";
-import Home from "./pages/Home";
-import Aboutus from "./pages/Aboutus";
-import Contact from "./pages/Contact";
-import Sessions from "./components/sessions/Sessions";
-import AdminPanel from "./components/admin_panel/Admin_Panel";
-import SystemUsers from "./components/system_users/SystemUsers";
-import AddPost from "./components/add_post/AddPost";
-import Student from "./components/students/Students";
-import PostsBoard from "./components/posts_board/Posts_board";
-import PostDetails from "./components/post_details/PostDetails";
-import StudentRegistrationForm from "./components/student_registration/StudentRegistrationForm";
 import { useTranslation } from "react-i18next";
-import Footer from "./components/footer/Footer";
-import ScrollToTop from "./utils/ScrollToTop";
-import Instructor from "./components/instructor/Instructor";
-import Room from "./components/room/Room";
-import Login from "./pages/Login";
-import UserContext from "./utils/UserContext";
-import React, { useContext, useEffect, useState } from "react";
-import RoomSideBar from "./components/room-side-bar/RoomSideBar";
-import Forgot from "./pages/Forgot";
-import ManageAcc from "./pages/ManageAcc";
-import Messages from "./components/messages/message";
-import BookBoard from "./components/quran_board/BookBoard";
+import React, { useContext, useEffect, useState, lazy, Suspense } from "react";
 import { HelmetProvider } from 'react-helmet-async'
+
+import ScrollToTop from "./utils/ScrollToTop";
+import UserContext from "./utils/UserContext";
+import { Home, Aboutus, Contact, Login, Forgot, ManageAcc } from './pages';
+import { NavBar, Sessions, AdminPanel, SystemUsers, AddPost, Student, PostsBoard, PostDetails, StudentRegistrationForm, Footer, Instructor, Room, RoomSideBar, Messages, BookBoard } from './components'
 
 function App() {
   const [t, i18n] = useTranslation();
@@ -35,7 +17,7 @@ function App() {
   const { isLoading } = useContext(UserContext);
 
   useEffect(() => {
-    if (!localStorage.getItem("i18nextLng") || localStorage.getItem("i18nextLng")=== 'en-US') {
+    if (!localStorage.getItem("i18nextLng") || localStorage.getItem("i18nextLng") === 'en-US') {
       localStorage.setItem("i18nextLng", 'ar');
       i18n.changeLanguage("ar")
     }
@@ -62,7 +44,7 @@ function App() {
           />
 
           <div style={{ height: 86 }}></div>
-          <div style={{ minHeight: "100vh",position:'relative'}}>
+          <div style={{ minHeight: "100vh", position: 'relative' }}>
             <div onClick={setExpanded.bind(this, false)}>
               <Routes>
                 <Route path="/" element={<Navigate to="home" replace />} />

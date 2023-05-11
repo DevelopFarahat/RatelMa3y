@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import StudentRegistrationFormStyles from "./StudentRegistrationForm.module.css";
 import { ImPrevious2 } from "react-icons/im";
 import { TbPlayerTrackNext } from "react-icons/tb";
-import ReadQuranImg from "../../assets/images/read-quran.jpg";
+import ReadQuranImg from "../../assets/images/read-quran.webp";
 import Spinner from "react-bootstrap/Spinner";
 import { useTranslation } from "react-i18next";
 import Form from "react-bootstrap/Form";

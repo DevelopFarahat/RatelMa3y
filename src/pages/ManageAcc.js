@@ -1,10 +1,10 @@
-import React, { useContext, useEffect, useState } from "react";
-import Changepassword from "../components/account_manage/changepassword";
-import Formikform from "../components/account_manage/form2formik";
-import UserContext from "../utils/UserContext";
-import malePic from "../assets/images/male.png";
-import femalePic from "../assets/images/female.png";
+import React, { useContext } from "react";
 import { useTranslation } from "react-i18next";
+
+import {Changepassword, Formikform } from "../components";
+import UserContext from "../utils/UserContext";
+import malePic from "../assets/images/male.webp";
+import femalePic from "../assets/images/female.webp";
 
 export default function ManageAcc() {
   const { user, setUser } = useContext(UserContext)
