@@ -1,63 +1,46 @@
 import React, { useEffect, useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router";
+import { useParams } from "react-router";
+import { Link } from "react-router-dom";
+
 import PostDetailsStyles from "./PostDetails.module.css";
 import { IoChevronBack } from "react-icons/io5";
 import { TbUrgent } from "react-icons/tb";
 import { useTranslation } from "react-i18next";
 import { Helmet } from "react-helmet-async";
+import axios from "axios";
+import HeadTags from "../head/Head";
 
 const PostDetails = () => {
-  const location = useLocation();
-  const navigate = useNavigate();
+  const params = useParams();
   const { t } = useTranslation();
-
   const [postDetails, setPostDetails] = useState({});
+
   useEffect(() => {
-    setPostDetails(location.state);
+    axios
+      .get(`${process.env.REACT_APP_BACK_HOST_URL}/api/events/${params.slug}`)
+      .then((res) => setPostDetails(res.data))
+
   }, []);
 
   //Find link and separate it in new item
-  const urlRegex =
-    /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gi;
+  // const urlRegex =
+  //   /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gi;
 
   let link = "";
 
-  function linkify(text) {
-    return text?.replace(urlRegex, function (url) {
-      link = (
-        <a
-          href={url}
-          target="_blank"
-          style={{
-            backgroundColor: "#198754",
-            padding: 8,
-            paddingInline: 16,
-            textDecoration: "none",
-            fontWeight: 500,
-            borderRadius: 4,
-            color: "white",
-          }} rel="noreferrer"
-        >
-          {postDetails.lang == "ar" ? "الرابط" : "Link"}
-        </a>
-      );
-      return "";
-    });
-  }
-
   return (
     <>
-     {/*<Helmet>
-        <title>{postDetails.title?? 'Ratel May | رتل معي'}</title>
-        <link rel="canonical" href="https://www.tacobell.com/" />
-  </Helmet> */}
+      <Helmet>
+        {HeadTags({ title: postDetails.title, summary: postDetails.summary, url: `${process.env.REACT_APP_FRONT_HOST_URL}/events/${postDetails.slug}`, img: postDetails.article_img, keywords: postDetails.keywords })}
+      </Helmet>
       <div className={PostDetailsStyles["post-details-main-container"]}>
         <img
           src={postDetails.article_img}
-          className={PostDetailsStyles["post-image-details"]}
-          alt="Post_Image"
+          className="rounded-4 w-100"
+          style={{ maxHeight: '60vh', objectFit: 'cover' }}
         />
-        <div
+
+        <h5
           className={PostDetailsStyles["post-details-title"]}
           style={{ direction: postDetails?.lang === "ar" ? "rtl" : "ltr" }}
         >
@@ -68,25 +51,31 @@ const PostDetails = () => {
               <TbUrgent style={{ marginBottom: "5px" }} />
             </span>
           ) : null}
-        </div>
+        </h5>
+
+
+        {/* TODO here should be you incoming html page */}
         <div
           className={PostDetailsStyles["post-details"]}
           style={{ direction: postDetails?.lang === "ar" ? "rtl" : "ltr" }}
         >
           <span className={PostDetailsStyles["post-paragarph"]}>
-            {linkify(postDetails.content)}
+            {<div dangerouslySetInnerHTML={{ __html: postDetails.content }}></div>}
           </span>
           {link !== "" && <span>{link}</span>}
         </div>
-        <button
+
+
+        <Link
+          to="/events"
           type="button"
           style={{ direction: "ltr" }}
           className={PostDetailsStyles["btn"]}
-          onClick={() => navigate(-1)}
         >
+
           <IoChevronBack size={20} style={{ marginTop: "3px" }} />
           {t("events_back")}
-        </button>
+        </Link>
       </div>
     </>
   );

@@ -9,11 +9,11 @@
   -ms-border-radius: 5px;
   -o-border-radius: 5px;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  padding: 20px;
+  /* padding: 20px; */
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
-  align-items:center;
+  align-items:start;
   flex-wrap: wrap;
 }
 .add-post-main-container-center{
@@ -30,7 +30,12 @@
   width:30%;
   display: flex;
   flex-direction: column;
-
+  padding-inline: 12px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  position: sticky;
+  top: 90px;
+  right: 10px;
 }
 .post-image-area {
     height: 259px;
@@ -97,6 +102,8 @@ input[type="file"] {
 }
 .btn {
   width: 10%;
+  min-width: max-content;
+
   outline: none;
   border: none;
   border-radius: 5px;
@@ -107,7 +114,7 @@ input[type="file"] {
   text-align: center;
   font-size: 1rem;
   text-transform: capitalize;
-  padding: 8px 8px;
+  padding: 8px 16px;
   background-color: #198754;
   margin-top: 20px;
   color: #ffffff;
@@ -128,6 +135,7 @@ input[type="file"] {
 .posting-button-container{
   width:100%;
   padding:20px;
+  min-width: max-content;
 }
 .btn-post-image-settings{
   display: flex;
@@ -198,9 +206,12 @@ input[type="file"] {
     flex-direction: column;
     padding:15px;
     width:95%;
+    position: relative;
   }
   .add-post-main-container > .image-posting-settings-container{
-    width:100%
+    width:100%;
+    position: static;
+
   }
   .post-title-content-container{
     width:100%;

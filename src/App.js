@@ -89,7 +89,7 @@ function App() {
                 </Route>
 
                 <Route path="events" element={<PostsBoard />} />
-                <Route path="events/:id" element={<PostDetails />} />
+                <Route path="events/:slug" element={<PostDetails />} />
 
                 <Route
                   element={

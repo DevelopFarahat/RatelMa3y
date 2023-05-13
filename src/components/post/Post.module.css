@@ -40,6 +40,8 @@
     height: 294.047px;
     display: block;
     margin: auto;
+    object-fit: cover;
+    object-position: center;
     border-radius: 5px;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
@@ -63,24 +65,27 @@
 }
 .post-header{
     width: 100%;
-    padding: 15px 0 0 43px;
+    /* padding: 15px 0 0 43px; */
     line-height: 1.5;
+    font-weight: 700;
+    font-size: 1.4rem;
     text-transform: capitalize;
     letter-spacing: .5px;
     word-spacing: 1px;
-    font-family: 'Times New Roman', Times, serif;
-    margin-left: 16px;
+    /* margin-left: 16px; */
 }
 .post-details{
-    width: 95%;
+    width: 100%;
     text-align: start;
-    line-height: 2.5;
+    margin-top: 8px;
+    line-height: 1.7;
     white-space: pre-line;
     cursor: "pointer";
     text-overflow: ellipsis;
     letter-spacing: .5px;
     word-spacing: 1px;
-    font-size: 1rem;
+    font-size: 1.1rem;
+    color: rgb(149, 149, 149);
     font-family: 'Times New Roman', Times, serif;
 }
 .read-more{

@@ -11,7 +11,6 @@
     opacity: 1;
 }
 .post-more-option{
-    position: absolute;
     top:0;
     right:0;
     font-family: 'Times New Roman', Times, serif;
@@ -39,8 +38,9 @@
     align-items: center;
     position: absolute;
     top: 30px;
-    right:0;
+    left:0;
     padding:0;
+    padding-inline: 16px;
     list-style-type: none;
     border-radius: 5px;
     -webkit-border-radius: 5px;
@@ -67,7 +67,7 @@
     width:100%;
     height: calc(100%/2);
     box-sizing: border-box;
-    padding-left: 10px;
+    padding-inline: 10px;
     cursor: pointer;
     
 }

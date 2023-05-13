@@ -20,7 +20,7 @@ const Post = (props) => {
       minute: "2-digit",
     }
   );
-  
+
   const urlRegex =
     /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gi;
 
@@ -51,7 +51,7 @@ const Post = (props) => {
 
   return (
     <Link
-      to={`/events/${props.post._id}`}
+      to={`/events/${props.post.slug}`}
       state={props.post}
       className={PostStyles["read-more"]}
       style={{
@@ -66,59 +66,58 @@ const Post = (props) => {
         : null}
       <div className={PostStyles["post-main-container"]}>
         <div className={PostStyles['post-image-container']}>
-        {props.latestPost._id === props.post._id ? (
-          <span className={PostStyles["latest-post"]}>
-            {t("events_latest")}
-            <TbUrgent style={{ marginBottom: "5px" }} />
-          </span>
-        ) : null}
-                <img
-          src={props.post.article_img}
-          className={`${PostStyles["post-image"]}`}
-          style={{
-            cursor: "pointer",
-            width: '100%'
-          }}
-          alt="post_image"
-        />
-        </div>
-
-        <div style={{ minHeight: "100%",width: '100%' }}>
-          <h3
-            className={PostStyles["post-header"]}
+          {props.latestPost._id === props.post._id ? (
+            <span className={PostStyles["latest-post"]}>
+              {t("events_latest")}
+              <TbUrgent style={{ marginBottom: "5px" }} />
+            </span>
+          ) : null}
+          <img
+            src={props.post.article_img}
+            className={`${PostStyles["post-image"]}`}
             style={{
               cursor: "pointer",
+              width: '100%'
             }}
+            alt="post_image"
+          />
+        </div>
+
+        <div style={{ minHeight: "100%", width: '100%' }} dir="rtl">
+          <h3
+            className={PostStyles["post-header"]}
+            role="button"
           >
             {props.post.title}
           </h3>
-            {props.post.content.split(" ").length > 63  ? (
+          {props.post.content.split(" ").length > 63 ? (
             <span
               className={PostStyles["post-details"]}
               style={{
                 cursor: "pointer",
-                height:'200px',
+                height: '200px',
                 marginBottom: 40
-                
+
               }}
             >
-              {props.post.content.substring(0, 374)}
+              {(props.post.summary?.substring(0, 374))}
             </span>
           ) : (
             <p className={PostStyles["post-details"]}
-            style={{
-              cursor: "pointer",
-              minHeight:'200px'
-            }}
+              style={{
+                cursor: "pointer",
+                minHeight: '200px'
+              }}
             >
-              {" "}{""}{linkify(props.post.content)}
+              {" "}{""}{props.post.summary}
             </p>
           )}
 
-          <span className={PostStyles["post-date"]}>
-            <BsCalendarDate size={15}/>{" "}
-            {dateClearified}
-          </span>
+            <span className={PostStyles["post-date"]}>
+              <BsCalendarDate size={15} />{" "}
+              {dateClearified}
+            </span>
+
         </div>
       </div>
     </Link>

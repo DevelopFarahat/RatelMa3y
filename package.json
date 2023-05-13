@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@ckeditor/ckeditor5-react": "^6.0.0",
     "@daily-co/daily-js": "^0.29.0",
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",
@@ -12,6 +13,7 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^0.27.2",
     "bootstrap": "^5.2.1",
+    "ckeditor5-custom-build": "file:ckeditor5",
     "formik": "^2.2.9",
     "i18next-browser-languagedetector": "^6.1.5",
     "notistack": "^2.0.5",

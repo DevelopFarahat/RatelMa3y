@@ -5,15 +5,16 @@ import React, {
   useCallback,
   useRef,
 } from "react";
-import Post from "../post/Post";
-import PostBoardStyles from "./PostsBoard.module.css";
 import axios from "axios";
-import UserContext from "../../utils/UserContext";
-import WarningIcon from "../../assets/images/warning.png";
 import { useTranslation } from "react-i18next";
-import CircleGif from "../../assets/images/check-circle.gif";
 import Form from "react-bootstrap/Form";
+
+import UserContext from "../../utils/UserContext";
+import PostBoardStyles from "./PostsBoard.module.css";
+import WarningIcon from "../../assets/images/warning.png";
+import CircleGif from "../../assets/images/check-circle.gif";
 import AddPost from "../add_post/AddPost";
+import Post from "../post/Post";
 
 const PostsBoard = () => {
   const { isLoading, setIsLoading } = useContext(UserContext);
@@ -168,20 +169,26 @@ const PostsBoard = () => {
     <>
       <div className={PostBoardStyles["post-board"]}>
         {posts?.map((post, index, arr) => {
-          if (index === posts.length - 1)
-            return (
-              <div
-                ref={lastPostElementRef}
-                style={{
-                  width: "100%",
-                  position: "relative",
-                }}
-                key={post._id}
-              >
+          return (
+            <div
+              ref={lastPostElementRef}
+              dir={t("us") === t("Us") ? "ltr" : "rtl"}
+              style={{
+                width: "100%",
+                position: "relative",
+
+              }}
+              className="d-flex justify-content-between"
+              key={post._id}
+            >
+              <Post post={post} latestPost={arr[0]} />
+              
+              <div>
                 {user && user?.privileges === "Admin" ? (
                   <>
                     <button
                       className={PostBoardStyles["post-more-option"]}
+                      style={{ right: t("us" === "Us") ? 0 : 'auto', left: t("us" === "Us") ? 'auto' : 0 }}
                       id={post._id}
                       onClick={handleMoreOptionVisibility}
                     >
@@ -191,7 +198,7 @@ const PostsBoard = () => {
                       className={PostBoardStyles["more-option-menu-list"]}
                       style={
                         selectedPostMoreOption === post._id &&
-                        isMoreOptionVisible
+                          isMoreOptionVisible
                           ? styles.moreOptionVisible
                           : styles.moreOptionHidden
                       }
@@ -221,59 +228,9 @@ const PostsBoard = () => {
                     </ul>
                   </>
                 ) : null}
-                <Post post={post} latestPost={arr[0]} />
               </div>
-            );
-          else
-            return (
-              <div
-                style={{
-                  width: "100%",
-                  position: "relative",
-                }}
-                key={post._id}
-              >
-                <button
-                  className={PostBoardStyles["post-more-option"]}
-                  id={post._id}
-                  onClick={handleMoreOptionVisibility}
-                >
-                  ...
-                </button>
-                <ul
-                  className={PostBoardStyles["more-option-menu-list"]}
-                  style={
-                    selectedPostMoreOption === post._id && isMoreOptionVisible
-                      ? styles.moreOptionVisible
-                      : styles.moreOptionHidden
-                  }
-                >
-                  <li
-                    onClick={(event) =>
-                      handleEditComponentVisibility(event, post._id)
-                    }
-                    style={{
-                      textAlign: t("us") === t("Us") ? "start" : "end",
-                      padding:
-                        t("us") === t("Us") ? "0 0 0 10px" : "0 10px 0 0",
-                    }}
-                  >
-                    {t("edit")}
-                  </li>
-                  <li
-                    onClick={(event) => deletePost(event, post._id)}
-                    style={{
-                      textAlign: t("us") === t("Us") ? "start" : "end",
-                      padding:
-                        t("us") === t("Us") ? "0 0 0 10px" : "0 10px 0 0",
-                    }}
-                  >
-                    {t("delete")}
-                  </li>
-                </ul>
-                <Post post={post} latestPost={arr[0]} />
-              </div>
-            );
+            </div>
+          )
         })}
         {isUserDeleteAnyPost ? (
           <div className={PostBoardStyles["alert-container"]}>

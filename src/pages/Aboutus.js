@@ -13,11 +13,17 @@ import AboutCss from "./Aboutus.module.css";
 import aboutus from "../assets/images/aboutus.webp";
 import about11 from "../assets/images/about1.webp";
 
-
+import { Helmet } from "react-helmet-async";
+import HeadTags from "../components/head/Head";
 
 function Aboutus() {
   const [t, i18n] = useTranslation();
   return (
+    <>
+    <Helmet>
+      {HeadTags({ title: 'عنا', summary: "معلومات عن مدرسة رتل معي", url: `${process.env.REACT_APP_FRONT_HOST_URL}/about`, img: '%PUBLIC_URL%/logo.webp', keywords: "Ratel May, رتل معي, قرآن كريم, Ratel May Academy" })}
+    </Helmet>
+
     <div
       style={{ direction: t("us") === "Us" ? "ltr" : "rtl" }}
       className={AboutCss.about}>
@@ -63,6 +69,7 @@ function Aboutus() {
         </Container>
       </div>
     </div>
+    </>
   );
 }
 export default Aboutus;

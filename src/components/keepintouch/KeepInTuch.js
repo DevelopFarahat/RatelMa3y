@@ -40,7 +40,7 @@ function KeepInTuch() {
 
           <Form.Control controlId='formBasicEmail'
             className="form-control"
-            dir="rtl"
+            dir={ t("us") === "Us" ? "ltr" : "rtl"}
             type='email'
             placeholder={t("keepintouch_hint_email")}
             onChange={(e) => setEmail(e.target.value)}

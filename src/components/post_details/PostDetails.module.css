@@ -24,7 +24,7 @@
   text-align: center;
   text-transform: capitalize;
   /* font-weight: bold; */
-  font-size: 1rem;
+  font-weight: 700;
   position: relative;
   background-image: linear-gradient(to bottom,rgb(244, 244, 244),white);
   /* box-shadow:  0 0px 8px 0 rgba(0, 0, 0, 0.2), 0 0px 0px 0 rgba(255, 255, 255, 0.19);; */
@@ -48,6 +48,7 @@
 }
 .btn {
   width: 170px;
+  text-decoration: none;
   outline: none;
   border: none;
   border-radius: 5px;
@@ -62,6 +63,9 @@
   background-color: #198754;
   margin-top: 20px;
   color: #ffffff;
+}
+.btn:hover{
+  color: white;
 }
 .latest-post-badge {
   position: absolute;
