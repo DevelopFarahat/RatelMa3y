@@ -3,11 +3,28 @@ import { Routes, Route, Navigate, Outlet } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import React, { useContext, useEffect, useState, lazy, Suspense } from "react";
 import { HelmetProvider } from 'react-helmet-async'
-
 import ScrollToTop from "./utils/ScrollToTop";
 import UserContext from "./utils/UserContext";
-import { Home, Aboutus, Contact, Login, Forgot, ManageAcc } from './pages';
-import { NavBar, Sessions, AdminPanel, SystemUsers, AddPost, Student, PostsBoard, PostDetails, StudentRegistrationForm, Footer, Instructor, Room, RoomSideBar, Messages, BookBoard } from './components'
+import { Home, Login, ManageAcc } from './pages';
+import { NavBar, Footer,BookBoard} from './components';
+const AdminPanel = lazy(()=> import ("./components/admin_panel/Admin_Panel"));
+const SystemUsers = lazy(()=> import ("./components/system_users/SystemUsers"));
+const AddPost = lazy(()=>import ("./components/add_post/AddPost"));
+const Student = lazy(()=>import ("./components/students/Students"));
+const PostsBoard  = lazy(()=>import ("./components/posts_board/Posts_board"));
+const PostDetails  = lazy(()=>import ("./components/post_details/PostDetails"));
+const Instructor =lazy(()=>import ("./components/instructor/Instructor"));
+const Messages = lazy(()=>import("./components/messages/message"));
+const Sessions = lazy(()=>import("./components/sessions/Sessions"));
+const Room = lazy(()=>import("./components/room/Room"));
+const RoomSideBar = lazy(()=>import("./components/room-side-bar/RoomSideBar"));
+const Contact = lazy(()=>import("./pages/Contact"));
+const Aboutus = lazy(()=>import("./pages/Aboutus"));
+const Forgot = lazy(()=>import("./pages/Forgot"));
+const StudentRegistrationForm = lazy(()=>import("./components/student_registration/StudentRegistrationForm"));
+
+
+
 
 function App() {
   const [t, i18n] = useTranslation();
@@ -46,6 +63,7 @@ function App() {
           <div style={{ height: 86 }}></div>
           <div style={{ minHeight: "100vh", position: 'relative' }}>
             <div onClick={setExpanded.bind(this, false)}>
+              <Suspense fallback={<div>Loding.....</div>}>
               <Routes>
                 <Route path="/" element={<Navigate to="home" replace />} />
                 <Route path="home" element={<Home />} />
@@ -111,6 +129,7 @@ function App() {
 
                 <Route path="*" element={<Navigate to="home" replace />} />
               </Routes>
+              </Suspense>
             </div>
           </div>
           <Footer isRoomPrepared={isRoomPrepared} />
