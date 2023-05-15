@@ -106,7 +106,19 @@ const PostsBoard = () => {
     getSpecificPostDetails(postObji);
   };
   const getSpecificPostDetails = (pObji) => {
-    setPosInfo(posts[pObji.postArrIndex]);
+    
+   
+    let blogPost = {
+      title: pObji.title,
+      content: pObji.content,
+      image: pObji.article_img,
+      slug: pObji.slug,
+      keywords: pObji.keywords,
+      summary: pObji.summary,
+      lang: pObji.lang,
+    }
+  
+    setPosInfo(blogPost);
   };
   const distroyBackrop = (e) => {
     e.stopPropagation();

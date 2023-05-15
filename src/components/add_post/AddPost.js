@@ -65,7 +65,7 @@ const AddPost = ({
         ? setPostData((prev) => ({ ...prev, image: dataURL }))
         : setPosInfo({
           ...posInfo,
-          article_img: dataURL,
+          image: dataURL,
         });
     };
     reader.readAsDataURL(event.target.files[0]);
@@ -90,7 +90,7 @@ const AddPost = ({
     posInfo
       ? setPosInfo({
         ...posInfo,
-        article_img: "",
+        image: "",
       })
       : setPostData((prev) => ({
         ...prev,
@@ -121,7 +121,7 @@ const AddPost = ({
     event.preventDefault();
     // let contentWithoutBackslash = !posInfo ? postData.content.replace(/(\r\n|\n|\r)/gm, "") : posInfo.content.replace(/(\r\n|\n|\r)/gm, "")
     let post = {
-      article_img: !posInfo ? postData.image : posInfo["article_img"],
+      image: !posInfo ? postData.image : posInfo["image"],
       content: `${!posInfo ? postData.content : posInfo["content"]}`,
       title: !posInfo ? postData.title : posInfo["title"],
       slug: !posInfo ? postData.slug : posInfo["slug"],
@@ -149,6 +149,7 @@ const AddPost = ({
         })
         .catch((err) => console.error(err));
     } else {
+      console.log("ji")
       axios
         .put(
           `${process.env.REACT_APP_BACK_HOST_URL}/api/events/${posInfo._id}`,
@@ -181,7 +182,9 @@ const AddPost = ({
 
   function checkIfEmpty(name) {
    // console.log("check on", name);
-    if (!posInfo ? postData[name].length === 0 : posInfo[name].length === 0) {
+   
+    if (!posInfo ? postData[name] == "" : posInfo[name] == "") {
+
       setError((prev) => {
         let obj = { ...prev };
         obj[name + "Error"] = t(name + "Error");
@@ -256,9 +259,9 @@ const AddPost = ({
                 alt={"post_image"}
               />
             ) : posInfo !== undefined ? (
-              posInfo["article_img"] !== "" ? (
+              posInfo["image"] !== "" ? (
                 <img
-                  src={posInfo["article_img"]}
+                  src={posInfo["image"]}
                   className={AddPostStyles["image-post"]}
                   alt={"post_image"}
                 />
