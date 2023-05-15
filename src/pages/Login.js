@@ -10,13 +10,14 @@ import { useSnackbar } from "notistack";
 import { useTranslation } from "react-i18next";
 import UserContext from "../utils/UserContext";
 // import './Login.css'
-
+import { Helmet } from "react-helmet-async";
+import HeadTags from "../components/head/Head"
 export default function Login() {
   const navigate = useNavigate();
   const { setUser, setIsLoading } = useContext(UserContext);
   const { t } = useTranslation();
   const { enqueueSnackbar } = useSnackbar();
-
+;
   const initialValues = {
     email: "",
     password: "",
