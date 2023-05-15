@@ -1797,7 +1797,7 @@ const SystemUsers = () => {
                         <td>{userAccount.name}</td>
                         <td>{userAccount.email}</td>
                         <td>{userAccount.mobile}</td>
-                        {!deleteAlertConfirmation && staffAccount._id === userAccount._id?<td>{t("Scanning.....")}</td>:<>
+                        {!deleteAlertConfirmation && staffAccount._id === userAccount._id?<td style={{color:'#E8110F'}}>{t("Scanning.....")}</td>:<>
                         <td>
                           {userAccount.privilages ?? userAccount.privileges}
                         </td>

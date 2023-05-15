@@ -3478,7 +3478,7 @@ const StudentSubscriptionState = ({
                   >
                     <td>{stdData.name}</td>
                     <td>{stdData.subscription_state}</td>
-                    {!deleteAlertConfirmation && changableSubscriptionState._id === stdData._id?<td>{t("Scanning.....")}</td>:<td>
+                    {!deleteAlertConfirmation && changableSubscriptionState._id === stdData._id?<td style={{color:'#E8110F'}}>{t("Scanning.....")}</td>:<td>
                       <AiFillSetting
                         className={
                           StudentSubscriptionStyles["setting-icon-hidden"]

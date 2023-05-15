@@ -477,7 +477,7 @@ const [isUserConfirmedDeletion,setisUserConfirmedDeletion] = useState(false);
                                         <td>{ms.phone}</td>
                                         <td>{ms.date.split("T")[0]}</td>
                                         <td>{ms.status}</td>
-                                        {!deleteAlertConfirmation && changeableMsg._id === ms._id?<td>{t("Scanning.....")}</td>:<td><FaTrash  onClick={(event)=>deleteMessage(event,ms)}/></td>}
+                                        {!deleteAlertConfirmation && changeableMsg._id === ms._id?<td style={{color:'#E8110F'}}>{t("Scanning.....")}</td>:<td><FaTrash  onClick={(event)=>deleteMessage(event,ms)}/></td>}
                                         
                                     </tr>
                                 ))}
