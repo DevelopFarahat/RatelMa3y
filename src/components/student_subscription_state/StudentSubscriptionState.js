@@ -68,6 +68,7 @@ const StudentSubscriptionState = ({
   const [changableSubscriptionState, setChangableSubscriptionState] = useState(
     {}
   );
+  const [isUserConfirmedDeletion,setisUserConfirmedDeletion] = useState(false);
   const [isAlertVisible, setIsAlertVisible] = useState(false);
   const [isUserDeleteAnyAccount, setIsUserDeleteAnyAccount] = useState(false);
   const [typeOfProcess, setTypeOfProcess] = useState("");
@@ -3355,6 +3356,7 @@ const StudentSubscriptionState = ({
     //let deleteReservedStudentDaysAndHours = () => {
       if (event.currentTarget.value === 'confirm' || donnotAskmeAgain ===  true) {
         let stdAcc = studentAccountObji === undefined ? changableSubscriptionState : studentAccountObji;
+        setisUserConfirmedDeletion(true);
       return new Promise((resolve, reject) => {
         resolve(
           axios.delete(`${process.env.REACT_APP_BACK_HOST_URL}/api/students/${stdAcc._id}`,{headers:{},data:{instructorID:stdAcc.instructor}}).then((res) => {
@@ -3365,6 +3367,7 @@ const StudentSubscriptionState = ({
             setTimeout(() => {
               setIsUserDeleteAnyAccount(false);
             }, 1000);
+            setisUserConfirmedDeletion(false);
             handleStudentBusyOnInstructor(stdAcc);
             return res;
           }).catch((error) => {
@@ -3475,7 +3478,7 @@ const StudentSubscriptionState = ({
                   >
                     <td>{stdData.name}</td>
                     <td>{stdData.subscription_state}</td>
-                    <td>
+                    {!deleteAlertConfirmation && changableSubscriptionState._id === stdData._id?<td>{t("Scanning.....")}</td>:<td>
                       <AiFillSetting
                         className={
                           StudentSubscriptionStyles["setting-icon-hidden"]
@@ -3513,7 +3516,8 @@ const StudentSubscriptionState = ({
                         }
                       />
                       <FaTrash onClick={(event) => deleteStudent(event, stdData)} />
-                    </td>
+                    </td> }
+  
                   </tr>
                 ))}
               </tbody>
@@ -4139,7 +4143,8 @@ const StudentSubscriptionState = ({
         </div>
       ) : null}
             {deleteAlertConfirmation ? <div className={`${StudentSubscriptionStyles["alert"]} ${StudentSubscriptionStyles["warning-alert"]}`}>
-        <section>
+              {!isUserConfirmedDeletion?<>
+          <section>
           <img src={WarningIcon} alt="warning" />
           <span>{t("are you sure you want to delete this account")}</span>
         </section>
@@ -4151,6 +4156,12 @@ const StudentSubscriptionState = ({
           <button type="submit" className={StudentSubscriptionStyles['btn']} value={"confirm"} onClick={deleteStudent}>{t("confirm")}</button>
           <button type="submit" value={"cancel"} className={StudentSubscriptionStyles['btn']} onClick={deleteStudent}>{t("cancel")}</button>
         </section>
+              </>:<div className={StudentSubscriptionStyles['loading-deletion-spiner-container']}>
+          <section>
+          <Spinner animation="border" role="status" size="xl" style={{color:'#198754'}}/>
+          </section>
+          <span>{t("Scanning.....")}</span>
+        </div>}
       </div> : null}
     </>
   );

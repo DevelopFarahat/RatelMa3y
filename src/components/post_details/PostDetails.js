@@ -38,6 +38,7 @@ const PostDetails = () => {
           src={postDetails.article_img}
           className="rounded-4 w-100"
           style={{ maxHeight: '60vh', objectFit: 'cover' }}
+          alt="article content"
         />
 
         <h5

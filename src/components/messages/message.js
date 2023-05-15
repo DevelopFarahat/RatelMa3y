@@ -13,6 +13,7 @@ import WarningIcon from "../../assets/images/warning.png";
 import {AiFillFilter} from "react-icons/ai";
 import {BiReset} from "react-icons/bi";
 import CircleGif from "../../assets/images/check-circle.gif";
+import Spinner from 'react-bootstrap/Spinner';
 import {FaTrash} from "react-icons/fa";
 import axios from "axios";
 const Messages = ()=>{
@@ -179,6 +180,8 @@ const Messages = ()=>{
     const [donnotAskmeAgainChecked, setDonotAskmeAgainChecked] = useState(false);
     const [isUserDeleteAnyMsg,setIsUserDeleteAnymsg] = useState(false);
     const initialResponse = useRef();
+    
+const [isUserConfirmedDeletion,setisUserConfirmedDeletion] = useState(false);
 
 
     const handleDonnotAskmeAgainChange = (event) => {
@@ -284,6 +287,7 @@ const Messages = ()=>{
           }
         if (event.currentTarget.value === 'confirm' || donnotAskmeAgain === true) {
         let chMsg = msg === undefined ? changeableMsg : msg;
+      setisUserConfirmedDeletion(true);
         axios.delete(`${process.env.REACT_APP_BACK_HOST_URL}/api/contacts/${chMsg._id}`).then((res)=>{
         setAlertDeleteConfirmation(false);
         setFetchAgain(fetchAgain+1);
@@ -291,7 +295,7 @@ const Messages = ()=>{
         setTimeout(()=>{
             setIsUserDeleteAnymsg(false);
         },1000)
-    
+        setisUserConfirmedDeletion(false);
         }).catch((error)=>{
     
         })
@@ -340,7 +344,7 @@ const Messages = ()=>{
               </span>
             </div></>:null}
             {deleteAlertConfirmation ? <div className={`${MessagesStyles["alert"]} ${MessagesStyles["warning-alert"]}`}>
-        <section>
+                {!isUserConfirmedDeletion?<><section>
           <img src={WarningIcon} alt="warning" />
           <span>{t("are you sure you want to delete this account")}</span>
         </section>
@@ -351,7 +355,12 @@ const Messages = ()=>{
         <section style={{direction:t("us")===t("Us")?'ltr':'rtl'}}>
           <button type="submit" className={MessagesStyles['btn']} value={"confirm"} onClick={deleteMessage}>{t("confirm")}</button>
           <button type="submit" value={"cancel"} className={MessagesStyles['btn']} onClick={deleteMessage}>{t("cancel")}</button>
-        </section>
+        </section></>:<div className={MessagesStyles['loading-deletion-spiner-container']}>
+          <section>
+          <Spinner animation="border" role="status" size="xl" style={{color:'#198754'}}/>
+          </section>
+          <span>{t("Scanning.....")}</span>
+        </div>}
       </div> : null}
         <div className={MessagesStyles['messages-main']}>
         <div className={MessagesStyles['pagination-container']} style={{direction:'rtl'}}>
@@ -468,7 +477,8 @@ const Messages = ()=>{
                                         <td>{ms.phone}</td>
                                         <td>{ms.date.split("T")[0]}</td>
                                         <td>{ms.status}</td>
-                                        <td><FaTrash  onClick={(event)=>deleteMessage(event,ms)}/></td>
+                                        {!deleteAlertConfirmation && changeableMsg._id === ms._id?<td>{t("Scanning.....")}</td>:<td><FaTrash  onClick={(event)=>deleteMessage(event,ms)}/></td>}
+                                        
                                     </tr>
                                 ))}
                             </tbody>

@@ -33,9 +33,11 @@
   padding-inline: 12px;
   padding-top: 20px;
   padding-bottom: 20px;
+  /*
   position: sticky;
   top: 90px;
   right: 10px;
+  */
 }
 .post-image-area {
     height: 259px;
@@ -201,7 +203,7 @@ input[type="file"] {
   margin-top: 55px;
   margin-right: 7px;
 }
-@media screen and  (max-width:700px){
+@media screen and  (max-width:1200px){
   .add-post-main-container{
     flex-direction: column;
     padding:15px;
@@ -221,6 +223,7 @@ input[type="file"] {
     width:104px;
   }
 }
+/*
 @media screen and (max-width:859px){
   .post-image-area{
     height:217px;
@@ -237,3 +240,4 @@ input[type="file"] {
 
   }
 }
+*/

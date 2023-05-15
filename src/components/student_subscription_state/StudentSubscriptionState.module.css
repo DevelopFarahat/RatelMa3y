@@ -524,7 +524,25 @@
   border-color: #f6003c !important;
 
 }
-
+.loading-deletion-spiner-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.loading-deletion-spiner-container > section , .loading-deletion-spiner-container > span{
+  min-height: 80px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.loading-deletion-spiner-container > span{
+  color: #F71E35;
+  width: 100%;
+  text-align: center;
+  font-size: 1.3rem;
+}
 @media screen and (max-width:1200px) {
   .student-user-data-container {
     width: 100%;

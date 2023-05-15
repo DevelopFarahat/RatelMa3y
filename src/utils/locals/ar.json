@@ -286,6 +286,7 @@
   "imageError":"يرجى اختيار صورة",
   "titleError":"يرجى كتابة  عنوان المنشور",
   "contentError":"يرجى كتابة محتوى المنشور",
+  "summaryError":"يرجى كتابة ملخص المنشور",
   "postedSuccessully":"تم النشر بنجاح",
   "filter":"بحث",
   "reset":"عودة",
@@ -369,7 +370,9 @@
   "thre are no sessions during this period":"لاتوجد اى حلقات خلال هذه الفترة",
   "has deleted post successfully":"قام بمسح المنشور بنجاح",
   "edit":"تعديل",
-  "delete":"مسح"
+  "delete":"مسح",
+  "are you Sure you want to delete this post":"هل انت متأكد انك ترغب فى مسح هذا المشور؟",
+  "Scanning.....":"جارى المسح الان"
 
 
 

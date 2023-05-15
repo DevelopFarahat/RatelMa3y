@@ -15,11 +15,11 @@ import WarningIcon from "../../assets/images/warning.png";
 import CircleGif from "../../assets/images/check-circle.gif";
 import AddPost from "../add_post/AddPost";
 import Post from "../post/Post";
+import Modal from 'react-bootstrap/Modal';
 
 const PostsBoard = () => {
   const { isLoading, setIsLoading } = useContext(UserContext);
   const [posts, setPosts] = useState([]);
-  const [isMoreOptionVisible, setIsMoreOptionVisible] = useState(false);
   const [deleteAlertConfirmation, setAlertDeleteConfirmation] = useState(false);
   const [donnotAskmeAgain, setDonotAskmeAgain] = useState(false);
   const [donnotAskmeAgainChecked, setDonotAskmeAgainChecked] = useState(false);
@@ -27,17 +27,9 @@ const PostsBoard = () => {
   const [isEditeComponentVisible, setIsEditeComponentVisible] = useState(false);
   const [isUserDeleteAnyPost, setIsUserDeleteAnyPost] = useState(false);
   const [posId, setPosId] = useState("");
-  const [fetchAgain, setFetchAgain] = useState(0);
   const { user } = useContext(UserContext)
   const [posInfo, setPosInfo] = useState({});
-  const styles = {
-    moreOptionVisible: {
-      display: "flex",
-    },
-    moreOptionHidden: {
-      display: "none",
-    },
-  };
+  const [fetchAgain,setFetchAgain] = useState(false);
   const [t, i18n] = useTranslation();
   const handleDonnotAskmeAgainChange = (event) => {
     setDonotAskmeAgainChecked((current) => !current);
@@ -107,35 +99,26 @@ const PostsBoard = () => {
   const handleMoreOptionVisibility = (event) => {
     event.stopPropagation();
     setSelectedPostMoreOption(event.currentTarget.id);
-    setIsMoreOptionVisible((current) => !current);
   };
-  const handleEditComponentVisibility = (event, pId) => {
+  const handleEditComponentVisibility = (event, postObji) => {
     event.stopPropagation();
     setIsEditeComponentVisible(true);
-    getSpecificPostDetails(pId);
+    getSpecificPostDetails(postObji);
   };
-  const getSpecificPostDetails = (postId) => {
-    axios
-      .get(`${process.env.REACT_APP_BACK_HOST_URL}/api/events/${postId}`, {
-        headers: { "Access-Control-Allow-Origin": "*" },
-      })
-      .then((res) => {
-        setPosInfo(res.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+  const getSpecificPostDetails = (pObji) => {
+    setPosInfo(posts[pObji.postArrIndex]);
   };
-  const distroyBackrop = (event) => {
-    event.stopPropagation();
+  const distroyBackrop = (e) => {
+    e.stopPropagation();
+    e.nativeEvent.stopImmediatePropagation();
     setSelectedPostMoreOption(-1);
-    setIsMoreOptionVisible((current) => !current);
     setIsEditeComponentVisible(false);
     setPosInfo({});
   };
+
   const deletePost = (event, postId) => {
     event.stopPropagation();
-    setIsMoreOptionVisible(false);
+    setSelectedPostMoreOption(-1);
     if (postId !== undefined) {
       setPosId(postId);
     }
@@ -153,8 +136,8 @@ const PostsBoard = () => {
       axios
         .delete(`${process.env.REACT_APP_BACK_HOST_URL}/api/events/${pId}`)
         .then(() => {
+          console.log("deleted successfully")
           setAlertDeleteConfirmation(false);
-          setFetchAgain(fetchAgain + 1);
           setIsUserDeleteAnyPost(true);
           setTimeout(() => {
             setIsUserDeleteAnyPost(false);
@@ -176,60 +159,50 @@ const PostsBoard = () => {
               style={{
                 width: "100%",
                 position: "relative",
+                backgroundImage: "linear-gradient(to left,#f9f9f9, #ffffff)",
 
               }}
               className="d-flex justify-content-between"
               key={post._id}
+              
             >
               <Post post={post} latestPost={arr[0]} />
               
-              <div>
+         
                 {user && user?.privileges === "Admin" ? (
                   <>
                     <button
                       className={PostBoardStyles["post-more-option"]}
-                      style={{ right: t("us" === "Us") ? 0 : 'auto', left: t("us" === "Us") ? 'auto' : 0 }}
+                     
                       id={post._id}
                       onClick={handleMoreOptionVisibility}
                     >
                       ...
                     </button>
                     <ul
-                      className={PostBoardStyles["more-option-menu-list"]}
-                      style={
-                        selectedPostMoreOption === post._id &&
-                          isMoreOptionVisible
-                          ? styles.moreOptionVisible
-                          : styles.moreOptionHidden
-                      }
+                      className={`${selectedPostMoreOption === post._id 
+                        ?PostBoardStyles["more-option-menu-list"]:PostBoardStyles['more-option-menu-list-hidden']}`}
+                        style={{left:t("us")===t("Us")?"calc(100% - 170px)":"7px"}}
                     >
                       <li
                         onClick={(event) =>
-                          handleEditComponentVisibility(event, post._id)
+                          handleEditComponentVisibility(event, {...post,postArrIndex:index})
                         }
-                        style={{
-                          textAlign: t("us") === t("Us") ? "start" : "end",
-                          padding:
-                            t("us") === t("Us") ? "0 0 0 10px" : "0 10px 0 0",
-                        }}
+                        style={{textAlign:t("US") === t("Us")?'end':'start'}}
                       >
                         {t("edit")}
                       </li>
                       <li
                         onClick={(event) => deletePost(event, post._id)}
-                        style={{
-                          textAlign: t("us") === t("Us") ? "start" : "end",
-                          padding:
-                            t("us") === t("Us") ? "0 0 0 10px" : "0 10px 0 0",
-                        }}
+                        style={{textAlign:t("US") === t("Us")?'end':'start'}}
                       >
                         {t("delete")}
                       </li>
                     </ul>
                   </>
                 ) : null}
-              </div>
-            </div>
+                   
+                      </div>
           )
         })}
         {isUserDeleteAnyPost ? (
@@ -249,7 +222,7 @@ const PostsBoard = () => {
           >
             <section>
               <img src={WarningIcon} alt="warning" />
-              <span>{t("are you sure you want to delete this account")}</span>
+              <span>{t("are you Sure you want to delete this postt")}</span>
             </section>
             <section style={{ width: t("us") === t("Us") ? "98%" : "88%" }}>
               <Form.Check
@@ -284,19 +257,29 @@ const PostsBoard = () => {
         ) : null}
       </div>
       {isEditeComponentVisible ? (
-        <div
-          className={PostBoardStyles["backdrop"]}
-          onClick={(event) => distroyBackrop(event)}
-        >
-          <AddPost
-            isEditeComponentVisible={isEditeComponentVisible}
-            posInfo={posInfo}
-            setPosInfo={setPosInfo}
-            setIsEditeComponentVisible={setIsEditeComponentVisible}
-            setIsMoreOptionVisible={setIsMoreOptionVisible}
-            setFetchAgain={setFetchAgain}
-          />
-        </div>
+      
+      <div
+      className={PostBoardStyles["backdrop"]}
+      onClick={(event) => {
+        distroyBackrop(event);
+        event.stopPropagation();
+      }}
+    >
+             <AddPost
+                isEditeComponentVisible={isEditeComponentVisible}
+                posInfo={posInfo}
+                setPosInfo={setPosInfo}
+                setIsEditeComponentVisible={setIsEditeComponentVisible}
+              setSelectedPostMoreOption={setSelectedPostMoreOption}
+              fetchAgain={fetchAgain}
+              setFetchAgain={setFetchAgain}
+              />
+      </div>
+
+         
+ 
+ 
+     
       ) : null}
     </>
   );

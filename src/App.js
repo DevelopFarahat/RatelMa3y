@@ -7,6 +7,7 @@ import ScrollToTop from "./utils/ScrollToTop";
 import UserContext from "./utils/UserContext";
 import { Home, Login, ManageAcc } from './pages';
 import { NavBar, Footer,BookBoard} from './components';
+import Fullback from "./components/fullback/fullback";
 const AdminPanel = lazy(()=> import ("./components/admin_panel/Admin_Panel"));
 const SystemUsers = lazy(()=> import ("./components/system_users/SystemUsers"));
 const AddPost = lazy(()=>import ("./components/add_post/AddPost"));
@@ -63,7 +64,7 @@ function App() {
           <div style={{ height: 86 }}></div>
           <div style={{ minHeight: "100vh", position: 'relative' }}>
             <div onClick={setExpanded.bind(this, false)}>
-              <Suspense fallback={<div>Loding.....</div>}>
+              <Suspense fallback={<Fullback/>}>
               <Routes>
                 <Route path="/" element={<Navigate to="home" replace />} />
                 <Route path="home" element={<Home />} />
@@ -98,7 +99,7 @@ function App() {
                   <Route path="forgot-password" element={<Forgot />} />
                   <Route
                     path="register"
-                    element={<StudentRegistrationForm i18n={i18n} t={t} />}
+                    element={<StudentRegistrationForm  />}
                   />
                 </Route>
 

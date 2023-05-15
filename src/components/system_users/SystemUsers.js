@@ -197,6 +197,7 @@ const SystemUsers = () => {
   const [staffAccount, setStaffAcount] = useState([]);
   const [donnotAskmeAgainChecked, setDonotAskmeAgainChecked] = useState(false);
   const [isUserDeleteAnyAccount, setIsUserDeleteAnyAccount] = useState(false);
+  const [isUserConfirmedDeletion,setisUserConfirmedDeletion] = useState(false);
   const [isUserMadeAnyUpdateToAnyAccount, setIsUserMadeAnyUpdateToAnyAccount] =
     useState(false);
   const initialResponse = useRef();
@@ -648,6 +649,7 @@ const SystemUsers = () => {
             h6: false,
             h7: false,
           });
+          setSelectAllDays(false);
           setSystemUsersFormSteps({
             firstStep: true,
             secondStep: false,
@@ -741,6 +743,7 @@ const SystemUsers = () => {
             h6: false,
             h7: false,
           });
+          setSelectAllDays(false);
           setSystemUsersFormSteps({
             firstStep: true,
             secondStep: false,
@@ -942,6 +945,7 @@ const SystemUsers = () => {
   }
   const deleteStaffAccount = (event, sAccount) => {
     event.stopPropagation();
+    
     if (sAccount !== undefined) {
       setStaffAcount(sAccount);
     }
@@ -957,6 +961,8 @@ const SystemUsers = () => {
     }
     if (event.currentTarget.value === 'confirm' || donnotAskmeAgain === true) {
       let staffAcc = sAccount === undefined ? staffAccount : sAccount;
+      setisUserConfirmedDeletion(true);
+      
       axios.delete(`${process.env.REACT_APP_BACK_HOST_URL}/api/instructors/${staffAcc._id}`, { headers: {}, data: { studentsIDs: staffAcc.students } }).then((res) => {
         setAlertDeleteConfirmation(false);
         setFetchAgain(fetchAgain + 1);
@@ -964,10 +970,11 @@ const SystemUsers = () => {
         setTimeout(() => {
           setIsUserDeleteAnyAccount(false);
         }, 1000)
-
+        setisUserConfirmedDeletion(false);
       }).catch((error) => {
         console.error(error)
       })
+      
     }
 
   }
@@ -1032,8 +1039,8 @@ const SystemUsers = () => {
           </span>
         </div>
       ) : null}
-      {deleteAlertConfirmation ? <div className={`${SystemUsersStyles["alert-container"]} ${SystemUsersStyles["warning-alert"]}`}>
-        <section>
+      {deleteAlertConfirmation  ? <div className={`${SystemUsersStyles["alert-container"]} ${SystemUsersStyles["warning-alert"]}`}>
+        {!isUserConfirmedDeletion?<><section>
           <img src={WarningIcon} alt="warning" />
           <span>{t("are you sure you want to delete this account")}</span>
         </section>
@@ -1044,7 +1051,14 @@ const SystemUsers = () => {
         <section style={{direction:t("us")===t("Us")?'ltr':'rtl'}}>
           <button type="submit" className={SystemUsersStyles['btn']} value={"confirm"} onClick={deleteStaffAccount}>{t("confirm")}</button>
           <button type="submit" value={"cancel"} className={SystemUsersStyles['btn']} onClick={deleteStaffAccount}>{t("cancel")}</button>
-        </section>
+        </section></>:
+        <div className={SystemUsersStyles['loading-deletion-spiner-container']}>
+          <section>
+          <Spinner animation="border" role="status" size="xl" style={{color:'#198754'}}/>
+          </section>
+          <span>{t("Scanning.....")}</span>
+        </div>}
+        
       </div> : null}
       <div className={SystemUsersStyles["system-user-main"]}>
         <div
@@ -1783,10 +1797,13 @@ const SystemUsers = () => {
                         <td>{userAccount.name}</td>
                         <td>{userAccount.email}</td>
                         <td>{userAccount.mobile}</td>
+                        {!deleteAlertConfirmation && staffAccount._id === userAccount._id?<td>{t("Scanning.....")}</td>:<>
                         <td>
                           {userAccount.privilages ?? userAccount.privileges}
                         </td>
                         <td><FaTrash onClick={(event) => deleteStaffAccount(event, userAccount)} /></td>
+                        </>}
+                 
                       </tr>
                     ))}
                   </tbody>
