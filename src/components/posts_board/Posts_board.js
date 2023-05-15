@@ -16,7 +16,8 @@ import CircleGif from "../../assets/images/check-circle.gif";
 import AddPost from "../add_post/AddPost";
 import Post from "../post/Post";
 import Modal from 'react-bootstrap/Modal';
-
+import { Helmet } from "react-helmet-async";
+import HeadTags from "../head/Head";
 const PostsBoard = () => {
   const { isLoading, setIsLoading } = useContext(UserContext);
   const [posts, setPosts] = useState([]);
@@ -162,6 +163,10 @@ const PostsBoard = () => {
   };
   return (
     <>
+        <Helmet>
+        {HeadTags({ title: t("navbar_contactus"), summary: "تواصل معنا في مدرسة رتل معي", url: `${process.env.REACT_APP_FRONT_HOST_URL}/contact`, img: 'https://ratelmay.com/%PUBLIC_URL%/logo.webp', keywords: "Ratel May, رتل معي, قرآن كريم, Ratel May Academy, contact" })}
+      </Helmet>
+   
       <div className={PostBoardStyles["post-board"]}>
         {posts?.map((post, index, arr) => {
           return (

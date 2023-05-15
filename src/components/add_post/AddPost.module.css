@@ -208,7 +208,7 @@ input[type="file"] {
     flex-direction: column;
     padding:15px;
     width:95%;
-    position: relative;
+    
   }
   .add-post-main-container > .image-posting-settings-container{
     width:100%;
@@ -223,21 +223,10 @@ input[type="file"] {
     width:104px;
   }
 }
-/*
-@media screen and (max-width:859px){
-  .post-image-area{
-    height:217px;
-  }
-  .clear-btn{
-    padding: 0px;
-    width: 97px;
-    height: 37px;
-  }
-  .button-container{
-    padding: 6px;
-    width: 97px;
-    height: 37px;
-
+@media screen and (max-width:900px) {
+  .add-post-main-container{
+    height: 509px;
+    overflow-y: scroll;
+    flex-wrap: nowrap;
   }
 }
-*/

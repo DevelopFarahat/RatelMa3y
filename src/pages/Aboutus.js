@@ -21,7 +21,7 @@ function Aboutus() {
   return (
     <>
     <Helmet>
-      {HeadTags({ title: 'عنا', summary: "معلومات عن مدرسة رتل معي", url: `${process.env.REACT_APP_FRONT_HOST_URL}/about`, img: '%PUBLIC_URL%/logo.webp', keywords: "Ratel May, رتل معي, قرآن كريم, Ratel May Academy" })}
+      {HeadTags({ title: t("aboutus"), summary: "معلومات عن مدرسة رتل معي", url: `${process.env.REACT_APP_FRONT_HOST_URL}/about`, img: 'https://ratelmay.com/%PUBLIC_URL%/logo.webp', keywords: "Ratel May, رتل معي, قرآن كريم, Ratel May Academy" })}
     </Helmet>
 
     <div
