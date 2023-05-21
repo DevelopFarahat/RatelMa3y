@@ -6,6 +6,9 @@ import axios from "axios";
 import { useSnackbar } from "notistack";
 import { useTranslation } from "react-i18next";
 import UserContext from "../utils/UserContext";
+import { Helmet } from "react-helmet-async";
+import HeadTags from "../components/head/Head";
+
 
 export default function Forgot() {
   const { enqueueSnackbar } = useSnackbar();
@@ -130,6 +133,11 @@ export default function Forgot() {
 
   return (
     <>
+
+      <Helmet>
+        <meta name="robots" content="noindex"></meta>
+        {HeadTags({ title: t('page_title_forget'), summary: ".أكاديمية رتل معي لتحفيظ القرآن الكريم وتعليم تلاوته Ratel May Academy for memorizing and recitation of The Holy Quran.", url: `${process.env.REACT_APP_FRONT_HOST_URL}`, img: "%PUBLIC_URL%/logo.webp", keywords: 'Ratel May,Academy,Quran,Memorizing,Recitation, Holy Quran, VideoChat, Sessions, تحفيظ قرآن, تلاوة , نور البيان, أكاديمية, رتل معي, القرآن الكريم, الحلقات,كتاب اون لاين ,قران اون لاين , قران , تلاوة , تعليم قران , تعليم القراءة,تعليم اللغة العربية , مصحف , مصحف اون لاين , ' })}
+      </Helmet>
       <div
         className="container text-center"
         style={{ height: "100%", marginTop: 64, marginBottom: 32 }}

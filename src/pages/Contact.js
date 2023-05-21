@@ -85,7 +85,7 @@ function Contact() {
             <span>{t("contact")}</span> {t("us")}
           </h2>
           <Form onSubmit={formik.handleSubmit}>
-            <Form.Group className='mb-3' controlId='formBasicUserName'>
+            <Form.Group className='mb-3' sigma="" controlid='formBasicUserName'>
               <Form.Control
                 type='text'
                 name='userName'
@@ -98,7 +98,7 @@ function Contact() {
                 <div className='error'>{formik.errors.userName}</div>
               ) : null}
             </Form.Group>
-            <Form.Group className='mb-3' controlId='formBasicEmail'>
+            <Form.Group className='mb-3' sigma="" controlid='formBasicEmail'>
               <Form.Control
                 type='email'
                 name='email'
@@ -111,7 +111,7 @@ function Contact() {
                 <div className='error'>{formik.errors.email}</div>
               ) : null}
             </Form.Group>
-            <Form.Group className='mb-3' controlId='formBasicPhone'>
+            <Form.Group className='mb-3' sigma="" controlid='formBasicPhone'>
               <Form.Control
                 type='number'
                 name='phone'
@@ -124,7 +124,7 @@ function Contact() {
                 <div className='error'>{formik.errors.phone}</div>
               ) : null}
             </Form.Group>
-            <Form.Group className='mb-3' controlId='formBasicMessage'>
+            <Form.Group className='mb-3' sigma="" controlid='formBasicMessage'>
               <Form.Control
                 as='textarea'
                 name='message'

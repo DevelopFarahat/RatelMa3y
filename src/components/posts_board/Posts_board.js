@@ -167,7 +167,9 @@ const PostsBoard = () => {
   return (
     <>
    
-   
+     <Helmet>
+        {HeadTags({ title: t("navbar_events"), summary: "مقالات متنوعة في مواضيع قد تهمك عن الدين والدنيا.", url: `${process.env.REACT_APP_FRONT_HOST_URL}/blog`, img: "%PUBLIC_URL%/logo.webp", keywords: 'Ratel May,Academy,Quran,Memorizing,Recitation, Holy Quran, VideoChat, Sessions, تحفيظ قرآن, تلاوة , نور البيان, أكاديمية, رتل معي, القرآن الكريم, الحلقات,كتاب اون لاين ,قران اون لاين , قران , تلاوة , تعليم قران , تعليم القراءة,تعليم اللغة العربية , مصحف , مصحف اون لاين , ' })}
+      </Helmet>
       <div className={PostBoardStyles["post-board"]}>
         {posts?.map((post, index, arr) => {
           return (

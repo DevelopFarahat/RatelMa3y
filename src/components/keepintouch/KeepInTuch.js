@@ -38,7 +38,7 @@ function KeepInTuch() {
             {t("keepintouch_subscribe")}
           </Button>{" "}
 
-          <Form.Control controlId='formBasicEmail'
+          <Form.Control sigma="" controlid='formBasicEmail'
             className="form-control"
             dir={ t("us") === "Us" ? "ltr" : "rtl"}
             type='email'

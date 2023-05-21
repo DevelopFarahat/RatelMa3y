@@ -15,6 +15,9 @@ import { MdError } from "react-icons/md";
 import axios from "axios";
 import { useEffect } from "react";
 import { useSnackbar } from "notistack";
+import { Helmet } from "react-helmet-async";
+import HeadTags from "../head/Head";
+
 
 const StudentRegistrationForm = () => {
   const { t } = useTranslation();
@@ -62,12 +65,12 @@ const StudentRegistrationForm = () => {
   ];
 
   let Working_hours = [
-    { id: 0, appointment:  `8:00 ${t("AM")}`, att: "h0" },
-    { id: 1, appointment:  `10:00 ${t("AM")}`, att: "h1" },
+    { id: 0, appointment: `8:00 ${t("AM")}`, att: "h0" },
+    { id: 1, appointment: `10:00 ${t("AM")}`, att: "h1" },
     { id: 2, appointment: `12:00 ${t("PM")}`, att: "h2" },
-    { id: 3, appointment:  `2:00 ${t("PM")}`, att: "h3" },
+    { id: 3, appointment: `2:00 ${t("PM")}`, att: "h3" },
     { id: 4, appointment: `4:00 ${t("PM")}`, att: "h4" },
-    { id: 5, appointment:  `6:00 ${t("PM")}`, att: "h5" },
+    { id: 5, appointment: `6:00 ${t("PM")}`, att: "h5" },
     { id: 6, appointment: `8:00 ${t("PM")}`, att: "h6" },
     { id: 7, appointment: `10:00 ${t("PM")}`, att: "h7" },
   ];
@@ -156,15 +159,15 @@ const StudentRegistrationForm = () => {
     event.preventDefault();
     event.currentTarget.id === "firstStep"
       ? setStudentRegistrationFormSteps({
-          firstStep: true,
-          secondStep: false,
-          thirdStep: false,
-          fourStep: false,
-          fiveStep: false,
-          sixStep: false,
-        })
+        firstStep: true,
+        secondStep: false,
+        thirdStep: false,
+        fourStep: false,
+        fiveStep: false,
+        sixStep: false,
+      })
       : event.currentTarget.id === "secondStep"
-      ? setStudentRegistrationFormSteps({
+        ? setStudentRegistrationFormSteps({
           firstStep: false,
           secondStep: true,
           thirdStep: false,
@@ -172,100 +175,100 @@ const StudentRegistrationForm = () => {
           fiveStep: false,
           sixStep: false,
         })
-      : event.currentTarget.id === "thirdStep"
-      ? setStudentRegistrationFormSteps({
-          firstStep: false,
-          secondStep: false,
-          thirdStep: true,
-          fourStep: false,
-          fiveStep: false,
-          sixStep: false,
-        })
-      : event.currentTarget.id === "firstStepPrevious"
-      ? setStudentRegistrationFormSteps({
-          firstStep: true,
-          secondStep: false,
-          thirdStep: false,
-          fourStep: false,
-          fiveStep: false,
-          sixStep: false,
-        })
-      : event.currentTarget.id === "secondStepPrevious"
-      ? setStudentRegistrationFormSteps({
-          firstStep: false,
-          secondStep: true,
-          thirdStep: false,
-          fourStep: false,
-          fiveStep: false,
-          sixStep: false,
-        })
-      : event.currentTarget.id === "thirdStepPrevious"
-      ? setStudentRegistrationFormSteps({
-          firstStep: false,
-          secondStep: false,
-          thirdStep: true,
-          fourStep: false,
-          fiveStep: false,
-          sixStep: false,
-        })
-      : event.currentTarget.id === "fourStepPrevious"
-      ? setStudentRegistrationFormSteps({
-          firstStep: false,
-          secondStep: false,
-          thirdStep: false,
-          fourStep: true,
-          fiveStep: false,
-          sixStep: false,
-        })
-      : event.currentTarget.id === "fourStep"
-      ? setStudentRegistrationFormSteps({
-          firstStep: false,
-          secondStep: false,
-          thirdStep: false,
-          fourStep: true,
-          fiveStep: false,
-          sixStep: false,
-        })
-      : event.currentTarget.id === "fiveStep"
-      ? setStudentRegistrationFormSteps({
-          firstStep: false,
-          secondStep: false,
-          thirdStep: false,
-          fourStep: false,
-          fiveStep: true,
-          sixStep: false,
-        })
-      : event.currentTarget.id === "fiveStepPrevious"
-      ? setStudentRegistrationFormSteps({
-          firstStep: false,
-          secondStep: false,
-          thirdStep: false,
-          fourStep: false,
-          fiveStep: true,
-          sixStep: false,
-        })
-      : setStudentRegistrationFormSteps({
-          firstStep: false,
-          secondStep: false,
-          thirdStep: false,
-          fourStep: false,
-          fiveStep: false,
-          sixStep: true,
-        });
+        : event.currentTarget.id === "thirdStep"
+          ? setStudentRegistrationFormSteps({
+            firstStep: false,
+            secondStep: false,
+            thirdStep: true,
+            fourStep: false,
+            fiveStep: false,
+            sixStep: false,
+          })
+          : event.currentTarget.id === "firstStepPrevious"
+            ? setStudentRegistrationFormSteps({
+              firstStep: true,
+              secondStep: false,
+              thirdStep: false,
+              fourStep: false,
+              fiveStep: false,
+              sixStep: false,
+            })
+            : event.currentTarget.id === "secondStepPrevious"
+              ? setStudentRegistrationFormSteps({
+                firstStep: false,
+                secondStep: true,
+                thirdStep: false,
+                fourStep: false,
+                fiveStep: false,
+                sixStep: false,
+              })
+              : event.currentTarget.id === "thirdStepPrevious"
+                ? setStudentRegistrationFormSteps({
+                  firstStep: false,
+                  secondStep: false,
+                  thirdStep: true,
+                  fourStep: false,
+                  fiveStep: false,
+                  sixStep: false,
+                })
+                : event.currentTarget.id === "fourStepPrevious"
+                  ? setStudentRegistrationFormSteps({
+                    firstStep: false,
+                    secondStep: false,
+                    thirdStep: false,
+                    fourStep: true,
+                    fiveStep: false,
+                    sixStep: false,
+                  })
+                  : event.currentTarget.id === "fourStep"
+                    ? setStudentRegistrationFormSteps({
+                      firstStep: false,
+                      secondStep: false,
+                      thirdStep: false,
+                      fourStep: true,
+                      fiveStep: false,
+                      sixStep: false,
+                    })
+                    : event.currentTarget.id === "fiveStep"
+                      ? setStudentRegistrationFormSteps({
+                        firstStep: false,
+                        secondStep: false,
+                        thirdStep: false,
+                        fourStep: false,
+                        fiveStep: true,
+                        sixStep: false,
+                      })
+                      : event.currentTarget.id === "fiveStepPrevious"
+                        ? setStudentRegistrationFormSteps({
+                          firstStep: false,
+                          secondStep: false,
+                          thirdStep: false,
+                          fourStep: false,
+                          fiveStep: true,
+                          sixStep: false,
+                        })
+                        : setStudentRegistrationFormSteps({
+                          firstStep: false,
+                          secondStep: false,
+                          thirdStep: false,
+                          fourStep: false,
+                          fiveStep: false,
+                          sixStep: true,
+                        });
   };
 
   //TO SEND PIN WHEN REACHING 6th STEP
-  
+
   //MARK: hash for testing /Unhash when deploying
-  
+
   useEffect(() => {
-    
+
     if (!!studentRegistrationFormSteps.sixStep)
       axios.post(
         `${process.env.REACT_APP_BACK_HOST_URL}/api/auth/request_pin`,
-        { email: userData.email, rpin: true },{headers:{'Access-Control-Allow-Origin': '*'}}
+        { email: userData.email, rpin: true }, { headers: { 'Access-Control-Allow-Origin': '*' } }
       );
-    }, [studentRegistrationFormSteps.sixStep]);
+  }, [studentRegistrationFormSteps.sixStep]);
 
   // just case if the user demande student can register in multiple programs
   /*
@@ -346,8 +349,8 @@ const StudentRegistrationForm = () => {
           value.length === 0
             ? t("keepintouch_required")
             : emailRegx.test(value)
-            ? null
-            : t("student_email_error_message"),
+              ? null
+              : t("student_email_error_message"),
       });
     } else if (filed === "mobile") {
       const mobileRegx = /^[+][0-9]+(01)(0|1|2|5)[0-9]{8}$/;
@@ -375,8 +378,8 @@ const StudentRegistrationForm = () => {
           value.length === 0
             ? t("keepintouch_required")
             : nameRegx.test(value)
-            ? null
-            : t("student_fullname_error"),
+              ? null
+              : t("student_fullname_error"),
       });
     } else if (filed === "age") {
       setErrors({
@@ -401,8 +404,8 @@ const StudentRegistrationForm = () => {
           value.length === 0
             ? t("keepintouch_required")
             : passwordRegx.test(value)
-            ? null
-            : t("student_password_error"),
+              ? null
+              : t("student_password_error"),
       });
     } else if (filed === "state") {
       setErrors({
@@ -451,7 +454,7 @@ const StudentRegistrationForm = () => {
     //MARK: hash for testing /Unhash when deploying
     let result = await axios.post(
       `${process.env.REACT_APP_BACK_HOST_URL}/api/auth/confirm_pin`,
-      { email: userData.email, rpin: true, pin: userData.email_verification },{headers:{'Access-Control-Allow-Origin': '*'}}
+      { email: userData.email, rpin: true, pin: userData.email_verification }, { headers: { 'Access-Control-Allow-Origin': '*' } }
     );
 
     if (result.status !== 200) return enqueueSnackbar(t('login_error_pin'));
@@ -503,12 +506,12 @@ const StudentRegistrationForm = () => {
     axios
       .post(
         `${process.env.REACT_APP_BACK_HOST_URL}/api/students`,
-        finalStudentRegistrationDataObji,{headers:{'Access-Control-Allow-Origin': '*'}}
+        finalStudentRegistrationDataObji, { headers: { 'Access-Control-Allow-Origin': '*' } }
       )
       .then((res) => {
-        if(res.status !== 200) setIsRegistrationErrorAlertVisible(true);
-        
-        enqueueSnackbar(t('success_registration'),{variant: 'success'})
+        if (res.status !== 200) setIsRegistrationErrorAlertVisible(true);
+
+        enqueueSnackbar(t('success_registration'), { variant: 'success' })
         navigate("/login")
         setIsThereNewRegistration(false);
       })
@@ -523,6 +526,11 @@ const StudentRegistrationForm = () => {
 
   return (
     <>
+
+      <Helmet>
+        <meta name="robots" content="noindex"></meta>
+        {HeadTags({ title: t('page_title_register'), summary: ".أكاديمية رتل معي لتحفيظ القرآن الكريم وتعليم تلاوته Ratel May Academy for memorizing and recitation of The Holy Quran.", url: `${process.env.REACT_APP_FRONT_HOST_URL}`, img: "%PUBLIC_URL%/logo.webp", keywords: 'Ratel May,Academy,Quran,Memorizing,Recitation, Holy Quran, VideoChat, Sessions, تحفيظ قرآن, تلاوة , نور البيان, أكاديمية, رتل معي, القرآن الكريم, الحلقات,كتاب اون لاين ,قران اون لاين , قران , تلاوة , تعليم قران , تعليم القراءة,تعليم اللغة العربية , مصحف , مصحف اون لاين , ' })}
+      </Helmet>
       <div
         style={{ direction: t("us") === "Us" ? "ltr" : "rtl" }}
         className={
@@ -531,158 +539,147 @@ const StudentRegistrationForm = () => {
       >
         <div className={StudentRegistrationFormStyles["form-steps-container"]}>
           <span
-            className={`${StudentRegistrationFormStyles["circle"]} ${
-              userData.name === "" ||
-              userData.email === "" ||
-              userData.age === "" ||
-              userData.password === "" ||
-              errors.nameError ||
-              errors.ageError ||
-              errors.emailError ||
-              errors.passwordError
+            className={`${StudentRegistrationFormStyles["circle"]} ${userData.name === "" ||
+                userData.email === "" ||
+                userData.age === "" ||
+                userData.password === "" ||
+                errors.nameError ||
+                errors.ageError ||
+                errors.emailError ||
+                errors.passwordError
                 ? ""
                 : StudentRegistrationFormStyles["coloredCircle"]
-            }`}
+              }`}
           >
             1
           </span>
           <span
-            className={`${StudentRegistrationFormStyles["line"]} ${
-              userData.name === "" ||
-              userData.email === "" ||
-              userData.age === "" ||
-              userData.password === "" ||
-              errors.nameError ||
-              errors.ageError ||
-              errors.emailError ||
-              errors.passwordError
+            className={`${StudentRegistrationFormStyles["line"]} ${userData.name === "" ||
+                userData.email === "" ||
+                userData.age === "" ||
+                userData.password === "" ||
+                errors.nameError ||
+                errors.ageError ||
+                errors.emailError ||
+                errors.passwordError
                 ? ""
                 : StudentRegistrationFormStyles["coloredLine"]
-            }`}
+              }`}
           ></span>
           <span
-            className={`${StudentRegistrationFormStyles["circle"]} ${
-              userData.mobile === "" ||
-              userData.whatsapp_number === "" ||
-              userData.gender === "" ||
-              userData.state === "" ||
-              errors.mobileError ||
-              errors.whatsapp_numberError ||
-              errors.stateError ||
-              errors.genderError
+            className={`${StudentRegistrationFormStyles["circle"]} ${userData.mobile === "" ||
+                userData.whatsapp_number === "" ||
+                userData.gender === "" ||
+                userData.state === "" ||
+                errors.mobileError ||
+                errors.whatsapp_numberError ||
+                errors.stateError ||
+                errors.genderError
                 ? ""
                 : StudentRegistrationFormStyles["coloredCircle"]
-            }`}
+              }`}
           >
             2
           </span>
           <span
-            className={`${StudentRegistrationFormStyles["line"]} ${
-              userData.mobile === "" ||
-              userData.whatsapp_number === "" ||
-              userData.gender === "" ||
-              userData.state === "" ||
-              errors.mobileError ||
-              errors.whatsapp_numberError ||
-              errors.stateError ||
-              errors.genderError
+            className={`${StudentRegistrationFormStyles["line"]} ${userData.mobile === "" ||
+                userData.whatsapp_number === "" ||
+                userData.gender === "" ||
+                userData.state === "" ||
+                errors.mobileError ||
+                errors.whatsapp_numberError ||
+                errors.stateError ||
+                errors.genderError
                 ? ""
                 : StudentRegistrationFormStyles["coloredLine"]
-            }`}
+              }`}
           ></span>
           <span
-            className={` ${StudentRegistrationFormStyles["circle"]} ${
-              userData.program === "" ||
-              errors.programError ||
-              userData.certificate === "" ||
-              userData.sessions_in_week === "" ||
-              userData.started_from_surah === "" ||
-              errors.sessions_in_weekError ||
-              errors.certificateError ||
-              errors.started_from_surahError
+            className={` ${StudentRegistrationFormStyles["circle"]} ${userData.program === "" ||
+                errors.programError ||
+                userData.certificate === "" ||
+                userData.sessions_in_week === "" ||
+                userData.started_from_surah === "" ||
+                errors.sessions_in_weekError ||
+                errors.certificateError ||
+                errors.started_from_surahError
                 ? ""
                 : StudentRegistrationFormStyles["coloredCircle"]
-            }`}
+              }`}
           >
             3
           </span>
           <span
-            className={`${StudentRegistrationFormStyles["line"]} ${
-              userData.program === "" ||
-              errors.programError ||
-              userData.certificate === "" ||
-              userData.sessions_in_week === "" ||
-              userData.started_from_surah === "" ||
-              errors.sessions_in_weekError ||
-              errors.certificateError ||
-              errors.started_from_surahError
+            className={`${StudentRegistrationFormStyles["line"]} ${userData.program === "" ||
+                errors.programError ||
+                userData.certificate === "" ||
+                userData.sessions_in_week === "" ||
+                userData.started_from_surah === "" ||
+                errors.sessions_in_weekError ||
+                errors.certificateError ||
+                errors.started_from_surahError
                 ? ""
                 : StudentRegistrationFormStyles["coloredLine"]
-            }`}
+              }`}
           ></span>
           <span
-            className={`${StudentRegistrationFormStyles["circle"]} ${
-              (workingDays.d0 !== "" ||
+            className={`${StudentRegistrationFormStyles["circle"]} ${(workingDays.d0 !== "" ||
                 workingDays.d1 !== "" ||
                 workingDays.d2 !== "" ||
                 workingDays.d3 !== "" ||
                 workingDays.d4 !== "" ||
                 workingDays.d5 !== "" ||
                 workingDays.d6 !== "") &&
-              (userData.reached_surah !== "" || errors.reached_surahError)
+                (userData.reached_surah !== "" || errors.reached_surahError)
                 ? StudentRegistrationFormStyles["coloredCircle"]
                 : ""
-            }`}
+              }`}
           >
             4
           </span>
           <span
-            className={`${StudentRegistrationFormStyles["line"]} ${
-              (workingDays.d0 !== "" ||
+            className={`${StudentRegistrationFormStyles["line"]} ${(workingDays.d0 !== "" ||
                 workingDays.d1 !== "" ||
                 workingDays.d2 !== "" ||
                 workingDays.d3 !== "" ||
                 workingDays.d4 !== "" ||
                 workingDays.d5 !== "" ||
                 workingDays.d6 !== "") &&
-              (userData.reached_surah !== "" || errors.reached_surahError)
+                (userData.reached_surah !== "" || errors.reached_surahError)
                 ? StudentRegistrationFormStyles["coloredLine"]
                 : ""
-            }`}
+              }`}
           ></span>
           <span
             className={`${StudentRegistrationFormStyles["circle"]} 
-                      ${
-                        WorkingHours.h0 !== "" ||
-                        WorkingHours.h1 !== "" ||
-                        WorkingHours.h2 !== "" ||
-                        WorkingHours.h3 !== "" ||
-                        WorkingHours.h4 !== "" ||
-                        WorkingHours.h5 !== "" ||
-                        WorkingHours.h6 !== "" ||
-                        WorkingHours.h7 !== ""
-                          ? StudentRegistrationFormStyles["coloredCircle"]
-                          : ""
-                      }`}
+                      ${WorkingHours.h0 !== "" ||
+                WorkingHours.h1 !== "" ||
+                WorkingHours.h2 !== "" ||
+                WorkingHours.h3 !== "" ||
+                WorkingHours.h4 !== "" ||
+                WorkingHours.h5 !== "" ||
+                WorkingHours.h6 !== "" ||
+                WorkingHours.h7 !== ""
+                ? StudentRegistrationFormStyles["coloredCircle"]
+                : ""
+              }`}
           >
             5
           </span>
           <span
-            className={`${StudentRegistrationFormStyles["line"]} ${
-              userData.email_verification !== "" ||
-              errors.email_verificationError
+            className={`${StudentRegistrationFormStyles["line"]} ${userData.email_verification !== "" ||
+                errors.email_verificationError
                 ? StudentRegistrationFormStyles["coloredLine"]
                 : ""
-            }`}
+              }`}
           ></span>
           <span
             className={`${StudentRegistrationFormStyles["circle"]} 
-                      ${
-                        userData.email_verification !== "" ||
-                        errors.email_verificationError
-                          ? StudentRegistrationFormStyles["coloredCircle"]
-                          : ""
-                      }`}
+                      ${userData.email_verification !== "" ||
+                errors.email_verificationError
+                ? StudentRegistrationFormStyles["coloredCircle"]
+                : ""
+              }`}
           >
             6
           </span>
@@ -702,18 +699,16 @@ const StudentRegistrationForm = () => {
             onSubmit={handleSubmit}
           >
             <div
-              className={`${
-                StudentRegistrationFormStyles["registration-form-hint"]
-              } ${
-                studentRegistrationFormSteps.firstStep ||
-                studentRegistrationFormSteps.secondStep ||
-                studentRegistrationFormSteps.thirdStep ||
-                studentRegistrationFormSteps.fourStep
+              className={`${StudentRegistrationFormStyles["registration-form-hint"]
+                } ${studentRegistrationFormSteps.firstStep ||
+                  studentRegistrationFormSteps.secondStep ||
+                  studentRegistrationFormSteps.thirdStep ||
+                  studentRegistrationFormSteps.fourStep
                   ? StudentRegistrationFormStyles[
-                      "registration-form-hint-on-step-1-2-3-4"
-                    ]
+                  "registration-form-hint-on-step-1-2-3-4"
+                  ]
                   : ""
-              }`}
+                }`}
             >
               {t("registration")}{" "}
               <span>
@@ -722,9 +717,9 @@ const StudentRegistrationForm = () => {
                     display: "bloxk",
                     backgroundColor: "#c2a054",
                     color: "#FFFFFF",
-                    padding:'0 !important',
-                    fontSize:'1.1rem !important',
-                    fontFamliy:'math'
+                    padding: '0 !important',
+                    fontSize: '1.1rem !important',
+                    fontFamliy: 'math'
                   }}
                 >
                   {t("as_student")}
@@ -740,13 +735,11 @@ const StudentRegistrationForm = () => {
                     id="name"
                     name="name"
                     value={userData.name}
-                    className={`${
-                      StudentRegistrationFormStyles["system-user-form-controls"]
-                    } ${
-                      errors.nameError
+                    className={`${StudentRegistrationFormStyles["system-user-form-controls"]
+                      } ${errors.nameError
                         ? StudentRegistrationFormStyles["errors"]
                         : ""
-                    }`}
+                      }`}
                     onChange={handleChange}
                   />
                   <small className="text-danger">{errors.nameError}</small>
@@ -759,15 +752,13 @@ const StudentRegistrationForm = () => {
                       id="email"
                       name="email"
                       value={userData.email}
-                      className={`${
-                        StudentRegistrationFormStyles[
-                          "system-user-form-controls"
+                      className={`${StudentRegistrationFormStyles[
+                        "system-user-form-controls"
                         ]
-                      } ${
-                        errors.emailError
+                        } ${errors.emailError
                           ? StudentRegistrationFormStyles["errors"]
                           : ""
-                      }`}
+                        }`}
                       onChange={handleChange}
                     />
                     <small className="text-danger">{errors.emailError}</small>
@@ -779,13 +770,11 @@ const StudentRegistrationForm = () => {
                     name="age"
                     value={userData.age}
                     min={0}
-                    className={`${
-                      StudentRegistrationFormStyles["system-user-form-controls"]
-                    } ${
-                      errors.ageError
+                    className={`${StudentRegistrationFormStyles["system-user-form-controls"]
+                      } ${errors.ageError
                         ? StudentRegistrationFormStyles["errors"]
                         : ""
-                    }`}
+                      }`}
                     onChange={handleChange}
                   />
                   <small className="text-danger">{errors.ageError}</small>
@@ -797,13 +786,11 @@ const StudentRegistrationForm = () => {
                     id="password"
                     name="password"
                     value={userData.password}
-                    className={`${
-                      StudentRegistrationFormStyles["system-user-form-controls"]
-                    } ${
-                      errors.passwordError
+                    className={`${StudentRegistrationFormStyles["system-user-form-controls"]
+                      } ${errors.passwordError
                         ? StudentRegistrationFormStyles["errors"]
                         : ""
-                    }`}
+                      }`}
                     onChange={handleChange}
                   />
                   <small className="text-danger">{errors.passwordError}</small>
@@ -824,33 +811,32 @@ const StudentRegistrationForm = () => {
                     onClick={handleFormSteps}
                     disabled={
                       userData.name === "" ||
-                      userData.email === "" ||
-                      userData.age === "" ||
-                      userData.password === "" ||
-                      errors.nameError ||
-                      errors.ageError ||
-                      errors.emailError ||
-                      errors.passwordError
+                        userData.email === "" ||
+                        userData.age === "" ||
+                        userData.password === "" ||
+                        errors.nameError ||
+                        errors.ageError ||
+                        errors.emailError ||
+                        errors.passwordError
                         ? true
                         : false
                     }
-                    className={`${
-                      userData.name === "" ||
-                      userData.email === "" ||
-                      userData.age === "" ||
-                      userData.password === "" ||
-                      errors.nameError ||
-                      errors.ageError ||
-                      errors.emailError ||
-                      errors.passwordError
+                    className={`${userData.name === "" ||
+                        userData.email === "" ||
+                        userData.age === "" ||
+                        userData.password === "" ||
+                        errors.nameError ||
+                        errors.ageError ||
+                        errors.emailError ||
+                        errors.passwordError
                         ? StudentRegistrationFormStyles["disabled-btn"]
                         : StudentRegistrationFormStyles["btn"]
-                    }`}
+                      }`}
                   >
                     {t("next")}{" "}
                     <TbPlayerTrackNext
                       style={{
-                        margin:t("us")===t("Us")?'4px -3px 0px -2px':'6px -3px 0px -2px',
+                        margin: t("us") === t("Us") ? '4px -3px 0px -2px' : '6px -3px 0px -2px',
                         transform:
                           t("us") === "Us"
                             ? "rotate(360deg)"
@@ -870,13 +856,11 @@ const StudentRegistrationForm = () => {
                     name="mobile"
                     value={userData.mobile}
                     onChange={handleChange}
-                    className={`${
-                      StudentRegistrationFormStyles["system-user-form-controls"]
-                    } ${
-                      errors.mobileError
+                    className={`${StudentRegistrationFormStyles["system-user-form-controls"]
+                      } ${errors.mobileError
                         ? StudentRegistrationFormStyles["errors"]
                         : ""
-                    }`}
+                      }`}
                   />
                   <small className="text-danger">{errors.mobileError}</small>
                 </div>
@@ -890,13 +874,11 @@ const StudentRegistrationForm = () => {
                     name="whatsapp_number"
                     value={userData.whatsapp_number}
                     onChange={handleChange}
-                    className={`${
-                      StudentRegistrationFormStyles["system-user-form-controls"]
-                    } ${
-                      errors.whatsapp_numberError
+                    className={`${StudentRegistrationFormStyles["system-user-form-controls"]
+                      } ${errors.whatsapp_numberError
                         ? StudentRegistrationFormStyles["errors"]
                         : ""
-                    }`}
+                      }`}
                   />
                   <small className="text-danger">
                     {errors.whatsapp_numberError}
@@ -909,13 +891,11 @@ const StudentRegistrationForm = () => {
                     id="state"
                     value={userData.state}
                     onChange={handleChange}
-                    className={`${
-                      StudentRegistrationFormStyles["system-user-form-controls"]
-                    } ${
-                      errors.stateError
+                    className={`${StudentRegistrationFormStyles["system-user-form-controls"]
+                      } ${errors.stateError
                         ? StudentRegistrationFormStyles["errors"]
                         : ""
-                    }`}
+                      }`}
                   >
                     <option value="">{t("select")}</option>
                     {listOfCountries.map((country) => (
@@ -933,13 +913,11 @@ const StudentRegistrationForm = () => {
                     id="gender"
                     value={userData.gender}
                     onChange={handleChange}
-                    className={`${
-                      StudentRegistrationFormStyles["system-user-form-controls"]
-                    } ${
-                      errors.genderError
+                    className={`${StudentRegistrationFormStyles["system-user-form-controls"]
+                      } ${errors.genderError
                         ? StudentRegistrationFormStyles["errors"]
                         : ""
-                    }`}
+                      }`}
                   >
                     <option value="">{t("select")}</option>
                     <option value="Male">{t("male")}</option>
@@ -961,7 +939,7 @@ const StudentRegistrationForm = () => {
                     {" "}
                     <ImPrevious2
                       style={{
-                        margin:t("us")===t("Us")?'0px 0px -4px':'1px 0px -4px 1px',
+                        margin: t("us") === t("Us") ? '0px 0px -4px' : '1px 0px -4px 1px',
                         transform:
                           t("us") === "Us"
                             ? "rotate(360deg)"
@@ -976,33 +954,32 @@ const StudentRegistrationForm = () => {
                     onClick={handleFormSteps}
                     disabled={
                       userData.mobile === "" ||
-                      userData.whatsapp_number === "" ||
-                      userData.gender === "" ||
-                      userData.state === "" ||
-                      errors.mobileError ||
-                      errors.whatsapp_numberError ||
-                      errors.stateError ||
-                      errors.genderError
+                        userData.whatsapp_number === "" ||
+                        userData.gender === "" ||
+                        userData.state === "" ||
+                        errors.mobileError ||
+                        errors.whatsapp_numberError ||
+                        errors.stateError ||
+                        errors.genderError
                         ? true
                         : false
                     }
-                    className={`${
-                      userData.mobile === "" ||
-                      userData.whatsapp_number === "" ||
-                      userData.gender === "" ||
-                      userData.state === "" ||
-                      errors.mobileError ||
-                      errors.whatsapp_numberError ||
-                      errors.stateError ||
-                      errors.genderError
+                    className={`${userData.mobile === "" ||
+                        userData.whatsapp_number === "" ||
+                        userData.gender === "" ||
+                        userData.state === "" ||
+                        errors.mobileError ||
+                        errors.whatsapp_numberError ||
+                        errors.stateError ||
+                        errors.genderError
                         ? StudentRegistrationFormStyles["disabled-btn"]
                         : StudentRegistrationFormStyles["btn"]
-                    }`}
+                      }`}
                   >
                     {t("next")}{" "}
                     <TbPlayerTrackNext
                       style={{
-                        margin:t("us")===t("Us")?'4px -3px 0px -2px':'6px -3px 0px -2px',
+                        margin: t("us") === t("Us") ? '4px -3px 0px -2px' : '6px -3px 0px -2px',
                         transform:
                           t("us") === "Us"
                             ? "rotate(360deg)"
@@ -1047,11 +1024,10 @@ const StudentRegistrationForm = () => {
                     name="sessions_in_week"
                     value={userData.sessions_in_week}
                     onChange={handleChange}
-                    className={`${
-                      errors.sessions_in_weekError
+                    className={`${errors.sessions_in_weekError
                         ? StudentRegistrationFormStyles["errors"]
                         : ""
-                    }`}
+                      }`}
                   >
                     <option value="">{t("select")}</option>
                     <option value="1">1</option>
@@ -1073,11 +1049,10 @@ const StudentRegistrationForm = () => {
                     name="certificate"
                     value={userData.certificate}
                     onChange={handleChange}
-                    className={`${
-                      errors.certificateError
+                    className={`${errors.certificateError
                         ? StudentRegistrationFormStyles["errors"]
                         : ""
-                    }`}
+                      }`}
                   />
                   <small className="text-danger">
                     {errors.certificateError}
@@ -1093,11 +1068,10 @@ const StudentRegistrationForm = () => {
                     name="started_from_surah"
                     value={userData.started_from_surah}
                     onChange={handleChange}
-                    className={`${
-                      errors.started_from_surahError
+                    className={`${errors.started_from_surahError
                         ? StudentRegistrationFormStyles["errors"]
                         : ""
-                    }`}
+                      }`}
                   />
                   <small className="text-danger">
                     {errors.started_from_surahError}
@@ -1117,7 +1091,7 @@ const StudentRegistrationForm = () => {
                     {" "}
                     <ImPrevious2
                       style={{
-                        margin:t("us")===t("Us")?'0px 0px -4px':'1px 0px -4px 1px',
+                        margin: t("us") === t("Us") ? '0px 0px -4px' : '1px 0px -4px 1px',
                         transform:
                           t("us") === "Us"
                             ? "rotate(360deg)"
@@ -1132,33 +1106,32 @@ const StudentRegistrationForm = () => {
                     onClick={handleFormSteps}
                     disabled={
                       userData.program === "" ||
-                      errors.programError ||
-                      userData.certificate === "" ||
-                      userData.sessions_in_week === "" ||
-                      userData.started_from_surah === "" ||
-                      errors.sessions_in_weekError ||
-                      errors.certificateError ||
-                      errors.started_from_surahError
+                        errors.programError ||
+                        userData.certificate === "" ||
+                        userData.sessions_in_week === "" ||
+                        userData.started_from_surah === "" ||
+                        errors.sessions_in_weekError ||
+                        errors.certificateError ||
+                        errors.started_from_surahError
                         ? true
                         : false
                     }
-                    className={` ${
-                      userData.program === "" ||
-                      errors.programError ||
-                      userData.certificate === "" ||
-                      userData.sessions_in_week === "" ||
-                      userData.started_from_surah === "" ||
-                      errors.sessions_in_weekError ||
-                      errors.certificateError ||
-                      errors.started_from_surahError
+                    className={` ${userData.program === "" ||
+                        errors.programError ||
+                        userData.certificate === "" ||
+                        userData.sessions_in_week === "" ||
+                        userData.started_from_surah === "" ||
+                        errors.sessions_in_weekError ||
+                        errors.certificateError ||
+                        errors.started_from_surahError
                         ? StudentRegistrationFormStyles["disabled-btn"]
                         : StudentRegistrationFormStyles["btn"]
-                    }`}
+                      }`}
                   >
                     {t("next")}{" "}
                     <TbPlayerTrackNext
                       style={{
-                        margin:t("us")===t("Us")?'4px -3px 0px -2px':'6px -3px 0px -2px',
+                        margin: t("us") === t("Us") ? '4px -3px 0px -2px' : '6px -3px 0px -2px',
                         transform:
                           t("us") === "Us"
                             ? "rotate(360deg)"
@@ -1180,11 +1153,10 @@ const StudentRegistrationForm = () => {
                     name="reached_surah"
                     value={userData.reached_surah}
                     onChange={handleChange}
-                    className={`${
-                      errors.reached_surahError
+                    className={`${errors.reached_surahError
                         ? StudentRegistrationFormStyles["errors"]
                         : ""
-                    }`}
+                      }`}
                   />
                   <small className="text-danger">
                     {errors.reached_surahError}
@@ -1290,7 +1262,7 @@ const StudentRegistrationForm = () => {
                     {" "}
                     <ImPrevious2
                       style={{
-                        margin:t("us")===t("Us")?'0px 0px -4px':'1px 0px -4px 1px',
+                        margin: t("us") === t("Us") ? '0px 0px -4px' : '1px 0px -4px 1px',
                         transform:
                           t("us") === "Us"
                             ? "rotate(360deg)"
@@ -1311,29 +1283,28 @@ const StudentRegistrationForm = () => {
                         workingDays.d4 !== "" ||
                         workingDays.d5 !== "" ||
                         workingDays.d6 !== "") &&
-                      (userData.reached_surah !== "" ||
-                        errors.reached_surahError)
+                        (userData.reached_surah !== "" ||
+                          errors.reached_surahError)
                         ? false
                         : true
                     }
-                    className={`${
-                      (workingDays.d0 !== "" ||
+                    className={`${(workingDays.d0 !== "" ||
                         workingDays.d1 !== "" ||
                         workingDays.d2 !== "" ||
                         workingDays.d3 !== "" ||
                         workingDays.d4 !== "" ||
                         workingDays.d5 !== "" ||
                         workingDays.d6 !== "") &&
-                      (userData.reached_surah !== "" ||
-                        errors.reached_surahError)
+                        (userData.reached_surah !== "" ||
+                          errors.reached_surahError)
                         ? StudentRegistrationFormStyles["btn"]
                         : StudentRegistrationFormStyles["disabled-btn"]
-                    }`}
+                      }`}
                   >
                     {t("next")}{" "}
                     <TbPlayerTrackNext
                       style={{
-                        margin:t("us")===t("Us")?'4px -3px 0px -2px':'6px -3px 0px -2px',
+                        margin: t("us") === t("Us") ? '4px -3px 0px -2px' : '6px -3px 0px -2px',
                         transform:
                           t("us") === "Us"
                             ? "rotate(360deg)"
@@ -1378,7 +1349,7 @@ const StudentRegistrationForm = () => {
                     {" "}
                     <ImPrevious2
                       style={{
-                        margin:t("us")===t("Us")?'0px 0px -4px':'1px 0px -4px 1px',
+                        margin: t("us") === t("Us") ? '0px 0px -4px' : '1px 0px -4px 1px',
                         transform:
                           t("us") === "Us"
                             ? "rotate(360deg)"
@@ -1392,34 +1363,33 @@ const StudentRegistrationForm = () => {
                     type="submit"
                     disabled={
                       WorkingHours.h0 !== "" ||
-                      WorkingHours.h1 !== "" ||
-                      WorkingHours.h2 !== "" ||
-                      WorkingHours.h3 !== "" ||
-                      WorkingHours.h4 !== "" ||
-                      WorkingHours.h5 !== "" ||
-                      WorkingHours.h6 !== "" ||
-                      WorkingHours.h7 !== ""
+                        WorkingHours.h1 !== "" ||
+                        WorkingHours.h2 !== "" ||
+                        WorkingHours.h3 !== "" ||
+                        WorkingHours.h4 !== "" ||
+                        WorkingHours.h5 !== "" ||
+                        WorkingHours.h6 !== "" ||
+                        WorkingHours.h7 !== ""
                         ? false
                         : true
                     }
-                    className={`${
-                      WorkingHours.h0 !== "" ||
-                      WorkingHours.h1 !== "" ||
-                      WorkingHours.h2 !== "" ||
-                      WorkingHours.h3 !== "" ||
-                      WorkingHours.h4 !== "" ||
-                      WorkingHours.h5 !== "" ||
-                      WorkingHours.h6 !== "" ||
-                      WorkingHours.h7 !== ""
+                    className={`${WorkingHours.h0 !== "" ||
+                        WorkingHours.h1 !== "" ||
+                        WorkingHours.h2 !== "" ||
+                        WorkingHours.h3 !== "" ||
+                        WorkingHours.h4 !== "" ||
+                        WorkingHours.h5 !== "" ||
+                        WorkingHours.h6 !== "" ||
+                        WorkingHours.h7 !== ""
                         ? StudentRegistrationFormStyles["btn"]
                         : StudentRegistrationFormStyles["disabled-btn"]
-                    }`}
+                      }`}
                     onClick={handleFormSteps}
                   >
                     {t("next")}{" "}
                     <TbPlayerTrackNext
                       style={{
-                        margin:t("us")===t("Us")?'4px -3px 0px -2px':'6px -3px 0px -2px',
+                        margin: t("us") === t("Us") ? '4px -3px 0px -2px' : '6px -3px 0px -2px',
                         transform:
                           t("us") === "Us"
                             ? "rotate(360deg)"
@@ -1458,7 +1428,7 @@ const StudentRegistrationForm = () => {
                     {" "}
                     <ImPrevious2
                       style={{
-                        margin:t("us")===t("Us")?'0px 0px -4px':'1px 0px -4px 1px',
+                        margin: t("us") === t("Us") ? '0px 0px -4px' : '1px 0px -4px 1px',
                         transform:
                           t("us") === "Us"
                             ? "rotate(360deg)"
@@ -1469,15 +1439,14 @@ const StudentRegistrationForm = () => {
                   </button>
                   <button
                     type="submit"
-                    className={` ${
-                      userData.email_verification === "" ||
-                      errors.email_verificationError
+                    className={` ${userData.email_verification === "" ||
+                        errors.email_verificationError
                         ? StudentRegistrationFormStyles["disabled-btn"]
                         : StudentRegistrationFormStyles["btn"]
-                    }`}
+                      }`}
                     disabled={
                       userData.email_verification === "" ||
-                      errors.certificateError
+                        errors.certificateError
                         ? true
                         : false
                     }

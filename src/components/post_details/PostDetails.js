@@ -37,7 +37,7 @@ const PostDetails = () => {
   return (
     <>
       <Helmet>
-        {HeadTags({ title: postDetails.title, summary: postDetails.summary, url: `${process.env.REACT_APP_FRONT_HOST_URL}/events/${postDetails.slug}`, img: postDetails.article_img, keywords: postDetails.keywords })}
+        {HeadTags({ title: postDetails.title, summary: postDetails.summary, url: `${process.env.REACT_APP_FRONT_HOST_URL}/blog/${postDetails.slug}`, img: postDetails.article_img, keywords: postDetails.keywords })}
       </Helmet>
       <div className={PostDetailsStyles["post-details-main-container"]}>
         <img
@@ -74,7 +74,7 @@ const PostDetails = () => {
 
 
         <Link
-          to="/events"
+          to="/blog"
           type="button"
           style={{ direction: "ltr" }}
           className={PostDetailsStyles["btn"]}

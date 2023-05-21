@@ -75,6 +75,8 @@ function ContactUs() {
     onSubmit,
     validate,
   });
+
+  
   return (
     <div
       style={{ direction: t("us") === "Us" ? "ltr" : "rtl" }}
@@ -87,7 +89,7 @@ function ContactUs() {
           <Form>
             <Row>
               <Col md={6}>
-                <Form.Group className='mb-3' controlId='formBasicUserName'>
+                <Form.Group className='mb-3' sigma="" controlid='formBasicUserName'>
                   <Form.Control
                     type='text'
                     name='userName'
@@ -100,7 +102,7 @@ function ContactUs() {
                     <div className='error'>{formik.errors.userName}</div>
                   ) : null}
                 </Form.Group>
-                <Form.Group className='mb-3' controlId='formBasicEmail'>
+                <Form.Group className='mb-3' sigma="" controlid='formBasicEmail'>
                   <Form.Control
                     type='email'
                     name='email'
@@ -113,7 +115,7 @@ function ContactUs() {
                     <div className='error'>{formik.errors.email}</div>
                   ) : null}
                 </Form.Group>
-                <Form.Group className='mb-3' controlId='formBasicPhone'>
+                <Form.Group className='mb-3' sigma="" controlid='formBasicPhone'>
                   <Form.Control
                     type='number'
                     name='phone'
@@ -130,7 +132,7 @@ function ContactUs() {
               <Col md={6}>
                 <Form.Group
                   className='mb-3'
-                  controlId='exampleForm.ControlTextarea1'>
+                  sigma="" controlid='exampleForm.ControlTextarea1'>
                   <Form.Control
                     as='textarea'
                     name='content'

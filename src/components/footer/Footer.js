@@ -47,7 +47,7 @@ function Footer(props) {
                 <a href='https://wa.me/+201154823980'  target='_blank' rel="noreferrer">
                   <RiWhatsappFill className={FooterCss.socialicon} />
                 </a>
-                <a href='#'>
+                <a href='#' target="_blank">
                   <BsInstagram className={FooterCss.socialicon} />
                 </a>
               </div>
@@ -57,7 +57,7 @@ function Footer(props) {
               <Link className={FooterCss.link} to={"/home"}>
                 <span className={FooterCss.hoverable}>{t("footer_home")}</span>
               </Link>
-              <Link className={FooterCss.link} to={"/events"}>
+              <Link className={FooterCss.link} to={"/blog"}>
                 <span className={FooterCss.hoverable}>
                   {t("footer_events")}
                 </span>

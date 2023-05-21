@@ -6,23 +6,23 @@ import { HelmetProvider } from 'react-helmet-async'
 import ScrollToTop from "./utils/ScrollToTop";
 import UserContext from "./utils/UserContext";
 import { Home, Login, ManageAcc } from './pages';
-import { NavBar, Footer,BookBoard} from './components';
+import { NavBar, Footer, BookBoard } from './components';
 import Fullback from "./components/fullback/fullback";
-const AdminPanel = lazy(()=> import ("./components/admin_panel/Admin_Panel"));
-const SystemUsers = lazy(()=> import ("./components/system_users/SystemUsers"));
-const AddPost = lazy(()=>import ("./components/add_post/AddPost"));
-const Student = lazy(()=>import ("./components/students/Students"));
-const PostsBoard  = lazy(()=>import ("./components/posts_board/Posts_board"));
-const PostDetails  = lazy(()=>import ("./components/post_details/PostDetails"));
-const Instructor =lazy(()=>import ("./components/instructor/Instructor"));
-const Messages = lazy(()=>import("./components/messages/message"));
-const Sessions = lazy(()=>import("./components/sessions/Sessions"));
-const Room = lazy(()=>import("./components/room/Room"));
-const RoomSideBar = lazy(()=>import("./components/room-side-bar/RoomSideBar"));
-const Contact = lazy(()=>import("./pages/Contact"));
-const Aboutus = lazy(()=>import("./pages/Aboutus"));
-const Forgot = lazy(()=>import("./pages/Forgot"));
-const StudentRegistrationForm = lazy(()=>import("./components/student_registration/StudentRegistrationForm"));
+const AdminPanel = lazy(() => import("./components/admin_panel/Admin_Panel"));
+const SystemUsers = lazy(() => import("./components/system_users/SystemUsers"));
+const AddPost = lazy(() => import("./components/add_post/AddPost"));
+const Student = lazy(() => import("./components/students/Students"));
+const PostsBoard = lazy(() => import("./components/posts_board/Posts_board"));
+const PostDetails = lazy(() => import("./components/post_details/PostDetails"));
+const Instructor = lazy(() => import("./components/instructor/Instructor"));
+const Messages = lazy(() => import("./components/messages/message"));
+const Sessions = lazy(() => import("./components/sessions/Sessions"));
+const Room = lazy(() => import("./components/room/Room"));
+const RoomSideBar = lazy(() => import("./components/room-side-bar/RoomSideBar"));
+const Contact = lazy(() => import("./pages/Contact"));
+const Aboutus = lazy(() => import("./pages/Aboutus"));
+const Forgot = lazy(() => import("./pages/Forgot"));
+const StudentRegistrationForm = lazy(() => import("./components/student_registration/StudentRegistrationForm"));
 
 
 
@@ -64,72 +64,74 @@ function App() {
           <div style={{ height: 86 }}></div>
           <div style={{ minHeight: "100vh", position: 'relative' }}>
             <div onClick={setExpanded.bind(this, false)}>
-              <Suspense fallback={<Fullback/>}>
-              <Routes>
-                <Route path="/" element={<Navigate to="home" replace />} />
-                <Route path="home" element={<Home />} />
-                <Route path="about" element={<Aboutus />} />
-                <Route path="contact" element={<Contact />} />
-                <Route path="book" element={<BookBoard />} />
+              <Suspense fallback={<Fullback />}>
+                <Routes>
+                  <Route path="/" element={<Home />} />
+                  <Route path="home" element={<Navigate to="home" replace />} />
+                  <Route path="about" element={<Aboutus />} />
+                  <Route path="contact" element={<Contact />} />
+                  <Route path="book" element={<BookBoard />} />
 
-                <Route element={<PrivateRoutes />}>
-                  <Route
-                    path="sessions"
-                    element={
-                      <Sessions
-                        textt={"test test"}
-                        setIsRoomPrepared={setIsRoomPrepared}
-                      />
-                    }
-                  />
-                  <Route
-                    path="sessions/room"
-                    element={
-                      <Room
-                        setHideMain={setHideMain}
-                        setShowSidebar={setShowSidebar}
-                        setIsRoomPrepared={setIsRoomPrepared}
-                      />
-                    }
-                  />
-                </Route>
-
-                <Route element={<NotLoggedInRoutes />}>
-                  <Route path="login" element={<Login />} />
-                  <Route path="forgot-password" element={<Forgot />} />
-                  <Route
-                    path="register"
-                    element={<StudentRegistrationForm  />}
-                  />
-                </Route>
-
-                <Route element={<PrivateRoutes />}>
-                  <Route path="account" element={<ManageAcc />} />
-                </Route>
-
-                <Route path="events" element={<PostsBoard />} />
-                <Route path="events/:slug" element={<PostDetails />} />
-
-                <Route
-                  element={
-                    <PrivateRoutes
-                      roleRequired="instructor"
-                      privilegesRequired="Admin"
+                  <Route element={<NotMemberRoutes />}>
+                    <Route
+                      path="sessions"
+                      element={
+                        <Sessions
+                          textt={"test test"}
+                          setIsRoomPrepared={setIsRoomPrepared}
+                        />
+                      }
                     />
-                  }
-                >
-                  <Route path="adminPanel" element={<AdminPanel />}>
-                    <Route index element={<SystemUsers />} />
-                    <Route path="systemUsers" index element={<SystemUsers />} />
-                    <Route path="addPost" element={<AddPost />} />
-                    <Route path="students" element={<Student />} />
-                    <Route path="instructors" element={<Instructor />} />
-                    <Route path="messages" element={<Messages />} />
+                    <Route
+                      path="sessions/room"
+                      element={
+                        <Room
+                          setHideMain={setHideMain}
+                          setShowSidebar={setShowSidebar}
+                          setIsRoomPrepared={setIsRoomPrepared}
+                        />
+                      }
+                    />
                   </Route>
-                </Route>
 
-                <Route path="*" element={<Navigate to="home" replace />} />
-              </Routes>
+                  <Route element={<NotLoggedInRoutes />}>
+                    <Route path="login" element={<Login />} />
+                    <Route path="forgot-password" element={<Forgot />} />
+                    <Route
+                      path="register"
+                      element={<StudentRegistrationForm />}
+                    />
+                  </Route>
+
+                  <Route element={<PrivateRoutes />}>
+                    <Route path="account" element={<ManageAcc />} />
+                  </Route>
+
+                  <Route path="blog" element={<PostsBoard />} />
+                  <Route path="blog/:slug" element={<PostDetails />} />
+
+                  <Route
+                    element={
+                      <PrivateRoutes
+                        roleRequired="instructor"
+                        privilegesRequired="Admin"
+                      />
+                    }
+                  >
+                    <Route path="adminPanel" element={<AdminPanel />}>
+                      <Route index element={<SystemUsers />} />
+                      <Route path="systemUsers" index element={<SystemUsers />} />
+                      <Route path="addPost" element={<AddPost />} />
+                      <Route path="students" element={<Student />} />
+                      <Route path="instructors" element={<Instructor />} />
+                      <Route path="messages" element={<Messages />} />
+                    </Route>
+                  </Route>
+
+
+                  <Route path="/sessions-" element={<SessionsNotMember  text={t('filler_rooms')}/>} />
+                  <Route path="*" element={<Navigate to="/" replace />} />
+                </Routes>
               </Suspense>
             </div>
           </div>
@@ -173,9 +175,16 @@ const PrivateRoutes = (props) => {
   return <Outlet />;
 };
 
+const NotMemberRoutes = (props) => {
+  let auth = localStorage.getItem("accessToken");
+  if (!auth) return <Navigate to="/sessions-" />;
+  return <Outlet />;
+};
+
+
 const NotLoggedInRoutes = () => {
   let auth = localStorage.getItem("accessToken");
-  if (auth) return <Navigate to="/home" />;
+  if (auth) return <Navigate to="/" />;
 
   return <Outlet />;
 };
@@ -256,5 +265,19 @@ const LoadingScreen = () => (
     </svg>
   </div>
 );
+
+import vChat from "./assets/images/v-chat.webp";
+
+const SessionsNotMember = ({text}) => (
+<>
+  <div style={{display: 'grid',textAlign: 'center',placeContent: 'center', height: '82vh'}}>
+    <br/>
+    <img src={vChat}  style={{height: '100%', maxWidth: '90%', maxHeight: '500px', marginInline: 'auto'}}/>
+    <br/>
+    <div style={{opacity: 0.6,  marginInline: '16px'}}>{text}</div>
+    
+  </div>
+</>
+)
 
 export default App;

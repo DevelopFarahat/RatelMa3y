@@ -51,7 +51,7 @@ const Post = (props) => {
 
   return (
     <Link
-      to={`/events/${props.post.slug}`}
+      to={`/blog/${props.post.slug}`}
       state={props.post}
       className={PostStyles["read-more"]}
       style={{

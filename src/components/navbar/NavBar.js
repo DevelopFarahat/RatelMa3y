@@ -75,12 +75,12 @@ function NavBar({ i18n, isRoomPrepared, expanded,setExpanded }) {
             </Link>
             <Link
               className={NavCss.link}
-              to={"/events"}
+              to={"/blog"}
               onClick={setExpanded.bind(this,false)}
             >
               {t("navbar_events")}
             </Link>
-            {user != null && (
+            {/* {user != null && ( */}
               <Link
                 className={NavCss.link}
                 to={"/sessions"}
@@ -88,7 +88,7 @@ function NavBar({ i18n, isRoomPrepared, expanded,setExpanded }) {
               >
                 {t("navbar_rooms")}
               </Link>
-            )}
+            {/* )} */}
             <Link
               className={NavCss.link}
               to={"/about"}
