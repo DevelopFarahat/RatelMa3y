@@ -1,129 +1,130 @@
 .sessions-schedule-main{
-    width:100%;
-    padding: 10px;
-    height: 388px;
-    overflow: auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    
-  }
- .sessions-schedule-main::-webkit-scrollbar {
-    width: 15px;
-  }
- .sessions-schedule-main::-webkit-scrollbar-track {
-    background-color: #e4e4e4;
-    border-radius: 7px;
-    -webkit-border-radius: 7px;
-    -moz-border-radius: 7px;
-    -ms-border-radius: 7px;
-    -o-border-radius: 7px;
-  }
+  width:100%;
+  padding: 10px;
+  height: 388px;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
   
- .sessions-schedule-main::-webkit-scrollbar-thumb {
-    border-radius: 70px;
-    border: 6px solid rgba(0, 0, 0, 0.18);
-    border-left: 0;
-    border-right: 0;
-    background-color: #198754;
-    -webkit-border-radius: 70px;
-    -moz-border-radius: 70px;
-    -ms-border-radius: 70px;
-    -o-border-radius: 70px;
-  }
-  .sessions-schedule-main > section{
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: flex-start;
-    min-width: 100%;
-    margin:5px 0 5px 0;
-  }
-  .sessions-schedule-main > section > .days-times{
-    flex: 0 0 100%;
-    display: flex;
-    margin-bottom: 5px;
-  }
-  .sessions-schedule-main > section > .days-times > span:first-of-type{
-    min-height: 100px;
-    color: #FFFFFF;
-    padding:10px;
-    background-color: rgb(25, 135, 84);
-    color:#FFFFFF;
-    writing-mode: vertical-rl;
-    -webkit-writing-mode: vertical-rl;
-    -ms-writing-mode: vertical-rl;
-    text-align: center;
-  }
-  .sessions-schedule-main > section > .days-times > div{
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    margin-left: 5px;
-    flex: 0 0 100%;
-    gap: 10px;
-  }
-  .sessions-schedule-main > section > .days-times > div > div{
-    display: grid;
-    grid-template-columns: minmax(25px,1fr) minmax(80%,1fr);
-    grid-template-rows: 1fr;
-    width:99%;
-    height: 100%;
-  }
-  .sessions-schedule-main > section > .days-times > div > div> span{
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-        background-color: rgb(32, 170, 105);
-        text-align: center;
-        color: #FFFFFF;
-        width: inherit;
-  }
+}
+.sessions-schedule-main::-webkit-scrollbar {
+  width: 15px;
+}
+.sessions-schedule-main::-webkit-scrollbar-track {
+  background-color: #e4e4e4;
+  border-radius: 7px;
+  -webkit-border-radius: 7px;
+  -moz-border-radius: 7px;
+  -ms-border-radius: 7px;
+  -o-border-radius: 7px;
+}
 
- .sessions-members {
-    display: grid;
-    gap: 10px;
-    grid-template-columns: 1fr;
-    grid-template-rows: 1fr;
-  }
-  .sessions-members > div{
-    background-color: #dadada;
-    margin: 0px 5px 1px 5px;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-  }
+.sessions-schedule-main::-webkit-scrollbar-thumb {
+  border-radius: 70px;
+  border: 6px solid rgba(0, 0, 0, 0.18);
+  border-left: 0;
+  border-right: 0;
+  background-color: #198754;
+  -webkit-border-radius: 70px;
+  -moz-border-radius: 70px;
+  -ms-border-radius: 70px;
+  -o-border-radius: 70px;
+}
+.sessions-schedule-main > section{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+  min-width: 100%;
+  margin:5px 0 5px 0;
+}
+.sessions-schedule-main > section > .days-times{
+  flex: 0 0 100%;
+  display: flex;
+  margin-bottom: 5px;
+}
+.sessions-schedule-main > section > .days-times > span:first-of-type{
+  min-height: 100px;
+  color: #FFFFFF;
+  padding:10px;
+  background-color: rgb(25, 135, 84);
+  color:#FFFFFF;
+  writing-mode: vertical-rl;
+  -webkit-writing-mode: vertical-rl;
+  -ms-writing-mode: vertical-rl;
+  text-align: center;
+}
+.sessions-schedule-main > section > .days-times > div{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  margin-left: 5px;
+  flex: 0 0 100%;
+  gap: 10px;
+}
+.sessions-schedule-main > section > .days-times > div > div{
+  display: grid;
+  grid-template-columns: minmax(25px,1fr) minmax(70%,1fr);
+  grid-template-rows: 1fr;
+  width:99%;
+  height: 100%;
+}
+.sessions-schedule-main > section > .days-times > div > div> span{
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      background-color: rgb(32, 170, 105);
+      text-align: center;
+      color: #FFFFFF;
+      width: inherit;
+      padding: 15px;
+}
+
+.sessions-members {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+}
+.sessions-members > div{
+  background-color: #dadada;
+  margin: 0px 5px 1px 5px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
 .sessions-members > div >  .session-student-members > span{
-    display: block;
-    width: 100%;
-    text-align: center;
-    padding:5px;
+  display: block;
+  width: 100%;
+  text-align: center;
+  padding:5px;
+}
+.empty-data-img {
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform: translate(-50%,-50%);
+  -webkit-transform: translate(-50%,-50%);
+  -moz-transform: translate(-50%,-50%);
+  -ms-transform: translate(-50%,-50%);
+  -o-transform: translate(-50%,-50%);
+  object-fit: contain;
+  display: block;
+}
+
+@media screen  and (max-width:500px){
+  .sessions-schedule-main{
+    padding:0;
   }
-  .empty-data-img {
-    position:absolute;
-    top:50%;
-    left:50%;
-    transform: translate(-50%,-50%);
-    -webkit-transform: translate(-50%,-50%);
-    -moz-transform: translate(-50%,-50%);
-    -ms-transform: translate(-50%,-50%);
-    -o-transform: translate(-50%,-50%);
-    object-fit: contain;
-    display: block;
+  .sessions-schedule-main > section > span {
+    min-width:41%;
   }
-  
-  @media screen  and (max-width:500px){
-    .sessions-schedule-main{
-      padding:0;
-    }
-    .sessions-schedule-main > section > span {
-      min-width:41%;
-    }
-    .sessions-schedule-main > section > .session-student-members{
-      min-width: 10%;
-    }
+  .sessions-schedule-main > section > .session-student-members{
+    min-width: 10%;
   }
+}

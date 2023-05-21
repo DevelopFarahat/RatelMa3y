@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState,useEffect,useMemo } from "react";
 import InstructorWorkHistoryStyles from "./InstructorWorkHistory.module.css";
 import EmptyDataImage from "../../assets/images/empty.png";
 import InstructorHistory from "../instructor_history/instructorHistory";
@@ -56,11 +56,13 @@ const InstructorWorkHistory = ({instructorSessionsDetails, setInstructorSessions
           setInstructorSessionsDetails(initialInstructorSessionsDetails.current);
          
           }
+        const studentSessionsDataCopy = useMemo(() => [...instructorSessionsDetails], [instructorSessionsDetails]);
         useEffect(()=>{
           let watingForSessionsData = true;
+          
           let totalNumberOfSession = 0;
           let numberOfStudentRelatedToSpecificInstructor = 0;
-            const studentSessionsDataCopy = [...instructorSessionsDetails];
+          //  const studentSessionsDataCopy = [...instructorSessionsDetails];
             for (let i = 0; i < studentSessionsDataCopy.length; i++) {
               totalNumberOfSession+=1;
         }
