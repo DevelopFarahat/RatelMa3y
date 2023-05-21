@@ -46,15 +46,18 @@ const PostsBoard = () => {
     currentCount = undefined;
 
   useEffect(() => {
-    fetchPosts(page);
+    let abortController = new AbortController();
+    fetchPosts(page,abortController);
+    return ()=>abortController?.abort();
   }, [fetchAgain]);
 
-  async function fetchPosts(page) {
+  async function fetchPosts(page,abortController) {
     setIsLoading(true);
-
+  
+    let signal = abortController.signal;
     try {
       let res = await axios.get(
-        `${process.env.REACT_APP_BACK_HOST_URL}/api/events?page=${page}`
+        `${process.env.REACT_APP_BACK_HOST_URL}/api/events?page=${page}`,{signal:signal}
       );
 
       let postsArr = res.data.data;

@@ -308,8 +308,12 @@ const Instructor = () => {
     };
 
     useEffect(() => {
-        axios
-            .get(`${process.env.REACT_APP_BACK_HOST_URL}/api/instructors?limit=300&page=${currentPage}`,{headers:{'Access-Control-Allow-Origin': '*'}})
+        let abortController;
+        abortController = new AbortController();
+        (async ()=>{
+            let signal = abortController.signal;
+            axios
+            .get(`${process.env.REACT_APP_BACK_HOST_URL}/api/instructors?limit=300&page=${currentPage}`,{signal:signal},{headers:{'Access-Control-Allow-Origin': '*'}})
             .then((res) => {
                 initialResponse.current = res.data.data;
                 setInstructorData(res.data.data);
@@ -327,6 +331,8 @@ const Instructor = () => {
             .catch((error) => {
                 console.log(error);
             });
+        })();
+        return ()=>abortController?.abort();
     }, [fetchAgain,currentPage]);
 
     return (
@@ -424,13 +430,17 @@ const Instructor = () => {
                     </button>
                     </section>
                 </div>
-                <div className={InstructorStyles["table-wrapper"]}>
+                <div className={InstructorStyles["table-wrapper"]} style={{justifyContent:instructorData.length !== 0?'flex-start':'center',alignItems:instructorData.length !== 0?'flex-start':'center'}}>
                     {instructorData?.length === 0 || instructorData === undefined ? (
-                        <img
+                        <>
+                                                <img
                             src={NoResultFiltaration}
                             className={InstructorStyles["no-result"]}
                             alt="no-result"
                         />
+                        {lastPage === -1?<span>{t("Loading Data.....")}</span>:<span>{t("No data found")}</span>}
+                        </>
+
                     ) : (
                         <table className={InstructorStyles["instructor-table"]}>
                             <thead>

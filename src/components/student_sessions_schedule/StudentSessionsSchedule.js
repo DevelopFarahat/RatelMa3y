@@ -35,7 +35,7 @@ const StudentSessionsSchedule = ({specificStudentJoiningRequestData})=>{
         "10:00",
     ]
     useEffect(()=>{
-       
+       let watingScheduleData = true;
         let scheduleDetailsArr = [];
         if(specificStudentJoiningRequestData !== undefined){
 
@@ -79,6 +79,7 @@ const StudentSessionsSchedule = ({specificStudentJoiningRequestData})=>{
             }
             setScheduleData(scheduleDetailsArr);
         }
+        return ()=> watingScheduleData = false;
 
     },[specificStudentJoiningRequestData])
     return(

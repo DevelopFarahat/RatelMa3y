@@ -36,13 +36,19 @@ const BookBoard = () => {
 
   useEffect(() => {
     //API Call for Quran Pages
-    axios
-      .get(`https://api.alquran.cloud/v1/page/${pageNumber}/ar.asad`)
+    let abortController;
+    abortController = new AbortController();
+    (async ()=>{
+      let signal = abortController.signal;
+      axios
+      .get(`https://api.alquran.cloud/v1/page/${pageNumber}/ar.asad`,{signal:signal})
       .then((res) => {
         setBook(res.data.data.ayahs);
         setCurrentSurah(res.data.data.ayahs[0].surah.number);
       })
       .catch((err) => console.error(err));
+    })();
+    return ()=>abortController?.abort();
   }, [pageNumber]);
 
   //TODO: select Ayah

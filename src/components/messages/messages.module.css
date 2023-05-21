@@ -124,13 +124,16 @@
 .table-wrapper {
   width: 100%;
   height: 352px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   overflow: auto;
   position: relative;
 }
 
 .messages-table {
   width: 100%;
-  margin: auto;
 }
 
 .messages-table,
@@ -241,16 +244,8 @@
 }
 
 .no-result {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  display: block;
   object-fit: cover;
-  transform: translate(-50%, -50%);
-  -webkit-transform: translate(-50%, -50%);
-  -moz-transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
-  -o-transform: translate(-50%, -50%);
+  aspect-ratio: 1/1;
 }
 
 .empty-data-img {

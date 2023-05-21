@@ -70,12 +70,13 @@
 .table-wrapper {
   width: 100%;
   height: 348px;
+  display: flex;
+  flex-direction: column;
   overflow: auto;
   position: relative;
 }
 .instructor-table {
   width: 205%;
-  margin: auto;
 }
 .instructor-table,
 .instructor-table > tr,
@@ -175,16 +176,8 @@
   background-color: #E8222D;
 }
 .no-result {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  display: block;
   object-fit: cover;
-  transform: translate(-50%, -50%);
-  -webkit-transform: translate(-50%, -50%);
-  -moz-transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
-  -o-transform: translate(-50%, -50%);
+  aspect-ratio: 1/1;
 }
 .errors {
   border-color: #f6003c !important;

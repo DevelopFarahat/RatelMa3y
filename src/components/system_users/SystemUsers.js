@@ -979,9 +979,13 @@ const SystemUsers = () => {
 
   }
   useEffect(() => {
-    axios
+    let abortController;
+    abortController = new AbortController();
+     (async()=>{
+      let signal = abortController.signal;
+      axios
       .get(
-        `${process.env.REACT_APP_BACK_HOST_URL}/api/instructors?limit=300&page=${currentPage}`,{headers:{'Access-Control-Allow-Origin': '*'}}
+        `${process.env.REACT_APP_BACK_HOST_URL}/api/instructors?limit=300&page=${currentPage}`,{signal:signal},{headers:{'Access-Control-Allow-Origin': '*'}}
       )
       .then((res) => {
         initialResponse.current = res.data.data;
@@ -996,10 +1000,14 @@ const SystemUsers = () => {
         numOfPages.reverse().splice(numOfPages[numOfPages.length - 1], 1);
         setPageNoArrLength(numOfPages.length);
         setPageNo(numOfPages.reverse());
+
+    
       })
       .catch((error) => {
         console.log(error);
       });
+    })();
+    return ()=>abortController?.abort();
   }, [fetchAgain, currentPage]);
 
   return (
@@ -1756,13 +1764,18 @@ const SystemUsers = () => {
             </div>
             <div
               className={SystemUsersStyles["table-wrapper"]}
+              style={{justifyContent:accountsData.length !== 0?'flex-start':'center',alignItems:accountsData.length !== 0?'flex-start':'center'}}
             >
               {accountsData.length === 0 || accountsData === undefined ? (
-                <img
+                <>
+                  <img
                   src={NoResultFiltaration}
                   className={SystemUsersStyles["no-result"]}
                   alt="no-result"
                 />
+                {lastPage === -1?<span>{t("Loading Data.....")}</span>:<span>{t("No data found")}</span>}
+                </>
+              
               ) : (
                 <table
                   className={SystemUsersStyles["system-accounts-table"]}

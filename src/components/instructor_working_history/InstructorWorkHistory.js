@@ -57,6 +57,7 @@ const InstructorWorkHistory = ({instructorSessionsDetails, setInstructorSessions
          
           }
         useEffect(()=>{
+          let watingForSessionsData = true;
           let totalNumberOfSession = 0;
           let numberOfStudentRelatedToSpecificInstructor = 0;
             const studentSessionsDataCopy = [...instructorSessionsDetails];
@@ -72,6 +73,7 @@ const InstructorWorkHistory = ({instructorSessionsDetails, setInstructorSessions
           setNumberOfStudent(numberOfStudentRelatedToSpecificInstructor);
         }
         }
+        return ()=> watingForSessionsData = false;
         },[selectedInstructorData,instructorSessionsDetails])
     return (
         <>

@@ -16,10 +16,16 @@ const PostDetails = () => {
   const [postDetails, setPostDetails] = useState({});
 
   useEffect(() => {
-    axios
-      .get(`${process.env.REACT_APP_BACK_HOST_URL}/api/events/${params.slug}`)
+    let abortController;
+    abortController = new AbortController();
+    (async ()=>{
+      let signal = abortController.signal;
+      axios
+      .get(`${process.env.REACT_APP_BACK_HOST_URL}/api/events/${params.slug}`,{signal:signal})
       .then((res) => setPostDetails(res.data))
+    })();
 
+    return ()=>abortController?.abort();
   }, []);
 
   //Find link and separate it in new item

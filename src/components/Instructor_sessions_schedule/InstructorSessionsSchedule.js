@@ -35,7 +35,7 @@ import EmptyDataImage from "../../assets/images/empty.png";
         "10:00",
     ]
     useEffect(()=>{
-       
+       let watingForScheduleData = true;
         let scheduleDetailsArr = [];
         if(selectedInstructorData !== undefined){
 
@@ -81,7 +81,7 @@ import EmptyDataImage from "../../assets/images/empty.png";
             }
             setScheduleData(scheduleDetailsArr);
         }
-
+        return ()=>watingForScheduleData = false;
     },[selectedInstructorData])
     return(
         <>

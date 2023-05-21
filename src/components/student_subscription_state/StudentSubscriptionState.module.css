@@ -53,13 +53,14 @@
 .table-wrapper {
   width: 100%;
   height: 365px;
+  display: flex;
+  flex-direction: column;
   overflow: auto;
   position: relative;
 }
 
 .student-accounts-table {
   width: 100%;
-  margin: auto;
 
 }
 
@@ -503,16 +504,8 @@
 }
 
 .no-result {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  display: block;
   object-fit: cover;
-  transform: translate(-50%, -50%);
-  -webkit-transform: translate(-50%, -50%);
-  -moz-transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
-  -o-transform: translate(-50%, -50%);
+  aspect-ratio: 1/1;
 }
 
 .errors {

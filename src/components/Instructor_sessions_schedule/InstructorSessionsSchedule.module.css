@@ -59,38 +59,43 @@
   .sessions-schedule-main > section > .days-times > div{
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     margin-left: 5px;
     flex: 0 0 100%;
+    gap: 10px;
   }
   .sessions-schedule-main > section > .days-times > div > div{
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
+    display: grid;
+    grid-template-columns: minmax(25px,1fr) minmax(80%,1fr);
+    grid-template-rows: 1fr;
     width:99%;
+    height: 100%;
   }
   .sessions-schedule-main > section > .days-times > div > div> span{
-        box-sizing: border-box;
-        padding: 25px;
-        margin: 0px 0px 1px 0px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
         background-color: rgb(32, 170, 105);
-        min-height: 100%;
         text-align: center;
         color: #FFFFFF;
-        flex: 0 0 16%;
-        min-height: 100%;
+        width: inherit;
   }
 
  .sessions-members {
-    align-self: flex-start;
-    flex: 0 0 72%;
-    min-height: 100%;
+    display: grid;
+    gap: 10px;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
   }
   .sessions-members > div{
     background-color: #dadada;
     margin: 0px 5px 1px 5px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
   }
 .sessions-members > div >  .session-student-members > span{
     display: block;

@@ -179,7 +179,7 @@ const Students = () => {
             </div>
         <div>
         <StudentDetails      studentSessionsDetails={studentSessionsDetails} setStudentSessionsDetails={setStudentSessionsDetails} initialStudentSessionsDetails={initialStudentSessionsDetails} specificStudentJoiningRequestData={specificStudentJoiningRequestData} setSpecificStudentJoiningRequestData={setSpecificStudentJoiningRequestData} setIsStudentRequestDataVisible={setIsStudentRequestDataVisible} setIsStudentRatelDataVisible={setIsStudentRatelDataVisible} isStudentRequestDataVisible={isStudentRequestDataVisible} isStudentRatelDataVisible={isStudentRatelDataVisible} />
-        <StudentSubscriptionState       setStudentSessionsDetails={setStudentSessionsDetails} currentPage={currentPage} setPageNoArrLength={setPageNoArrLength} setLastPage={setLastPage} setPageNoCopy={setPageNoCopy} setPageNo={setPageNo}  initialStudentSessionsDetails={initialStudentSessionsDetails} setSpecificStudentJoiningRequestData={setSpecificStudentJoiningRequestData} />
+        <StudentSubscriptionState lastPage={lastPage}      setStudentSessionsDetails={setStudentSessionsDetails} currentPage={currentPage} setPageNoArrLength={setPageNoArrLength} setLastPage={setLastPage} setPageNoCopy={setPageNoCopy} setPageNo={setPageNo}  initialStudentSessionsDetails={initialStudentSessionsDetails} setSpecificStudentJoiningRequestData={setSpecificStudentJoiningRequestData} />
         </div>
         </div>
         </>

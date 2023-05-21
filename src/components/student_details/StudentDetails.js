@@ -174,7 +174,7 @@ const [sessionInfo,setSessionInfo] = useState([]);
     setIsSessionsMoreInfoOpend(current=>!current);
   }
   useEffect(()=>{
-    
+    let watingDataAboutStudentSessions = true;
     let totalPresent = 0;
     let totalAbsence = 0;
     let totalNumberOfSession = 0;
@@ -286,7 +286,7 @@ const [sessionInfo,setSessionInfo] = useState([]);
    SessionAttendanceAndEvaluationArr.push(stdSessionDetails);
   }
   setSessionInfo(SessionAttendanceAndEvaluationArr);
-
+  return ()=> watingDataAboutStudentSessions = false;
   },[specificStudentJoiningRequestData,studentSessionsDetails])
 
 

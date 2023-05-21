@@ -302,33 +302,44 @@ const [isUserConfirmedDeletion,setisUserConfirmedDeletion] = useState(false);
     }
     }
     useEffect(()=>{
-        axios.get(`${process.env.REACT_APP_BACK_HOST_URL}/api/contacts?limit=300&page=${currentPage}`,{headers:{'Access-Control-Allow-Origin': '*'}}).then((res)=>{
-        let messagesResponse = res.data.data;
-        for(let i = 0;i< messagesResponse.length;i++){
-            if(messagesResponse[i].status === "Read"){
-                messagesResponse[i].precedence = 0;
-            }else{
-                messagesResponse[i].precedence = 1;
-            }
-        }
-        messagesResponse.sort((a,b)=>{
-            return b.precedence - a.precedence;
-        })
-        setMessages(messagesResponse);
-        initialResponse.current = res.data.data;
-        let pageN =  Math.ceil(res.data.count/300);
-        let numOfPages = [];
-        for(let i = 0 ; i < pageN;i++){
-          numOfPages.push({id:i+1,index:i+1});
-        }
-        setPageNoCopy(numOfPages);
-        setLastPage(numOfPages[numOfPages.length-1]);
-        numOfPages.reverse().splice(numOfPages[numOfPages.length-1],1);
-        setPageNoArrLength(numOfPages.length);
-        setPageNo(numOfPages.reverse());
-        }).catch((error)=>{
-            console.log(error);
-        })
+        let abortController;
+        abortController = new AbortController();
+        (async ()=>{
+            let signal = abortController.signal;
+            axios.get(`${process.env.REACT_APP_BACK_HOST_URL}/api/contacts?limit=300&page=${currentPage}`,{signal:signal},{headers:{'Access-Control-Allow-Origin': '*'}}).then((res)=>{
+                let messagesResponse = res.data.data;
+                for(let i = 0;i< messagesResponse.length;i++){
+                    if(messagesResponse[i].status === "Read"){
+                        messagesResponse[i].precedence = 0;
+                    }else{
+                        messagesResponse[i].precedence = 1;
+                    }
+                }
+                messagesResponse.sort((a,b)=>{
+                    return b.precedence - a.precedence;
+                })
+           
+              
+                
+                    
+            
+                setMessages(messagesResponse);
+                initialResponse.current = res.data.data;
+                let pageN =  Math.ceil(res.data.count/300);
+                let numOfPages = [];
+                for(let i = 0 ; i < pageN;i++){
+                  numOfPages.push({id:i+1,index:i+1});
+                }
+                setPageNoCopy(numOfPages);
+                setLastPage(numOfPages[numOfPages.length-1]);
+                numOfPages.reverse().splice(numOfPages[numOfPages.length-1],1);
+                setPageNoArrLength(numOfPages.length);
+                setPageNo(numOfPages.reverse());
+                }).catch((error)=>{
+                    console.log(error);
+                })
+        })();
+        return ()=>abortController?.abort();
     },[fetchAgain,currentPage])
     return(
 
@@ -383,7 +394,7 @@ const [isUserConfirmedDeletion,setisUserConfirmedDeletion] = useState(false);
                     {lastPage !== undefined?<img src={currentPage === lastPage.index?LessThanGrayImage:LessThanWhiteImage} alt="lessThan"/>:null}
                     </button>:null}
                </ul>:null}
-                
+              
             </div>
         <div>
         <div className={MessagesStyles['messages-content-main-container']}>
@@ -446,14 +457,18 @@ const [isUserConfirmedDeletion,setisUserConfirmedDeletion] = useState(false);
                     </button>
                 </section>
                 </div>
-        <div className={MessagesStyles["table-wrapper"]}>
-                 
+        <div className={MessagesStyles["table-wrapper"]} style={{justifyContent:messages.length !== 0?'flex-start':'center',alignItems:messages.length !== 0?'flex-start':'center'}}>
+               
                     {messages.length === 0 || messages === undefined  ? (
-                        <img
+                        <>
+                          <img
                             src={NoResultFiltaration}
                             className={MessagesStyles["no-result"]}
                             alt="no-result"
                         />
+                        {lastPage === -1?<span>{t("Loading Data.....")}</span>:<span>{t("No data found")}</span>}
+                        </>
+                      
                     ) : (
                         <table
                             className={MessagesStyles["messages-table"]}

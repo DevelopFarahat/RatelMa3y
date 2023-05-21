@@ -27,6 +27,7 @@ const StudentSubscriptionState = ({
   setStudentSessionsDetails,
   setSpecificStudentJoiningRequestData,
   initialStudentSessionsDetails,
+  lastPage
 }) => {
   const [t, i18n] = useTranslation();
   const days = [
@@ -1873,34 +1874,41 @@ const StudentSubscriptionState = ({
   };
   //
   useEffect(() => {
-    axios.get(`${process.env.REACT_APP_BACK_HOST_URL}/api/students?limit=300&page=${currentPage}`,{headers:{'Access-Control-Allow-Origin': '*'}}).then(
-      (res) => {
-        initialResponse.current = res.data.data;
-        setStudentData(res.data.data);
-        let pageN = Math.ceil(res.data.count / 300);
-        let numOfPages = [];
-        for (let i = 0; i < pageN; i++) {
-          numOfPages.push({ id: i + 1, index: i + 1 });
+    let abortController;
+    abortController = new AbortController();
+    (async ()=>{
+      let signal = abortController.signal;
+      axios.get(`${process.env.REACT_APP_BACK_HOST_URL}/api/students?limit=300&page=${currentPage}`,{signal:signal},{headers:{'Access-Control-Allow-Origin': '*'}}).then(
+        (res) => {
+          initialResponse.current = res.data.data;
+          setStudentData(res.data.data);
+          let pageN = Math.ceil(res.data.count / 300);
+          let numOfPages = [];
+          for (let i = 0; i < pageN; i++) {
+            numOfPages.push({ id: i + 1, index: i + 1 });
+          }
+          setPageNoCopy(numOfPages);
+          setLastPage(numOfPages[numOfPages.length - 1]);
+          numOfPages.reverse().splice(numOfPages[numOfPages.length - 1], 1);
+          setPageNoArrLength(numOfPages.length);
+          setPageNo(numOfPages.reverse());
+        },
+        (error) => {
+          console.log(error);
         }
-        setPageNoCopy(numOfPages);
-        setLastPage(numOfPages[numOfPages.length - 1]);
-        numOfPages.reverse().splice(numOfPages[numOfPages.length - 1], 1);
-        setPageNoArrLength(numOfPages.length);
-        setPageNo(numOfPages.reverse());
-      },
-      (error) => {
-        console.log(error);
-      }
+  
+      );
+      axios
+        .get(`${process.env.REACT_APP_BACK_HOST_URL}/api/instructors?limit=10000000000`,{signal:signal},{headers:{'Access-Control-Allow-Origin': '*'}})
+        .then((instructorRes) => {
+          setInstructorData(instructorRes.data.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    })();
 
-    );
-    axios
-      .get(`${process.env.REACT_APP_BACK_HOST_URL}/api/instructors?limit=10000000000`,{headers:{'Access-Control-Allow-Origin': '*'}})
-      .then((instructorRes) => {
-        setInstructorData(instructorRes.data.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    return ()=>abortController?.abort();
   }, [fetchAgain, currentPage]);
   const changeSubscriptionState = (event) => {
     if (studentConfiguration.studentStatus !== "Cancelled" && changableSubscriptionState.instructor === undefined && changableSubscriptionState.started_in === null) {
@@ -3440,13 +3448,17 @@ const StudentSubscriptionState = ({
           </button>
           </section>
         </div>
-        <div className={StudentSubscriptionStyles["table-wrapper"]}>
+        <div className={StudentSubscriptionStyles["table-wrapper"]} style={{justifyContent:studentData.length !== 0?'flex-start':'center',alignItems:studentData.length !== 0?'flex-start':'center'}}>
           {studentData.length === 0 || studentData === undefined ? (
-            <img
+            <>
+               <img
               src={NoResultFiltaration}
               className={StudentSubscriptionStyles["no-result"]}
               alt="no-result"
             />
+             {lastPage === -1?<span>{t("Loading Data.....")}</span>:<span>{t("No data found")}</span>}
+            </>
+         
           ) : (
             <table
               className={StudentSubscriptionStyles["student-accounts-table"]}

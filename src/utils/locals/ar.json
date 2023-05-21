@@ -373,7 +373,9 @@
   "delete":"مسح",
   "are you Sure you want to delete this post":"هل انت متأكد انك ترغب فى مسح هذا المشور؟",
   "Scanning.....":"جارى المسح الان",
-  "aboutus":"عنا"
+  "aboutus":"عنا",
+  "Loading Data.....":"جارى تحميل البيانات.........",
+  "No data found":"لا توجد اى بيانات"
 
 
 
