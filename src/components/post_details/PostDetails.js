@@ -41,16 +41,14 @@ const PostDetails = () => {
       </Helmet>
       <div className={PostDetailsStyles["post-details-main-container"]}>
         <img
-          src={postDetails.article_img}
+          src={postDetails.image}
           className="rounded-4 w-100"
           style={{ maxHeight: '60vh', objectFit: 'cover' }}
           alt="article content"
         />
-
-        <h5
-          className={PostDetailsStyles["post-details-title"]}
-          style={{ direction: postDetails?.lang === "ar" ? "rtl" : "ltr" }}
-        >
+        <div>
+        <h5   className={PostDetailsStyles["post-details-title"]}
+          style={{ direction: postDetails?.lang === "ar" ? "rtl" : "ltr" }}>
           {postDetails.title}
           {postDetails.latest ? (
             <span className={PostDetailsStyles["latest-post-badge"]}>
@@ -59,8 +57,7 @@ const PostDetails = () => {
             </span>
           ) : null}
         </h5>
-
-
+        </div>
         {/* TODO here should be you incoming html page */}
         <div
           className={PostDetailsStyles["post-details"]}

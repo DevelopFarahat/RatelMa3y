@@ -431,6 +431,7 @@
   font-size: 1rem;
   font-family: 'Times New Roman', Times, serif;
   text-transform: capitalize;
+  white-space: nowrap;
 }
 .table-settings-container > section:first-of-type > div >input{
   text-align: center;

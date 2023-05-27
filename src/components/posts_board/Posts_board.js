@@ -30,8 +30,8 @@ const PostsBoard = () => {
   const [posId, setPosId] = useState("");
   const { user } = useContext(UserContext)
   const [posInfo, setPosInfo] = useState({});
-  const [fetchAgain,setFetchAgain] = useState(false);
-  const [t, i18n] = useTranslation();
+  const [fetchAgain,setFetchAgain] = useState(0);
+  const {t} = useTranslation();
   const handleDonnotAskmeAgainChange = (event) => {
     setDonotAskmeAgainChecked((current) => !current);
     if (event.target.checked) {
@@ -62,7 +62,8 @@ const PostsBoard = () => {
 
       let postsArr = res.data.data;
       setPosts((prev) => {
-        let parr = [...prev, ...postsArr];
+       // let parr = [...prev, ...postsArr];
+       let parr = [ ...postsArr];
         currentCount = parr.length;
         return parr;
       });
@@ -108,29 +109,29 @@ const PostsBoard = () => {
     event.stopPropagation();
     setIsEditeComponentVisible(true);
     getSpecificPostDetails(postObji);
+    document.body.style.overflow = "hidden";
   };
   const getSpecificPostDetails = (pObji) => {
-    
-   
+    console.log(pObji)
     let blogPost = {
+      _id:pObji._id,
       title: pObji.title,
       content: pObji.content,
-      image: pObji.article_img,
+      image: pObji.image,
       slug: pObji.slug,
       keywords: pObji.keywords,
       summary: pObji.summary,
       lang: pObji.lang,
     }
-  
     setPosInfo(blogPost);
   };
-  const distroyBackrop = (e) => {
-    e.stopPropagation();
-    e.nativeEvent.stopImmediatePropagation();
+  const distroyBackrop = useCallback((e) => {
+    document.body.style.overflow = "auto";
+    //e.stopPropagation();
     setSelectedPostMoreOption(-1);
     setIsEditeComponentVisible(false);
     setPosInfo({});
-  };
+  },[]);
 
   const deletePost = (event, postId) => {
     event.stopPropagation();
@@ -149,6 +150,7 @@ const PostsBoard = () => {
     }
     if (event.currentTarget.value === "confirm" || donnotAskmeAgain === true) {
       let pId = postId === undefined ? posId : postId;
+      console.log(pId)
       axios
         .delete(`${process.env.REACT_APP_BACK_HOST_URL}/api/events/${pId}`)
         .then(() => {
@@ -166,7 +168,6 @@ const PostsBoard = () => {
   };
   return (
     <>
-   
      <Helmet>
         {HeadTags({ title: t("navbar_events"), summary: "مقالات متنوعة في مواضيع قد تهمك عن الدين والدنيا.", url: `${process.env.REACT_APP_FRONT_HOST_URL}/blog`, img: "%PUBLIC_URL%/logo.webp", keywords: 'Ratel May,Academy,Quran,Memorizing,Recitation, Holy Quran, VideoChat, Sessions, تحفيظ قرآن, تلاوة , نور البيان, أكاديمية, رتل معي, القرآن الكريم, الحلقات,كتاب اون لاين ,قران اون لاين , قران , تلاوة , تعليم قران , تعليم القراءة,تعليم اللغة العربية , مصحف , مصحف اون لاين , ' })}
       </Helmet>
@@ -286,12 +287,10 @@ const PostsBoard = () => {
       }}
     >
              <AddPost
-                isEditeComponentVisible={isEditeComponentVisible}
-                posInfo={posInfo}
-                setPosInfo={setPosInfo}
-                setIsEditeComponentVisible={setIsEditeComponentVisible}
-              setSelectedPostMoreOption={setSelectedPostMoreOption}
-              fetchAgain={fetchAgain}
+             isEditeComponentVisible={isEditeComponentVisible}
+              distroyBackrop={distroyBackrop}
+              posInfo={posInfo}
+              setPosInfo={setPosInfo}
               setFetchAgain={setFetchAgain}
               />
       </div>
