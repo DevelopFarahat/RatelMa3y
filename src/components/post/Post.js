@@ -73,7 +73,7 @@ const Post = (props) => {
             </span>
           ) : null}
           <img
-            src={props.post.article_img}
+            src={props.post.image}
             className={`${PostStyles["post-image"]}`}
             style={{
               cursor: "pointer",
@@ -83,21 +83,30 @@ const Post = (props) => {
           />
         </div>
 
-        <div style={{ minHeight: "100%", width: '100%' }} dir="rtl">
-          <h3
+        <article dir="rtl">
+          <h4
             className={PostStyles["post-header"]}
             role="button"
           >
             {props.post.title}
-          </h3>
+          </h4>
+          
+          <span className={PostStyles["post-date"]} style={{marginBottom: 16}}>
+              <BsCalendarDate size={15} />{" "}
+              {dateClearified}
+            </span>
+
+          <br/>
+          <br/>
+
           {props.post.content.split(" ").length > 63 ? (
             <span
               className={PostStyles["post-details"]}
               style={{
                 cursor: "pointer",
-                height: '200px',
+                minHeight: '200px',
+                height: '100%',
                 marginBottom: 40
-
               }}
             >
               {(props.post.summary?.substring(0, 374))}
@@ -113,12 +122,8 @@ const Post = (props) => {
             </p>
           )}
 
-            <span className={PostStyles["post-date"]}>
-              <BsCalendarDate size={15} />{" "}
-              {dateClearified}
-            </span>
 
-        </div>
+        </article>
       </div>
     </Link>
   );

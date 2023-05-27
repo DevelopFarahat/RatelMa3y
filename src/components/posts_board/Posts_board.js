@@ -109,13 +109,12 @@ const PostsBoard = () => {
     setIsEditeComponentVisible(true);
     getSpecificPostDetails(postObji);
   };
+
   const getSpecificPostDetails = (pObji) => {
-    
-   
     let blogPost = {
       title: pObji.title,
       content: pObji.content,
-      image: pObji.article_img,
+      image: pObji.image,
       slug: pObji.slug,
       keywords: pObji.keywords,
       summary: pObji.summary,
@@ -124,6 +123,7 @@ const PostsBoard = () => {
   
     setPosInfo(blogPost);
   };
+
   const distroyBackrop = (e) => {
     e.stopPropagation();
     e.nativeEvent.stopImmediatePropagation();
@@ -152,12 +152,14 @@ const PostsBoard = () => {
       axios
         .delete(`${process.env.REACT_APP_BACK_HOST_URL}/api/events/${pId}`)
         .then(() => {
-          console.log("deleted successfully")
           setAlertDeleteConfirmation(false);
           setIsUserDeleteAnyPost(true);
           setTimeout(() => {
             setIsUserDeleteAnyPost(false);
-          }, 1000);
+            
+            setPosts(posts.filter(post => post._id != pId ))
+          }, 500);
+          
         })
         .catch((error) => {
           console.log(error);

@@ -163,7 +163,6 @@ function Sessions({ setIsRoomPrepared }) {
         c_eval = obj.current_eval;
         p_eval = obj.total_eval ?? obj.previously_eval ?? 0;
       }
-      console.log("pe", obj);
     }
 
     let date = new Date(session.created_at);

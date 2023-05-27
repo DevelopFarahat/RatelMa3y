@@ -37,11 +37,11 @@ const PostDetails = () => {
   return (
     <>
       <Helmet>
-        {HeadTags({ title: postDetails.title, summary: postDetails.summary, url: `${process.env.REACT_APP_FRONT_HOST_URL}/blog/${postDetails.slug}`, img: postDetails.article_img, keywords: postDetails.keywords })}
+        {HeadTags({ title: postDetails.title, summary: postDetails.summary, url: `${process.env.REACT_APP_FRONT_HOST_URL}/blog/${postDetails.slug}`, img: postDetails.image, keywords: postDetails.keywords })}
       </Helmet>
       <div className={PostDetailsStyles["post-details-main-container"]}>
         <img
-          src={postDetails.article_img}
+          src={postDetails.image}
           className="rounded-4 w-100"
           style={{ maxHeight: '60vh', objectFit: 'cover' }}
           alt="article content"
@@ -51,7 +51,7 @@ const PostDetails = () => {
           className={PostDetailsStyles["post-details-title"]}
           style={{ direction: postDetails?.lang === "ar" ? "rtl" : "ltr" }}
         >
-          {postDetails.title}
+          <span style={{marginInline: '16px'}}>{postDetails.title}</span>
           {postDetails.latest ? (
             <span className={PostDetailsStyles["latest-post-badge"]}>
               {t("events_latest")}

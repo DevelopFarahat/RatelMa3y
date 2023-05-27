@@ -3,7 +3,7 @@ import Editor from 'ckeditor5-custom-build/build/ckeditor'
 import { CKEditor } from '@ckeditor/ckeditor5-react'
 import axios from "axios";
 
-const   CKEDitor = forwardRef(({name, blurF,editorConfigProp},ref)=> {
+const CKEDitor = forwardRef(({name, blurF,editorConfigProp},ref)=> {
 
     const imageUploadUrl = process.env.REACT_APP_BACK_HOST_URL + '/api/upload-img'
     

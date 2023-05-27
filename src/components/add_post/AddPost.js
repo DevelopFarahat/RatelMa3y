@@ -9,7 +9,9 @@ import { BsFillFileEarmarkPostFill } from "react-icons/bs";
 import CircleGif from "../../assets/images/check-circle.gif";
 import formEmptyFieldSadEmoji from "../../assets/images/emotions.png";
 import axios from "axios";
-import CKEDitor from "../editor/ckeditor";
+import Editor from 'ckeditor5-custom-build/build/ckeditor'
+import { CKEditor } from '@ckeditor/ckeditor5-react'
+
 
 const AddPost = ({
   isEditeComponentVisible,
@@ -21,6 +23,7 @@ const AddPost = ({
   setFetchAgain,
 }) => {
   const [t, i18n] = useTranslation();
+
   const [postData, setPostData] = useState({
     title: "",
     slug: "",
@@ -36,7 +39,6 @@ const AddPost = ({
     setPostData({ ...postData, slug: dashedTitle });
   }, [postData.title]);
 
-  const editorRef = useRef(null);
 
   let editorConfig = {
     language: {
@@ -47,7 +49,7 @@ const AddPost = ({
 
   const [isUserMadeAPost, setIsUserMadeAPost] = useState(false);
   const [isThereAnyFormFieldEmpty, setIsThereAnyFormFieldEmpty] = useState(false);
-  const [isThereAnyPostIsUploading, setIsThereAnyPostIsUploading] =  useState(false);
+  const [isThereAnyPostIsUploading, setIsThereAnyPostIsUploading] = useState(false);
 
   const [error, setError] = useState({
     imageError: "",
@@ -56,8 +58,9 @@ const AddPost = ({
     summaryError: "",
     contentError: "",
   });
+
   const openFile = (event) => {
-    
+
     let reader = new FileReader();
     reader.onload = function () {
       let dataURL = reader.result;
@@ -73,7 +76,6 @@ const AddPost = ({
 
   const handleChange = (event) => {
     event.stopPropagation();
-    console.log("myPost", posInfo);
     posInfo === undefined
       ? setPostData({
         ...postData,
@@ -98,6 +100,8 @@ const AddPost = ({
       }));
   };
 
+  const editorRef = useRef();
+
   const resetAllPostCriteria = () => {
     setIsThereAnyPostIsUploading(false);
     setIsUserMadeAPost(true);
@@ -113,8 +117,6 @@ const AddPost = ({
       summary: "",
       lang: "ar",
     });
-
-    editorRef.current.setData("");
   };
 
   const handleSubmit = async (event) => {
@@ -140,21 +142,22 @@ const AddPost = ({
     }
     setIsThereAnyPostIsUploading(true);
     if (!posInfo) {
+      return resetAllPostCriteria();
+
       axios
         .post(`${process.env.REACT_APP_BACK_HOST_URL}/api/events`, post, {
-          headers: { "Access-Control-Allow-Origin": "*" },
+          headers: { "Access-Control-Allow-Origin": "*", "Authorization": 'Bearer ' + localStorage.getItem('accessToken') },
         })
         .then((res) => {
           resetAllPostCriteria();
         })
         .catch((err) => console.error(err));
     } else {
-      console.log("ji")
       axios
         .put(
           `${process.env.REACT_APP_BACK_HOST_URL}/api/events/${posInfo._id}`,
           post,
-          { headers: { "Access-Control-Allow-Origin": "*" } }
+          { headers: { "Access-Control-Allow-Origin": "*", "Authorization": 'Bearer ' + localStorage.getItem('accessToken') } }
         )
         .then(() => {
           setIsEditeComponentVisible(false);
@@ -167,6 +170,7 @@ const AddPost = ({
         });
     }
   };
+
   const ckeditorBlurHandle = (event, editor) => {
     const data = editor.getData();
     posInfo === undefined
@@ -180,9 +184,34 @@ const AddPost = ({
       });
   };
 
+  const imageUploadUrl = process.env.REACT_APP_BACK_HOST_URL + '/api/upload-img'
+
+  function uploadAdapter(loader) {
+    return {
+      upload: () => {
+        try {
+          return new Promise(async (resolve, reject) => {
+            const body = new FormData();
+
+            let file = await loader.file;
+            body.append('uploadImg', file);
+
+            let { data } = await axios.post(imageUploadUrl, body)
+            resolve({ default: data })
+          })
+        } catch (e) {
+          return console.error('error', e)
+        }
+      },
+    }
+  }
+
+  function uploadPlugin(editor) {
+    editor.plugins.get('FileRepository').createUploadAdapter = (loader) => uploadAdapter(loader)
+  }
+
   function checkIfEmpty(name) {
-   // console.log("check on", name);
-   
+
     if (!posInfo ? postData[name] == "" : posInfo[name] == "") {
 
       setError((prev) => {
@@ -210,6 +239,8 @@ const AddPost = ({
     e.stopPropagation();
     e.nativeEvent.stopImmediatePropagation();
   };
+
+
   return (
     <>
       {isUserMadeAPost ? (
@@ -223,7 +254,7 @@ const AddPost = ({
             <span>{error.imageError}</span>
           ) : error.titleError ? (
             <span>{error.titleError}</span>
-          ): error.contentError ? (
+          ) : error.contentError ? (
             <span>{error.contentError}</span>
           ) : (
             <span>{error.summaryError}</span>
@@ -240,8 +271,8 @@ const AddPost = ({
       ) : null}
       <form
         className={`${AddPostStyles["add-post-main-container"]} ${isEditeComponentVisible
-            ? AddPostStyles["add-post-main-container-center"]
-            : ""
+          ? AddPostStyles["add-post-main-container-center"]
+          : ""
           }`}
         onSubmit={handleSubmit}
         encType="multipart/form-data"
@@ -287,7 +318,7 @@ const AddPost = ({
                   id="file"
                   name="post_img"
                   accept="image/*"
-  
+
                   onChange={(event) => {
                     openFile(event);
                   }}
@@ -323,9 +354,10 @@ const AddPost = ({
                   type="text"
                   id="postSlug"
                   name="slug"
+                  placeholder={t('slug_placeholder')}
                   value={!posInfo ? postData.slug : posInfo["slug"]}
                   onChange={handleChange}
-                  style={{marginTop:'5px'}}
+                  style={{ marginTop: '5px' }}
                 />
               </Form.Label>
 
@@ -333,23 +365,23 @@ const AddPost = ({
                 htmlFor="postLang"
                 className={`col-6 mx-0 px-0 ${t("us") === "Us" ? "ps-2" : "pe-2"
                   }`}
-                  
+
               >
-              
+
                 {t("Language")}
-              
+
                 <Form.Select
                   id="postLang"
                   name="lang"
                   value={!posInfo ? postData.lang : posInfo["lang"]}
                   onChange={handleChange}
                   placeholder={"Choose Language"}
-                  style={{marginTop:'5px'}}
+                  style={{ marginTop: '5px' }}
                 >
                   <option value={"ar"}>عربي</option>
                   <option value={"en"}>English</option>
                 </Form.Select>
-                </Form.Label>
+              </Form.Label>
             </div>
 
             <Form.Label htmlFor="postSummary">{t("postSummary")}</Form.Label>
@@ -373,13 +405,18 @@ const AddPost = ({
 
           <div>
             <Form.Label htmlFor="postPargraph">{t("content")}</Form.Label>
-            <CKEDitor
-              ref={editorRef}
-              name="content"
+
+            <CKEditor
+              editor={Editor}
+              config={{
+                ...editorConfig,
+                extraPlugins: [uploadPlugin]
+              }}
+              name='content'
+              onBlur={ckeditorBlurHandle}
               id="postPargraph"
-              blurF={ckeditorBlurHandle}
-              editorConfigProp={editorConfig}
-            />
+              data=""
+            ></CKEditor>
 
             {/* <Form.Control
               as="textarea"
@@ -399,7 +436,7 @@ const AddPost = ({
             style={{ float: t("us") === t("Us") ? "right" : "left" }}
             onClick={(e) => e.stopPropagation()}
           >
-                      {isThereAnyPostIsUploading ? (
+            {isThereAnyPostIsUploading ? (
               <>
                 <Spinner
                   animation="grow"
@@ -435,7 +472,7 @@ const AddPost = ({
             ) : (
               <>
                 {t("post")}
-                <BsFillFileEarmarkPostFill size={15} style={{margin:"5px 4px 0px 3px"}}/>
+                <BsFillFileEarmarkPostFill size={15} style={{ margin: "5px 4px 0px 3px" }} />
               </>
             )}
           </button>
@@ -444,4 +481,5 @@ const AddPost = ({
     </>
   );
 };
+
 export default AddPost;

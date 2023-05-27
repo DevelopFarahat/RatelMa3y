@@ -1,4 +1,5 @@
 {
+  "slug_placeholder":"recommended 5 words at most",
   "title": "Registration",
   "name": "Name",
   "password": " Password",
@@ -11,7 +12,7 @@
   "day7": "thursday",
   "day8": "friday",
   "age": "Age",
-  "mobile number": " Mobile Number",
+  "mobile number": "Whatsapp",
   "qualification": "Education degree",
   "sectionnumber": " numbers of sections you want to join ",
   "numbers-sections": "  choose numbers of sections you want to join",
