@@ -971,6 +971,22 @@ const SystemUsers = () => {
           setIsUserDeleteAnyAccount(false);
         }, 1000)
         setisUserConfirmedDeletion(false);
+        setUserData({
+          _id: "",
+          email: "",
+          name: "",
+          gender: "",
+          age: "",
+          state: "",
+          started_at: "",
+          prefs: {
+            working_hours: [],
+            working_days: [],
+          },
+          password: "",
+          mobile: "",
+          privileges: "",
+        });
       }).catch((error) => {
         console.error(error)
       })
@@ -1810,7 +1826,7 @@ const SystemUsers = () => {
                         <td>{userAccount.name}</td>
                         <td>{userAccount.email}</td>
                         <td>{userAccount.mobile}</td>
-                        {!deleteAlertConfirmation && staffAccount._id === userAccount._id?<td style={{color:'#E8110F'}}>{t("Scanning.....")}</td>:<>
+                        {!deleteAlertConfirmation && staffAccount._id === userAccount._id && isUserConfirmedDeletion === true?<td style={{color:'#E8110F'}}>{t("Scanning.....")}</td>:<>
                         <td>
                           {userAccount.privilages ?? userAccount.privileges}
                         </td>

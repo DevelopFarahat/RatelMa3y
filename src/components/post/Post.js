@@ -67,7 +67,7 @@ const Post = (props) => {
       <div className={PostStyles["post-main-container"]}>
         <div className={PostStyles['post-image-container']}>
           {props.latestPost._id === props.post._id ? (
-            <span className={PostStyles["latest-post"]}   style={{left:t("us")===t("Us")?"0":"calc(100% - 105px)"}}>
+            <span className={PostStyles["latest-post"]}   style={{left:t("us")===t("Us")?"3px":"calc(100% - 105px)"}}>
               {t("events_latest")}
               <TbUrgent style={{ marginBottom: "5px" }} />
             </span>

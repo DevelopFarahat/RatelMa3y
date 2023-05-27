@@ -192,11 +192,11 @@ const [isUserConfirmedDeletion,setisUserConfirmedDeletion] = useState(false);
           setDonotAskmeAgain(false);
         }
       }
-    const handlerRowClicked = useCallback((event,msg) => {
+    const handlerRowClicked = useCallback((event,msg,messageObjiArrIndex) => {
         const id = event.currentTarget.id;
         setSelectedRow(id);
-        showMessageContentAndMarkItAsReadedMsg(msg);
-    }, []);
+        showMessageContentAndMarkItAsReadedMsg(msg,messageObjiArrIndex);
+    }, [selectedRow,messages]);
     const filterMessages = () => {
         let filtarationArr = [];
         for (let i = 0; i < messages.length; i++) {
@@ -255,20 +255,33 @@ const [isUserConfirmedDeletion,setisUserConfirmedDeletion] = useState(false);
         }
         setMessages(messagesCopy);
     }
-    const showMessageContentAndMarkItAsReadedMsg = (msg)=>{
 
+    const showMessageContentAndMarkItAsReadedMsg = (msg,messageObjiArrIndex)=>{
         setMsgContent(msg.content);
-        if(msg.status === 'Unread'){
-            
-            axios.put(`${process.env.REACT_APP_BACK_HOST_URL}/api/contacts/${msg._id}`,{status:'Read'},{headers:{'Access-Control-Allow-Origin': '*'}}).then((res)=>{
-                setFetchAgain(fetchAgain+1);
-         
-            }).catch((error)=>{
-                console.log(error);
-            });
-        }
-    
-       
+      if(msg.status === 'Unread'){
+          axios.put(`${process.env.REACT_APP_BACK_HOST_URL}/api/contacts/${msg._id}`,{status:'Read'},{headers:{'Access-Control-Allow-Origin': '*'}}).then((res)=>{
+          }).catch((error)=>{
+              console.log(error);
+          });
+          msg = {
+              ...msg,
+              status:'Read'
+          }
+          const messagesCopy = [...messages];
+          messagesCopy[messageObjiArrIndex] = msg;
+          for(let i = 0;i< messagesCopy.length;i++){
+              if(messagesCopy[i].status === "Read"){
+                  messagesCopy[i].precedence = 0;
+              }else{
+                  messagesCopy[i].precedence = 1;
+              }
+          }
+          messagesCopy.sort((a,b)=>{
+              return b.precedence - a.precedence;
+          })
+          setMessages(messagesCopy);
+          
+      }
     }
     const deleteMessage = (event,msg)=>{
         event.stopPropagation();
@@ -292,6 +305,7 @@ const [isUserConfirmedDeletion,setisUserConfirmedDeletion] = useState(false);
         setAlertDeleteConfirmation(false);
         setFetchAgain(fetchAgain+1);
         setIsUserDeleteAnymsg(true);
+        setMsgContent('');
         setTimeout(()=>{
             setIsUserDeleteAnymsg(false);
         },1000)
@@ -318,11 +332,6 @@ const [isUserConfirmedDeletion,setisUserConfirmedDeletion] = useState(false);
                 messagesResponse.sort((a,b)=>{
                     return b.precedence - a.precedence;
                 })
-           
-              
-                
-                    
-            
                 setMessages(messagesResponse);
                 initialResponse.current = res.data.data;
                 let pageN =  Math.ceil(res.data.count/300);
@@ -355,7 +364,7 @@ const [isUserConfirmedDeletion,setisUserConfirmedDeletion] = useState(false);
               </span>
             </div></>:null}
             {deleteAlertConfirmation ? <div className={`${MessagesStyles["alert"]} ${MessagesStyles["warning-alert"]}`}>
-                {!isUserConfirmedDeletion?<><section>
+            {!isUserConfirmedDeletion?<><section>
           <img src={WarningIcon} alt="warning" />
           <span>{t("are you sure you want to delete this account")}</span>
         </section>
@@ -485,14 +494,14 @@ const [isUserConfirmedDeletion,setisUserConfirmedDeletion] = useState(false);
                                 </tr>
                             </thead>
                             <tbody>
-                                {messages.map((ms) => (
-                                    <tr key={ms._id} id={ms._id} onClick={(event)=>handlerRowClicked(event,ms)}  style={{ background: selectedRow === ms._id ? '#198754' : '', color: selectedRow === ms._id ? '#FFFFFF' : '', boxShadow: selectedRow === ms._id ? `rgba(0, 0, 0, 0.2) 0 6px 20px 0 rgba(0, 0, 0, 0.19)` : '' }}>
+                                {messages.map((ms,index) => (
+                                    <tr key={ms._id} id={ms._id} onClick={(event)=>handlerRowClicked(event,ms,index)}  style={{ background: selectedRow === ms._id ? '#198754' : '', color: selectedRow === ms._id ? '#FFFFFF' : '', boxShadow: selectedRow === ms._id ? `rgba(0, 0, 0, 0.2) 0 6px 20px 0 rgba(0, 0, 0, 0.19)` : '' }}>
                                         <td>{ms.name}</td>
                                         <td>{ms.email}</td>
                                         <td>{ms.phone}</td>
                                         <td>{ms.date.split("T")[0]}</td>
                                         <td>{ms.status}</td>
-                                        {!deleteAlertConfirmation && changeableMsg._id === ms._id?<td style={{color:'#E8110F'}}>{t("Scanning.....")}</td>:<td><FaTrash  onClick={(event)=>deleteMessage(event,ms)}/></td>}
+                                        {!deleteAlertConfirmation && changeableMsg._id === ms._id && isUserConfirmedDeletion === true?<td style={{color:'#E8110F'}}>{t("Scanning.....")}</td>:<td><FaTrash  onClick={(event)=>deleteMessage(event,ms)}/></td>}
                                         
                                     </tr>
                                 ))}

@@ -51,7 +51,7 @@ const PostDetails = () => {
           className={PostDetailsStyles["post-details-title"]}
           style={{ direction: postDetails?.lang === "ar" ? "rtl" : "ltr" }}
         >
-          <span style={{marginInline: '16px'}}>{postDetails.title}</span>
+          {postDetails.title}
           {postDetails.latest ? (
             <span className={PostDetailsStyles["latest-post-badge"]}>
               {t("events_latest")}
@@ -59,8 +59,7 @@ const PostDetails = () => {
             </span>
           ) : null}
         </h5>
-
-
+        </div>
         {/* TODO here should be you incoming html page */}
         <div
           className={PostDetailsStyles["post-details"]}

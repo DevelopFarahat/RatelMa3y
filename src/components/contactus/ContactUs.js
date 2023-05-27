@@ -49,7 +49,7 @@ function ContactUs() {
     axios
       .post(`${process.env.REACT_APP_BACK_HOST_URL}/api/contacts`, {
         name: values.userName,
-        content: values.message,
+        content: values.content,
         email: values.email,
         phone: values.phone,
       })
@@ -60,6 +60,7 @@ function ContactUs() {
 
     enqueueSnackbar("Sent Successfully", { variant: "success" });
     resetForm();
+    
   };
 
   const [isArabic, setIsArabic] = useState(false);
@@ -86,7 +87,7 @@ function ContactUs() {
           <FaHeadphones className={ContctUsCss.contacticon} />
           <h2>{t("contactus_title")}</h2>
           <p className='lead'>{t("contactus_text")}</p>
-          <Form>
+          <Form onSubmit={formik.handleSubmit}>
             <Row>
               <Col md={6}>
                 <Form.Group className='mb-3' sigma="" controlid='formBasicUserName'>
@@ -138,9 +139,12 @@ function ContactUs() {
                     name='content'
                     placeholder={t("keepintouch_hint_msg")}
                     rows={4}
+                    value={formik.values.content}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
                   />
                 </Form.Group>
-                <Button variant='danger'>{t("contactus_btn")}</Button>{" "}
+                <Button type="submit"  variant='danger'>{t("contactus_btn")}</Button>{" "}
               </Col>
             </Row>
           </Form>

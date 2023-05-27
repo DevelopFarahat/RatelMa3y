@@ -56,13 +56,13 @@ const InstructorWorkHistory = ({instructorSessionsDetails, setInstructorSessions
           setInstructorSessionsDetails(initialInstructorSessionsDetails.current);
          
           }
-        const studentSessionsDataCopy = useMemo(() => [...instructorSessionsDetails], [instructorSessionsDetails]);
+        //const studentSessionsDataCopy = useMemo(() => [...instructorSessionsDetails], [instructorSessionsDetails]);
         useEffect(()=>{
           let watingForSessionsData = true;
           
           let totalNumberOfSession = 0;
           let numberOfStudentRelatedToSpecificInstructor = 0;
-          //  const studentSessionsDataCopy = [...instructorSessionsDetails];
+            const studentSessionsDataCopy = [...instructorSessionsDetails];
             for (let i = 0; i < studentSessionsDataCopy.length; i++) {
               totalNumberOfSession+=1;
         }

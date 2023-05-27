@@ -15,11 +15,9 @@ import { CKEditor } from '@ckeditor/ckeditor5-react'
 
 const AddPost = ({
   isEditeComponentVisible,
-  fetchAgain,
+  distroyBackrop,
   posInfo,
   setPosInfo,
-  setIsEditeComponentVisible,
-  setSelectedPostMoreOption,
   setFetchAgain,
 }) => {
   const [t, i18n] = useTranslation();
@@ -65,10 +63,10 @@ const AddPost = ({
     reader.onload = function () {
       let dataURL = reader.result;
       !posInfo
-        ? setPostData((prev) => ({ ...prev, image: dataURL }))
+        ? setPostData((prev) => ({ ...prev, image: String(dataURL)}))
         : setPosInfo({
           ...posInfo,
-          image: dataURL,
+          image: String(dataURL),
         });
     };
     reader.readAsDataURL(event.target.files[0]);
@@ -117,6 +115,8 @@ const AddPost = ({
       summary: "",
       lang: "ar",
     });
+
+    editorRef.current.setData("");
   };
 
   const handleSubmit = async (event) => {
@@ -142,28 +142,27 @@ const AddPost = ({
     }
     setIsThereAnyPostIsUploading(true);
     if (!posInfo) {
-      return resetAllPostCriteria();
-
       axios
         .post(`${process.env.REACT_APP_BACK_HOST_URL}/api/events`, post, {
-          headers: { "Access-Control-Allow-Origin": "*", "Authorization": 'Bearer ' + localStorage.getItem('accessToken') },
+          headers: { "Access-Control-Allow-Origin": "*" },
         })
         .then((res) => {
           resetAllPostCriteria();
         })
         .catch((err) => console.error(err));
     } else {
+      console.log("ji")
       axios
         .put(
           `${process.env.REACT_APP_BACK_HOST_URL}/api/events/${posInfo._id}`,
           post,
-          { headers: { "Access-Control-Allow-Origin": "*", "Authorization": 'Bearer ' + localStorage.getItem('accessToken') } }
+          { headers: { "Access-Control-Allow-Origin": "*" } }
         )
         .then(() => {
           setIsEditeComponentVisible(false);
           setSelectedPostMoreOption(-1);
           resetAllPostCriteria();
-          setFetchAgain(fetchAgain + 1);
+          setFetchAgain((prev)=>prev+1)
         })
         .catch((error) => {
           console.log(error);
@@ -211,13 +210,12 @@ const AddPost = ({
   }
 
   function checkIfEmpty(name) {
-
+   // console.log("check on", name);
+   
     if (!posInfo ? postData[name] == "" : posInfo[name] == "") {
-
       setError((prev) => {
         let obj = { ...prev };
         obj[name + "Error"] = t(name + "Error");
-        //console.log("validation obj", obj);
         return obj;
       });
       return setIsThereAnyFormFieldEmpty(true);
@@ -237,7 +235,6 @@ const AddPost = ({
   };
   const stopBublingPhase = (e) => {
     e.stopPropagation();
-    e.nativeEvent.stopImmediatePropagation();
   };
 
 
@@ -292,7 +289,7 @@ const AddPost = ({
             ) : posInfo !== undefined ? (
               posInfo["image"] !== "" ? (
                 <img
-                  src={posInfo["image"]}
+                  src={ posInfo["image"]}
                   className={AddPostStyles["image-post"]}
                   alt={"post_image"}
                 />
