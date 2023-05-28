@@ -8,6 +8,7 @@ import UserContext from "./utils/UserContext";
 import { Home, Login, ManageAcc } from './pages';
 import { NavBar, Footer, BookBoard } from './components';
 import Fullback from "./components/fullback/fullback";
+import vChat from "./assets/images/v-chat.webp";
 const AdminPanel = lazy(() => import("./components/admin_panel/Admin_Panel"));
 const SystemUsers = lazy(() => import("./components/system_users/SystemUsers"));
 const AddPost = lazy(() => import("./components/add_post/AddPost"));
@@ -266,7 +267,6 @@ const LoadingScreen = () => (
   </div>
 );
 
-import vChat from "./assets/images/v-chat.webp";
 
 const SessionsNotMember = ({text}) => (
 <>

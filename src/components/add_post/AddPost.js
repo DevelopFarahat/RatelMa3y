@@ -15,6 +15,8 @@ import { CKEditor } from '@ckeditor/ckeditor5-react'
 
 const AddPost = ({
   isEditeComponentVisible,
+  setIsEditeComponentVisible,
+  setSelectedPostMoreOption,
   distroyBackrop,
   posInfo,
   setPosInfo,
