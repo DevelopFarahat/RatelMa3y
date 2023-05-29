@@ -133,7 +133,7 @@ const PostsBoard = () => {
     setSelectedPostMoreOption(-1);
     setIsEditeComponentVisible(false);
     setPosInfo({});
-  },[]);
+  }
 
   const deletePost = (event, postId) => {
     event.stopPropagation();

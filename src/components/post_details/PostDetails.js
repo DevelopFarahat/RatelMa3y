@@ -18,14 +18,14 @@ const PostDetails = () => {
   useEffect(() => {
     let abortController;
     abortController = new AbortController();
-    (async ()=>{
+    (async () => {
       let signal = abortController.signal;
       axios
-      .get(`${process.env.REACT_APP_BACK_HOST_URL}/api/events/${params.slug}`,{signal:signal})
-      .then((res) => setPostDetails(res.data))
+        .get(`${process.env.REACT_APP_BACK_HOST_URL}/api/events/${params.slug}`, { signal: signal })
+        .then((res) => setPostDetails(res.data))
     })();
 
-    return ()=>abortController?.abort();
+    return () => abortController?.abort();
   }, []);
 
   //Find link and separate it in new item
@@ -59,7 +59,6 @@ const PostDetails = () => {
             </span>
           ) : null}
         </h5>
-        </div>
         {/* TODO here should be you incoming html page */}
         <div
           className={PostDetailsStyles["post-details"]}
