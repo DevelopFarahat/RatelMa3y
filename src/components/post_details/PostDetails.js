@@ -39,6 +39,7 @@ const PostDetails = () => {
       <Helmet>
         {HeadTags({ title: postDetails.title, summary: postDetails.summary, url: `${process.env.REACT_APP_FRONT_HOST_URL}/blog/${postDetails.slug}`, img: postDetails.image, keywords: postDetails.keywords })}
       </Helmet>
+
       <div className={PostDetailsStyles["post-details-main-container"]}>
         <img
           src={postDetails.image}
