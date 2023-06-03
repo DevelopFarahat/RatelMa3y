@@ -37,18 +37,26 @@ export default function Room({
   }, [id]);
 
   async function createRoom() {
-
-    const response = await axios
+    axios
       .post(`${process.env.REACT_APP_BACK_HOST_URL}/video-call/${id}`, {
         role: user.role,
+      }).then(async (response)=> {
+
+        if (response.status !== 200) throw t("not_authorized")
+        await prepareAFrame(response)
+
+      }).catch((err)=>  {
+        enqueueSnackbar(t("not_authorized"));
+        return endRoom();
       })
 
-    if (response.status !== 200) {
-      enqueueSnackbar(t("not_authorized"));
-      return endRoom();
-    }
 
-    const callFrame = await DailyIframe.createFrame({
+    axios.put(process.env.REACT_APP_BACK_HOST_URL+'/api/sessions/'+session._id, {is_running: true})
+  }
+
+  async function prepareAFrame(response){
+    
+    const callFrame = DailyIframe.createFrame({
       iframeStyle: {
         position: "absolute",
         width: "100%",

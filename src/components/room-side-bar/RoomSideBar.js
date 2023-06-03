@@ -43,6 +43,7 @@ export default function RoomSideBar({ hideMain }) {
             id: result[i].data._id,
           };
         }
+        console.log('students',result)
         setStudents(result);
       });
     }
@@ -148,6 +149,7 @@ export default function RoomSideBar({ hideMain }) {
 }
 
 const EvaluationSheet = (props) => {
+  console.log('props Sidebar',props )
   const { user } = useContext(UserContext);
   const t = props.t;
   const { enqueueSnackbar } = useSnackbar();
@@ -157,7 +159,7 @@ const EvaluationSheet = (props) => {
 
   useEffect(() => {
     setEvaluationsList(props.session.evaluations);
-    let arr = props.session.evaluations.map((ev) => ev.student) ?? [];
+    let arr = props.session?.evaluations?.map((ev) => ev.student) ?? [];
     setAlreadyTested(arr);
   }, []);
 

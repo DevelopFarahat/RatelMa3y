@@ -117,8 +117,7 @@ const AddPost = ({
       summary: "",
       lang: "ar",
     });
-
-    editorRef.current.setData("");
+    editorRef.current.editor.data.set("")
   };
 
   const handleSubmit = async (event) => {
@@ -406,6 +405,7 @@ const AddPost = ({
             <Form.Label htmlFor="postPargraph">{t("content")}</Form.Label>
 
             <CKEditor
+              ref={editorRef}
               editor={Editor}
               config={{
                 ...editorConfig,

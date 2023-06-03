@@ -125,6 +125,7 @@ function Sessions({ setIsRoomPrepared }) {
         {
           is_live: false,
           room_id: session.room_id,
+          is_running: false,
           ended_at: Date.now(),
         }
       )
@@ -256,7 +257,7 @@ function Sessions({ setIsRoomPrepared }) {
               <Accordion.Header className="RoomAccordionHeader">
                 {t("sessions_more_about")}
               </Accordion.Header>
-              <Accordion.Body style={{ direction: isArabic ? "rtl" : "ltr" }}>
+              <Accordion.Body style={{ direction: t('us') == 'Us' ? "ltr" : "rtl" }}>
                 {user.role === "student" && (
                   <h6>
                     {t("sessions_attended")}{" "}
@@ -327,15 +328,15 @@ function Sessions({ setIsRoomPrepared }) {
             >
               {(session.created_by?._id === user?._id ||
                 user?.privileges === "Admin") && (
-                <Button
-                  variant="outline-danger"
-                  className="mx-2"
-                  onClick={endSession.bind(this, session, index)}
-                >
-                  <ImPhoneHangUp className="mx-1" />
-                  <span>{t("sessions_end_room")}</span>
-                </Button>
-              )}
+                  <Button
+                    variant="outline-danger"
+                    className="mx-2"
+                    onClick={endSession.bind(this, session, index)}
+                  >
+                    <ImPhoneHangUp className="mx-1" />
+                    <span>{t("sessions_end_room")}</span>
+                  </Button>
+                )}
               <Link to="/sessions/room" state={{ session: session }}>
                 <Button
                   variant="success"
@@ -423,25 +424,29 @@ function Sessions({ setIsRoomPrepared }) {
           </div>
         ) : (
           sessions?.map((session, index) => {
-            if (index == sessions?.length - 1)
-              return (
-                <div
-                  style={{ width: "100%" }}
-                  ref={lastSessionElementRef}
-                  key={session._id}
-                >
-                  <SessionCard session={session} index={index} />
-                </div>
-              );
-            else
-              return (
-                <SessionCard
-                  isArabic={isArabic}
-                  session={session}
-                  index={index}
-                  key={session._id}
-                />
-              );
+            // if (index == sessions?.length - 1)
+            //   return (
+            //     <div
+            //       style={{ width: "100%" }}
+            //       ref={lastSessionElementRef}
+            //       key={session._id}
+            //     >
+            //       <SessionCard session={session} index={index} />
+            //     </div>
+            //   );
+            // else
+
+            //if a student Don't show session if created but not running yet
+            if (user?.role == 'student' && !session.ended_at && !session.is_running) return
+
+            return (
+              <SessionCard
+                isArabic={isArabic}
+                session={session}
+                index={index}
+                key={session._id}
+              />)
+
           })
         )}
       </div>
