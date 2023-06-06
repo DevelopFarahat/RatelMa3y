@@ -43,7 +43,6 @@ export default function RoomSideBar({ hideMain }) {
             id: result[i].data._id,
           };
         }
-        console.log('students',result)
         setStudents(result);
       });
     }

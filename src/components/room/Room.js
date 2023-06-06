@@ -43,7 +43,11 @@ export default function Room({
       }).then(async (response)=> {
 
         if (response.status !== 200) throw t("not_authorized")
-        await prepareAFrame(response)
+        try {
+          await prepareAFrame(response)
+        } catch (error) {
+          enqueueSnackbar("Maybe you should reconnect");
+        }
 
       }).catch((err)=>  {
         enqueueSnackbar(t("not_authorized"));
@@ -104,6 +108,8 @@ export default function Room({
             `${process.env.REACT_APP_BACK_HOST_URL}/api/sessions/${session._id}`,
             body
           )
+
+          setUser({ ...user, in_session: session });
       })
 
       .on("left-meeting", endRoom);

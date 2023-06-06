@@ -123,6 +123,8 @@
   "sessions_ended_at": "انتهت في:",
   "sessions_more_about": "المزيد عنها",
   "sessions_attended": "تم حضورها:",
+  "true":"نعم",
+  "false":"لا",
   "sessions_attendants_count": "عدد الحاضرين:",
   "sessions_full_attendants_count": "عدد المصرح لهم:",
   "sessions_join": "انضمام",

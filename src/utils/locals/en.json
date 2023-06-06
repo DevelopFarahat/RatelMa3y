@@ -78,6 +78,8 @@
   "keepintouch_hint_msg": "Your Message",
   "keepintouch_hint_username": "Enter Full Name",
   "keepintouch_hint_number": "Phone Number",
+  "true":"true",
+  "false":"false",
   "login_title": "Login your account",
   "login_forgot": "Forgot your password?",
   "login_register": "Register new account",

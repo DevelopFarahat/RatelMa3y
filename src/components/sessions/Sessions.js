@@ -222,12 +222,12 @@ function Sessions({ setIsRoomPrepared }) {
             user.role === "student" &&
             !(p_eval === 0 && session.is_live) && (
               <>
-                <h6>
+                <h6 style={{color: p_eval<= 5?'red':'' }}>
                   {t("sessions_mem_eval")}{" "}
-                  <span style={{ fontWeight: 300 }}>{p_eval}</span>
+                  <span style={{ fontWeight: 300, color: p_eval<= 5?'red':'' }}>{p_eval}</span>
                 </h6>
                 {!session.is_exam && (
-                  <h6>
+                  <h6 style={{color: c_eval<= 5?'red':'' }}>
                     {t("sessions_cur_eval")}{" "}
                     <span style={{ fontWeight: 300 }}>{c_eval}</span>
                   </h6>
@@ -263,8 +263,8 @@ function Sessions({ setIsRoomPrepared }) {
                     {t("sessions_attended")}{" "}
                     <span style={{ fontWeight: 300 }}>
                       {session.attendants?.includes(user?._id)
-                        ? "true"
-                        : "false"}
+                        ? t("true")
+                        : t("false")}
                     </span>
                   </h6>
                 )}
