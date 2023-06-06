@@ -259,7 +259,7 @@ function Sessions({ setIsRoomPrepared }) {
               </Accordion.Header>
               <Accordion.Body style={{ direction: t('us') == 'Us' ? "ltr" : "rtl" }}>
                 {user.role === "student" && (
-                  <h6>
+                  <h6 style={{color: session.attendants?.includes(user?._id)? '':'red'}}>
                     {t("sessions_attended")}{" "}
                     <span style={{ fontWeight: 300 }}>
                       {session.attendants?.includes(user?._id)
@@ -280,9 +280,9 @@ function Sessions({ setIsRoomPrepared }) {
                     {session.members_with_access?.length}
                   </span>
                 </h6>
-                {user.role === "student" && (
-                  <h6>
-                    {t("sessions_notes")}{" "}
+                {user.role === "student" && notes != '' && (
+                  <h6 style={{fontWeight: 700}}>
+                    {t("sessions_notes")}{": "}
                     <span style={{ fontWeight: 300 }}>{notes}</span>
                   </h6>
                 )}
