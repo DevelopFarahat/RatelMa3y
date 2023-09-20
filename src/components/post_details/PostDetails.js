@@ -9,6 +9,7 @@ import { useTranslation } from "react-i18next";
 import { Helmet } from "react-helmet-async";
 import axios from "axios";
 import HeadTags from "../head/Head";
+import ph from './placeholder.jpg'
 
 const PostDetails = () => {
   const params = useParams();
@@ -42,7 +43,7 @@ const PostDetails = () => {
 
       <div className={PostDetailsStyles["post-details-main-container"]}>
         <img
-          src={postDetails.image}
+          src={postDetails.image?? ph}
           className="rounded-4 w-100"
           style={{ maxHeight: '60vh', objectFit: 'cover' }}
           alt="article image"
